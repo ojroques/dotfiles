@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<channel name="thunar" version="1.0">
+  <property name="default-view" type="string" value="ThunarDetailsView"/>
+  <property name="misc-date-style" type="string" value="THUNAR_DATE_STYLE_YYYYMMDD"/>
+  <property name="misc-middle-click-in-tab" type="bool" value="true"/>
+  <property name="misc-open-new-window-as-tab" type="bool" value="true"/>
+  <property name="misc-show-delete-action" type="bool" value="true"/>
+  <property name="last-details-view-column-order" type="string" value="THUNAR_COLUMN_NAME,THUNAR_COLUMN_SIZE,THUNAR_COLUMN_SIZE_IN_BYTES,THUNAR_COLUMN_TYPE,THUNAR_COLUMN_DATE_MODIFIED"/>
+  <property name="last-details-view-visible-columns" type="string" value="THUNAR_COLUMN_DATE_MODIFIED,THUNAR_COLUMN_NAME,THUNAR_COLUMN_SIZE"/>
+  <property name="last-show-hidden" type="bool" value="true"/>
+  <property name="last-side-pane" type="string" value="ThunarTreePane"/>
+  <property name="last-view" type="string" value="ThunarDetailsView"/>
+</channel>

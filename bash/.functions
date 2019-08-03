@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Update and Upgrade Debian packages
+apt-update() {
+    sudo apt -y update
+    sudo apt -y upgrade
+}
+
+# Clean Debian packages
+apt-clean() {
+    sudo apt-get -y clean
+    sudo apt-get -y autoclean
+    sudo apt -y autoremove
+}
+
+# List intentionally installed packages
+apt-list() {
+    (zcat $(ls -tr /var/log/apt/history.log*.gz); cat /var/log/apt/history.log) 2> /dev/null |
+    grep -E '^Commandline' |
+    sed -e 's/Commandline: \(.*\)/\1/'
+}
+
+# Create a new directory and enter it
+mkd() {
+    mkdir -pv "$@" && cd "$1"
+}
+
+# Go back up N directories
+up() {
+    if [[ $# -eq 0 ]]; then
+        cd "../"
+    elif [[ $1 -gt 0 ]]; then
+        up_dir=""
+        for i in `seq 1 $1`; do
+            up_dir+="../"
+        done
+        cd "$up_dir"
+    else
+        echo "Usage: up [n]"
+    fi
+}

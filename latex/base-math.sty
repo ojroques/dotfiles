@@ -1,0 +1,57 @@
+\ProvidesPackage{base-math}
+
+\usepackage{base}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+
+\DeclareMathOperator{\e}{e}
+\DeclareMathOperator{\Id}{Id}
+\DeclareMathOperator{\Idm}{I}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Ima}{Im}
+\DeclareMathOperator{\Span}{Span}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\GL}{GL}
+
+\newcommand{\set}[1]{\mathbb{#1}}
+\newcommand{\N}{\set{N}}
+\newcommand{\Z}{\set{Z}}
+\newcommand{\Q}{\set{Q}}
+\newcommand{\R}{\set{R}}
+\newcommand{\C}{\set{C}}
+\newcommand{\K}{\set{K}}
+
+\newcommand{\notation}[1]{\mathcal{#1}}
+\newcommand{\classC}{\notation{C}}
+\newcommand{\mat}{\notation{M}}
+\newcommand{\edm}{\notation{L}}
+\newcommand{\sym}{\notation{S}}
+\newcommand{\ortg}{\notation{O}}
+
+\newcommand{\interval}[4]{\mathopen{#1}#2\mathclose{}\mathpunct{},#3\mathclose{#4}}
+\newcommand{\intcc}[2]{\interval{[}{#1}{#2}{]}}
+\newcommand{\intoc}[2]{\interval{]}{#1}{#2}{]}}
+\newcommand{\intco}[2]{\interval{[}{#1}{#2}{[}}
+\newcommand{\intoo}[2]{\interval{]}{#1}{#2}{[}}
+\newcommand{\intii}[2]{\interval{\llbracket}{#1}{#2}{\rrbracket}}
+
+\newcommand{\setst}[2]{\left\{#1\mathrel{}\middle|\mathrel{}#2\right\}}
+\newcommand{\integral}[2]{\displaystyle \int_{#1}^{#2}}
+\newcommand{\symsum}[2]{\sum\limits_{#1}^{#2}}
+\newcommand{\symprod}[2]{\prod\limits_{#1}^{#2}}
+\newcommand{\diff}{\mathop{}\mathopen{}\mathrm{d}}
+\newcommand{\partder}[2]{\frac{\partial#1}{\partial#2}}
+\newcommand{\innerprod}[2]{\left\langle#1,#2\right\rangle}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\littleo}[1]{o\mathopen{}\left(#1\right)}
+\newcommand{\bigo}[1]{O\mathopen{}\left(#1\right)}
+
+\newcommand{\function}[5]{
+\begin{array}{lrcl}
+#1 : & #2 & \longrightarrow & #3 \\
+     & #4 & \longmapsto & #5
+\end{array}
+ }
