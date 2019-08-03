@@ -1,0 +1,10 @@
+{
+    "pyls.plugins.rope_completion.enabled": false,
+    "pyls.plugins.pyflakes.enabled": false,
+    "pyls.plugins.mccabe.enabled": false,
+    "pyls.plugins.pycodestyle.enabled": false,
+    "pyls.plugins.pydocstyle.enabled": false,
+    "pyls.plugins.autopep8.enabled": false,
+    "pyls.plugins.yapf.enabled": false,
+    "pyls.plugins.pylint.args": ["--disable=R,C"]
+}

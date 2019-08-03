@@ -27,9 +27,9 @@ sudo ./install.sh
 ```sh
 latex/latex_setup.sh
 ```
-4. (Optional) Uncomment `alias vim=nvim` in `bash/.aliases` to use neovim instead of vim. Then run `coc_setup.sh` to enable `coc.nvim` (autocompletion plugin):
+4. (Optional) Uncomment `alias vim=nvim` in `bash/.aliases` to use neovim instead of vim. Then run `lsp.sh` to install language servers to be used by `LanguageClient-neovim` (a plugin to support the [Language Server Protocol](https://microsoft.github.io/language-server-protocol/)):
 ```sh
-nvim/coc_setup.sh
+nvim/lsp.sh
 ```
 5. Finally, run `vim` and execute `:PlugInstall` to install all plugins.
 

@@ -7,10 +7,6 @@ fi
 
 echo "INSTALLATION SCRIPT"
 
-echo "Updating system..."
-apt update -y
-apt upgrade -y
-
 echo -e "\nMinimal installation includes:"
 echo "* git"
 echo "* vim"
@@ -61,6 +57,10 @@ if [ $choice = 0 ]; then
 fi
 
 SUDO_HOME="/home/$SUDO_USER"  # User home
+
+echo "Updating system..."
+apt update -y
+apt upgrade -y
 
 # Minimal packages
 apt install -y git
