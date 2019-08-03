@@ -1,0 +1,24 @@
+\ProvidesPackage{base}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fullpage}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{graphicx}
+
+\newcommand{\pic}[3]{
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=#2\textwidth]{#1}
+    \caption{#3}
+    \label{fig:#1}
+\end{figure}
+}
+
+\newcommand{\ie}{\textit{i.e.}\ }
+\newcommand{\eg}{\textit{e.g.}\ }
+\newcommand{\ttt}[1]{\texttt{#1}}
+\newcommand{\tbf}[1]{\textbf{#1}}
+\newcommand{\tit}[1]{\textit{#1}}
+\newcommand{\tsc}[1]{\textsc{#1}}

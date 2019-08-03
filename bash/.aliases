@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# System
+alias ls='ls -F --color=auto --group-directories-first'
+alias ll='ls -lAh'
+alias grep='grep --color=auto'
+alias rm='rm --preserve-root -I'
+alias tree='tree -F -C --dirsfirst'
+alias lt='tree $(pwd)'
+alias pwo='poweroff'
+
+# Development
+alias py='python3'
+alias lmc='latexmk -C'
+# Uncomment if using neovim
+# alias vim='nvim'
+
+# Network
+alias ip='ip -c -h'
+alias ipa='ip -br address'
+alias ipl='ip -br link'
+alias ssp='ss -lnprtu'
+alias lsofi='lsof -i -P'
+
+# Process
+alias ps='ps -o command,pid,euser,pcpu,pmem c'
+alias psa='ps -eH'
+
+# Memory and Storage
+alias df='df -Th --total'
+alias du='du -ch'
+alias dua='du -a --max-depth=1 | sort -h'
+alias free='free -ht'
+
+# Shortcuts
+alias dl='cd ~/Downloads && ls'
+alias doc='cd ~/Documents && ls'

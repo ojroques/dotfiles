@@ -1,0 +1,42 @@
+; GIT config
+; By Olivier Roques
+; github.com/ojroques
+
+[user]
+    name = Olivier Roques
+    ; To complete
+    email =
+
+[core]
+    editor = vim
+    ; Uncomment if diff-so-fancy is installed
+    ; pager = diff-so-fancy | less --tabs=4 -RFX
+
+[alias]
+    st = status
+    co = checkout
+    br = branch
+    pr = pull --rebase
+    ls = ls-tree --full-tree --name-only -r HEAD
+    freset = checkout --
+    hreset = reset --hard
+    unstage = reset HEAD --
+    last = log -1 HEAD
+    graph = log --graph --pretty='%C(yellow)%h%Creset%Cred%d%Creset %s %Cgreen(%ar) %Cblue%an%Creset' --abbrev-commit --all
+
+[color]
+    ui = true
+
+[color "diff-highlight"]
+    oldNormal = red bold
+    oldHighlight = red bold 52
+    newNormal = green bold
+    newHighlight = green bold 22
+
+[color "diff"]
+    meta = yellow
+    frag = magenta bold
+    commit = yellow bold
+    old = red bold
+    new = green bold
+    whitespace = red reverse
