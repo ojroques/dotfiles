@@ -23,10 +23,11 @@ Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 if has("nvim")
     Plug 'airblade/vim-rooter'
+    Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
     Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
     Plug 'junegunn/fzf.vim'
     Plug 'lervag/vimtex'
-    Plug 'neoclide/coc.nvim', {'do': {-> coc#util#install()}}
+    Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
 else
     Plug 'ctrlpvim/ctrlp.vim'
 endif
@@ -41,36 +42,49 @@ let g:gitgutter_map_keys = 0                          " Disable all gitgutter ma
 let g:netrw_liststyle = 3                             " Tree style listing
 
 if has("nvim")
-    " Fuzzy finder support (fzf)
+    " Fuzzy finder (fzf)
     let $FZF_DEFAULT_COMMAND = 'rg --files --hidden'  " Change fzf command
-    nmap <C-p> :Files<CR>
-    nmap <leader>p :Rg<CR>
+    nnoremap <C-p> :Files<CR>
+    nnoremap <leader>p :Rg<CR>
 
-    " Autocompletion support (coc.nvim)
-    nmap <leader>d <Plug>(coc-definition)
-    nmap <leader>r <Plug>(coc-references)
+    " Autocompletion (deoplete)
+    let g:deoplete#enable_at_startup = 1                  " Run deoplete at startup
+    call deoplete#custom#option('ignore_case', v:false)   " Case is not ignored
+    call deoplete#custom#option('max_list', 10)           " Number of candidates
 
-    " Latex support (vimtex)
+    " Language Server Protocol (languageclient-neovim)
+    let g:LanguageClient_serverCommands = {
+        \ 'python': ['pyls'],
+        \ 'cpp': ['ccls'],
+        \ 'c': ['ccls'],
+        \ }
+    let g:LanguageClient_settingsPath = "~/.config/nvim/settings.json"
+    nnoremap <leader>d :call LanguageClient#textDocument_definition()<CR>
+    nnoremap <leader>h :call LanguageClient#textDocument_hover()<CR>
+    nnoremap <leader>r :call LanguageClient#textDocument_references()<CR>
+
+    " LaTeX (vimtex)
     let g:polyglot_disabled = ['latex']    " Disable polyglot for latex
     let g:vimtex_quickfix_mode = 0         " Quickfix window stays closed
     let g:vimtex_view_method = 'zathura'   " Default PDF viewer
+    call deoplete#custom#var('omni', 'input_patterns', {'tex': g:vimtex#re#deoplete})
 else
-    " Fuzzy finder support (ctrlp)
+    " Fuzzy finder (ctrlp)
     let g:ctrlp_open_multiple_files = 'i'  " Open files as hidden buffers
     let g:ctrlp_show_hidden = 1            " Display hidden files
 endif
 
 " ===================== MAPPINGS ===========================
 " 'j' and 'k' move accross diplay lines
-map j gj
-map k gk
+noremap j gj
+noremap k gk
 " Toggle word wrap and spell check
-nmap <F3> :set wrap!<bar>:set linebreak!<bar>:set spell!<CR>
+nnoremap <F3> :set wrap!<bar>:set linebreak!<bar>:set spell!<CR>
 " Cycle between completion entries
-imap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-imap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " Toggle fold
-nmap <space> za
+nnoremap <space> za
 " Change buffer
 nmap <leader>1 <Plug>AirlineSelectTab1
 nmap <leader>2 <Plug>AirlineSelectTab2
@@ -84,31 +98,31 @@ nmap <leader>9 <Plug>AirlineSelectTab9
 nmap <leader>u <Plug>AirlineSelectPrevTab
 nmap <leader>i <Plug>AirlineSelectNextTab
 " Copy to system clipboard
-vmap <leader>c "+y
+vnoremap <leader>c "+y
 " Paste from system clipboard
-nmap <leader>v "+p
+nnoremap <leader>v "+p
 " Close buffer (without closing window)
-nmap <leader>w :bp<bar>sp<bar>bn<bar>bd<CR>
+nnoremap <leader>w :bp<bar>sp<bar>bn<bar>bd<CR>
 " Save buffer
-nmap <leader>n :update<CR>
+nnoremap <leader>n :update<CR>
 " Save buffer and quit
-nmap <leader>m :x<CR>
+nnoremap <leader>m :x<CR>
 " Move up linewise
 map <leader>j <Plug>(easymotion-j)
 " Move down linewise
 map <leader>k <Plug>(easymotion-k)
 " Insert blank new line
-nmap <leader>; o<Esc>
+nnoremap <leader>; o<Esc>
 " Quickfix list
-nmap <Up> :copen<CR>
-nmap <Down> :cclose<CR>
-nmap <Right> :cnext<CR>
-nmap <Left> :cprev<CR>
+nnoremap <Up> :copen<CR>
+nnoremap <Down> :cclose<CR>
+nnoremap <Right> :cnext<CR>
+nnoremap <Left> :cprev<CR>
 " Location list
-nmap <S-Up> :lopen<CR>
-nmap <S-Down> :lclose<CR>
-nmap <S-Right> :lnext<CR>
-nmap <S-Left> :lprev<CR>
+nnoremap <S-Up> :lopen<CR>
+nnoremap <S-Down> :lclose<CR>
+nnoremap <S-Right> :lnext<CR>
+nnoremap <S-Left> :lprev<CR>
 
 " ===================== INTERFACE ==========================
 filetype plugin on              " Load filetype plugin
@@ -134,7 +148,7 @@ set shiftwidth=4                " Number of shifts
 set autoindent                  " Copy the indentation from the previous line
 set smartindent                 " Automatically inserts indentation
 set backspace=indent,eol,start  " Intuitive backspacing in insert mode
-set pastetoggle=<F2>            " Aid in pasting text from other applications
+set pastetoggle=<F2>            " Aid in pasting text
 
 " ===================== SEARCH =============================
 set ignorecase                  " Ignore case when searching...
@@ -143,10 +157,7 @@ set hlsearch                    " Highlight search terms...
 set incsearch                   " ...dynamically as they are typed
 
 " ===================== COMPLETION =========================
-set complete=.,w,b,u,t                " Where to search for keywords
-set completeopt=menu,longest,preview  " How completion occurs
-set wildmode=list:longest             " Complete to the point of ambiguity
-
-" ===================== GVIM ===============================
-set guifont=Consolas:h11              " Change default font
-set guioptions-=T                     " Remove toolbar
+set complete=.,w,b,u,t          " Where to search for keywords
+set completeopt=menu,longest    " How completion occurs
+set wildmenu                    " Command-line completion
+set wildmode=longest:full,full  " Complete to the longest common string

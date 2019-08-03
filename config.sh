@@ -32,7 +32,7 @@ cp -v vim/.vimrc $HOME
 
 echo "Copying neovim config..."
 cp -v -r nvim/ $CONFIG_DIR
-rm $CONFIG_DIR/nvim/coc_setup.sh
+rm -f $CONFIG_DIR/nvim/lsp.sh
 
 if [[ -d "$CONFIG_DIR/xfce4/xfconf/xfce-perchannel-xml" ]]; then
     echo "Copying thunar config..."
