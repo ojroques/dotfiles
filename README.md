@@ -31,7 +31,7 @@ latex/latex_setup.sh
 ```sh
 nvim/lsp.sh
 ```
-5. Finally, run `vim` and execute `:PlugInstall` to install all plugins.
+5. Add email to `~/.gitconfig`. Run `vim` and execute `:PlugInstall` to install all plugins.
 
 
 ## Configuration

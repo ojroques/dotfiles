@@ -1,13 +1,14 @@
 #!/bin/bash
 
 if [[ $EUID -ne 0 ]]; then
-    echo "This script must be run as root"
+    echo "This script must be run as root."
     exit 1
 fi
 
 echo "INSTALLATION SCRIPT"
 
-echo -e "\nMinimal installation includes:"
+echo "------------------------------------------------------------"
+echo "Minimal installation includes:"
 echo "* git"
 echo "* vim"
 echo "* tmux"
@@ -29,23 +30,23 @@ echo "* diff-so-fancy"
 echo "* fonts-hack"
 echo "* arc-theme"
 echo "* paper-icons-theme"
-echo -e "WARNING: Complete installation also purges some default applications present on Xubuntu.\n"
+echo -e "[WARNING] Complete installation also purges some default applications present on Xubuntu.\n"
 echo "Which one to choose?"
 
 select installation in "Minimal installation" "Complete installation" "Abort"; do
     case "$installation" in
         "Minimal installation")
-            echo -e "Minimal installation selected.\n"
+            echo "Minimal installation selected."
             choice=1
             break
             ;;
         "Complete installation")
-            echo -e "Complete installation selected.\n"
+            echo "Complete installation selected."
             choice=2
             break
             ;;
         "Abort")
-            echo -e "\nAborting installation."
+            echo "Installation aborted."
             choice=0
             break
             ;;
@@ -58,11 +59,11 @@ fi
 
 SUDO_HOME="/home/$SUDO_USER"  # User home
 
-echo "Updating system..."
+echo -e "\n[UPDATING SYSTEM]"
 apt update -y
 apt upgrade -y
 
-# Minimal packages
+echo -e "\n[MINIMAL PACKAGES]"
 apt install -y git
 apt install -y vim
 apt install -y tmux
@@ -72,8 +73,8 @@ apt install -y make
 apt install -y curl
 sudo -u $SUDO_USER curl -fLo $SUDO_HOME/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-# Additional packages
 if [ $choice = 2 ]; then
+    echo -e "\n[ADDITIONAL PACKAGES]"
     apt install -y kitty
     apt install -y vim-gtk3 neovim
     apt install -y ripgrep
@@ -90,6 +91,7 @@ if [ $choice = 2 ]; then
     add-apt-repository -y -u ppa:snwh/ppa
     apt install -y paper-icon-theme
 
+    echo -e "\n[PURGING DEFAULT PACKAGES]"
     apt purge -y ristretto
     apt purge -y simple-scan
     apt purge -y thunderbird thunderbird-locale-en thunderbird-locale-en-gb thunderbird-locale-en-us
@@ -103,9 +105,10 @@ if [ $choice = 2 ]; then
     apt purge -y gigolo
 fi
 
-echo -e "\nCleaning system..."
+echo -e "\n[CLEANING SYSTEM]"
 apt-get clean -y
 apt-get auto-clean -y
 apt autoremove -y
+echo "------------------------------------------------------------"
 
 echo "Installation done."

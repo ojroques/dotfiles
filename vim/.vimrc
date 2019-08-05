@@ -4,11 +4,11 @@
 
 " ===================== GENERAL ============================
 set nocompatible    " Use Vim settings instead of Vi settings
-set history=100     " Command line history
-set visualbell      " Disable sounds
 set autoread        " Reload buffers modified outside vim
 set hidden          " Buffers can exist in background
+set history=100     " Command line history
 set updatetime=300  " Delay before swap file is written to disk
+set visualbell      " Disable sounds
 
 " ===================== PLUGINS ============================
 filetype off
@@ -19,7 +19,9 @@ Plug 'google/vim-searchindex'
 Plug 'joshdick/onedark.vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-vinegar'
 Plug 'vim-airline/vim-airline'
 if has("nvim")
     Plug 'airblade/vim-rooter'
@@ -28,8 +30,6 @@ if has("nvim")
     Plug 'junegunn/fzf.vim'
     Plug 'lervag/vimtex'
     Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
-else
-    Plug 'ctrlpvim/ctrlp.vim'
 endif
 call plug#end()
 
@@ -46,6 +46,7 @@ if has("nvim")
     let $FZF_DEFAULT_COMMAND = 'rg --files --hidden'  " Change fzf command
     nnoremap <C-p> :Files<CR>
     nnoremap <leader>p :Rg<CR>
+    nnoremap <leader>g :Commits<CR>
 
     " Autocompletion (deoplete)
     let g:deoplete#enable_at_startup = 1                  " Run deoplete at startup
@@ -68,10 +69,6 @@ if has("nvim")
     let g:vimtex_quickfix_mode = 0         " Quickfix window stays closed
     let g:vimtex_view_method = 'zathura'   " Default PDF viewer
     call deoplete#custom#var('omni', 'input_patterns', {'tex': g:vimtex#re#deoplete})
-else
-    " Fuzzy finder (ctrlp)
-    let g:ctrlp_open_multiple_files = 'i'  " Open files as hidden buffers
-    let g:ctrlp_show_hidden = 1            " Display hidden files
 endif
 
 " ===================== MAPPINGS ===========================
@@ -125,39 +122,41 @@ nnoremap <S-Right> :lnext<CR>
 nnoremap <S-Left> :lprev<CR>
 
 " ===================== INTERFACE ==========================
-filetype plugin on              " Load filetype plugin
-filetype indent on              " Load filetype indentation
-syntax enable                   " Enable syntax processing
-set background=dark             " Dark background
-set termguicolors               " True color support
-colorscheme onedark             " Color scheme
-set colorcolumn=80              " Line length marker
-set cursorline                  " Highlight current line
-set nowrap                      " Disable wrap lines
-set number                      " Relative line number
-set scrolloff=4                 " Show lines of context
-set showcmd                     " Show incomplete commands
-set showmode                    " Show current mode
-set signcolumn=yes              " Show sign column
+filetype plugin on                    " Load filetype plugin
+filetype indent on                    " Load filetype indentation
+syntax enable                         " Enable syntax processing
+set background=dark                   " Dark background
+set termguicolors                     " True color support
+colorscheme onedark                   " Color scheme
+set colorcolumn=80                    " Line length marker
+set cursorline                        " Highlight current line
+set list                              " Show trailing blanks
+set listchars=tab:>\ ,trail:-,nbsp:+  " Strings to use in list
+set nowrap                            " Disable wrap lines
+set number                            " Relative line number
+set scrolloff=4                       " Show lines of context
+set showcmd                           " Show incomplete commands
+set showmode                          " Show current mode
+set signcolumn=yes                    " Show sign column
 
 " ===================== INDENTATION ========================
-set expandtab                   " Tabs are spaces
-set tabstop=4                   " Number of visual spaces per tab
-set softtabstop=4               " Number of spaces in tab when editing
-set shiftwidth=4                " Number of shifts
-set autoindent                  " Copy the indentation from the previous line
-set smartindent                 " Automatically inserts indentation
-set backspace=indent,eol,start  " Intuitive backspacing in insert mode
-set pastetoggle=<F2>            " Aid in pasting text
+set autoindent                        " Copy indentation from previous line
+set backspace=indent,eol,start        " Intuitive backspacing in insert mode
+set expandtab                         " Tabs are spaces
+set pastetoggle=<F2>                  " Aid in pasting text
+set shiftwidth=4                      " Number of shifts
+set smartindent                       " Automatically inserts indentation
+set softtabstop=4                     " Number of spaces in tab when editing
+set tabstop=4                         " Number of visual spaces per tab
 
 " ===================== SEARCH =============================
-set ignorecase                  " Ignore case when searching...
-set smartcase                   " ...unless we type a capital
-set hlsearch                    " Highlight search terms...
-set incsearch                   " ...dynamically as they are typed
+set hlsearch                          " Highlight search terms...
+set incsearch                         " ...dynamically as they are typed
+set ignorecase                        " Ignore case when searching...
+set smartcase                         " ...unless we type a capital
 
 " ===================== COMPLETION =========================
-set complete=.,w,b,u,t          " Where to search for keywords
-set completeopt=menu,longest    " How completion occurs
-set wildmenu                    " Command-line completion
-set wildmode=longest:full,full  " Complete to the longest common string
+set complete=.,w,b,u,t                " Where to search for keywords
+set completeopt=menu,longest          " How completion occurs
+set wildmenu                          " Command-line completion
+set wildmode=longest:full,full        " Complete to the longest common string
