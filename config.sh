@@ -2,46 +2,49 @@
 
 CONFIG_DIR="$HOME/.config"
 
-echo "DOTFILES INSTALLATION"
+echo "DOTFILES CONFIGURATION"
 
+echo "------------------------------------------------------------"
 if [[ ! -d "$CONFIG_DIR" ]]; then
     echo "Creating $CONFIG_DIR..."
     mkdir "$CONFIG_DIR"
 fi
 
-echo "Copying bash configs..."
+echo -e "[BASH]"
 cp -v bash/.profile $HOME
 cp -v bash/.bashrc $HOME
 cp -v bash/.aliases $HOME
 cp -v bash/.functions $HOME
 
-echo "Copying git config..."
+echo "[GIT]"
 cp -v git/.gitconfig $HOME
 
-echo "Copying tmux config..."
+echo "[TMUX]"
 cp -v tmux/.tmux.conf $HOME
 
-echo "Copying kitty config..."
+echo "[KITTY]"
 cp -v -r kitty/ $CONFIG_DIR
 
-echo "Copying rofi config..."
+echo "[ROFI]"
 cp -v -r rofi/ $CONFIG_DIR
 
-echo "Copying vim config..."
+echo "[VIM]"
 cp -v vim/.vimrc $HOME
 
-echo "Copying neovim config..."
+echo "[NEOVIM]"
 cp -v -r nvim/ $CONFIG_DIR
 rm -f $CONFIG_DIR/nvim/lsp.sh
 
 if [[ -d "$CONFIG_DIR/xfce4/xfconf/xfce-perchannel-xml" ]]; then
-    echo "Copying thunar config..."
+    echo "[THUNAR]"
     cp -v thunar/thunar.xml $CONFIG_DIR/xfce4/xfconf/xfce-perchannel-xml/
-    echo "Copying xfce keyboard configs..."
+    echo "[XFCE]"
     cp -v xfce/keyboards.xml $CONFIG_DIR/xfce4/xfconf/xfce-perchannel-xml/
     cp -v xfce/keyboard-layout.xml $CONFIG_DIR/xfce4/xfconf/xfce-perchannel-xml/
     cp -v xfce/xfce4-keyboard-shortcuts.xml $CONFIG_DIR/xfce4/xfconf/xfce-perchannel-xml/
 fi
+echo "------------------------------------------------------------"
 
 echo "Configuration done."
-echo "Run vim then execute ':PlugInstall' to finish vim configuration."
+echo "Add your email to ~/.gitconfig."
+echo "Run vim then execute ':PlugInstall' to install vim plugins."
