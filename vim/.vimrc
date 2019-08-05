@@ -21,7 +21,6 @@ Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
-Plug 'tpope/vim-vinegar'
 Plug 'vim-airline/vim-airline'
 if has("nvim")
     Plug 'airblade/vim-rooter'
@@ -39,6 +38,7 @@ let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline#extensions#tabline#buffer_idx_mode = 1  " Display buffer index
 let g:airline#extensions#tabline#enabled = 1          " Display all buffers
 let g:gitgutter_map_keys = 0                          " Disable all gitgutter mappings
+let g:netrw_banner = 0                                " Suppress banner
 let g:netrw_liststyle = 3                             " Tree style listing
 
 if has("nvim")
