@@ -5,30 +5,61 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
+MINIMAL=(
+    "git"
+    "vim"
+    "tmux"
+    "tree"
+    "openssh-server"
+    "make"
+    "curl"
+)
+FULL=(
+    "software-properties-common"
+    "kitty"
+    "vim-gtk3"
+    "ripgrep"
+    "vlc"
+    "rofi"
+    "zathura"
+    "viewnior"
+    "redshift-gtk"
+    "fonts-hack"
+    "arc-theme"
+)
+PPA=(
+    "neovim"
+    "paper-icon-theme"
+)
+PURGED=(
+    "ristretto"
+    "simple-scan"
+    "thunderbird thunderbird-locale-en thunderbird-locale-en-gb thunderbird-locale-en-us"
+    "pidgin pidgin-data pidgin-libnotify pidgin-otr"
+    "parole"
+    "xfburn"
+    "atril atril-common"
+    "mate-calc mate-calc-common mate-desktop-common"
+    "dictionaries-common"
+    "orage"
+    "gigolo"
+)
+
 echo "INSTALLATION SCRIPT"
 
 echo -e "\nMinimal installation includes:"
-echo "* git"
-echo "* vim"
-echo "* tmux"
-echo "* tree"
-echo "* openssh-server"
-echo "* make"
-echo "* curl"
+for pkg in ${MINIMAL[@]}; do
+    echo "* $pkg"
+done
 echo "* vim-plug"
 echo "Complete installation consists of minimal packages plus:"
-echo "* kitty"
-echo "* neovim"
-echo "* ripgrep"
-echo "* rofi"
-echo "* vlc"
-echo "* zathura"
-echo "* viewnior"
-echo "* redshift"
+for pkg in ${FULL[@]}; do
+    echo "* $pkg"
+done
+for pkg in ${PPA[@]}; do
+    echo "* $pkg"
+done
 echo "* diff-so-fancy"
-echo "* fonts-hack"
-echo "* arc-theme"
-echo "* paper-icons-theme"
 echo -e "WARNING: Complete installation also purges some default applications present on Xubuntu.\n"
 echo "Which one to choose?"
 
@@ -75,7 +106,9 @@ sudo -u $SUDO_USER curl -fLo $SUDO_HOME/.vim/autoload/plug.vim --create-dirs htt
 # Additional packages
 if [ $choice = 2 ]; then
     apt install -y kitty
-    apt install -y vim-gtk3 neovim
+    apt install -y vim-gtk3
+    add-apt-repository -y -u ppa:neovim-ppa/stable
+    apt install -y neovim
     apt install -y ripgrep
     apt install -y vlc
     apt install -y rofi
