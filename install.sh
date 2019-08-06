@@ -16,9 +16,7 @@ MINIMAL=(
 )
 FULL=(
     "software-properties-common"
-    "kitty"
     "vim-gtk3"
-    "ripgrep"
     "vlc"
     "rofi"
     "zathura"
@@ -26,6 +24,11 @@ FULL=(
     "redshift-gtk"
     "fonts-hack"
     "arc-theme"
+)
+# Available from 18.10
+OTHERS=(
+    "kitty"
+    "ripgrep"
 )
 PPA=(
     "neovim"
@@ -55,6 +58,9 @@ done
 echo "* vim-plug"
 echo "Full installation includes minimal packages plus:"
 for pkg in ${FULL[@]}; do
+    echo "* $pkg"
+done
+for pkg in ${OTHERS[@]}; do
     echo "* $pkg"
 done
 for pkg in ${PPA[@]}; do
@@ -99,6 +105,7 @@ sudo -u $SUDO_USER curl -fLo $SUDO_HOME/.vim/autoload/plug.vim --create-dirs htt
 if [ $choice = 2 ]; then
     echo -e "\n[ADDITIONAL PACKAGES]"
     apt install -y ${FULL[@]}
+    apt install -y ${OTHERS[@]}
     add-apt-repository -y ppa:neovim-ppa/stable
     add-apt-repository -y ppa:snwh/ppa
     apt update
