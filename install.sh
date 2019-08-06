@@ -5,43 +5,74 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
-echo "INSTALLATION SCRIPT"
+MINIMAL=(
+    "git"
+    "vim"
+    "tmux"
+    "tree"
+    "openssh-server"
+    "make"
+    "curl"
+)
+FULL=(
+    "software-properties-common"
+    "kitty"
+    "vim-gtk3"
+    "ripgrep"
+    "vlc"
+    "rofi"
+    "zathura"
+    "viewnior"
+    "redshift-gtk"
+    "fonts-hack"
+    "arc-theme"
+)
+PPA=(
+    "neovim"
+    "paper-icon-theme"
+)
+PURGED=(
+    "ristretto"
+    "simple-scan"
+    "thunderbird thunderbird-locale-en thunderbird-locale-en-gb thunderbird-locale-en-us"
+    "pidgin pidgin-data pidgin-libnotify pidgin-otr"
+    "parole"
+    "xfburn"
+    "atril atril-common"
+    "mate-calc mate-calc-common mate-desktop-common"
+    "dictionaries-common"
+    "orage"
+    "gigolo"
+)
+SUDO_HOME="/home/$SUDO_USER"
 
+echo "INSTALLATION SCRIPT"
 echo "------------------------------------------------------------"
 echo "Minimal installation includes:"
-echo "* git"
-echo "* vim"
-echo "* tmux"
-echo "* tree"
-echo "* openssh-server"
-echo "* make"
-echo "* curl"
+for pkg in ${MINIMAL[@]}; do
+    echo "* $pkg"
+done
 echo "* vim-plug"
-echo "Complete installation consists of minimal packages plus:"
-echo "* kitty"
-echo "* neovim"
-echo "* ripgrep"
-echo "* rofi"
-echo "* vlc"
-echo "* zathura"
-echo "* viewnior"
-echo "* redshift"
+echo "Full installation includes minimal packages plus:"
+for pkg in ${FULL[@]}; do
+    echo "* $pkg"
+done
+for pkg in ${PPA[@]}; do
+    echo "* $pkg"
+done
 echo "* diff-so-fancy"
-echo "* fonts-hack"
-echo "* arc-theme"
-echo "* paper-icons-theme"
-echo -e "[WARNING] Complete installation also purges some default applications present on Xubuntu.\n"
-echo "Which one to choose?"
+echo -e "[WARNING] Full installation also purges some default applications present on Xubuntu.\n"
 
-select installation in "Minimal installation" "Complete installation" "Abort"; do
+echo "Which one to choose?"
+select installation in "Minimal installation" "Full installation" "Abort"; do
     case "$installation" in
         "Minimal installation")
             echo "Minimal installation selected."
             choice=1
             break
             ;;
-        "Complete installation")
-            echo "Complete installation selected."
+        "Full installation")
+            echo "Full installation selected."
             choice=2
             break
             ;;
@@ -57,52 +88,26 @@ if [ $choice = 0 ]; then
     exit 0
 fi
 
-SUDO_HOME="/home/$SUDO_USER"  # User home
-
 echo -e "\n[UPDATING SYSTEM]"
-apt update -y
+apt update
 apt upgrade -y
 
 echo -e "\n[MINIMAL PACKAGES]"
-apt install -y git
-apt install -y vim
-apt install -y tmux
-apt install -y tree
-apt install -y openssh-server
-apt install -y make
-apt install -y curl
+apt install -y ${MINIMAL[@]}
 sudo -u $SUDO_USER curl -fLo $SUDO_HOME/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 if [ $choice = 2 ]; then
     echo -e "\n[ADDITIONAL PACKAGES]"
-    apt install -y kitty
-    apt install -y vim-gtk3 neovim
-    apt install -y ripgrep
-    apt install -y vlc
-    apt install -y rofi
-    apt install -y zathura
-    apt install -y viewnior
-    apt install -y redshift-gtk
+    apt install -y ${FULL[@]}
+    add-apt-repository -y ppa:neovim-ppa/stable
+    add-apt-repository -y ppa:snwh/ppa
+    apt update
+    apt install -y ${PPA[@]}
     sudo -u $SUDO_USER curl -fLo $SUDO_HOME/.local/bin/diff-so-fancy --create-dirs https://raw.githubusercontent.com/so-fancy/diff-so-fancy/master/third_party/build_fatpack/diff-so-fancy
     chmod 775 $SUDO_HOME/.local/bin/diff-so-fancy
-    apt install -y fonts-hack
-    apt install -y arc-theme
-    apt install -y software-properties-common
-    add-apt-repository -y -u ppa:snwh/ppa
-    apt install -y paper-icon-theme
 
     echo -e "\n[PURGING DEFAULT PACKAGES]"
-    apt purge -y ristretto
-    apt purge -y simple-scan
-    apt purge -y thunderbird thunderbird-locale-en thunderbird-locale-en-gb thunderbird-locale-en-us
-    apt purge -y pidgin pidgin-data pidgin-libnotify pidgin-otr
-    apt purge -y parole
-    apt purge -y xfburn
-    apt purge -y atril atril-common
-    apt purge -y mate-calc mate-calc-common mate-desktop-common
-    apt purge -y dictionaries-common
-    apt purge -y orage
-    apt purge -y gigolo
+    apt purge -y ${PURGED[@]}
 fi
 
 echo -e "\n[CLEANING SYSTEM]"
@@ -110,5 +115,4 @@ apt-get clean -y
 apt-get auto-clean -y
 apt autoremove -y
 echo "------------------------------------------------------------"
-
 echo "Installation done."
