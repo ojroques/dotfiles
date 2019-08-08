@@ -5,7 +5,7 @@
 " ===================== GENERAL ============================
 set nocompatible    " Use Vim settings instead of Vi settings
 set autoread        " Reload buffers modified outside vim
-set hidden          " Buffers can exist in background
+set hidden          " Enable background buffers
 set history=100     " Command line history
 set updatetime=300  " Delay before swap file is written to disk
 set visualbell      " Disable sounds
@@ -38,7 +38,6 @@ let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline#extensions#tabline#buffer_idx_mode = 1  " Display buffer index
 let g:airline#extensions#tabline#enabled = 1          " Display all buffers
 let g:gitgutter_map_keys = 0                          " Disable all gitgutter mappings
-let g:netrw_banner = 0                                " Suppress banner
 let g:netrw_liststyle = 3                             " Tree style listing
 
 if has("nvim")
