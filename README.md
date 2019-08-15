@@ -14,7 +14,7 @@ This repository contains my configuration files for:
 I use [Xubuntu](https://xubuntu.org/) but instructions should work fine on any recent (18.04+) Ubuntu-based distribution.
 
 
-# Screenshots
+## Screenshots
 Wallpaper can be found [here](./screenshots/wallpaper.png)
 ![Kitty and Thunar](./screenshots/shell.png)
 ![Vim](./screenshots/vim.png)
