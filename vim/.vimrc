@@ -75,7 +75,7 @@ endif
 noremap j gj
 noremap k gk
 " Toggle word wrap and spell check
-nnoremap <F3> :set wrap!<bar>:set linebreak!<bar>:set spell!<CR>
+nnoremap <F3> :set wrap!<bar>:set linebreak!<bar>:set breakindent!<bar>:set spell!<CR>
 " Cycle between completion entries
 inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
