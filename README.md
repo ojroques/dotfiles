@@ -14,6 +14,11 @@ This repository contains my configuration files for:
 I use [Xubuntu](https://xubuntu.org/) but instructions should work fine on any recent (18.04+) Ubuntu-based distribution.
 
 
+# Screenshots
+![Kitty and Thunar](./screenshots/shell.png)
+![Vim](./screenshots/vim.png)
+
+
 ## Installation
 1. Run `install.sh` as root to install applications:
 ```sh
@@ -27,14 +32,14 @@ sudo ./install.sh
 ```sh
 latex/latex_setup.sh
 ```
-4. (Optional) Uncomment `alias vim=nvim` in `bash/.aliases` to use neovim instead of vim. Then run `lsp.sh` to install language servers to be used by `LanguageClient-neovim` (a plugin to support the [Language Server Protocol](https://microsoft.github.io/language-server-protocol/)):
+4. (Optional) Uncomment `alias vim=nvim` in `bash/.aliases` to use neovim instead of vim. Then run `lsp.sh` to install language servers for `LanguageClient-neovim` (a plugin to use the [Language Server Protocol](https://langserver.org)):
 ```sh
 nvim/lsp.sh
 ```
 5. Add email to `~/.gitconfig`. Run `vim` and execute `:PlugInstall` to install all plugins.
 
 
-## Configuration
+## After Installation
 - Rearrange home directories
 - Turn off unused services at startup
 - Configure panel and workspaces
@@ -43,24 +48,3 @@ nvim/lsp.sh
 - Change default applications
 - Generate SSH keys: `ssh-keygen -t rsa`
 - Set wallpapers
-
-
-## Vim on Windows
-1. Install **Git for Windows** with the *Run git from Windows command prompt* option enabled
-2. To install **Vundle** (plugin manager), launch **Git Bash** and run
-```sh
-git clone https://github.com/VundleVim/Vundle.vim.git /c/Users/<USERNAME>/vimfiles/bundle/Vundle.vim
-```
-3. Rename `vimrc` into `_vimrc`
-5. Copy `_vimrc` into *C:\Users\<USERNAME>\\_vimrc*
-4. Add these lines at the top of `_vimrc`:
-```sh
-source $VIMRUNTIME/mswin.vim
-behave mswin
-```
-6. In `_vimrc`, replace all instances of `Plug` with `Plugin`. Replace `call plug#end()` by `call vundle#end()` and `call plug#begin()` by
-```sh
-set rtp+=C:\Users\<USERNAME>\vimfiles\bundle\Vundle.vim
-call vundle#begin('C:\Users\<USERNAME>\vimfiles\bundle\')
-```
-8. Launch **vim** and run `:PluginInstall` to complete the installation
