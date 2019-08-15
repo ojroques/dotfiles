@@ -15,6 +15,7 @@ I use [Xubuntu](https://xubuntu.org/) but instructions should work fine on any r
 
 
 # Screenshots
+Wallpaper can be found [here](./screenshots/wallpaper.png)
 ![Kitty and Thunar](./screenshots/shell.png)
 ![Vim](./screenshots/vim.png)
 
