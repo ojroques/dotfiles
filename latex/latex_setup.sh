@@ -1,10 +1,10 @@
 #!/bin/bash
 
+echo "[Update]"
 sudo apt update
-echo "Installing texlive-full..."
+echo -e "\n[texlive-full]"
 sudo apt install -y texlive-full
-echo "Installing latexmk..."
+echo -e "\n[latexmk]"
 sudo apt install -y latexmk
-echo "Installing xdotool..."
+echo -e "\n[xdotool]"
 sudo apt install -y xdotool
-echo "Done."
