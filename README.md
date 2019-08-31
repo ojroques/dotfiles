@@ -5,7 +5,7 @@ This repository contains my configuration files for:
 - **bash**
 - **tmux**
 - **vim** and **neovim**
-- **kitty** (main terminal emulator) and **terminator**
+- [**kitty**](https://github.com/kovidgoyal/kitty) and **terminator**
 - **rofi**
 - **latex**
 - **thunar**

@@ -39,3 +39,8 @@ up() {
         echo "Usage: up [n]"
     fi
 }
+
+# Command cheatsheets
+tldr() {
+    curl -s "cheat.sh/$1"
+}
