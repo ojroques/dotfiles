@@ -14,7 +14,6 @@ set visualbell      " Disable sounds
 filetype off
 call plug#begin()
 Plug 'airblade/vim-gitgutter'
-Plug 'easymotion/vim-easymotion'
 Plug 'google/vim-searchindex'
 Plug 'joshdick/onedark.vim'
 Plug 'sheerun/vim-polyglot'
@@ -71,16 +70,26 @@ if has("nvim")
 endif
 
 " ===================== MAPPINGS ===========================
-" 'j' and 'k' move accross diplay lines
+" Exit insert mode
+inoremap jj <ESC>
+" Move accross diplay lines
 noremap j gj
 noremap k gk
-" Toggle word wrap and spell check
-nnoremap <F3> :set wrap!<bar>:set linebreak!<bar>:set breakindent!<bar>:set spell!<CR>
+" Insert blank new line
+nnoremap <leader>o o<Esc>
+" Toggle word wrap
+nnoremap <F3> :set wrap!<bar>:set linebreak!<bar>:set breakindent!<CR>
+" Toggle spell check
+nnoremap <F4> :set spell!<CR>
 " Cycle between completion entries
 inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " Toggle fold
 nnoremap <space> za
+" Copy to system clipboard
+vnoremap <leader>c "+y
+" Paste from system clipboard
+nnoremap <leader>v "+p
 " Change buffer
 nmap <leader>1 <Plug>AirlineSelectTab1
 nmap <leader>2 <Plug>AirlineSelectTab2
@@ -93,22 +102,14 @@ nmap <leader>8 <Plug>AirlineSelectTab8
 nmap <leader>9 <Plug>AirlineSelectTab9
 nmap <leader>u <Plug>AirlineSelectPrevTab
 nmap <leader>i <Plug>AirlineSelectNextTab
-" Copy to system clipboard
-vnoremap <leader>c "+y
-" Paste from system clipboard
-nnoremap <leader>v "+p
 " Close buffer (without closing window)
 nnoremap <leader>w :bp<bar>sp<bar>bn<bar>bd<CR>
 " Save buffer
 nnoremap <leader>n :update<CR>
 " Save buffer and quit
 nnoremap <leader>m :x<CR>
-" Move up linewise
-map <leader>j <Plug>(easymotion-j)
-" Move down linewise
-map <leader>k <Plug>(easymotion-k)
-" Insert blank new line
-nnoremap <leader>; o<Esc>
+" Save read-only buffer
+cnoremap w!! w !sudo tee % > /dev/null
 " Quickfix list
 nnoremap <Up> :copen<CR>
 nnoremap <Down> :cclose<CR>
@@ -132,7 +133,7 @@ set cursorline                        " Highlight current line
 set list                              " Show trailing blanks
 set listchars=tab:>\ ,trail:-,nbsp:+  " Strings to use in list
 set nowrap                            " Disable wrap lines
-set number                            " Relative line number
+set number relativenumber             " Relative line number
 set scrolloff=4                       " Show lines of context
 set showcmd                           " Show incomplete commands
 set showmode                          " Show current mode
@@ -143,6 +144,7 @@ set autoindent                        " Copy indentation from previous line
 set backspace=indent,eol,start        " Intuitive backspacing in insert mode
 set expandtab                         " Tabs are spaces
 set pastetoggle=<F2>                  " Aid in pasting text
+set shiftround                        " Round indent
 set shiftwidth=4                      " Number of shifts
 set smartindent                       " Automatically inserts indentation
 set softtabstop=4                     " Number of spaces in tab when editing
