@@ -25,10 +25,11 @@ FULL=(
     "fonts-hack"
     "arc-theme"
 )
-# Available from 18.10
+# Available from 19.04
 OTHERS=(
     "kitty"
     "ripgrep"
+    "fd-find"
 )
 PPA=(
     "neovim"
