@@ -17,6 +17,7 @@ MINIMAL=(
 FULL=(
     "software-properties-common"
     "vim-gtk3"
+    "neovim"
     "vlc"
     "rofi"
     "zathura"
@@ -31,7 +32,6 @@ OTHERS=(
     "fd-find"  # 19.04
 )
 PPA=(
-    "neovim"
     "paper-icon-theme"
 )
 PURGED=(
