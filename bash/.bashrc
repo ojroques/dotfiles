@@ -4,12 +4,12 @@
 
 # Alias definitions
 if [ -f ~/.aliases ]; then
-    . ~/.aliases
+    source ~/.aliases
 fi
 
 # Function definitions
 if [ -f ~/.functions ]; then
-    . ~/.functions
+    source ~/.functions
 fi
 
 # If not running interactively, don't do anything
