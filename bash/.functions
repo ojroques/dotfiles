@@ -40,7 +40,7 @@ up() {
     fi
 }
 
-# Command cheatsheets
+# Command cheatsheet
 tldr() {
     curl -s "cheat.sh/$1"
 }

@@ -8,6 +8,7 @@ fi
 MINIMAL=(
     "git"
     "vim"
+    "neovim"
     "tmux"
     "tree"
     "openssh-server"
@@ -17,7 +18,6 @@ MINIMAL=(
 FULL=(
     "software-properties-common"
     "vim-gtk3"
-    "neovim"
     "vlc"
     "rofi"
     "zathura"
