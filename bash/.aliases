@@ -9,7 +9,7 @@ alias tree='tree -F -C --dirsfirst'
 alias lt='tree $(pwd)'
 alias pwo='poweroff'
 
-# Development
+# Coding
 alias py='python3'
 alias lmc='latexmk -C'
 # Uncomment if using neovim
