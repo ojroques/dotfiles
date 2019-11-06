@@ -20,9 +20,10 @@ apt-list() {
     sed -e 's/Commandline: \(.*\)/\1/'
 }
 
-# Create a new directory and enter it
-mkd() {
-    mkdir -pv "$@" && cd "$1"
+# Delete swap files
+rm-swap() {
+    rm -fv $PWD/*.swp
+    rm -fv $HOME/.local/share/nvim/swap/*.swp
 }
 
 # Go back up N directories
