@@ -3,6 +3,7 @@
 # System
 alias ls='ls -F --color=auto --group-directories-first'
 alias ll='ls -lAh'
+alias mkd='mkdir -pv'
 alias grep='grep --color=auto'
 alias rm='rm --preserve-root -I'
 alias tree='tree -F -C --dirsfirst'
