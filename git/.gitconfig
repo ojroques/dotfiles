@@ -14,15 +14,19 @@
 
 [alias]
     st = status
-    co = checkout
     br = branch
+    co = checkout
+    cm = commit
     pr = pull --rebase
     ls = ls-tree --full-tree --name-only -r HEAD
+    stats = diff --compact-summary
     freset = checkout --
     hreset = reset --hard
     unstage = reset HEAD --
-    last = log -1 HEAD
     graph = log --graph --pretty='%C(yellow)%h%Creset%Cred%d%Creset %s %Cgreen(%ar) %Cblue%an%Creset' --abbrev-commit --all
+
+[merge]
+    tool = vimdiff
 
 [color]
     ui = true
