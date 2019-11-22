@@ -23,8 +23,8 @@
     freset = checkout --
     hreset = reset --hard
     unstage = reset HEAD --
-    msg = log --format="%C(bold yellow)COMMIT%Creset %C(yellow)%H%Cred%d%n%C(bold blue)AUTHOR%Creset %Cblue%an <%ae>%n%C(bold green)DATE%Creset   %Cgreen%ai (%ar)%Creset%n%n%s%n%n%b" -n 1
-    tree = log --graph --format="%C(yellow)%h%Cred%d %Creset%s %Cgreen(%ar) %Cblue%an%Creset" --abbrev-commit --all
+    msg = log --format='%C(bold yellow)COMMIT%Creset %C(yellow)%H%Cred%d%n%C(bold blue)AUTHOR%Creset %Cblue%an <%ae>%n%C(bold green)DATE%Creset   %Cgreen%ai (%ar)%Creset%n%n%s%n%n%b' -n 1
+    tree = log --graph --format='%C(yellow)%h%Cred%d %Creset%s %Cgreen(%ar) %Cblue%an%Creset' --abbrev-commit --all
 
 [merge]
     tool = vimdiff
