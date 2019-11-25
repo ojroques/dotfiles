@@ -53,14 +53,16 @@ if has("nvim")
 
     " Language Server Protocol (languageclient-neovim)
     let g:LanguageClient_serverCommands = {
-        \ 'python': ['pyls'],
-        \ 'cpp': ['ccls'],
         \ 'c': ['ccls'],
+        \ 'cpp': ['ccls'],
+        \ 'go': ['gopls'],
+        \ 'python': ['pyls'],
         \ }
     let g:LanguageClient_settingsPath = "~/.config/nvim/settings.json"
     nnoremap <leader>d :call LanguageClient#textDocument_definition()<CR>
     nnoremap <leader>h :call LanguageClient#textDocument_hover()<CR>
     nnoremap <leader>r :call LanguageClient#textDocument_references()<CR>
+    nnoremap <leader>f :call LanguageClient#textDocument_formatting()<CR>
 
     " LaTeX (vimtex)
     let g:polyglot_disabled = ['latex']    " Disable polyglot for latex
