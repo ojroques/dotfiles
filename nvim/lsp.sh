@@ -33,3 +33,6 @@ if [[ ! -d "./ccls" ]]; then
 else
     echo "ccls is already installed"
 fi
+
+echo -e "\n[Go language server]"
+sudo apt install -y golang golang-golang-x-tools
