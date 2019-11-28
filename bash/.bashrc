@@ -12,14 +12,17 @@ if [ -f ~/.functions ]; then
     source ~/.functions
 fi
 
+# Completion for kitty commands
+source <(kitty + complete setup bash)
+
+# Preserve bash history in multiple terminal windows
+export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
     *) return;;
 esac
-
-# Preserve bash history in multiple terminal windows
-export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
