@@ -59,6 +59,7 @@ if has("nvim")
         \ 'python': ['pyls'],
         \ }
     let g:LanguageClient_settingsPath = "~/.config/nvim/settings.json"
+    nnoremap <F5> :call LanguageClient_contextMenu()<CR>
     nnoremap <leader>d :call LanguageClient#textDocument_definition()<CR>
     nnoremap <leader>h :call LanguageClient#textDocument_hover()<CR>
     nnoremap <leader>r :call LanguageClient#textDocument_references()<CR>
@@ -105,7 +106,7 @@ nmap <leader>9 <Plug>AirlineSelectTab9
 nmap <leader>u <Plug>AirlineSelectPrevTab
 nmap <leader>i <Plug>AirlineSelectNextTab
 " Close buffer (without closing window)
-nnoremap <leader>w :bp<bar>sp<bar>bn<bar>bd<CR>
+nnoremap <leader>w :bp<bar>sp<bar>bn<bar>bd<bar>bn<CR>
 " Save buffer
 nnoremap <leader>n :update<CR>
 " Save buffer and quit
