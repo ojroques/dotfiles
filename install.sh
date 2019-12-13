@@ -14,6 +14,7 @@ MINIMAL=(
     "openssh-server"
     "make"
     "curl"
+    "htop"
 )
 FULL=(
     "software-properties-common"
