@@ -58,7 +58,7 @@ weather() {
 # Browse git commits
 glog() {
     local show_fmt="'%C(bold yellow)COMMIT%Creset %C(yellow)%H%Cred%d%n%C(bold blue)AUTHOR%Creset %Cblue%an <%ae>%n%C(bold green)DATE%Creset   %Cgreen%ai (%ar)%Creset%n%n%s%n%n%b'"
-    local log_fmt="'%C(yellow)%h%Cred%d %Creset%s %Cgreen(%ar) %Cblue%an%Creset'"
+    local log_fmt="'%C(yellow)%h%Cred%d %Creset%s %Cblue%an%Creset'"
     local commit_hash="echo {} | grep -o '[a-f0-9]\{7\}' | head -1"
     local view_commit="$commit_hash | xargs -I hash sh -c \"git show --color=always --format="$show_fmt" hash | diff-so-fancy\""
 
