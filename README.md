@@ -11,7 +11,7 @@ This repository contains my configuration files for:
 - **thunar**
 - **xfce** (keyboard layouts and shortcuts)
 
-I use [Xubuntu](https://xubuntu.org/) but instructions should work fine on any recent (18.04+) Ubuntu-based distribution.
+I use [Xubuntu](https://xubuntu.org/) but installation should work fine on any recent (18.04+) Ubuntu-based distribution.
 
 
 ## Screenshots

@@ -106,7 +106,7 @@ nmap <leader>9 <Plug>AirlineSelectTab9
 nmap <leader>u <Plug>AirlineSelectPrevTab
 nmap <leader>i <Plug>AirlineSelectNextTab
 " Close buffer (without closing window)
-nnoremap <leader>w :bp<bar>sp<bar>bn<bar>bd<bar>bn<CR>
+nnoremap <leader>w :bn<bar>sp<bar>bp<bar>bd<CR>
 " Save buffer
 nnoremap <leader>n :update<CR>
 " Save buffer and quit
