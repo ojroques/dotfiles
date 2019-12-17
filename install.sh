@@ -6,47 +6,47 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 MINIMAL=(
+    "curl"
     "git"
-    "vim"
+    "htop"
+    "make"
     "neovim"
+    "openssh-server"
     "tmux"
     "tree"
-    "openssh-server"
-    "make"
-    "curl"
-    "htop"
+    "vim"
 )
 FULL=(
+    "arc-theme"
+    "fonts-hack"
+    "redshift-gtk"
+    "rofi"
     "software-properties-common"
+    "viewnior"
     "vim-gtk3"
     "vlc"
-    "rofi"
     "zathura"
-    "viewnior"
-    "redshift-gtk"
-    "fonts-hack"
-    "arc-theme"
 )
 OTHERS=(
-    "kitty"    # 18.04
-    "ripgrep"  # 18.04
     "fd-find"  # 19.04
+    "kitty"    # 19.04
+    "ripgrep"  # 19.04
 )
 PPA=(
     "paper-icon-theme"
 )
 PURGED=(
+    "atril atril-common"
+    "dictionaries-common"
+    "gigolo"
+    "mate-calc mate-calc-common mate-desktop-common"
+    "orage"
+    "parole"
+    "pidgin pidgin-data pidgin-libnotify pidgin-otr"
     "ristretto"
     "simple-scan"
     "thunderbird thunderbird-locale-en thunderbird-locale-en-gb thunderbird-locale-en-us"
-    "pidgin pidgin-data pidgin-libnotify pidgin-otr"
-    "parole"
     "xfburn"
-    "atril atril-common"
-    "mate-calc mate-calc-common mate-desktop-common"
-    "dictionaries-common"
-    "orage"
-    "gigolo"
 )
 SUDO_HOME="/home/$SUDO_USER"
 
@@ -107,7 +107,6 @@ if [ $choice = 2 ]; then
     echo -e "\n[ADDITIONAL PACKAGES]"
     apt install -y ${FULL[@]}
     apt install -y ${OTHERS[@]}
-    add-apt-repository -y ppa:neovim-ppa/stable
     add-apt-repository -y ppa:snwh/ppa
     apt update
     apt install -y ${PPA[@]}
