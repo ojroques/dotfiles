@@ -106,9 +106,9 @@ nmap <leader>9 <Plug>AirlineSelectTab9
 nmap <leader>u <Plug>AirlineSelectPrevTab
 nmap <leader>i <Plug>AirlineSelectNextTab
 " Close buffer (without closing window)
-nnoremap <expr><leader>w len(getbufinfo(bufnr())[0].windows) > 1 ?
+nnoremap <expr><leader>w len(getbufinfo("")[0].windows) > 1 ?
   \ ":close<CR>" :
-  \ (bufnr() == getbufinfo({"buflisted": 1})[-1].bufnr ? ":bp" : ":bn")."<bar>bd #<CR>"
+  \ (bufnr("") == getbufinfo({"buflisted": 1})[-1].bufnr ? ":bp" : ":bn")."<bar>bd #<CR>"
 " Close all buffers except current
 nnoremap <leader>W :%bd<bar>e #<bar>bd #<bar>normal `"<CR>
 " Save buffer
