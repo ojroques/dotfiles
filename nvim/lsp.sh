@@ -18,20 +18,25 @@ pip3 install jedi
 pip3 install python-language-server
 
 echo -e "\n[C/C++ language server]"
-if [[ ! -d "./ccls" ]]; then
-    sudo apt install -y cmake make gcc
-    sudo apt install -y clang-8 libclang-8-dev
-    git clone --depth=1 --recursive https://github.com/MaskRay/ccls
-    cd ccls
-    cmake -H. -BRelease -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_PREFIX_PATH=/usr/lib/llvm-8 \
-        -DLLVM_INCLUDE_DIR=/usr/lib/llvm-8/include \
-        -DLLVM_BUILD_INCLUDE_DIR=/usr/include/llvm-8
-    cmake --build Release
-    sudo cmake --build Release --target install
-    cd $NVIM_DIR
+if [[ $(apt-cache search --names-only "^ccls$") ]]; then
+    sudo apt install -y ccls
 else
-    echo "ccls is already installed"
+    if [[ ! -d "./ccls" ]]; then
+        CLANG_VERSION=7
+        sudo apt install -y cmake make gcc zlib1g-dev libncurses-dev
+        sudo apt install -y clang-"$CLANG_VERSION" libclang-"$CLANG_VERSION"-dev
+        git clone --depth=1 --recursive https://github.com/MaskRay/ccls
+        cd ccls
+        cmake -H. -BRelease -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_PREFIX_PATH=/usr/lib/llvm-"$CLANG_VERSION" \
+            -DLLVM_INCLUDE_DIR=/usr/lib/llvm-"$CLANG_VERSION"/include \
+            -DLLVM_BUILD_INCLUDE_DIR=/usr/include/llvm-"$CLANG_VERSION"
+        cmake --build Release
+        sudo cmake --build Release --target install
+        cd $NVIM_DIR
+    else
+        echo "ccls is already installed"
+    fi
 fi
 
 echo -e "\n[Go language server]"
