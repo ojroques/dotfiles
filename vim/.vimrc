@@ -6,7 +6,7 @@
 set nocompatible    " Use Vim settings instead of Vi settings
 set autoread        " Reload buffers modified outside vim
 set hidden          " Enable background buffers
-set history=100     " Command line history
+set history=1000    " Command line history
 set updatetime=300  " Delay before swap file is written to disk
 set visualbell      " Disable sounds
 
@@ -79,7 +79,8 @@ inoremap jj <ESC>
 noremap j gj
 noremap k gk
 " Insert blank new line
-nnoremap <leader>o o<Esc>
+nnoremap <leader>O m`O<Esc>``
+nnoremap <leader>o m`o<Esc>``
 " Toggle word wrap
 nnoremap <F3> :set wrap!<bar>:set linebreak!<bar>:set breakindent!<CR>
 " Toggle spell check
@@ -91,8 +92,6 @@ inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 nnoremap <space> za
 " Copy to system clipboard
 vnoremap <leader>c "+y
-" Paste from system clipboard
-nnoremap <leader>v "+p
 " Change buffer
 nmap <leader>1 <Plug>AirlineSelectTab1
 nmap <leader>2 <Plug>AirlineSelectTab2
@@ -142,7 +141,7 @@ set listchars=tab:>\ ,trail:-,nbsp:+  " Strings to use in list
 set nowrap                            " Disable wrap lines
 set number relativenumber             " Relative line number
 set scrolloff=4                       " Show lines of context
-set showcmd                           " Show incomplete commands
+set showcmd                           " Show commands
 set showmode                          " Show current mode
 set signcolumn=yes                    " Show sign column
 
