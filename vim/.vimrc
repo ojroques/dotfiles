@@ -16,10 +16,10 @@ call plug#begin()
 Plug 'airblade/vim-gitgutter'
 Plug 'google/vim-searchindex'
 Plug 'joshdick/onedark.vim'
+Plug 'machakann/vim-sandwich'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 if has("nvim")
     Plug 'airblade/vim-rooter'
