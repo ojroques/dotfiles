@@ -38,6 +38,7 @@ let g:airline#extensions#tabline#buffer_idx_mode = 1  " Display buffer index
 let g:airline#extensions#tabline#enabled = 1          " Display all buffers
 let g:gitgutter_map_keys = 0                          " Disable all gitgutter mappings
 let g:netrw_liststyle = 3                             " Tree style listing
+runtime macros/sandwich/keymap/surround.vim           " Use vim-surround mappings
 
 if has("nvim")
     " Fuzzy finder (fzf)
