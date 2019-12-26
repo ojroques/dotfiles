@@ -19,6 +19,7 @@
     cm = commit
     pr = pull --rebase
     ls = ls-tree --full-tree --name-only -r HEAD
+    diffc = diff --cached
     stats = diff --compact-summary
     freset = checkout --
     hreset = reset --hard

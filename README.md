@@ -4,8 +4,8 @@ This repository contains my configuration files for:
 - **git**
 - **bash**
 - **tmux**
-- **vim** and **neovim**
-- [**kitty**](https://github.com/kovidgoyal/kitty) and **terminator**
+- **vim**, **neovim**, **vimium**
+- [**kitty**](https://github.com/kovidgoyal/kitty), **terminator**
 - **rofi**
 - **latex**
 - **thunar**
