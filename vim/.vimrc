@@ -31,12 +31,12 @@ if has("nvim")
 endif
 call plug#end()
 
-" Display only the filename unless two buffers have the same name
+let g:airline#extensions#tabline#enabled = 1          " Display all buffers
+let g:airline#extensions#tabline#buffer_idx_mode = 1  " Display buffer index
 let g:airline#extensions#tabline#fnamemod = ':p:t'
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
-let g:airline#extensions#tabline#buffer_idx_mode = 1  " Display buffer index
-let g:airline#extensions#tabline#enabled = 1          " Display all buffers
-let g:gitgutter_map_keys = 0                          " Disable all gitgutter mappings
+let g:airline#extensions#wordcount#filetypes = ['markdown', 'plaintex', 'tex', 'text']
+let g:gitgutter_map_keys = 0                          " Disable gitgutter mappings
 let g:netrw_liststyle = 3                             " Tree style listing
 runtime macros/sandwich/keymap/surround.vim           " Use vim-surround mappings
 
@@ -48,9 +48,9 @@ if has("nvim")
     nnoremap <leader>g :Commits<CR>
 
     " Autocompletion (deoplete)
-    let g:deoplete#enable_at_startup = 1                  " Run deoplete at startup
-    call deoplete#custom#option('ignore_case', v:false)   " Case is not ignored
-    call deoplete#custom#option('max_list', 10)           " Number of candidates
+    let g:deoplete#enable_at_startup = 1                 " Run deoplete at startup
+    call deoplete#custom#option('ignore_case', v:false)  " Case is not ignored
+    call deoplete#custom#option('max_list', 10)          " Number of candidates
 
     " Language Server Protocol (languageclient-neovim)
     let g:LanguageClient_serverCommands = {
@@ -67,9 +67,9 @@ if has("nvim")
     nnoremap <leader>f :call LanguageClient#textDocument_formatting()<CR>
 
     " LaTeX (vimtex)
-    let g:polyglot_disabled = ['latex']    " Disable polyglot for latex
-    let g:vimtex_quickfix_mode = 0         " Quickfix window stays closed
-    let g:vimtex_view_method = 'zathura'   " Default PDF viewer
+    let g:polyglot_disabled = ['latex']  " Disable polyglot for latex
+    let g:vimtex_quickfix_mode = 0       " Quickfix window stays closed
+    let g:vimtex_view_method = 'zathura' " Default PDF viewer
     call deoplete#custom#var('omni', 'input_patterns', {'tex': g:vimtex#re#deoplete})
 endif
 

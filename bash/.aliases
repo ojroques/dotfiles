@@ -12,7 +12,6 @@ alias rm='rm --preserve-root -I'
 alias tree='tree -F -C --dirsfirst'
 
 # Development
-alias g='git'
 alias lmc='latexmk -C'
 alias py='python3'
 # Uncomment if using neovim
