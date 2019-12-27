@@ -24,10 +24,9 @@ map O Vomnibar.activateInNewTab
 map ? showHelp
 
 # SEARCH ENGINES
-g: https://www.google.com/search?q=%s Google
-gi: https://www.google.com/search?tbm=isch&q=%s Google Images
+gs: https://scholar.google.com/scholar?q=%s Google Scholar
 gm: https://www.google.com/maps?q=%s Google Maps
-gmh https://www.google.com/maps/dir/home/%s Directions
+gmh: https://www.google.com/maps/dir/home/%s Directions
 gte: https://translate.google.com/?source=osdd#auto|fr|%s Google Translate EN
 gtf: https://translate.google.com/?source=osdd#auto|en|%s Google Translator FR
 af: https://www.amazon.fr/s?k=%s Amazon FR
@@ -38,8 +37,8 @@ we: https://en.wikipedia.org/wiki/Special:Search?search=%s Wkipedia EN
 wf: https://fr.wikipedia.org/wiki/Special:Search?search=%s Wkipedia FR
 wre: https://www.wordreference.com/enfr/%s WordReference EN
 wrf: https://www.wordreference.com/fren/%s WordReference FR
-dice https://www.oxfordlearnersdictionaries.com/definition/english/%s Dictionary EN
-dicf https://www.larousse.fr/dictionnaires/francais/%s Dictionary FR
-syne https://www.thesaurus.com/browse/%s Synonyms EN
-synf https://synonymes.woxikon.fr/fr/%s Synonyms FR
-conj https://www.larousse.fr/conjugaison/francais/%s Conjugation FR
+dice: https://www.lexico.com/search?filter=dictionary&query=%s Dictionary EN
+dicf: https://www.larousse.fr/dictionnaires/francais/%s Dictionary FR
+syne: https://www.lexico.com/search?filter=thesaurus&query=%s Synonyms EN
+synf: https://www.dictionnaire-synonymes.com/synonyme.php?mot=%s Synonyms FR
+conj: https://www.larousse.fr/conjugaison/francais/%s Conjugation FR
