@@ -9,6 +9,7 @@ This repository contains my configuration files for:
 - **rofi**
 - **latex**
 - **thunar**
+- **zathura**
 - **xfce** (keyboard layouts and shortcuts)
 
 I use [Xubuntu](https://xubuntu.org/) but installation should work fine on any recent (18.04+) Ubuntu-based distribution.

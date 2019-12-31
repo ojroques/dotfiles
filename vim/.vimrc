@@ -35,7 +35,6 @@ let g:airline#extensions#tabline#enabled = 1          " Display all buffers
 let g:airline#extensions#tabline#buffer_idx_mode = 1  " Display buffer index
 let g:airline#extensions#tabline#fnamemod = ':p:t'
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
-let g:airline#extensions#wordcount#filetypes = ['markdown', 'plaintex', 'tex', 'text']
 let g:gitgutter_map_keys = 0                          " Disable gitgutter mappings
 let g:netrw_liststyle = 3                             " Tree style listing
 runtime macros/sandwich/keymap/surround.vim           " Use vim-surround mappings
@@ -67,9 +66,11 @@ if has("nvim")
     nnoremap <leader>f :call LanguageClient#textDocument_formatting()<CR>
 
     " LaTeX (vimtex)
-    let g:polyglot_disabled = ['latex']  " Disable polyglot for latex
-    let g:vimtex_quickfix_mode = 0       " Quickfix window stays closed
-    let g:vimtex_view_method = 'zathura' " Default PDF viewer
+    let g:tex_flavor = "latex"              " Change default tex flavor
+    let g:polyglot_disabled = ['latex']     " Disable polyglot for latex
+    let g:vimtex_quickfix_mode = 0          " Quickfix window stays closed
+    let g:vimtex_view_method = 'zathura'    " Default PDF viewer
+    let g:vimtex_compiler_progname = 'nvr'  " Path to nvim executable
     call deoplete#custom#var('omni', 'input_patterns', {'tex': g:vimtex#re#deoplete})
 endif
 
