@@ -8,3 +8,5 @@ echo -e "\n[latexmk]"
 sudo apt install -y latexmk
 echo -e "\n[xdotool]"
 sudo apt install -y xdotool
+echo -e "\n[neovim-remote]"
+pip3 install --user neovim-remote

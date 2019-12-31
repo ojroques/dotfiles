@@ -1,5 +1,6 @@
 # MAPPINGS
 unmapAll
+map ? showHelp
 map j scrollDown
 map k scrollUp
 map h scrollLeft
@@ -8,6 +9,9 @@ map gg scrollToTop
 map G scrollToBottom
 map d scrollPageDown
 map u scrollPageUp
+map r reload
+map H goBack
+map L goForward
 map gu goUp
 map gU goToRoot
 map gi focusInput
@@ -17,11 +21,34 @@ map yf LinkHints.activateModeToCopyLinkUrl
 map / enterFindMode
 map n performFind
 map N performBackwardsFind
+map yy copyCurrentUrl
+map p openCopiedUrlInCurrentTab
+map P openCopiedUrlInNewTab
+map K nextTab
+map J previousTab
 map << moveTabLeft
 map >> moveTabRight
-map o Vomnibar.activate
-map O Vomnibar.activateInNewTab
-map ? showHelp
+map g0 firstTab
+map g1 firstTab count=1
+map g2 firstTab count=2
+map g3 firstTab count=3
+map g4 firstTab count=4
+map g5 firstTab count=5
+map g6 firstTab count=6
+map g7 firstTab count=7
+map g8 firstTab count=8
+map g9 firstTab count=9
+map g$ lastTab
+map t createTab
+map yt duplicateTab
+map x removeTab
+map X restoreTab
+map s Vomnibar.activate
+map S Vomnibar.activateInNewTab
+map b Vomnibar.activateBookmarks
+map B Vomnibar.activateBookmarksInNewTab
+map ge Vomnibar.activateEditUrl
+map gE Vomnibar.activateEditUrlInNewTab
 
 # SEARCH ENGINES
 gs: https://scholar.google.com/scholar?q=%s Google Scholar
@@ -33,6 +60,7 @@ af: https://www.amazon.fr/s?k=%s Amazon FR
 ae: https://www.amazon.com/s?k=%s Amazon US
 rd: https://www.google.com/search?q=%s+site%3Areddit.com&tbs=qdr:y Reddit
 so: https://www.google.com/search?q=%s+site%3Astackoverflow.com StackOverflow
+gr: https://www.google.com/search?q=%s+site%3Agoodreads.com Goodreads
 we: https://en.wikipedia.org/wiki/Special:Search?search=%s Wkipedia EN
 wf: https://fr.wikipedia.org/wiki/Special:Search?search=%s Wkipedia FR
 wre: https://www.wordreference.com/enfr/%s WordReference EN
