@@ -43,10 +43,8 @@ map t createTab
 map yt duplicateTab
 map x removeTab
 map X restoreTab
-map s Vomnibar.activate
-map S Vomnibar.activateInNewTab
-map b Vomnibar.activateBookmarks
-map B Vomnibar.activateBookmarksInNewTab
+map b Vomnibar.activate
+map B Vomnibar.activateInNewTab
 map ge Vomnibar.activateEditUrl
 map gE Vomnibar.activateEditUrlInNewTab
 
