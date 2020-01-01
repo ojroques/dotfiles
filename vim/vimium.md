@@ -53,7 +53,7 @@ gs: https://scholar.google.com/scholar?q=%s Google Scholar
 gm: https://www.google.com/maps?q=%s Google Maps
 gmh: https://www.google.com/maps/dir/home/%s Directions
 gte: https://translate.google.com/?source=osdd#auto|fr|%s Google Translate EN
-gtf: https://translate.google.com/?source=osdd#auto|en|%s Google Translator FR
+gtf: https://translate.google.com/?source=osdd#auto|en|%s Google Translate FR
 af: https://www.amazon.fr/s?k=%s Amazon FR
 ae: https://www.amazon.com/s?k=%s Amazon US
 rd: https://www.google.com/search?q=%s+site%3Areddit.com&tbs=qdr:y Reddit
