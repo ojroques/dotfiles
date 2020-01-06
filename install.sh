@@ -18,6 +18,7 @@ MINIMAL=(
 )
 FULL=(
     "arc-theme"
+    "firefox"
     "fonts-hack"
     "redshift-gtk"
     "rofi"
@@ -29,6 +30,7 @@ FULL=(
 )
 OTHERS=(
     "fd-find"  # 19.04
+    "fzf"      # 19.04
     "kitty"    # 19.04
     "ripgrep"  # 19.04
 )
