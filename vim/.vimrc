@@ -59,7 +59,7 @@ if has("nvim")
         \ 'python': ['pyls'],
         \ }
     let g:LanguageClient_settingsPath = "~/.config/nvim/settings.json"
-    nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+    nnoremap <F9> :call LanguageClient_contextMenu()<CR>
     nnoremap <leader>d :call LanguageClient#textDocument_definition()<CR>
     nnoremap <leader>h :call LanguageClient#textDocument_hover()<CR>
     nnoremap <leader>r :call LanguageClient#textDocument_references()<CR>
@@ -87,6 +87,8 @@ nnoremap <leader>o m`o<Esc>``
 nnoremap <F3> :set wrap!<bar>:set linebreak!<bar>:set breakindent!<CR>
 " Toggle spell check
 nnoremap <F4> :set spell!<CR>
+" Reload buffers
+nnoremap <F5> :checktime<CR>
 " Cycle between completion entries
 inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
@@ -114,20 +116,15 @@ nnoremap <expr><leader>w len(getbufinfo("")[0].windows) > 1 ?
 nnoremap <leader>W :%bd<bar>e #<bar>bd #<bar>normal `"<CR>
 " Save buffer
 nnoremap <leader>n :update<CR>
-" Save buffer and quit
-nnoremap <leader>m :x<CR>
+" Quit
+nnoremap <leader>m :confirm qall<CR>
 " Save read-only buffer
 cnoremap w!! w !sudo tee % > /dev/null
 " Quickfix list
-nnoremap <Up> :copen<CR>
-nnoremap <Down> :cclose<CR>
-nnoremap <Right> :cnext<CR>
-nnoremap <Left> :cprev<CR>
-" Location list
-nnoremap <S-Up> :lopen<CR>
-nnoremap <S-Down> :lclose<CR>
-nnoremap <S-Right> :lnext<CR>
-nnoremap <S-Left> :lprev<CR>
+nnoremap <leader><Up> :copen<CR>
+nnoremap <leader><Down> :cclose<CR>
+nnoremap <leader><Right> :cnext<CR>
+nnoremap <leader><Left> :cprev<CR>
 
 " ===================== INTERFACE ==========================
 filetype plugin on                    " Load filetype plugin
