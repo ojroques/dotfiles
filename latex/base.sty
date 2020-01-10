@@ -1,11 +1,27 @@
 \ProvidesPackage{base}
 
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{fullpage}
-\usepackage{microtype}
-\usepackage{enumitem}
-\usepackage{graphicx}
+\usepackage[english]{babel}  % Multilingual support
+\usepackage[utf8]{inputenc}  % Input encodings
+\usepackage[T1]{fontenc}     % Font encodings
+\usepackage{booktabs}        % Enhanced tables
+\usepackage{caption}         % Customized captions
+\usepackage{csquotes}        % Enhanced quotations
+\usepackage{enumitem}        % List environments
+\usepackage{fullpage}        % Full-page margins
+\usepackage{graphicx}        % Support for graphics
+\usepackage{hyperref}        % Support for hypertext
+\usepackage{listings}        % Source code listings
+\usepackage{lmodern}         % Latin Modern font family
+\usepackage{longtable}       % Multi-page tables
+\usepackage{microtype}       % Typographical refinements
+\usepackage{tabularx}        % Tables with adjustable-width columns
+\usepackage{todonotes}       % To-do notes
+\usepackage{xurl}            % URL line breaks
+
+\usepackage[
+    style=numeric
+]{biblatex}  % Bibliographies
+\hypersetup{hidelinks}
 
 \newcommand{\pic}[4]{
 \begin{figure}[ht]
@@ -16,8 +32,8 @@
 \end{figure}
 }
 
-\newcommand{\ie}{\textit{i.e.}\ }
 \newcommand{\eg}{\textit{e.g.}\ }
+\newcommand{\ie}{\textit{i.e.}\ }
 \newcommand{\ttt}[1]{\texttt{#1}}
 \newcommand{\tbf}[1]{\textbf{#1}}
 \newcommand{\tit}[1]{\textit{#1}}
