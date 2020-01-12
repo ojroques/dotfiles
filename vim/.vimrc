@@ -58,7 +58,6 @@ if has("nvim")
         \ 'go': ['gopls'],
         \ 'python': ['pyls'],
         \ }
-    let g:LanguageClient_settingsPath = "~/.config/nvim/settings.json"
     nnoremap <F9> :call LanguageClient_contextMenu()<CR>
     nnoremap <leader>d :call LanguageClient#textDocument_definition()<CR>
     nnoremap <leader>h :call LanguageClient#textDocument_hover()<CR>
