@@ -14,6 +14,7 @@ alias tree='tree -F -C --dirsfirst'
 # Development
 alias lmc='latexmk -C'
 alias py='python3'
+alias vimrc='vim ~/.vimrc'
 # Uncomment if using neovim
 # alias vim='nvim'
 
