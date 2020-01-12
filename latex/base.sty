@@ -1,5 +1,7 @@
 \ProvidesPackage{base}
 
+
+%%%%%%%%%%%%%%%%%%%% PACKAGES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage[english]{babel}  % Multilingual support
 \usepackage[utf8]{inputenc}  % Input encodings
 \usepackage[T1]{fontenc}     % Font encodings
@@ -7,22 +9,41 @@
 \usepackage{caption}         % Customized captions
 \usepackage{csquotes}        % Enhanced quotations
 \usepackage{enumitem}        % List environments
+\usepackage{fancyhdr}        % Customized headers and footers
 \usepackage{fullpage}        % Full-page margins
-\usepackage{graphicx}        % Support for graphics
-\usepackage{hyperref}        % Support for hypertext
+\usepackage{graphicx}        % Graphics support
+\usepackage{hyperref}        % Hypertext support
+\usepackage{import}          % Import files
 \usepackage{listings}        % Source code listings
 \usepackage{lmodern}         % Latin Modern font family
 \usepackage{longtable}       % Multi-page tables
 \usepackage{microtype}       % Typographical refinements
+\usepackage{subfig}          % Subfigures support
 \usepackage{tabularx}        % Tables with adjustable-width columns
 \usepackage{todonotes}       % To-do notes
 \usepackage{xurl}            % URL line breaks
 
+
+%%%%%%%%%%%%%%%%%%%% PACKAGE OPTIONS %%%%%%%%%%%%%%%%%%%%%%%
 \usepackage[
     style=numeric
 ]{biblatex}  % Bibliographies
-\hypersetup{hidelinks}
+\definecolor{myred}{rgb}{0.8, 0, 0.2}
+\definecolor{myblue}{rgb}{0, 0.2, 0.8}
+\definecolor{mygreen}{rgb}{0.2, 0.8, 0}
+\hypersetup{
+    colorlinks=true,
+    citecolor=mygreen,
+    filecolor=myred,
+    linkcolor=myblue,
+    menucolor=myred,
+    runcolor=myred,
+    urlcolor=myblue,
+    hidelinks,  % Comment to enable color links
+}
 
+
+%%%%%%%%%%%%%%%%%%%% COMMANDS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\pic}[4]{
 \begin{figure}[ht]
     \centering
@@ -30,6 +51,13 @@
     \caption{#3}
     \label{fig:#4}
 \end{figure}
+}
+
+\newcommand{\subpic}[4]{
+    \subfloat[#3]{
+        \includegraphics[width=#2\textwidth]{#1}
+        \label{fig:#4}
+    }
 }
 
 \newcommand{\eg}{\textit{e.g.}\ }
