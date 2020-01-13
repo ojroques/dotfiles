@@ -52,6 +52,7 @@ if has("nvim")
     call deoplete#custom#option('max_list', 10)          " Number of candidates
 
     " Language Server Protocol (languageclient-neovim)
+    let g:LanguageClient_useVirtualText = "Diagnostics"
     let g:LanguageClient_serverCommands = {
         \ 'c': ['ccls'],
         \ 'cpp': ['ccls'],
