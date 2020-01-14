@@ -4,7 +4,7 @@ LATEXMK = latexmk -quiet
 CLEAN_LVL = -c
 BIB_FILES = *.bbl,*.run.xml,*.fls
 SYNCTEX_FILES = main.synctex.gz
-OTHERS = *.swp
+OTHERS = *.swp,*.tdo
 
 .PHONY: clean
 

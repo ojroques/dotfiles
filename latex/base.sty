@@ -31,6 +31,12 @@
 \definecolor{myred}{rgb}{0.8, 0, 0.2}
 \definecolor{myblue}{rgb}{0, 0.2, 0.8}
 \definecolor{mygreen}{rgb}{0.2, 0.8, 0}
+\captionsetup{
+    margin=10pt,
+    font=small,
+    labelfont=bf,
+    labelsep=endash,
+}  % caption
 \hypersetup{
     colorlinks=true,
     citecolor=mygreen,
@@ -40,7 +46,8 @@
     runcolor=myred,
     urlcolor=myblue,
     hidelinks,  % Comment to enable color links
-}
+}  % hyperref
+\renewcommand\tabularxcolumn[1]{m{#1}}  % Vertical alignment in tables
 
 
 %%%%%%%%%%%%%%%%%%%% COMMANDS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
