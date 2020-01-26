@@ -12,9 +12,6 @@ if [ -f ~/.functions ]; then
     source ~/.functions
 fi
 
-# Completion for kitty commands
-source <(kitty + complete setup bash)
-
 # Preserve bash history in multiple terminal windows
 export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
 
