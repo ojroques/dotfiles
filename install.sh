@@ -29,6 +29,7 @@ FULL=(
     "zathura"
 )
 OTHERS=(
+    "bat"      # 19.10
     "fd-find"  # 19.04
     "fzf"      # 19.04
     "kitty"    # 19.04
