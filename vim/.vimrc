@@ -51,11 +51,8 @@ if has("nvim")
     " Fuzzy finder (fzf)
     let $FZF_DEFAULT_COMMAND = 'rg --files --hidden'  " Change fzf command
     nnoremap <C-p> :Files<CR>
-    nnoremap <leader>b :Buffers<CR>
     nnoremap <leader>p :Rg<CR>
     nnoremap <leader>g :Commits<CR>
-    let g:fzf_commits_log_options =
-                \"--color=always --format='%C(yellow)%h%Cred%d %Creset%s %Cgreen(%ar)%Creset' --abbrev-commit"
     command! -bang -nargs=* Rg
                 \ call fzf#vim#grep(
                 \ 'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>),
@@ -79,8 +76,6 @@ if has("nvim")
     nnoremap <leader>f :call LanguageClient#textDocument_formatting()<CR>
     nnoremap <leader>h :call LanguageClient#textDocument_hover()<CR>
     nnoremap <leader>r :call LanguageClient#textDocument_references()<CR>
-    nnoremap <leader>s :call LanguageClient#textDocument_documentSymbol()<CR>
-    nnoremap <leader>S :call LanguageClient#workspace_symbol()<CR>
 
     " LaTeX (vimtex)
     let g:tex_flavor = "latex"              " Change default tex flavor

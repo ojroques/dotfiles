@@ -12,6 +12,9 @@ if [ -f ~/.functions ]; then
     source ~/.functions
 fi
 
+# bat theme
+export BAT_THEME="OneHalfDark"
+
 # Preserve bash history in multiple terminal windows
 export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
 

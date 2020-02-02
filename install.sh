@@ -22,6 +22,7 @@ FULL=(
     "fonts-hack"
     "redshift-gtk"
     "rofi"
+    "shellcheck"
     "software-properties-common"
     "viewnior"
     "vim-gtk3"
