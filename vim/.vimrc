@@ -42,7 +42,6 @@ let g:airline_section_z = airline#section#create([
             \ '%#__accent_bold#%3v%#__restore__#/%3{virtcol("$") - 1}', ' ',
             \ '%3p%%',
             \ ])
-
 let g:gitgutter_map_keys = 0                          " Disable gitgutter mappings
 let g:netrw_liststyle = 3                             " Tree style listing
 runtime macros/sandwich/keymap/surround.vim           " Use vim-surround mappings

@@ -1,5 +1,6 @@
 #!/bin/bash
 
+set -e
 if [[ $EUID -ne 0 ]]; then
     echo "This script must be run as root."
     exit 1
@@ -57,22 +58,22 @@ SUDO_HOME="/home/$SUDO_USER"
 echo "INSTALLATION SCRIPT"
 echo "------------------------------------------------------------"
 echo "Minimal installation includes:"
-for pkg in ${MINIMAL[@]}; do
+for pkg in "${MINIMAL[@]}"; do
     echo "* $pkg"
 done
 echo "* vim-plug"
 echo "Full installation includes minimal packages plus:"
-for pkg in ${FULL[@]}; do
+for pkg in "${FULL[@]}"; do
     echo "* $pkg"
 done
-for pkg in ${OTHERS[@]}; do
+for pkg in "${OTHERS[@]}"; do
     echo "* $pkg"
 done
-for pkg in ${PPA[@]}; do
+for pkg in "${PPA[@]}"; do
     echo "* $pkg"
 done
 echo "* diff-so-fancy"
-echo -e "[WARNING] Full installation also purges some default applications present on Xubuntu.\n"
+echo -e "[WARNING] Full installation also purges some default applications present on Xubuntu.\\n"
 
 echo "Which one to choose?"
 select installation in "Minimal installation" "Full installation" "Abort"; do
@@ -99,29 +100,29 @@ if [ $choice = 0 ]; then
     exit 0
 fi
 
-echo -e "\n[UPDATING SYSTEM]"
+echo -e "\\n[UPDATING SYSTEM]"
 apt update
 apt upgrade -y
 
-echo -e "\n[MINIMAL PACKAGES]"
-apt install -y ${MINIMAL[@]}
-sudo -u $SUDO_USER curl -fLo $SUDO_HOME/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+echo -e "\\n[MINIMAL PACKAGES]"
+apt install -y "${MINIMAL[@]}"
+sudo -u "$SUDO_USER" curl -fLo "$SUDO_HOME"/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 if [ $choice = 2 ]; then
-    echo -e "\n[ADDITIONAL PACKAGES]"
-    apt install -y ${FULL[@]}
-    apt install -y ${OTHERS[@]}
+    echo -e "\\n[ADDITIONAL PACKAGES]"
+    apt install -y "${FULL[@]}"
+    apt install -y "${OTHERS[@]}"
     add-apt-repository -y ppa:snwh/ppa
     apt update
-    apt install -y ${PPA[@]}
-    sudo -u $SUDO_USER curl -fLo $SUDO_HOME/.local/bin/diff-so-fancy --create-dirs https://raw.githubusercontent.com/so-fancy/diff-so-fancy/master/third_party/build_fatpack/diff-so-fancy
-    chmod 775 $SUDO_HOME/.local/bin/diff-so-fancy
+    apt install -y "${PPA[@]}"
+    sudo -u "$SUDO_USER" curl -fLo "$SUDO_HOME"/.local/bin/diff-so-fancy --create-dirs https://raw.githubusercontent.com/so-fancy/diff-so-fancy/master/third_party/build_fatpack/diff-so-fancy
+    chmod 775 "$SUDO_HOME"/.local/bin/diff-so-fancy
 
-    echo -e "\n[PURGING DEFAULT PACKAGES]"
-    apt purge -y ${PURGED[@]}
+    echo -e "\\n[PURGING DEFAULT PACKAGES]"
+    apt purge -y "${PURGED[@]}"
 fi
 
-echo -e "\n[CLEANING SYSTEM]"
+echo -e "\\n[CLEANING SYSTEM]"
 apt-get clean -y
 apt-get auto-clean -y
 apt autoremove -y

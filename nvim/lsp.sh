@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# Install language servers
-
+set -e
 NVIM_DIR="$HOME/.config/nvim"
+
 if [[ ! -d "$NVIM_DIR" ]]; then
     echo "$NVIM_DIR does not exist"
     exit 1
@@ -10,14 +10,14 @@ fi
 
 echo "[Update]"
 sudo apt update -y
-cd $NVIM_DIR
+cd "$NVIM_DIR"
 
-echo -e "\n[Python language server]"
+echo -e "\\n[Python language server]"
 sudo apt install -y python3-pip
 pip3 install --user jedi
 pip3 install --user python-language-server[yapf]
 
-echo -e "\n[C/C++ language server]"
+echo -e "\\n[C/C++ language server]"
 if [[ $(apt-cache search --names-only "^ccls$") ]]; then
     sudo apt install -y ccls
 else
@@ -33,11 +33,11 @@ else
             -DLLVM_BUILD_INCLUDE_DIR=/usr/include/llvm-"$CLANG_VERSION"
         cmake --build Release
         sudo cmake --build Release --target install
-        cd $NVIM_DIR
+        cd "$NVIM_DIR"
     else
         echo "ccls is already installed"
     fi
 fi
 
-echo -e "\n[Go language server]"
+echo -e "\\n[Go language server]"
 sudo apt install -y golang golang-golang-x-tools
