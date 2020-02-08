@@ -6,12 +6,10 @@
 set nocompatible    " Use Vim settings instead of Vi settings
 set autoread        " Reload buffers modified outside vim
 set hidden          " Enable background buffers
-set history=1000    " Command line history
-set updatetime=300  " Delay before swap file is written to disk
+set updatetime=400  " Delay before swap file is written to disk
 set visualbell      " Disable sounds
 
 " ===================== PLUGINS ============================
-filetype off
 call plug#begin()
 Plug 'airblade/vim-gitgutter'
 Plug 'google/vim-searchindex'
@@ -47,6 +45,8 @@ let g:netrw_liststyle = 3                             " Tree style listing
 runtime macros/sandwich/keymap/surround.vim           " Use vim-surround mappings
 
 if has("nvim")
+    set inccommand=split  " Show effect of substitution
+
     " Fuzzy finder (fzf)
     let $FZF_DEFAULT_COMMAND = 'rg --files --hidden'  " Change fzf command
     nnoremap <C-p> :Files<CR>
@@ -92,7 +92,6 @@ inoremap jj <ESC>
 noremap j gj
 noremap k gk
 " Insert blank new line
-nnoremap <leader>O m`O<Esc>``
 nnoremap <leader>o m`o<Esc>``
 " Toggle word wrap
 nnoremap <F3> :set wrap!<bar>:set linebreak!<bar>:set breakindent!<CR>
@@ -151,8 +150,6 @@ set listchars=tab:>\ ,trail:-,nbsp:+  " Strings to use in list
 set nowrap                            " Disable wrap lines
 set number relativenumber             " Relative line number
 set scrolloff=4                       " Show lines of context
-set showcmd                           " Show commands
-set showmode                          " Show current mode
 set signcolumn=yes                    " Show sign column
 
 " ===================== INDENTATION ========================
