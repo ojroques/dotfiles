@@ -45,8 +45,6 @@ let g:netrw_liststyle = 3                             " Tree style listing
 runtime macros/sandwich/keymap/surround.vim           " Use vim-surround mappings
 
 if has("nvim")
-    set inccommand=split  " Show effect of substitution
-
     " Fuzzy finder (fzf)
     let $FZF_DEFAULT_COMMAND = 'rg --files --hidden'  " Change fzf command
     nnoremap <C-p> :Files<CR>
@@ -99,6 +97,9 @@ nnoremap <F3> :set wrap!<bar>:set linebreak!<bar>:set breakindent!<CR>
 nnoremap <F4> :set spell!<CR>
 " Reload buffers
 nnoremap <F5> :checktime<CR>
+" Substitue
+nnoremap <leader>s :%s//gc<Left><Left><Left>
+vnoremap <leader>s :s//gc<Left><Left><Left>
 " Cycle between completion entries
 inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
@@ -168,6 +169,9 @@ set hlsearch                          " Highlight search terms...
 set incsearch                         " ...dynamically as they are typed
 set ignorecase                        " Ignore case when searching...
 set smartcase                         " ...unless we type a capital
+if has("nvim")
+    set inccommand=split              " Show effect of substitution
+endif
 
 " ===================== COMPLETION =========================
 set complete=.,w,b,u,t                " Where to search for keywords

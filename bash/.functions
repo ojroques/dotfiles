@@ -8,16 +8,17 @@ apt-update() {
 
 # Clean Debian packages
 apt-clean() {
-    sudo apt-get -y clean
+    sudo apt -y autoremove --purge
     sudo apt-get -y autoclean
-    sudo apt -y autoremove
+    sudo apt-get -y clean
 }
 
 # List intentionally installed packages
 apt-list() {
     (zcat $(ls -tr /var/log/apt/history.log*.gz); cat /var/log/apt/history.log) 2> /dev/null |
     grep -E '^Commandline' |
-    sed -e 's/Commandline: \(.*\)/\1/'
+    sed -e 's/Commandline: \(.*\)/\1/' |
+    grep -E -v '^/usr/bin/unattended-upgrade$'
 }
 
 # Delete swap files
@@ -42,7 +43,7 @@ up() {
 }
 
 # Print command cheatsheet
-tldr() {
+cheat() {
     curl -s "cheat.sh/$1"
 }
 
