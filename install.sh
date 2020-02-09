@@ -123,8 +123,8 @@ if [ $choice = 2 ]; then
 fi
 
 echo -e "\\n[CLEANING SYSTEM]"
+apt autoremove --purge -y
+apt-get autoclean -y
 apt-get clean -y
-apt-get auto-clean -y
-apt autoremove -y
 echo "------------------------------------------------------------"
 echo "Installation done."
