@@ -169,9 +169,6 @@ set hlsearch                          " Highlight search terms...
 set incsearch                         " ...dynamically as they are typed
 set ignorecase                        " Ignore case when searching...
 set smartcase                         " ...unless we type a capital
-if has("nvim")
-    set inccommand=split              " Show effect of substitution
-endif
 
 " ===================== COMPLETION =========================
 set complete=.,w,b,u,t                " Where to search for keywords
