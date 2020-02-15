@@ -28,8 +28,6 @@ echo "[KITTY]"
 cp -vr kitty/ "$CONFIG_DIR"
 echo "[ROFI]"
 cp -vr rofi/ "$CONFIG_DIR"
-echo "[ZATHURA]"
-cp -vr zathura/ "$CONFIG_DIR"
 
 if [[ -d "$CONFIG_DIR/xfce4/xfconf/xfce-perchannel-xml" ]]; then
     echo "[THUNAR]"
