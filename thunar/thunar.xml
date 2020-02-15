@@ -10,7 +10,6 @@
   <property name="last-details-view-column-order" type="string" value="THUNAR_COLUMN_NAME,THUNAR_COLUMN_TYPE,THUNAR_COLUMN_SIZE,THUNAR_COLUMN_DATE_MODIFIED"/>
   <property name="last-details-view-visible-columns" type="string" value="THUNAR_COLUMN_NAME,THUNAR_COLUMN_TYPE,THUNAR_COLUMN_SIZE,THUNAR_COLUMN_DATE_MODIFIED"/>
   <property name="last-location-bar" type="string" value="ThunarLocationButtons"/>
-  <property name="last-show-hidden" type="bool" value="true"/>
   <property name="last-side-pane" type="string" value="ThunarTreePane"/>
   <property name="last-view" type="string" value="ThunarDetailsView"/>
 </channel>
