@@ -32,10 +32,10 @@
 \definecolor{myblue}{rgb}{0, 0.2, 0.8}
 \definecolor{mygreen}{rgb}{0.2, 0.8, 0}
 \captionsetup{
-    margin=10pt,
     font=small,
     labelfont=bf,
     labelsep=endash,
+    margin=10pt,
 }  % caption
 \hypersetup{
     colorlinks=true,
@@ -47,6 +47,13 @@
     urlcolor=myblue,
     hidelinks,  % Comment to enable color links
 }  % hyperref
+\lstset{
+    basicstyle=\ttfamily,
+    breaklines=true,
+    breakatwhitespace=true,
+    columns=fullflexible,
+    frame=single,
+}
 \renewcommand\tabularxcolumn[1]{m{#1}}  % Vertical alignment in tables
 
 
