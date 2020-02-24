@@ -47,5 +47,5 @@ nvim/lsp.sh
 - Change theme and icons
 - Install and configure additional applications: [bat](https://github.com/sharkdp/bat), [fd](https://github.com/sharkdp/fd), [fzf](https://github.com/junegunn/fzf), [kitty](https://github.com/kovidgoyal/kitty), [ripgrep](https://github.com/BurntSushi/ripgrep), [spotify](https://www.spotify.com/uk/download/linux/)
 - Change default applications
-- Generate SSH keys: `ssh-keygen -t rsa -b 4096`
+- Generate SSH keys: `ssh-keygen -t ed25519 -a 100 -C "email@example.com"`
 - Set wallpapers
