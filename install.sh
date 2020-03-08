@@ -20,6 +20,7 @@ FULL=(
     "arc-theme"
     "firefox"
     "fonts-hack"
+    "papirus-icon-theme"
     "redshift-gtk"
     "rofi"
     "shellcheck"
@@ -36,20 +37,17 @@ OTHERS=(
     "kitty"    # 19.04
     "ripgrep"  # 19.04
 )
-PPA=(
-    "paper-icon-theme"
-)
 PURGED=(
     "atril atril-common"
     "dictionaries-common"
     "gigolo"
-    "mate-calc mate-calc-common mate-desktop-common"
+    "mate-calc mate-calc-common"
     "orage"
     "parole"
     "pidgin pidgin-data pidgin-libnotify pidgin-otr"
     "ristretto"
     "simple-scan"
-    "thunderbird thunderbird-locale-en thunderbird-locale-en-gb thunderbird-locale-en-us"
+    "thunderbird thunderbird-locale-en thunderbird-locale-en-us"
     "xfburn"
 )
 SUDO_HOME="/home/$SUDO_USER"
@@ -66,9 +64,6 @@ for pkg in "${FULL[@]}"; do
     echo "* $pkg"
 done
 for pkg in "${OTHERS[@]}"; do
-    echo "* $pkg"
-done
-for pkg in "${PPA[@]}"; do
     echo "* $pkg"
 done
 echo "* diff-so-fancy"
@@ -111,9 +106,6 @@ if [ $choice = 2 ]; then
     echo -e "\\n[ADDITIONAL PACKAGES]"
     apt install -y "${FULL[@]}"
     apt install -y "${OTHERS[@]}"
-    add-apt-repository -y ppa:snwh/ppa
-    apt update
-    apt install -y "${PPA[@]}"
     sudo -u "$SUDO_USER" curl -fLo "$SUDO_HOME"/.local/bin/diff-so-fancy --create-dirs https://raw.githubusercontent.com/so-fancy/diff-so-fancy/master/third_party/build_fatpack/diff-so-fancy
     chmod 775 "$SUDO_HOME"/.local/bin/diff-so-fancy
 
