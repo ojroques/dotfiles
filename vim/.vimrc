@@ -15,6 +15,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'google/vim-searchindex'
 Plug 'joshdick/onedark.vim'
 Plug 'machakann/vim-sandwich'
+Plug 'ojroques/vim-scrollstatus'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
@@ -33,12 +34,11 @@ let g:airline#extensions#tabline#enabled = 1          " Display all buffers
 let g:airline#extensions#tabline#buffer_idx_mode = 1  " Display buffer index
 let g:airline#extensions#tabline#fnamemod = ':p:t'
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
-let g:airline_section_x = ''
+let g:airline_section_x = '%{ScrollStatus()}'
 let g:airline_section_y = airline#section#create_right(['filetype'])
 let g:airline_section_z = airline#section#create([
             \ '%#__accent_bold#%3l%#__restore__#/%L', ' ',
-            \ '%#__accent_bold#%3v%#__restore__#/%3{virtcol("$") - 1}', ' ',
-            \ '%3p%%',
+            \ '%#__accent_bold#%3v%#__restore__#/%3{virtcol("$") - 1}',
             \ ])
 let g:gitgutter_map_keys = 0                          " Disable gitgutter mappings
 let g:netrw_liststyle = 3                             " Tree style listing
@@ -136,6 +136,8 @@ nnoremap <leader><Up> :copen<CR>
 nnoremap <leader><Down> :cclose<CR>
 nnoremap <leader><Right> :cnext<CR>
 nnoremap <leader><Left> :cprev<CR>
+" Remove search highlights
+nnoremap <C-l> :nohlsearch<CR>
 
 " ===================== INTERFACE ==========================
 filetype plugin on                    " Load filetype plugin
