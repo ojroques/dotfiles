@@ -1,10 +1,13 @@
 #!/bin/bash
 
 # System
+alias df='df -Th --total'
+alias du='du -ch'
+alias dua='du -a --max-depth=1 | sort -h'
+alias free='free -ht'
 alias grep='grep --color=auto'
-alias ll='ls -lAh'
 alias ls='ls -F --color=auto --group-directories-first'
-alias lt='tree $(pwd)'
+alias ll='ls -lAh'
 alias mkd='mkdir -pv'
 alias psa='ps -e -o pid,euser,pcpu,pmem,command'
 alias pwo='poweroff'
@@ -12,10 +15,8 @@ alias rm='rm --preserve-root -I'
 alias tree='tree -F -C --dirsfirst'
 
 # Development
-alias lmc='latexmk -C'
 alias py='python3'
 alias vimrc='vim ~/.vimrc'
-# Uncomment if using neovim
 # alias vim='nvim'
 
 # Network
@@ -24,12 +25,7 @@ alias ipa='ip -br address'
 alias ipl='ip -br link'
 alias ssp='ss -lnprtuw'
 
-# Memory and Storage
-alias df='df -Th --total'
-alias du='du -ch'
-alias dua='du -a --max-depth=1 | sort -h'
-alias free='free -ht'
-
 # Shortcuts
 alias dl='cd ~/Downloads && ls'
 alias doc='cd ~/Documents && ls'
+alias temp='cd ~/.temp && ls'

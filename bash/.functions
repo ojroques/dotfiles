@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# Update and Upgrade Debian packages
+# Update and upgrade packages
 apt-update() {
     sudo apt -y update
     sudo apt -y upgrade
 }
 
-# Clean Debian packages
+# Clean packages
 apt-clean() {
     sudo apt -y autoremove --purge
     sudo apt-get -y autoclean
@@ -47,21 +47,11 @@ cheat() {
     curl -s "cheat.sh/$1"
 }
 
-# Display weather
-weather() {
-    if [[ $# -le 1 ]]; then
-        curl wttr.in/$1?m
-    else
-        echo "Usage: weather [location]"
-    fi
-}
-
 # Browse git commits
 glog() {
-    local show_fmt="'%C(bold yellow)COMMIT%Creset %C(yellow)%H%Cred%d%n%C(bold blue)AUTHOR%Creset %Cblue%an <%ae>%n%C(bold green)DATE%Creset   %Cgreen%ai (%ar)%Creset%n%n%s%n%n%b'"
     local log_fmt="%C(yellow)%h%Cred%d %Creset%s %Cgreen(%ar)%Creset"
     local commit_hash="echo {} | grep -o '[a-f0-9]\{7\}' | head -1"
-    local view_commit="$commit_hash | xargs -I hash sh -c \"git show --color=always --format="$show_fmt" hash | diff-so-fancy\""
+    local view_commit="$commit_hash | xargs -I hash sh -c \"git info --color=always hash | diff-so-fancy\""
 
     git log --color=always --format="$log_fmt" --abbrev-commit "$@" | \
     fzf --no-sort --tiebreak=index --no-multi --reverse --ansi \
