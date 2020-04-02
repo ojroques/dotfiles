@@ -3,6 +3,7 @@
 ; github.com/ojroques
 
 [user]
+    useConfigOnly = true
     name = Olivier Roques
     ; To complete
     email =
@@ -24,7 +25,7 @@
     freset = checkout --
     hreset = reset --hard
     unstage = reset HEAD --
-    msg = log --format='%C(bold yellow)COMMIT%Creset %C(yellow)%H%Cred%d%n%C(bold blue)AUTHOR%Creset %Cblue%an <%ae>%n%C(bold green)DATE%Creset   %Cgreen%ai (%ar)%Creset%n%n%s%n%n%b' -n 1
+    info = show --format='%C(bold yellow)COMMIT%Creset %C(yellow)%H%Cred%d%n%C(bold blue)AUTHOR%Creset %Cblue%an <%ae>%n%C(bold green)DATE%Creset   %Cgreen%ai (%ar)%Creset%n%n%s%n%n%b'
     tree = log --graph --format='%C(yellow)%h%Cred%d %Creset%s %Cgreen(%ar) %Cblue%an%Creset' --abbrev-commit --all
 
 [merge]
@@ -40,7 +41,7 @@
     newHighlight = green bold 22
 
 [color "diff"]
-    meta = yellow
+    meta = 11
     frag = magenta bold
     commit = yellow bold
     old = red bold

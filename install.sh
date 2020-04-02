@@ -23,7 +23,6 @@ FULL=(
     "papirus-icon-theme"
     "redshift-gtk"
     "rofi"
-    "shellcheck"
     "software-properties-common"
     "viewnior"
     "vim-gtk3"
@@ -54,6 +53,7 @@ SUDO_HOME="/home/$SUDO_USER"
 
 echo "INSTALLATION SCRIPT"
 echo "------------------------------------------------------------"
+
 echo "Minimal installation includes:"
 for pkg in "${MINIMAL[@]}"; do
     echo "* $pkg"
@@ -114,8 +114,9 @@ if [ $choice = 2 ]; then
 fi
 
 echo -e "\\n[CLEANING SYSTEM]"
-apt autoremove --purge -y
-apt-get autoclean -y
-apt-get clean -y
+apt -y autoremove --purge
+apt-get -y autoclean
+apt-get -y clean
+
 echo "------------------------------------------------------------"
 echo "Installation done."

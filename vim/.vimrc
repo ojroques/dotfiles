@@ -5,7 +5,7 @@
 " ===================== GENERAL ============================
 set nocompatible    " Use Vim settings instead of Vi settings
 set autoread        " Reload buffers modified outside vim
-set hidden          " Enable background buffers
+set hidden          " Hides buffers instead of closing them
 set updatetime=400  " Delay before swap file is written to disk
 set visualbell      " Disable sounds
 
