@@ -34,11 +34,6 @@ cp -vr kitty/ "$CONFIG_DIR"
 echo "[ROFI]"
 cp -vr rofi/ "$CONFIG_DIR"
 
-if [[ -d "$CONFIG_DIR"/autostart ]]; then
-    echo "[SETXKBMAP]"
-    cp -v xfce/setxkbmap.desktop "$CONFIG_DIR"/autostart
-fi
-
 if [[ -d "$CONFIG_DIR"/xfce4/xfconf/xfce-perchannel-xml ]]; then
     echo "[THUNAR]"
     cp -v thunar/thunar.xml "$CONFIG_DIR"/xfce4/xfconf/xfce-perchannel-xml/
