@@ -1,6 +1,5 @@
 # MAPPINGS
 unmapAll  
-map ? showHelp  
 map j scrollDown  
 map k scrollUp  
 map h scrollLeft  
@@ -14,6 +13,7 @@ map gU goToRoot
 map gi focusInput  
 map f LinkHints.activateMode  
 map F LinkHints.activateModeToOpenInNewTab  
-map yf LinkHints.activateModeToCopyLinkUrl  
 map << moveTabLeft  
 map >> moveTabRight  
+map m Marks.activateCreateMode  
+map ' Marks.activateGotoMode

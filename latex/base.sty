@@ -1,8 +1,7 @@
 \ProvidesPackage{base}
 
-
 %%%%%%%%%%%%%%%%%%%% PACKAGES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage[english]{babel}  % Multilingual support
+\usepackage[french, english]{babel}
 \usepackage[utf8]{inputenc}  % Input encodings
 \usepackage[T1]{fontenc}     % Font encodings
 \usepackage{booktabs}        % Enhanced tables
@@ -22,7 +21,6 @@
 \usepackage{tabularx}        % Tables with adjustable-width columns
 \usepackage{todonotes}       % To-do notes
 \usepackage{xurl}            % URL line breaks
-
 
 %%%%%%%%%%%%%%%%%%%% PACKAGE OPTIONS %%%%%%%%%%%%%%%%%%%%%%%
 \usepackage[
@@ -56,15 +54,14 @@
 }  % listings
 \renewcommand\tabularxcolumn[1]{m{#1}}  % Vertical alignment in tables
 
-
 %%%%%%%%%%%%%%%%%%%% COMMANDS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\pic}[4]{
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=#2\textwidth]{#1}
-    \caption{#3}
-    \label{fig:#4}
-\end{figure}
+    \begin{figure}[ht]
+        \centering
+        \includegraphics[width=#2\textwidth]{#1}
+        \caption{#3}
+        \label{fig:#4}
+    \end{figure}
 }
 
 \newcommand{\subpic}[4]{
