@@ -5,7 +5,7 @@
 \usepackage[utf8]{inputenc}  % Input encodings
 \usepackage[T1]{fontenc}     % Font encodings
 \usepackage{booktabs}        % Enhanced tables
-\usepackage{caption}         % Customized captions
+\usepackage{subcaption}      % Customized captions
 \usepackage{csquotes}        % Enhanced quotations
 \usepackage{enumitem}        % List environments
 \usepackage{fancyhdr}        % Customized headers and footers
@@ -17,7 +17,6 @@
 \usepackage{lmodern}         % Latin Modern font family
 \usepackage{longtable}       % Multi-page tables
 \usepackage{microtype}       % Typographical refinements
-\usepackage{subfig}          % Subfigures support
 \usepackage{tabularx}        % Tables with adjustable-width columns
 \usepackage{todonotes}       % To-do notes
 \usepackage{xurl}            % URL line breaks
@@ -65,10 +64,12 @@
 }
 
 \newcommand{\subpic}[4]{
-    \subfloat[#3]{
-        \includegraphics[width=#2\textwidth]{#1}
+    \begin{subfigure}[b]{#2\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{#1}
+        \subcaption{#3}
         \label{fig:#4}
-    }
+    \end{subfigure}
 }
 
 \newcommand{\eg}{\textit{e.g.}\ }
