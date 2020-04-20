@@ -120,7 +120,9 @@ if [ $choice = 2 ]; then
     chmod 775 "$SUDO_HOME"/.local/bin/diff-so-fancy
 
     echo -e "\\n[PURGING DEFAULT PACKAGES]"
-    apt purge -y "${PURGE[@]}"
+    for pkg in "${PURGE[@]}"; do
+        apt purge -y "$pkg"
+    done
 fi
 
 echo -e "\\n[CLEANING SYSTEM]"
