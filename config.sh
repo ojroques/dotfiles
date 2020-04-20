@@ -1,13 +1,17 @@
 #!/bin/bash
 
 set -e
-CONFIG_DIR="$HOME/.config"
+CONFIG_DIR="$HOME"/.config
 
 echo "DOTFILES CONFIGURATION"
 echo "------------------------------------------------------------"
 
 if [[ ! -d "$CONFIG_DIR" ]]; then
     mkdir -vp "$CONFIG_DIR"
+fi
+
+if [[ ! -d "$HOME"/.tmp ]]; then
+    mkdir -vp "$HOME"/.tmp
 fi
 
 echo "[BASH]"

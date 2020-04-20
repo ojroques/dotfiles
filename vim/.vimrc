@@ -4,10 +4,8 @@
 
 " ===================== GENERAL ============================
 set nocompatible    " Use Vim settings instead of Vi settings
-set autoread        " Reload buffers modified outside vim
 set hidden          " Hides buffers instead of closing them
 set updatetime=400  " Delay before swap file is written to disk
-set visualbell      " Disable sounds
 
 " ===================== PLUGINS ============================
 call plug#begin()
@@ -30,6 +28,8 @@ if has("nvim")
 endif
 call plug#end()
 
+let g:scrollstatus_symbol_track = '░'
+let g:scrollstatus_symbol_bar = '█'
 let g:airline#extensions#tabline#enabled = 1          " Display all buffers
 let g:airline#extensions#tabline#buffer_idx_mode = 1  " Display buffer index
 let g:airline#extensions#tabline#fnamemod = ':p:t'
@@ -58,7 +58,7 @@ if has("nvim")
     " Autocompletion (deoplete)
     let g:deoplete#enable_at_startup = 1                 " Run deoplete at startup
     call deoplete#custom#option('ignore_case', v:false)  " Case is not ignored
-    call deoplete#custom#option('max_list', 10)          " Number of candidates
+    call deoplete#custom#option('max_list', 12)          " Number of candidates
 
     " Language Server Protocol (languageclient-neovim)
     let g:LanguageClient_useVirtualText = "Diagnostics"
