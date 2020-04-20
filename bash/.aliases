@@ -28,4 +28,4 @@ alias ssp='ss -lnprtuw'
 # Shortcuts
 alias dl='cd ~/Downloads && ls'
 alias doc='cd ~/Documents && ls'
-alias temp='cd ~/.temp && ls'
+alias tmp='cd ~/.tmp && ls'

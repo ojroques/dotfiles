@@ -11,7 +11,6 @@ MINIMAL=(
     "htop"
     "make"
     "neovim"
-    "openssh-server"
     "tmux"
     "tree"
     "vim"
@@ -36,17 +35,23 @@ OTHERS=(
     "kitty"    # 19.04
     "ripgrep"  # 19.04
 )
-PURGED=(
-    "atril atril-common"
+PURGE=(
+    "atril"
+    "atril-common"
     "dictionaries-common"
     "gigolo"
-    "mate-calc mate-calc-common"
+    "mate-calc"
+    "mate-calc-common"
     "orage"
     "parole"
-    "pidgin pidgin-data pidgin-libnotify pidgin-otr"
+    "pidgin"
+    "pidgin-data"
+    "pidgin-libnotify"
+    "pidgin-otr"
     "ristretto"
     "simple-scan"
-    "thunderbird thunderbird-locale-en thunderbird-locale-en-us"
+    "thunderbird"
+    "thunderbird-locale-*"
     "xfburn"
 )
 SUDO_HOME="/home/$SUDO_USER"
@@ -59,6 +64,7 @@ for pkg in "${MINIMAL[@]}"; do
     echo "* $pkg"
 done
 echo "* vim-plug"
+
 echo "Full installation includes minimal packages plus:"
 for pkg in "${FULL[@]}"; do
     echo "* $pkg"
@@ -67,7 +73,11 @@ for pkg in "${OTHERS[@]}"; do
     echo "* $pkg"
 done
 echo "* diff-so-fancy"
-echo -e "[WARNING] Full installation also purges some default applications present on Xubuntu.\\n"
+
+echo -e "[WARNING] Full installation also purges:"
+for pkg in "${PURGE[@]}"; do
+    echo "* $pkg"
+done
 
 echo "Which one to choose?"
 select installation in "Minimal installation" "Full installation" "Abort"; do
@@ -110,13 +120,11 @@ if [ $choice = 2 ]; then
     chmod 775 "$SUDO_HOME"/.local/bin/diff-so-fancy
 
     echo -e "\\n[PURGING DEFAULT PACKAGES]"
-    apt purge -y "${PURGED[@]}"
+    apt purge -y "${PURGE[@]}"
 fi
 
 echo -e "\\n[CLEANING SYSTEM]"
 apt -y autoremove --purge
-apt-get -y autoclean
-apt-get -y clean
 
 echo "------------------------------------------------------------"
 echo "Installation done."
