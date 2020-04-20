@@ -15,13 +15,13 @@ fi
 # Default bat theme
 BAT_THEME="OneHalfDark"
 
-# Preserve bash history in multiple terminal windows
+# Preserve bash history across terminals
 PROMPT_COMMAND="history -a; history -c; history -r"
 
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
-    *) return;;
+      *) return;;
 esac
 
 # don't put duplicate lines or lines starting with space in the history.
@@ -77,10 +77,10 @@ unset color_prompt force_color_prompt
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
-    xterm*|rxvt*)
+xterm*|rxvt*)
     PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
     ;;
-    *)
+*)
     ;;
 esac
 
@@ -88,6 +88,9 @@ esac
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 fi
+
+# colored GCC warnings and errors
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
