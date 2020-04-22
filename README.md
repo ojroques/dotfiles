@@ -33,7 +33,7 @@ sudo ./install.sh
 ```sh
 latex/latex_setup.sh
 ```
-4. (Optional) Uncomment `alias vim=nvim` in `bash/.aliases` to use neovim instead of vim. Then run `lsp.sh` to install language servers for `LanguageClient-neovim` (a plugin to use the [Language Server Protocol](https://langserver.org)):
+4. (Optional) Run `lsp.sh` to install language servers for `LanguageClient-neovim` (a plugin to use the [Language Server Protocol](https://langserver.org)):
 ```sh
 nvim/lsp.sh
 ```
