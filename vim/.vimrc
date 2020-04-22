@@ -1,13 +1,10 @@
-" VIM config
-" By Olivier Roques
+" VIM config by Olivier Roques
 " github.com/ojroques
+" vim: foldmethod=marker foldlevel=1
 
-" ===================== GENERAL ============================
-set nocompatible    " Use Vim settings instead of Vi settings
-set hidden          " Hides buffers instead of closing them
-set updatetime=400  " Delay before swap file is written to disk
+set nocompatible  " Use Vim default options
 
-" ===================== PLUGINS ============================
+" PLUGINS {{{
 call plug#begin()
 Plug 'airblade/vim-gitgutter'
 Plug 'google/vim-searchindex'
@@ -27,12 +24,14 @@ if has("nvim")
     Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
 endif
 call plug#end()
+" }}}
 
+" PLUGIN CONFIGURATION {{{
 let g:scrollstatus_symbol_track = '░'
 let g:scrollstatus_symbol_bar = '█'
 let g:airline#extensions#tabline#enabled = 1          " Display all buffers
 let g:airline#extensions#tabline#buffer_idx_mode = 1  " Display buffer index
-let g:airline#extensions#tabline#fnamemod = ':p:t'
+let g:airline#extensions#tabline#fnamemod = ':p:t'    " Buffer naming scheme
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline_section_x = '%{ScrollStatus()}'
 let g:airline_section_y = airline#section#create_right(['filetype'])
@@ -43,7 +42,9 @@ let g:airline_section_z = airline#section#create([
 let g:gitgutter_map_keys = 0                          " Disable gitgutter mappings
 let g:netrw_liststyle = 3                             " Tree style listing
 runtime macros/sandwich/keymap/surround.vim           " Use vim-surround mappings
+" }}}
 
+" NEOVIM SPECIFIC {{{
 if has("nvim")
     " Fuzzy finder (fzf)
     let $FZF_DEFAULT_COMMAND = 'rg --files --hidden'  " Change fzf command
@@ -60,7 +61,7 @@ if has("nvim")
     call deoplete#custom#option('ignore_case', v:false)  " Case is not ignored
     call deoplete#custom#option('max_list', 12)          " Number of candidates
 
-    " Language Server Protocol (languageclient-neovim)
+    " Language server protocol (languageclient-neovim)
     let g:LanguageClient_useVirtualText = "Diagnostics"
     let g:LanguageClient_serverCommands = {
         \ 'c': ['ccls'],
@@ -82,8 +83,9 @@ if has("nvim")
     let g:vimtex_compiler_progname = 'nvr'  " Path to nvim executable
     call deoplete#custom#var('omni', 'input_patterns', {'tex': g:vimtex#re#deoplete})
 endif
+" }}}
 
-" ===================== MAPPINGS ===========================
+" MAPPINGS {{{
 " Exit insert mode
 inoremap jj <ESC>
 " Move accross diplay lines
@@ -138,14 +140,22 @@ nnoremap <leader><Right> :cnext<CR>
 nnoremap <leader><Left> :cprev<CR>
 " Remove search highlights
 nnoremap <C-l> :nohlsearch<CR>
+" }}}
 
-" ===================== INTERFACE ==========================
-filetype plugin on                    " Load filetype plugin
+" GENERAL {{{
 filetype indent on                    " Load filetype indentation
+filetype plugin on                    " Load filetype plugin
 syntax enable                         " Enable syntax processing
-set background=dark                   " Dark background
-set termguicolors                     " True color support
+set autoread                          " Reload buffers modified outside vim
+set hidden                            " Enable background buffers
+set splitbelow splitright             " Change position of new windows
+set updatetime=400                    " Delay before swap file is saved
+set visualbell                        " Disable sounds
+" }}}
+
+" APPEARANCE {{{
 colorscheme onedark                   " Color scheme
+set background=dark                   " Dark background
 set colorcolumn=80                    " Line length marker
 set cursorline                        " Highlight current line
 set list                              " Show trailing blanks
@@ -154,8 +164,10 @@ set nowrap                            " Disable wrap lines
 set number relativenumber             " Relative line number
 set scrolloff=4                       " Show lines of context
 set signcolumn=yes                    " Show sign column
+set termguicolors                     " True color support
+" }}}
 
-" ===================== INDENTATION ========================
+" INDENTATION {{{
 set autoindent                        " Copy indentation from previous line
 set backspace=indent,eol,start        " Intuitive backspacing in insert mode
 set expandtab                         " Tabs are spaces
@@ -165,15 +177,18 @@ set shiftwidth=4                      " Number of shifts
 set smartindent                       " Automatically inserts indentation
 set softtabstop=4                     " Number of spaces in tab when editing
 set tabstop=4                         " Number of visual spaces per tab
+" }}}
 
-" ===================== SEARCH =============================
+" SEARCH {{{
 set hlsearch                          " Highlight search terms...
 set incsearch                         " ...dynamically as they are typed
 set ignorecase                        " Ignore case when searching...
-set smartcase                         " ...unless we type a capital
+set smartcase                         " ...unless an uppercase character is used
+" }}}
 
-" ===================== COMPLETION =========================
+" COMPLETION {{{
 set complete=.,w,b,u,t                " Where to search for keywords
 set completeopt=menu,longest          " How completion occurs
 set wildmenu                          " Command-line completion
 set wildmode=longest:full,full        " Complete to the longest common string
+" }}}

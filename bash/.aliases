@@ -17,7 +17,7 @@ alias tree='tree -F -C --dirsfirst'
 # Development
 alias py='python3'
 alias vimrc='vim ~/.vimrc'
-# alias vim='nvim'
+alias vim='nvim'
 
 # Network
 alias ip='ip -c -h'

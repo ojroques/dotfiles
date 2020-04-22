@@ -15,6 +15,10 @@ fi
 # Default bat theme
 BAT_THEME="OneHalfDark"
 
+# Change default editor
+export VISUAL=nvim
+export EDITOR="$VISUAL"
+
 # Preserve bash history across terminals
 PROMPT_COMMAND="history -a; history -c; history -r"
 

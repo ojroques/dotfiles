@@ -1,5 +1,4 @@
-; GIT config
-; By Olivier Roques
+; GIT config by Olivier Roques
 ; github.com/ojroques
 
 [user]
@@ -9,7 +8,7 @@
     email =
 
 [core]
-    editor = vim
+    editor = nvim
     ; Uncomment if diff-so-fancy is installed
     ; pager = diff-so-fancy | less --tabs=4 -RFX
 
