@@ -29,20 +29,23 @@ sudo ./install.sh
 ```sh
 ./config.sh
 ```
-3. (Optional) Run `latex.sh` to install LaTeX:
+3. Run `vim` and execute `:PlugInstall` to install the plugins.
+4. (Optional) Run `latex.sh` to install LaTeX:
 ```sh
 latex/latex_setup.sh
 ```
-4. (Optional) Run `lsp.sh` to install language servers for `LanguageClient-neovim` (a plugin to use the [Language Server Protocol](https://langserver.org)):
+5. (Optional) Run `lsp.sh` to install language servers for `LanguageClient-neovim` (a plugin to use the [Language Server Protocol](https://langserver.org)):
 ```sh
 nvim/lsp.sh
 ```
-5. Add email to `~/.gitconfig`. Run `vim` and execute `:PlugInstall` to install all plugins.
+6. (Optional) [Configure rclone](https://rclone.org/docs/):
+```sh
+rclone config
+```
 
 
 ## After Installation
 - Rearrange home directories
-- Turn off unused services at startup
 - Configure panel and workspaces
 - Change theme and icons
 - Install and configure additional applications: [bat](https://github.com/sharkdp/bat), [fd](https://github.com/sharkdp/fd), [fzf](https://github.com/junegunn/fzf), [kitty](https://github.com/kovidgoyal/kitty), [ripgrep](https://github.com/BurntSushi/ripgrep), [spotify](https://www.spotify.com/uk/download/linux/)
