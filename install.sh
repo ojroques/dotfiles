@@ -21,6 +21,7 @@ FULL=(
     "fonts-hack"
     "papirus-icon-theme"
     "redshift-gtk"
+    "rclone"
     "rofi"
     "software-properties-common"
     "viewnior"
