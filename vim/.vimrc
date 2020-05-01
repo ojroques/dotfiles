@@ -11,55 +11,51 @@ Plug 'google/vim-searchindex'
 Plug 'joshdick/onedark.vim'
 Plug 'machakann/vim-sandwich'
 Plug 'ojroques/vim-scrollstatus'
-Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
+Plug 'Yggdroot/indentLine'
 if has("nvim")
     Plug 'airblade/vim-rooter'
     Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
     Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
     Plug 'junegunn/fzf.vim'
     Plug 'lervag/vimtex'
+    Plug 'sheerun/vim-polyglot'
     Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
 endif
 call plug#end()
 " }}}
 
 " PLUGIN CONFIGURATION {{{
-let g:scrollstatus_symbol_track = '░'
-let g:scrollstatus_symbol_bar = '█'
+let g:airline_powerline_fonts = 1                     " Enable powerline symbols
 let g:airline#extensions#tabline#enabled = 1          " Display all buffers
-let g:airline#extensions#tabline#buffer_idx_mode = 1  " Display buffer index
 let g:airline#extensions#tabline#fnamemod = ':p:t'    " Buffer naming scheme
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
-let g:airline_section_x = '%{ScrollStatus()}'
+let g:airline_section_x = '%{ScrollStatus()} '
 let g:airline_section_y = airline#section#create_right(['filetype'])
 let g:airline_section_z = airline#section#create([
             \ '%#__accent_bold#%3l%#__restore__#/%L', ' ',
             \ '%#__accent_bold#%3v%#__restore__#/%3{virtcol("$") - 1}',
             \ ])
-let g:gitgutter_map_keys = 0                          " Disable gitgutter mappings
-let g:netrw_liststyle = 3                             " Tree style listing
+let g:gitgutter_map_keys = 0
+let g:indentLine_fileType = ['c', 'cpp', 'python', 'sh']
+let g:netrw_liststyle = 3
 runtime macros/sandwich/keymap/surround.vim           " Use vim-surround mappings
 " }}}
 
 " NEOVIM SPECIFIC {{{
 if has("nvim")
     " Fuzzy finder (fzf)
-    let $FZF_DEFAULT_COMMAND = 'rg --files --hidden'  " Change fzf command
     nnoremap <C-p> :Files<CR>
     nnoremap <leader>p :Rg<CR>
     nnoremap <leader>g :Commits<CR>
-    command! -bang -nargs=* Rg
-                \ call fzf#vim#grep(
-                \ 'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>),
-                \ 1, fzf#vim#with_preview(), <bang>0)
+    nnoremap s :Buffers<CR>
 
     " Autocompletion (deoplete)
     let g:deoplete#enable_at_startup = 1                 " Run deoplete at startup
     call deoplete#custom#option('ignore_case', v:false)  " Case is not ignored
-    call deoplete#custom#option('max_list', 12)          " Number of candidates
+    call deoplete#custom#option('max_list', 10)          " Number of candidates
 
     " Language server protocol (languageclient-neovim)
     let g:LanguageClient_useVirtualText = "Diagnostics"
@@ -77,7 +73,6 @@ if has("nvim")
 
     " LaTeX (vimtex)
     let g:tex_flavor = "latex"              " Change default tex flavor
-    let g:polyglot_disabled = ['latex']     " Disable polyglot for latex
     let g:vimtex_quickfix_mode = 0          " Quickfix window stays closed
     let g:vimtex_view_method = 'zathura'    " Default PDF viewer
     let g:vimtex_compiler_progname = 'nvr'  " Path to nvim executable
@@ -89,8 +84,11 @@ endif
 " Exit insert mode
 inoremap jj <ESC>
 " Move accross diplay lines
-noremap j gj
-noremap k gk
+nnoremap j gj
+nnoremap k gk
+" Disable mappings
+nnoremap Q :echohl WarningMsg<bar>echo "WARNING: Caps Lock may be on"<bar>echohl None<CR>
+nmap U Q
 " Insert blank new line
 nnoremap <leader>o m`o<Esc>``
 " Toggle word wrap
@@ -100,8 +98,8 @@ nnoremap <F4> :set spell!<CR>
 " Reload buffers
 nnoremap <F5> :checktime<CR>
 " Substitue
-nnoremap <leader>s :%s//gc<Left><Left><Left>
-vnoremap <leader>s :s//gc<Left><Left><Left>
+nnoremap S :%s//gc<Left><Left><Left>
+vnoremap S :s//gc<Left><Left><Left>
 " Cycle between completion entries
 inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
@@ -109,18 +107,6 @@ inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 nnoremap <space> za
 " Copy to system clipboard
 vnoremap <leader>c "+y
-" Change buffer
-nmap <leader>1 <Plug>AirlineSelectTab1
-nmap <leader>2 <Plug>AirlineSelectTab2
-nmap <leader>3 <Plug>AirlineSelectTab3
-nmap <leader>4 <Plug>AirlineSelectTab4
-nmap <leader>5 <Plug>AirlineSelectTab5
-nmap <leader>6 <Plug>AirlineSelectTab6
-nmap <leader>7 <Plug>AirlineSelectTab7
-nmap <leader>8 <Plug>AirlineSelectTab8
-nmap <leader>9 <Plug>AirlineSelectTab9
-nmap <leader>u <Plug>AirlineSelectPrevTab
-nmap <leader>i <Plug>AirlineSelectNextTab
 " Close buffer (without closing window)
 nnoremap <expr><leader>w len(getbufinfo("")[0].windows) > 1 ?
   \ ":close<CR>" :
@@ -128,9 +114,9 @@ nnoremap <expr><leader>w len(getbufinfo("")[0].windows) > 1 ?
 " Close all buffers except current
 nnoremap <leader>W :%bd<bar>e #<bar>bd #<bar>normal `"<CR>
 " Save buffer
-nnoremap <leader>n :update<CR>
+nnoremap <leader>u :update<CR>
 " Quit
-nnoremap <leader>m :confirm qall<CR>
+nnoremap <leader>i :confirm qall<CR>
 " Save read-only buffer
 cnoremap w!! w !sudo tee % > /dev/null
 " Quickfix list
