@@ -12,12 +12,15 @@ if [ -f ~/.functions ]; then
     source ~/.functions
 fi
 
-# Default bat theme
-BAT_THEME="OneHalfDark"
-
 # Change default editor
 export VISUAL=nvim
 export EDITOR="$VISUAL"
+
+# Change default FZF command
+export FZF_DEFAULT_COMMAND="rg --files"
+
+# Default bat theme
+export BAT_THEME="OneHalfDark"
 
 # Preserve bash history across terminals
 PROMPT_COMMAND="history -a; history -c; history -r"
