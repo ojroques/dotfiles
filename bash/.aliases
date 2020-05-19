@@ -16,6 +16,7 @@ alias tree='tree -F -C --dirsfirst'
 
 # Development
 alias py='python3'
+alias ipy='ipython --pylab --no-confirm-exit'
 alias vimrc='vim ~/.vimrc'
 alias vim='nvim'
 
@@ -23,7 +24,7 @@ alias vim='nvim'
 alias ip='ip -c -h'
 alias ipa='ip -br address'
 alias ipl='ip -br link'
-alias ssp='ss -lnprtuw'
+alias ssp='ss -lnptu'
 
 # Shortcuts
 alias dl='cd ~/Downloads && ls'

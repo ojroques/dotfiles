@@ -16,6 +16,7 @@ echo -e "\\n[Python language server]"
 sudo apt install -y python3-pip
 pip3 install --user jedi
 pip3 install --user python-language-server[yapf]
+pip3 install --user numpy scipy matplotlib ipython
 
 echo -e "\\n[C/C++ language server]"
 if [[ $(apt-cache search --names-only "^ccls$") ]]; then
