@@ -16,7 +16,7 @@ alias tree='tree -F -C --dirsfirst'
 
 # Development
 alias py='python3'
-alias ipy='ipython --pylab --no-confirm-exit'
+alias ipy='ipython --no-confirm-exit'
 alias vimrc='vim ~/.vimrc'
 alias vim='nvim'
 
