@@ -13,6 +13,7 @@ MINIMAL=(
     "neovim"
     "tmux"
     "tree"
+    "unzip"
     "vim"
 )
 FULL=(
