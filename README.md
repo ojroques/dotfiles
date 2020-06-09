@@ -10,6 +10,7 @@ This repository contains my configuration files for:
 - **latex**
 - **thunar**
 - **xfce** (keyboard layouts and shortcuts)
+- **windows terminal**
 
 I use [Xubuntu](https://xubuntu.org/) but installation should work fine on any recent (18.04+) Ubuntu-based distribution.
 

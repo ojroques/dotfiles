@@ -40,7 +40,9 @@ let g:airline_section_z = airline#section#create([
             \ ])
 let g:gitgutter_map_keys = 0
 let g:indentLine_fileType = ['c', 'cpp', 'python', 'sh']
+let g:netrw_banner = 0
 let g:netrw_liststyle = 3
+let g:netrw_winsize = 25
 runtime macros/sandwich/keymap/surround.vim           " Use vim-surround mappings
 " }}}
 
@@ -65,7 +67,7 @@ if has("nvim")
         \ 'go': ['gopls'],
         \ 'python': ['pyls'],
         \ }
-    nnoremap <F6> :call LanguageClient_contextMenu()<CR>
+    nnoremap <F7> :call LanguageClient_contextMenu()<CR>
     nnoremap <leader>d :call LanguageClient#textDocument_definition()<CR>
     nnoremap <leader>f :call LanguageClient#textDocument_formatting()<CR>
     nnoremap <leader>h :call LanguageClient#textDocument_hover()<CR>
@@ -81,51 +83,51 @@ endif
 " }}}
 
 " MAPPINGS {{{
-" Exit insert mode
-inoremap jj <ESC>
-" Move accross diplay lines
-nnoremap j gj
-nnoremap k gk
 " Disable mappings
 nnoremap Q :echohl WarningMsg<bar>echo "WARNING: Caps Lock may be on"<bar>echohl None<CR>
 nmap U Q
-" Insert blank new line
-nnoremap <leader>o m`o<Esc>``
+" Cycle between completion entries
+inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+" Exit insert mode
+inoremap jj <ESC>
+" Remove search highlights
+nnoremap <C-l> :nohlsearch<CR>
 " Toggle word wrap
 nnoremap <F3> :set wrap!<bar>:set linebreak!<bar>:set breakindent!<CR>
 " Toggle spell check
 nnoremap <F4> :set spell!<CR>
 " Reload buffers
 nnoremap <F5> :checktime<CR>
-" Substitue
-nnoremap S :%s//gc<Left><Left><Left>
-vnoremap S :s//gc<Left><Left><Left>
-" Cycle between completion entries
-inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-" Toggle fold
-nnoremap <space> za
-" Copy to system clipboard
-vnoremap <leader>c "+y
+" Toggle netrw
+nnoremap <F6> :Lexplore<CR>
+" Quickfix list
+nnoremap <leader><Down> :cclose<CR>
+nnoremap <leader><Left> :cprev<CR>
+nnoremap <leader><Right> :cnext<CR>
+nnoremap <leader><Up> :copen<CR>
 " Close buffer (without closing window)
 nnoremap <expr><leader>w len(getbufinfo("")[0].windows) > 1 ?
-  \ ":close<CR>" :
-  \ (bufnr("") == getbufinfo({"buflisted": 1})[-1].bufnr ? ":bp" : ":bn")."<bar>bd #<CR>"
+    \ ":close<CR>" :
+    \ (bufnr("") == getbufinfo({"buflisted": 1})[-1].bufnr ? ":bp" : ":bn")."<bar>bd #<CR>"
 " Close all buffers except current
 nnoremap <leader>W :%bd<bar>e #<bar>bd #<bar>normal `"<CR>
-" Save buffer
-nnoremap <leader>u :update<CR>
 " Quit
 nnoremap <leader>i :confirm qall<CR>
-" Save read-only buffer
-cnoremap w!! w !sudo tee % > /dev/null
-" Quickfix list
-nnoremap <leader><Up> :copen<CR>
-nnoremap <leader><Down> :cclose<CR>
-nnoremap <leader><Right> :cnext<CR>
-nnoremap <leader><Left> :cprev<CR>
-" Remove search highlights
-nnoremap <C-l> :nohlsearch<CR>
+" Insert blank new line
+nnoremap <leader>o m`o<Esc>``
+" Save buffer
+nnoremap <leader>u :update<CR>
+" Toggle fold
+nnoremap <space> za
+" Substitute
+nnoremap S :%s//gc<Left><Left><Left>
+vnoremap S :s//gc<Left><Left><Left>
+" Move accross display lines
+nnoremap j gj
+nnoremap k gk
+" Copy to system clipboard
+vnoremap <leader>c "+y
 " }}}
 
 " GENERAL {{{
