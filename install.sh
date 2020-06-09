@@ -33,27 +33,20 @@ FULL=(
 OTHERS=(
     "bat"      # 19.10
     "fd-find"  # 19.04
-    "fzf"      # 19.04
     "kitty"    # 19.04
     "ripgrep"  # 19.04
 )
 PURGE=(
-    "atril"
-    "atril-common"
+    "atril atril-common"
     "dictionaries-common"
     "gigolo"
-    "mate-calc"
-    "mate-calc-common"
+    "mate-calc mate-calc-common"
     "orage"
     "parole"
-    "pidgin"
-    "pidgin-data"
-    "pidgin-libnotify"
-    "pidgin-otr"
+    "pidgin pidgin-data pidgin-libnotify pidgin-otr"
     "ristretto"
     "simple-scan"
-    "thunderbird"
-    "thunderbird-locale-*"
+    "thunderbird thunderbird-locale-*"
     "xfburn"
 )
 SUDO_HOME="/home/$SUDO_USER"
