@@ -22,21 +22,21 @@ cp -v bash/.functions "$HOME"
 echo "[GIT]"
 cp -v git/.gitconfig "$HOME"
 
-echo "[VIM]"
-cp -v vim/.vimrc "$HOME"
-
-echo "[TMUX]"
-cp -v tmux/.tmux.conf "$HOME"
+echo "[KITTY]"
+cp -vr kitty/ "$CONFIG_DIR"
 
 echo "[NEOVIM]"
 cp -vr nvim/ "$CONFIG_DIR"
 rm -f "$CONFIG_DIR"/nvim/lsp.sh
 
-echo "[KITTY]"
-cp -vr kitty/ "$CONFIG_DIR"
-
 echo "[ROFI]"
 cp -vr rofi/ "$CONFIG_DIR"
+
+echo "[TMUX]"
+cp -v tmux/.tmux.conf "$HOME"
+
+echo "[VIM]"
+cp -v vim/.vimrc "$HOME"
 
 if [[ -d "$CONFIG_DIR"/xfce4/xfconf/xfce-perchannel-xml ]]; then
     echo "[THUNAR]"
@@ -50,5 +50,5 @@ fi
 
 echo "------------------------------------------------------------"
 echo "Configuration done."
-echo "Add your email to ~/.gitconfig."
+echo "Finish configuring ~/.gitconfig."
 echo "Run vim then execute ':PlugInstall' to install vim plugins."
