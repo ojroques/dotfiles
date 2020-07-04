@@ -1,18 +1,18 @@
 # dotfiles
 
-This repository contains my configuration files for:
-- **git**
+This repository contains my config files for:
 - **bash**
+- **git**
+- [**kitty**](https://github.com/kovidgoyal/kitty)
+- **latex**
+- **rofi**
+- **thunar**
 - **tmux**
 - **vim**, **neovim**, **vimium**
-- [**kitty**](https://github.com/kovidgoyal/kitty)
-- **rofi**
-- **latex**
-- **thunar**
-- **xfce** (keyboard layouts and shortcuts)
 - **windows terminal**
+- **xfce** (keyboard layouts and shortcuts)
 
-I use [Xubuntu](https://xubuntu.org/) but installation should work fine on any recent (18.04+) Ubuntu-based distribution.
+I use [Xubuntu](https://xubuntu.org/) but installation should work fine on any Ubuntu (20.04+) flavor.
 
 
 ## Screenshots
@@ -22,11 +22,11 @@ Wallpaper can be found [here](./screenshots/wallpaper.png)
 
 
 ## Installation
-1. Run `install.sh` as root to install applications:
+1. Run `install.sh` as root to install packages:
 ```sh
 sudo ./install.sh
 ```
-2. Run `config.sh` to copy configuration files to the right places:
+2. Run `config.sh` to copy config files to the right places:
 ```sh
 ./config.sh
 ```
@@ -49,7 +49,7 @@ rclone config
 - Rearrange home directories
 - Configure panel and workspaces
 - Change theme and icons
-- Install and configure additional applications: [bat](https://github.com/sharkdp/bat), [fd](https://github.com/sharkdp/fd), [fzf](https://github.com/junegunn/fzf), [kitty](https://github.com/kovidgoyal/kitty), [ripgrep](https://github.com/BurntSushi/ripgrep), [spotify](https://www.spotify.com/uk/download/linux/)
+- Install and configure additional applications: [bat](https://github.com/sharkdp/bat), [fd](https://github.com/sharkdp/fd), [fzf](https://github.com/junegunn/fzf), [kitty](https://github.com/kovidgoyal/kitty), [ripgrep](https://github.com/BurntSushi/ripgrep)
 - Change default applications
 - Generate SSH keys: `ssh-keygen -t ed25519 -a 100 -C "email@example.com"`
 - Set wallpapers

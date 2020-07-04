@@ -66,6 +66,7 @@ if has("nvim")
         \ 'cpp': ['ccls'],
         \ 'go': ['gopls'],
         \ 'python': ['pyls'],
+        \ 'sh': ['bash-language-server', 'start'],
         \ }
     nnoremap <F7> :call LanguageClient_contextMenu()<CR>
     nnoremap <leader>d :call LanguageClient#textDocument_definition()<CR>
