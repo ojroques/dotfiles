@@ -88,8 +88,8 @@ endif
 nnoremap Q :echohl WarningMsg<bar>echo "WARNING: Caps Lock may be on"<bar>echohl None<CR>
 nmap U Q
 " Cycle between completion entries
-inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " Exit insert mode
 inoremap jj <ESC>
 " Remove search highlights
@@ -105,13 +105,15 @@ nnoremap <F6> :set scrollbind!<CR>
 " Toggle netrw
 nnoremap <F9> :Lexplore<CR>
 " Quickfix list
+nnoremap <leader><Up> :copen<CR>
 nnoremap <leader><Down> :cclose<CR>
 nnoremap <leader><Left> :cprev<CR>
 nnoremap <leader><Right> :cnext<CR>
-nnoremap <leader><Up> :copen<CR>
 " Resize window
 nnoremap <S-Up> <C-w>2>
 nnoremap <S-Down> <C-w>2<
+nnoremap <S-Left> <C-w>2-
+nnoremap <S-Right> <C-w>2+
 " Close buffer (without closing window)
 nnoremap <expr><leader>w len(getbufinfo("")[0].windows) > 1 ?
     \ ":close<CR>" :
