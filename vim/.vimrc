@@ -10,7 +10,6 @@ Plug 'airblade/vim-gitgutter'
 Plug 'google/vim-searchindex'
 Plug 'joshdick/onedark.vim'
 Plug 'machakann/vim-sandwich'
-Plug 'ojroques/vim-scrollstatus'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
@@ -32,17 +31,18 @@ let g:airline_powerline_fonts = 1                     " Enable powerline symbols
 let g:airline#extensions#tabline#enabled = 1          " Display all buffers
 let g:airline#extensions#tabline#fnamemod = ':p:t'    " Buffer naming scheme
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
-let g:airline_section_x = '%{ScrollStatus()} '
+let g:airline_section_x = ''
 let g:airline_section_y = airline#section#create_right(['filetype'])
 let g:airline_section_z = airline#section#create([
             \ '%#__accent_bold#%3l%#__restore__#/%L', ' ',
-            \ '%#__accent_bold#%3v%#__restore__#/%3{virtcol("$") - 1}',
+            \ '%#__accent_bold#%3v%#__restore__#/%3{virtcol("$") - 1}', ' ',
+            \ '%3p%%',
             \ ])
 let g:gitgutter_map_keys = 0
 let g:indentLine_fileType = ['c', 'cpp', 'python', 'sh']
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
-let g:netrw_winsize = 25
+let g:netrw_winsize = 20
 runtime macros/sandwich/keymap/surround.vim           " Use vim-surround mappings
 " }}}
 
@@ -64,15 +64,15 @@ if has("nvim")
     let g:LanguageClient_serverCommands = {
         \ 'c': ['ccls'],
         \ 'cpp': ['ccls'],
-        \ 'go': ['gopls'],
         \ 'python': ['pyls'],
         \ 'sh': ['bash-language-server', 'start'],
         \ }
-    nnoremap <F7> :call LanguageClient_contextMenu()<CR>
+    nnoremap <F9> :call LanguageClient_contextMenu()<CR>
     nnoremap <leader>d :call LanguageClient#textDocument_definition()<CR>
     nnoremap <leader>f :call LanguageClient#textDocument_formatting()<CR>
     nnoremap <leader>h :call LanguageClient#textDocument_hover()<CR>
     nnoremap <leader>r :call LanguageClient#textDocument_references()<CR>
+    vnoremap <leader>f :call LanguageClient#textDocument_rangeFormatting()<CR>
 
     " LaTeX (vimtex)
     let g:tex_flavor = "latex"              " Change default tex flavor
@@ -111,8 +111,6 @@ nnoremap <leader><Up> :copen<CR>
 nnoremap <expr><leader>w len(getbufinfo("")[0].windows) > 1 ?
     \ ":close<CR>" :
     \ (bufnr("") == getbufinfo({"buflisted": 1})[-1].bufnr ? ":bp" : ":bn")."<bar>bd #<CR>"
-" Close all buffers except current
-nnoremap <leader>W :%bd<bar>e #<bar>bd #<bar>normal `"<CR>
 " Quit
 nnoremap <leader>i :confirm qall<CR>
 " Insert blank new line
