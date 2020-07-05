@@ -67,7 +67,7 @@ if has("nvim")
         \ 'python': ['pyls'],
         \ 'sh': ['bash-language-server', 'start'],
         \ }
-    nnoremap <F9> :call LanguageClient_contextMenu()<CR>
+    nnoremap <F10> :call LanguageClient_contextMenu()<CR>
     nnoremap <leader>d :call LanguageClient#textDocument_definition()<CR>
     nnoremap <leader>f :call LanguageClient#textDocument_formatting()<CR>
     nnoremap <leader>h :call LanguageClient#textDocument_hover()<CR>
@@ -100,13 +100,18 @@ nnoremap <F3> :set wrap!<bar>:set linebreak!<bar>:set breakindent!<CR>
 nnoremap <F4> :set spell!<CR>
 " Reload buffers
 nnoremap <F5> :checktime<CR>
+" Scroll binding
+nnoremap <F6> :set scrollbind!<CR>
 " Toggle netrw
-nnoremap <F6> :Lexplore<CR>
+nnoremap <F9> :Lexplore<CR>
 " Quickfix list
 nnoremap <leader><Down> :cclose<CR>
 nnoremap <leader><Left> :cprev<CR>
 nnoremap <leader><Right> :cnext<CR>
 nnoremap <leader><Up> :copen<CR>
+" Resize window
+nnoremap <S-Up> <C-w>2>
+nnoremap <S-Down> <C-w>2<
 " Close buffer (without closing window)
 nnoremap <expr><leader>w len(getbufinfo("")[0].windows) > 1 ?
     \ ":close<CR>" :
