@@ -6,36 +6,39 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 BIN_DIR="/usr/local/bin"
-MINIMAL=(
+CLI=(  # 18.04
     "curl"
     "git"
     "htop"
     "make"
     "neovim"
     "python3-pip"
-    "ripgrep"
+    "shellcheck"
     "software-properties-common"
     "tmux"
     "tree"
     "unzip"
     "vim"
 )
-FULL=(
+CLI_RECENT=(
+    "bat"      # 19.10
+    "fd-find"  # 19.04
+    "ripgrep"  # 19.04
+)
+GUI=(  # 18.04
     "arc-theme"
-    "bat"
-    "fd-find"
     "firefox"
     "fonts-hack"
-    "kitty"
     "papirus-icon-theme"
-    "rclone"
     "redshift-gtk"
     "rofi"
-    "shellcheck"
     "viewnior"
     "vim-gtk3"
     "vlc"
     "zathura"
+)
+GUI_RECENT=(
+    "kitty"  # 19.04
 )
 PURGE=(
     "atril atril-common"
@@ -63,11 +66,13 @@ function install() {
 
     echo "[INSTALL PACKAGES]"
 
-    apt install -y "${MINIMAL[@]}"
+    apt install -y "${CLI[@]}"
+    apt install -y "${CLI_RECENT[@]}"
     curl -o "$sudo_home"/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
     if [[ $full_installation = true ]]; then
-        apt install -y "${FULL[@]}"
+        apt install -y "${GUI[@]}"
+        apt install -y "${GUI_RECENT[@]}"
         curl -o "$BIN_DIR"/diff-so-fancy --create-dirs https://raw.githubusercontent.com/so-fancy/diff-so-fancy/master/third_party/build_fatpack/diff-so-fancy
         chmod 775 "$BIN_DIR"/diff-so-fancy
     fi
@@ -95,13 +100,13 @@ function main() {
     echo "------------------------------------------------------------"
 
     echo "Minimal installation includes:"
-    for pkg in "${MINIMAL[@]}"; do
+    for pkg in "${CLI[@]}" "${CLI_RECENT[@]}"; do
         echo "* $pkg"
     done
     echo "* vim-plug"
 
     echo "Full installation includes minimal packages and:"
-    for pkg in "${FULL[@]}"; do
+    for pkg in "${GUI[@]}" "${GUI_RECENT[@]}"; do
         echo "* $pkg"
     done
     echo "* diff-so-fancy"
