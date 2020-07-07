@@ -116,7 +116,7 @@ function main() {
         echo "* $pkg"
     done
 
-    echo "Which one to choose?"
+    echo "Select one:"
     select installation in "Minimal installation" "Full installation" "Abort"; do
         case "$installation" in
             "Minimal installation")
