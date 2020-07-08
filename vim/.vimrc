@@ -64,6 +64,7 @@ if has("nvim")
     let g:LanguageClient_serverCommands = {
         \ 'c': ['ccls'],
         \ 'cpp': ['ccls'],
+        \ 'json': ['vscode-json-languageserver', '--stdio'],
         \ 'python': ['pyls'],
         \ 'sh': ['bash-language-server', 'start'],
         \ }
