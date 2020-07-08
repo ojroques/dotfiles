@@ -14,11 +14,10 @@ function update() {
     sudo apt upgrade -y
 }
 
-function python_ls() {
-    echo "[Python language server]"
-    pip3 install --user jedi
-    pip3 install --user python-language-server[yapf]
-    pip3 install --user numpy scipy matplotlib ipython
+function bash_ls() {
+    echo "[Bash language server]"
+    sudo apt install -y nodejs npm
+    sudo npm install -g bash-language-server
 }
 
 function c_ls() {
@@ -47,15 +46,22 @@ function c_ls() {
     fi
 }
 
+function json_ls() {
+    echo "[JSON language server]"
+    sudo apt install -y nodejs npm
+    sudo npm install -g vscode-json-languageserver
+}
+
 function go_ls() {
     echo "[Go language server]"
     sudo apt install -y golang golang-golang-x-tools
 }
 
-function bash_ls() {
-    echo "[Bash language server]"
-    sudo apt install -y nodejs npm
-    sudo npm install -g bash-language-server
+function python_ls() {
+    echo "[Python language server]"
+    pip3 install --user jedi
+    pip3 install --user python-language-server[yapf]
+    pip3 install --user numpy scipy matplotlib ipython
 }
 
 function clean() {
@@ -67,6 +73,7 @@ function main() {
     update && echo
     bash_ls && echo
     c_ls && echo
+    json_ls && echo
     go_ls && echo
     python_ls && echo
     clean
