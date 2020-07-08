@@ -68,14 +68,17 @@ function install() {
 
     apt install -y "${CLI[@]}"
     apt install -y "${CLI_RECENT[@]}"
-    curl -o "$sudo_home"/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
     if [[ $full_installation = true ]]; then
         apt install -y "${GUI[@]}"
         apt install -y "${GUI_RECENT[@]}"
-        curl -o "$BIN_DIR"/diff-so-fancy --create-dirs https://raw.githubusercontent.com/so-fancy/diff-so-fancy/master/third_party/build_fatpack/diff-so-fancy
-        chmod 775 "$BIN_DIR"/diff-so-fancy
     fi
+
+    curl -o "$sudo_home"/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    chown -R "$SUDO_USER":"$SUDO_USER" "$sudo_home"/.vim && chmod -R 755 "$sudo_home"/.vim
+
+    curl -o "$BIN_DIR"/diff-so-fancy --create-dirs https://raw.githubusercontent.com/so-fancy/diff-so-fancy/master/third_party/build_fatpack/diff-so-fancy
+    chmod 775 "$BIN_DIR"/diff-so-fancy
 }
 
 function purge() {
@@ -99,17 +102,17 @@ function main() {
     echo "INSTALLATION SCRIPT"
     echo "------------------------------------------------------------"
 
-    echo "Minimal installation includes:"
+    echo "CLI installation includes:"
     for pkg in "${CLI[@]}" "${CLI_RECENT[@]}"; do
         echo "* $pkg"
     done
+    echo "* diff-so-fancy"
     echo "* vim-plug"
 
-    echo "Full installation includes minimal packages and:"
+    echo "Full installation includes CLI packages and:"
     for pkg in "${GUI[@]}" "${GUI_RECENT[@]}"; do
         echo "* $pkg"
     done
-    echo "* diff-so-fancy"
 
     echo "[WARNING] Full installation also purges:"
     for pkg in "${PURGE[@]}"; do
@@ -117,10 +120,10 @@ function main() {
     done
 
     echo "Select one:"
-    select installation in "Minimal installation" "Full installation" "Abort"; do
+    select installation in "CLI installation" "Full installation" "Abort"; do
         case "$installation" in
-            "Minimal installation")
-                echo "Minimal installation selected."
+            "CLI installation")
+                echo "CLI installation selected."
                 full_installation=false
                 break
                 ;;
