@@ -12,7 +12,7 @@ This repository contains my config files for:
 - **windows terminal**
 - **xfce** (keyboard layouts and shortcuts)
 
-I use [Xubuntu](https://xubuntu.org/) but installation should work fine on any Ubuntu (20.04+) flavor.
+I use [Xubuntu](https://xubuntu.org/) but installation should work fine on any recent Ubuntu (18.04+) flavor.
 
 
 ## Screenshots
