@@ -129,8 +129,8 @@ nnoremap <leader>u :update<CR>
 " Toggle fold
 nnoremap <space> za
 " Substitute
-nnoremap S :%s//gcI<Left><Left><Left>
-vnoremap S :s//gcI<Left><Left><Left>
+nnoremap S :%s//gcI<Left><Left><Left><Left>
+vnoremap S :s//gcI<Left><Left><Left><Left>
 " Move accross display lines
 nnoremap j gj
 nnoremap k gk
