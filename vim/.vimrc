@@ -62,8 +62,7 @@ if has("nvim")
     " Language server protocol (languageclient-neovim)
     let g:LanguageClient_useVirtualText = "Diagnostics"
     let g:LanguageClient_serverCommands = {
-        \ 'c': ['ccls'],
-        \ 'cpp': ['ccls'],
+        \ 'c': ['ccls'], 'cpp': ['ccls'],
         \ 'json': ['vscode-json-languageserver', '--stdio'],
         \ 'python': ['pyls'],
         \ 'sh': ['bash-language-server', 'start'],
@@ -119,6 +118,8 @@ nnoremap <S-Right> <C-w>2+
 nnoremap <expr><leader>w len(getbufinfo("")[0].windows) > 1 ?
     \ ":close<CR>" :
     \ (bufnr("") == getbufinfo({"buflisted": 1})[-1].bufnr ? ":bp" : ":bn")."<bar>bd #<CR>"
+" Close all buffers except current
+nnoremap <leader>W :%bd<bar>e #<bar>bd #<bar>normal `"<CR>
 " Quit
 nnoremap <leader>i :confirm qall<CR>
 " Insert blank new line
@@ -128,8 +129,8 @@ nnoremap <leader>u :update<CR>
 " Toggle fold
 nnoremap <space> za
 " Substitute
-nnoremap S :%s//gc<Left><Left><Left>
-vnoremap S :s//gc<Left><Left><Left>
+nnoremap S :%s//gcI<Left><Left><Left>
+vnoremap S :s//gcI<Left><Left><Left>
 " Move accross display lines
 nnoremap j gj
 nnoremap k gk
@@ -168,10 +169,10 @@ set backspace=indent,eol,start        " Intuitive backspacing in insert mode
 set expandtab                         " Tabs are spaces
 set pastetoggle=<F2>                  " Aid in pasting text
 set shiftround                        " Round indent
-set shiftwidth=4                      " Number of shifts
+set shiftwidth=2                      " Number of shifts
 set smartindent                       " Automatically inserts indentation
-set softtabstop=4                     " Number of spaces in tab when editing
-set tabstop=4                         " Number of visual spaces per tab
+set softtabstop=2                     " Number of spaces in tab when editing
+set tabstop=2                         " Number of visual spaces per tab
 " }}}
 
 " SEARCH {{{
