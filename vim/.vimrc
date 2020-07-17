@@ -104,11 +104,6 @@ nnoremap <F5> :checktime<CR>
 nnoremap <F6> :set scrollbind!<CR>
 " Toggle netrw
 nnoremap <F9> :Lexplore<CR>
-" Quickfix list
-nnoremap <leader><Up> :copen<CR>
-nnoremap <leader><Down> :cclose<CR>
-nnoremap <leader><Left> :cprev<CR>
-nnoremap <leader><Right> :cnext<CR>
 " Resize window
 nnoremap <S-Up> <C-w>2>
 nnoremap <S-Down> <C-w>2<
@@ -129,11 +124,14 @@ nnoremap <leader>u :update<CR>
 " Toggle fold
 nnoremap <space> za
 " Substitute
-nnoremap S :%s//gcI<Left><Left><Left><Left>
-vnoremap S :s//gcI<Left><Left><Left><Left>
+nnoremap <leader>s :%s//gcI<Left><Left><Left><Left>
+vnoremap <leader>s :s//gcI<Left><Left><Left><Left>
 " Move accross display lines
 nnoremap j gj
 nnoremap k gk
+" Next and previous buffer
+nnoremap S :bn<CR>
+nnoremap X :bp<CR>
 " Copy to system clipboard
 vnoremap <leader>c "+y
 " }}}
