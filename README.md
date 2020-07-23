@@ -6,11 +6,10 @@ This repository contains my config files for:
 - [**kitty**](https://github.com/kovidgoyal/kitty)
 - **latex**
 - **rofi**
-- **thunar**
 - **tmux**
 - **vim**, **neovim**, **vimium**
 - **windows terminal**
-- **xfce** (keyboard layouts and shortcuts)
+- **thunar** and **xfce** (keyboard layouts and shortcuts)
 
 I use [Xubuntu](https://xubuntu.org/) but installation should work fine on any recent Ubuntu (18.04+) flavor.
 
