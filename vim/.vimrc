@@ -7,7 +7,6 @@ set nocompatible  " Use Vim default options
 " PLUGINS {{{
 call plug#begin()
 Plug 'airblade/vim-gitgutter'
-Plug 'google/vim-searchindex'
 Plug 'joshdick/onedark.vim'
 Plug 'machakann/vim-sandwich'
 Plug 'tpope/vim-commentary'
@@ -119,19 +118,19 @@ nnoremap <leader>W :%bd<bar>e #<bar>bd #<bar>normal `"<CR>
 nnoremap <leader>i :confirm qall<CR>
 " Insert blank new line
 nnoremap <leader>o m`o<Esc>``
+" Substitute
+nnoremap <leader>s :%s//gcI<Left><Left><Left><Left>
+vnoremap <leader>s :s//gcI<Left><Left><Left><Left>
 " Save buffer
 nnoremap <leader>u :update<CR>
 " Toggle fold
 nnoremap <space> za
-" Substitute
-nnoremap <leader>s :%s//gcI<Left><Left><Left><Left>
-vnoremap <leader>s :s//gcI<Left><Left><Left><Left>
-" Move accross display lines
-nnoremap j gj
-nnoremap k gk
 " Next and previous buffer
 nnoremap S :bn<CR>
 nnoremap X :bp<CR>
+" Move accross display lines
+nnoremap j gj
+nnoremap k gk
 " Copy to system clipboard
 vnoremap <leader>c "+y
 " }}}
@@ -139,12 +138,12 @@ vnoremap <leader>c "+y
 " GENERAL {{{
 filetype indent on                    " Load filetype indentation
 filetype plugin on                    " Load filetype plugin
-syntax enable                         " Enable syntax processing
 set autoread                          " Reload buffers modified outside vim
 set hidden                            " Enable background buffers
 set splitbelow splitright             " Change position of new windows
 set updatetime=400                    " Delay before swap file is saved
 set visualbell                        " Disable sounds
+syntax enable                         " Enable syntax processing
 " }}}
 
 " APPEARANCE {{{
