@@ -40,7 +40,7 @@ cp -v vim/.vimrc "$HOME"
 
 if [[ -d "$CONFIG_DIR"/xfce4/xfconf/xfce-perchannel-xml ]]; then
     echo "[THUNAR]"
-    cp -v thunar/thunar.xml "$CONFIG_DIR"/xfce4/xfconf/xfce-perchannel-xml/
+    cp -v xfce/thunar.xml "$CONFIG_DIR"/xfce4/xfconf/xfce-perchannel-xml/
 
     echo "[XFCE]"
     cp -v xfce/keyboards.xml "$CONFIG_DIR"/xfce4/xfconf/xfce-perchannel-xml/
