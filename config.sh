@@ -37,6 +37,7 @@ cp -v tmux/.tmux.conf "$HOME"
 
 echo "[VIM]"
 cp -v vim/.vimrc "$HOME"
+cp -v vim/.minimal.vimrc "$HOME"
 
 if [[ -d "$CONFIG_DIR"/xfce4/xfconf/xfce-perchannel-xml ]]; then
     echo "[THUNAR]"

@@ -15,10 +15,11 @@ alias rm='rm --preserve-root -I'
 alias tree='tree -F -C --dirsfirst'
 
 # Development
-alias py='python3'
 alias ipy='ipython --no-confirm-exit'
-alias vimrc='vim ~/.vimrc'
+alias py='python3'
+alias vi='vim -u ~/.minimal.vimrc'
 alias vim='nvim'
+alias vimrc='vim ~/.vimrc'
 
 # Network
 alias ip='ip -c -h'
