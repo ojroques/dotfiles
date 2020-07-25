@@ -60,7 +60,7 @@ function go_ls() {
 function python_ls() {
     echo "[Python language server]"
     pip3 install --user jedi
-    pip3 install --user python-language-server[yapf]
+    pip3 install --user python-language-server[pyflakes,yapf]
     pip3 install --user numpy scipy matplotlib ipython
 }
 

@@ -86,6 +86,9 @@ endif
 " Disable mappings
 nnoremap Q :echohl WarningMsg<bar>echo "WARNING: Caps Lock may be on"<bar>echohl None<CR>
 nmap U Q
+" Break undo sequence
+inoremap <C-u> <C-g>u<C-u>
+inoremap <C-w> <C-g>u<C-w>
 " Cycle between completion entries
 inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
@@ -108,6 +111,11 @@ nnoremap <S-Up> <C-w>2>
 nnoremap <S-Down> <C-w>2<
 nnoremap <S-Left> <C-w>2-
 nnoremap <S-Right> <C-w>2+
+" Quickfix list
+nnoremap <leader><Up> :copen<CR>
+nnoremap <leader><Down> :cclose<CR>
+nnoremap <leader><Left> :cprev<CR>
+nnoremap <leader><Right> :cnext<CR>
 " Close buffer (without closing window)
 nnoremap <expr><leader>w len(getbufinfo("")[0].windows) > 1 ?
     \ ":close<CR>" :
@@ -118,7 +126,7 @@ nnoremap <leader>W :%bd<bar>e #<bar>bd #<bar>normal `"<CR>
 nnoremap <leader>i :confirm qall<CR>
 " Insert blank new line
 nnoremap <leader>o m`o<Esc>``
-" Substitute
+" Substitute string
 nnoremap <leader>s :%s//gcI<Left><Left><Left><Left>
 vnoremap <leader>s :s//gcI<Left><Left><Left><Left>
 " Save buffer
@@ -142,7 +150,6 @@ set autoread                          " Reload buffers modified outside vim
 set hidden                            " Enable background buffers
 set splitbelow splitright             " Change position of new windows
 set updatetime=400                    " Delay before swap file is saved
-set visualbell                        " Disable sounds
 syntax enable                         " Enable syntax processing
 " }}}
 
@@ -151,11 +158,15 @@ colorscheme onedark                   " Color scheme
 set background=dark                   " Dark background
 set colorcolumn=80                    " Line length marker
 set cursorline                        " Highlight current line
+set laststatus=2                      " Always display status line
 set list                              " Show trailing blanks
-set listchars=tab:>\ ,trail:-,nbsp:+  " Strings to use in list
+set listchars=tab:>\ ,trail:-,nbsp:+  " Characters to show for spaces
+set listchars+=extends:>,precedes:<   " Characters delimiting lines
 set nowrap                            " Disable wrap lines
 set number relativenumber             " Relative line number
-set scrolloff=4                       " Show lines of context
+set ruler                             " Show cursor line and column
+set scrolloff=4                       " Lines of context
+set sidescrolloff=8                   " Columns of context
 set signcolumn=yes                    " Show sign column
 set termguicolors                     " True color support
 " }}}
