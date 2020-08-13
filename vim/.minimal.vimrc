@@ -35,7 +35,6 @@ set incsearch                         " Dynamic highlight
 set laststatus=2                      " Always display status line
 set list                              " Show trailing blanks
 set listchars=tab:>\ ,trail:-,nbsp:+  " Characters to show for spaces
-set listchars+=extends:>,precedes:<   " Characters delimiting lines
 set nowrap                            " Disable wrap lines
 set number relativenumber             " Relative line number
 set pastetoggle=<F2>                  " Aid in pasting text

@@ -38,7 +38,7 @@ let g:airline_section_z = airline#section#create([
             \ '%3p%%',
             \ ])
 let g:gitgutter_map_keys = 0
-let g:indentLine_fileType = ['c', 'cpp', 'python', 'sh']
+let g:indentLine_fileType = ['c', 'cpp', 'json', 'python', 'sh']
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
 let g:netrw_winsize = 20
@@ -161,7 +161,6 @@ set cursorline                        " Highlight current line
 set laststatus=2                      " Always display status line
 set list                              " Show trailing blanks
 set listchars=tab:>\ ,trail:-,nbsp:+  " Characters to show for spaces
-set listchars+=extends:>,precedes:<   " Characters delimiting lines
 set nowrap                            " Disable wrap lines
 set number relativenumber             " Relative line number
 set ruler                             " Show cursor line and column
