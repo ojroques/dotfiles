@@ -38,10 +38,6 @@ latex/latex_setup.sh
 ```sh
 nvim/lsp.sh
 ```
-6. (Optional) [Install and configure rclone](https://rclone.org/docs/):
-```sh
-rclone config
-```
 
 
 ## After Installation

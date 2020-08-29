@@ -1,16 +1,14 @@
-; GIT config
+; git config
 ; github.com/ojroques
 
 [user]
     useConfigOnly = true
     name = Olivier Roques
-    ; To complete
-    email =
+    ; email =
 
 [core]
     editor = nvim
-    ; Uncomment if diff-so-fancy is installed
-    ; pager = diff-so-fancy | less --tabs=4 -RFX
+    pager = diff-so-fancy | less --tabs=4 -RFX
 
 [alias]
     st = status
