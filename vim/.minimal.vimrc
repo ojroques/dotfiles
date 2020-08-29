@@ -1,4 +1,4 @@
-" Minimal VIM config
+" Minimal vim config
 " github.com/ojroques
 
 set nocompatible
@@ -47,7 +47,6 @@ set softtabstop=2                     " Number of spaces in tab when editing
 set splitbelow splitright             " Change position of new windows
 set tabstop=2                         " Number of visual spaces per tab
 set termguicolors                     " True color support
-set updatetime=400                    " Delay before swap file is saved
 set wildmenu                          " Command-line completion
 set wildmode=longest:full,full        " Complete to the longest common string
 syntax enable                         " Enable syntax processing
