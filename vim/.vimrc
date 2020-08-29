@@ -1,4 +1,4 @@
-" VIM config
+" vim config
 " github.com/ojroques
 " vim: foldmethod=marker foldlevel=1
 

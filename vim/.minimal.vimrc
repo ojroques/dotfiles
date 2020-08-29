@@ -33,8 +33,6 @@ set hlsearch                          " Highlight search terms
 set ignorecase                        " Ignore case when searching
 set incsearch                         " Dynamic highlight
 set laststatus=2                      " Always display status line
-set list                              " Show trailing blanks
-set listchars=tab:>\ ,trail:-,nbsp:+  " Characters to show for spaces
 set nowrap                            " Disable wrap lines
 set number relativenumber             " Relative line number
 set pastetoggle=<F2>                  " Aid in pasting text

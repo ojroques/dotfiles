@@ -15,9 +15,11 @@ if [[ ! -d "$HOME"/.tmp ]]; then
 fi
 
 echo "[BASH]"
-cp -v bash/.bashrc "$HOME"
+cp -v bash/.mybashrc "$HOME"
 cp -v bash/.aliases "$HOME"
 cp -v bash/.functions "$HOME"
+line="source ~/.mybashrc"
+grep -qxF "$line" $HOME/.bashrc || echo -e "\n$line" >> $HOME/.bashrc
 
 echo "[GIT]"
 cp -v git/.gitconfig "$HOME"
@@ -51,5 +53,5 @@ fi
 
 echo "------------------------------------------------------------"
 echo "Configuration done."
-echo "Finish configuring ~/.gitconfig."
+echo "Add your email to ~/.gitconfig."
 echo "Run vim then execute ':PlugInstall' to install vim plugins."
