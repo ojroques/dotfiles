@@ -9,7 +9,7 @@ This repository contains my config files for:
 - **tmux**
 - **vim**, **neovim**, **vimium**
 - **windows terminal**
-- **thunar** and **xfce** (keyboard layouts and shortcuts)
+- **thunar** and **xfce**
 
 I use [Xubuntu](https://xubuntu.org/) but installation should work fine on any recent Ubuntu (18.04+) flavor.
 
@@ -21,7 +21,7 @@ Wallpaper can be found [here](./screenshots/wallpaper.png)
 
 
 ## Installation
-1. Run `install.sh` as root to install packages:
+1. Run `install.sh` as root to install the packages:
 ```sh
 sudo ./install.sh
 ```
@@ -29,22 +29,18 @@ sudo ./install.sh
 ```sh
 ./config.sh
 ```
-3. Run `vim` and execute `:PlugInstall` to install the plugins.
-4. (Optional) Run `latex.sh` to install LaTeX:
+3. (Optional) Run `latex.sh` to install LaTeX:
 ```sh
 latex/latex_setup.sh
 ```
-5. (Optional) Run `lsp.sh` to install language servers for `LanguageClient-neovim` (a plugin to use the [Language Server Protocol](https://langserver.org)):
+4. (Optional) Run `lsp.sh` to install language servers for `LanguageClient-neovim` (a plugin to use the [Language Server Protocol](https://langserver.org)):
 ```sh
 nvim/lsp.sh
 ```
 
 
 ## After Installation
-- Rearrange home directories
-- Configure panel and workspaces
-- Change theme and icons
-- Install and configure additional applications: [bat](https://github.com/sharkdp/bat), [fd](https://github.com/sharkdp/fd), [fzf](https://github.com/junegunn/fzf), [kitty](https://github.com/kovidgoyal/kitty), [ripgrep](https://github.com/BurntSushi/ripgrep)
-- Change default applications
+- Add email to [git config](git/.gitconfig)
+- Run `vim` and execute `:PlugInstall` to install the plugins
+- Install fzf: `~/.fzf/install`
 - Generate SSH keys: `ssh-keygen -t ed25519 -a 100 -C "email@example.com"`
-- Set wallpapers
