@@ -15,7 +15,7 @@ apt-clean() {
 
 # List intentionally installed packages
 apt-list() {
-    (zcat $(ls -tr /var/log/apt/history.log*.gz); cat /var/log/apt/history.log) 2> /dev/null |
+    (zcat "$(ls -tr /var/log/apt/history.log*.gz)"; cat /var/log/apt/history.log) 2> /dev/null |
     grep -E '^Commandline' |
     sed -e 's/Commandline: \(.*\)/\1/' |
     grep -E -v '^/usr/bin/unattended-upgrade$'
@@ -23,8 +23,8 @@ apt-list() {
 
 # Delete swap files
 rm-swap() {
-    rm -fv $PWD/*.swp
-    rm -fv $HOME/.local/share/nvim/swap/*.swp
+    rm -fv "$PWD"/*.swp
+    rm -fv "$HOME"/.local/share/nvim/swap/*.swp
 }
 
 # Go back up N directories
@@ -33,10 +33,10 @@ up() {
         cd "../"
     elif [[ $# -eq 1 ]] && [[ $1 -gt 0 ]]; then
         local up_dir=""
-        for i in `seq 1 $1`; do
+        for _ in $(seq 1 "$1"); do
             up_dir+="../"
         done
-        cd "$up_dir"
+        cd "$up_dir" || exit 1
     else
         echo "Usage: up [n]"
     fi
@@ -58,4 +58,50 @@ glog() {
         --header="enter to view, alt-y to copy hash" --preview="$view_commit" \
         --bind="enter:execute:$view_commit | less -R" \
         --bind="alt-y:execute:$commit_hash | xclip -selection clipboard"
+}
+
+# Get current status of a git repository
+function parse_git_status {
+    status=$(git status 2> /dev/null)
+    local bits=""
+
+    if [[ "$status" == *"Unmerged paths"* ]]; then
+        bits="!$bits"
+    fi
+    if [[ "$status" == *"Untracked files"* ]]; then
+        bits="?$bits"
+    fi
+    if [[ "$status" == *"Changes not staged for commit"* ]]; then
+        bits="~$bits"
+    fi
+    if [[ "$status" == *"Changes to be committed"* ]]; then
+        bits="=$bits"
+    fi
+    if [[ "$status" == *"Your branch is behind"* ]]; then
+        bits="<$bits"
+    fi
+    if [[ "$status" == *"Your branch is ahead"* ]]; then
+        bits=">$bits"
+    fi
+
+    if [[ -n "$bits" ]]; then
+        echo " $bits"
+    else
+        echo ""
+    fi
+}
+
+# Get branch and status of a git repository
+function parse_git() {
+    br=$(git branch --show-current 2> /dev/null)
+    st=""
+
+    if [[ -n "$br" ]]; then
+        if [[ $1 == "status" ]]; then
+            st=$(parse_git_status)
+        fi
+        echo " [$br$st]"
+    else
+        echo ""
+    fi
 }
