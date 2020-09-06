@@ -2,6 +2,17 @@
 # github.com/ojroques
 # vim: syntax=sh
 
+if [ -f ~/.aliases ]; then
+    source ~/.aliases
+fi
+
+if [ -f ~/.functions ]; then
+    source ~/.functions
+fi
+
+# Change prompt
+export PS1="\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[01;33m\]\$(parse_git status)\[\033[00m\]\$ "
+
 # Change default editor
 export VISUAL="nvim"
 export EDITOR="$VISUAL"
@@ -15,10 +26,5 @@ export BAT_THEME="OneHalfDark"
 # Change default FZF command
 export FZF_DEFAULT_COMMAND="rg --files"
 
-if [ -f ~/.aliases ]; then
-    source ~/.aliases
-fi
-
-if [ -f ~/.functions ]; then
-    source ~/.functions
-fi
+# Preserve bash history across terminals
+export PROMPT_COMMAND="history -a; history -c; history -r"
