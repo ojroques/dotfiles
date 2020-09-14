@@ -38,7 +38,7 @@ let g:airline_section_z = airline#section#create([
             \ '%3p%%',
             \ ])
 let g:gitgutter_map_keys = 0
-let g:indentLine_fileType = ['c', 'cpp', 'json', 'python', 'sh']
+let g:indentLine_fileType = ['c', 'cpp', 'python', 'sh']
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
 let g:netrw_winsize = 20
