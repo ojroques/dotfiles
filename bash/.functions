@@ -36,9 +36,24 @@ up() {
         for _ in $(seq 1 "$1"); do
             up_dir+="../"
         done
-        cd "$up_dir" || exit 1
+        cd "$up_dir" || return 1
     else
         echo "Usage: up [n]"
+        return 1
+    fi
+}
+
+# Pretty diff
+function pdiff() {
+    if [[ $# -ne 2 ]]; then
+        echo "Usage: pdiff file1 file2"
+        return 1
+    fi
+
+    if [[ -x $(command -v diff-so-fancy) ]]; then
+        diff -s -u --color=always "$1" "$2" | diff-so-fancy
+    else
+        diff -s -u --color=always "$1" "$2"
     fi
 }
 
