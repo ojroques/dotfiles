@@ -9,6 +9,7 @@ call plug#begin()
 Plug 'airblade/vim-gitgutter'
 Plug 'joshdick/onedark.vim'
 Plug 'machakann/vim-sandwich'
+Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
@@ -16,7 +17,7 @@ Plug 'Yggdroot/indentLine'
 if has("nvim")
     Plug 'airblade/vim-rooter'
     Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
-    Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
+    Plug 'junegunn/fzf', {'do': {-> fzf#install()}}
     Plug 'junegunn/fzf.vim'
     Plug 'lervag/vimtex'
     Plug 'sheerun/vim-polyglot'
@@ -127,8 +128,8 @@ nnoremap <leader>i :confirm qall<CR>
 " Insert blank new line
 nnoremap <leader>o m`o<Esc>``
 " Substitute string
-nnoremap <leader>s :%s//gcI<Left><Left><Left><Left>
-vnoremap <leader>s :s//gcI<Left><Left><Left><Left>
+nnoremap <leader>s :%Subvert//gc<Left><Left><Left>
+vnoremap <leader>s :Subvert//gc<Left><Left><Left>
 " Save buffer
 nnoremap <leader>u :update<CR>
 " Toggle fold
