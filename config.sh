@@ -19,7 +19,7 @@ cp -v bash/.mybashrc "$HOME"
 cp -v bash/.aliases "$HOME"
 cp -v bash/.functions "$HOME"
 line="source ~/.mybashrc"
-grep -qxF "$line" $HOME/.bashrc || echo -e "\n$line" >> $HOME/.bashrc
+grep -qxF "$line" "$HOME"/.bashrc || echo -e "\n$line" >> $HOME/.bashrc
 
 echo "[GIT]"
 cp -v git/.gitconfig "$HOME"
@@ -39,7 +39,6 @@ cp -v tmux/.tmux.conf "$HOME"
 
 echo "[VIM]"
 cp -v vim/.vimrc "$HOME"
-cp -v vim/.minimal.vimrc "$HOME"
 
 if [[ -d "$CONFIG_DIR"/xfce4/xfconf/xfce-perchannel-xml ]]; then
     echo "[THUNAR]"

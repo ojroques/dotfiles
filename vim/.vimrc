@@ -1,198 +1,65 @@
 " vim config
 " github.com/ojroques
-" vim: foldmethod=marker foldlevel=1
 
-set nocompatible  " Use Vim default options
+set nocompatible
 
-" PLUGINS {{{
-call plug#begin()
-Plug 'airblade/vim-gitgutter'
-Plug 'joshdick/onedark.vim'
-Plug 'machakann/vim-sandwich'
-Plug 'tpope/vim-abolish'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-fugitive'
-Plug 'vim-airline/vim-airline'
-Plug 'Yggdroot/indentLine'
-if has("nvim")
-    Plug 'airblade/vim-rooter'
-    Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
-    Plug 'junegunn/fzf', {'do': {-> fzf#install()}}
-    Plug 'junegunn/fzf.vim'
-    Plug 'lervag/vimtex'
-    Plug 'sheerun/vim-polyglot'
-    Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
-endif
-call plug#end()
-" }}}
-
-" PLUGIN CONFIGURATION {{{
-let g:airline_powerline_fonts = 1                     " Enable powerline symbols
-let g:airline#extensions#tabline#enabled = 1          " Display all buffers
-let g:airline#extensions#tabline#fnamemod = ':p:t'    " Buffer naming scheme
-let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
-let g:airline_section_x = ''
-let g:airline_section_y = airline#section#create_right(['filetype'])
-let g:airline_section_z = airline#section#create([
-            \ '%#__accent_bold#%3l%#__restore__#/%L', ' ',
-            \ '%#__accent_bold#%3v%#__restore__#/%3{virtcol("$") - 1}', ' ',
-            \ '%3p%%',
-            \ ])
-let g:gitgutter_map_keys = 0
-let g:indentLine_fileType = ['c', 'cpp', 'python', 'sh']
-let g:netrw_banner = 0
-let g:netrw_liststyle = 3
-let g:netrw_winsize = 20
-runtime macros/sandwich/keymap/surround.vim           " Use vim-surround mappings
-" }}}
-
-" NEOVIM SPECIFIC {{{
-if has("nvim")
-    " Fuzzy finder (fzf)
-    nnoremap <C-p> :Files<CR>
-    nnoremap <leader>p :Rg<CR>
-    nnoremap <leader>g :Commits<CR>
-    nnoremap s :Buffers<CR>
-
-    " Autocompletion (deoplete)
-    let g:deoplete#enable_at_startup = 1                 " Run deoplete at startup
-    call deoplete#custom#option('ignore_case', v:false)  " Case is not ignored
-    call deoplete#custom#option('max_list', 10)          " Number of candidates
-
-    " Language server protocol (languageclient-neovim)
-    let g:LanguageClient_useVirtualText = "Diagnostics"
-    let g:LanguageClient_serverCommands = {
-        \ 'c': ['ccls'], 'cpp': ['ccls'],
-        \ 'json': ['vscode-json-languageserver', '--stdio'],
-        \ 'python': ['pyls'],
-        \ 'sh': ['bash-language-server', 'start'],
-        \ }
-    nnoremap <F10> :call LanguageClient_contextMenu()<CR>
-    nnoremap <leader>d :call LanguageClient#textDocument_definition()<CR>
-    nnoremap <leader>f :call LanguageClient#textDocument_formatting()<CR>
-    nnoremap <leader>h :call LanguageClient#textDocument_hover()<CR>
-    nnoremap <leader>r :call LanguageClient#textDocument_references()<CR>
-    vnoremap <leader>f :call LanguageClient#textDocument_rangeFormatting()<CR>
-
-    " LaTeX (vimtex)
-    let g:tex_flavor = "latex"              " Change default tex flavor
-    let g:vimtex_quickfix_mode = 0          " Quickfix window stays closed
-    let g:vimtex_view_method = 'zathura'    " Default PDF viewer
-    let g:vimtex_compiler_progname = 'nvr'  " Path to nvim executable
-    call deoplete#custom#var('omni', 'input_patterns', {'tex': g:vimtex#re#deoplete})
-endif
-" }}}
-
-" MAPPINGS {{{
-" Disable mappings
-nnoremap Q :echohl WarningMsg<bar>echo "WARNING: Caps Lock may be on"<bar>echohl None<CR>
-nmap U Q
-" Break undo sequence
 inoremap <C-u> <C-g>u<C-u>
 inoremap <C-w> <C-g>u<C-w>
-" Cycle between completion entries
-inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-" Exit insert mode
 inoremap jj <ESC>
-" Remove search highlights
 nnoremap <C-l> :nohlsearch<CR>
-" Toggle word wrap
 nnoremap <F3> :set wrap!<bar>:set linebreak!<bar>:set breakindent!<CR>
-" Toggle spell check
 nnoremap <F4> :set spell!<CR>
-" Reload buffers
 nnoremap <F5> :checktime<CR>
-" Scroll binding
 nnoremap <F6> :set scrollbind!<CR>
-" Toggle netrw
 nnoremap <F9> :Lexplore<CR>
-" Resize window
 nnoremap <S-Up> <C-w>2>
 nnoremap <S-Down> <C-w>2<
 nnoremap <S-Left> <C-w>2-
 nnoremap <S-Right> <C-w>2+
-" Quickfix list
-nnoremap <leader><Up> :copen<CR>
-nnoremap <leader><Down> :cclose<CR>
-nnoremap <leader><Left> :cprev<CR>
-nnoremap <leader><Right> :cnext<CR>
-" Close buffer (without closing window)
 nnoremap <expr><leader>w len(getbufinfo("")[0].windows) > 1 ?
     \ ":close<CR>" :
     \ (bufnr("") == getbufinfo({"buflisted": 1})[-1].bufnr ? ":bp" : ":bn")."<bar>bd #<CR>"
-" Close all buffers except current
 nnoremap <leader>W :%bd<bar>e #<bar>bd #<bar>normal `"<CR>
-" Quit
 nnoremap <leader>i :confirm qall<CR>
-" Insert blank new line
 nnoremap <leader>o m`o<Esc>``
-" Substitute string
-nnoremap <leader>s :%Subvert//gc<Left><Left><Left>
-vnoremap <leader>s :Subvert//gc<Left><Left><Left>
-" Save buffer
 nnoremap <leader>u :update<CR>
-" Toggle fold
-nnoremap <space> za
-" Next and previous buffer
-nnoremap S :bn<CR>
-nnoremap X :bp<CR>
-" Move accross display lines
 nnoremap j gj
 nnoremap k gk
-" Copy to system clipboard
+nnoremap <leader>s :%s//gcI<Left><Left><Left><Left>
+vnoremap <leader>s :s//gcI<Left><Left><Left><Left>
 vnoremap <leader>c "+y
-" }}}
 
-" GENERAL {{{
-filetype indent on                    " Load filetype indentation
-filetype plugin on                    " Load filetype plugin
-set autoread                          " Reload buffers modified outside vim
+filetype plugin indent on
+syntax enable
+colorscheme desert
+set autoindent                        " Copy indent from previous line
+set autoread                          " Reload file modified outside vim
+set background=dark                   " Adjust default color groups
+set backspace=indent,eol,start        " Enhanced backspacing in insert mode
+set complete=.,w,b,u,t                " Location of completion keywords
+set completeopt=menu,longest          " Insert mode completion
+set expandtab                         " Use spaces instead of tabs
 set hidden                            " Enable background buffers
-set splitbelow splitright             " Change position of new windows
-set updatetime=400                    " Delay before swap file is saved
-syntax enable                         " Enable syntax processing
-" }}}
-
-" APPEARANCE {{{
-colorscheme onedark                   " Color scheme
-set background=dark                   " Dark background
-set colorcolumn=80                    " Line length marker
-set cursorline                        " Highlight current line
+set hlsearch                          " Highlight search terms
+set ignorecase                        " Ignore case
+set incsearch                         " Highlight search patterns
 set laststatus=2                      " Always display status line
-set list                              " Show trailing blanks
+set list                              " List mode
 set listchars=tab:>\ ,trail:-,nbsp:+  " Characters to show for spaces
-set nowrap                            " Disable wrap lines
+set nowrap                            " Disable line wrap
 set number relativenumber             " Relative line number
+set pastetoggle=<F2>                  " Paste mode
 set ruler                             " Show cursor line and column
-set scrolloff=4                       " Lines of context
-set sidescrolloff=8                   " Columns of context
-set signcolumn=yes                    " Show sign column
-set termguicolors                     " True color support
-" }}}
-
-" INDENTATION {{{
-set autoindent                        " Copy indentation from previous line
-set backspace=indent,eol,start        " Intuitive backspacing in insert mode
-set expandtab                         " Tabs are spaces
-set pastetoggle=<F2>                  " Aid in pasting text
 set shiftround                        " Round indent
-set shiftwidth=2                      " Number of shifts
-set smartindent                       " Automatically inserts indentation
-set softtabstop=2                     " Number of spaces in tab when editing
-set tabstop=2                         " Number of visual spaces per tab
-" }}}
-
-" SEARCH {{{
-set hlsearch                          " Highlight search terms...
-set incsearch                         " ...dynamically as they are typed
-set ignorecase                        " Ignore case when searching...
-set smartcase                         " ...unless an uppercase character is used
-" }}}
-
-" COMPLETION {{{
-set complete=.,w,b,u,t                " Where to search for keywords
-set completeopt=menu,longest          " How completion occurs
-set wildmenu                          " Command-line completion
-set wildmode=longest:full,full        " Complete to the longest common string
-" }}}
+set shiftwidth=2                      " Number of spaces when indenting
+set shortmess=filnxtToOF              " Configure vim messages
+set showcmd                           " Show current command
+set sidescrolloff=10                  " Columns of context
+set smartcase                         " Do not ignore case with uppercase character
+set smartindent                       " Insert indents automatically
+set softtabstop=2                     " Number of spaces for tabs when editing
+set splitbelow splitright             " Change position of new windows
+set tabstop=2                         " Number of spaces tabs count for
+set termguicolors                     " True color support
+set wildmenu                          " Enhanced command-line completion
+set wildmode=longest:full,full        " Command-line completion mode
