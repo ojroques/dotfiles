@@ -74,11 +74,11 @@ function install() {
         apt install -y "${GUI_RECENT[@]}"
     fi
 
-    curl -o "$sudo_home"/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    chown -R "$SUDO_USER":"$SUDO_USER" "$sudo_home"/.vim && chmod -R 755 "$sudo_home"/.vim
-
-    curl -o "$BIN_DIR"/diff-so-fancy --create-dirs https://raw.githubusercontent.com/so-fancy/diff-so-fancy/master/third_party/build_fatpack/diff-so-fancy
-    chmod 775 "$BIN_DIR"/diff-so-fancy
+    sudo -u "$SUDO_USER" curl -o "$sudo_home"/.local/share/nvim/site/autoload/plug.vim \
+        --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    curl -o "$BIN_DIR"/diff-so-fancy \
+        --create-dirs https://raw.githubusercontent.com/so-fancy/diff-so-fancy/master/third_party/build_fatpack/diff-so-fancy
+    chmod 755 "$BIN_DIR"/diff-so-fancy
 }
 
 function purge() {
