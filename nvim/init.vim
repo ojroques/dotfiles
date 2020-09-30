@@ -30,10 +30,10 @@ let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline_section_x = ''
 let g:airline_section_y = airline#section#create_right(['filetype'])
 let g:airline_section_z = airline#section#create([
-            \ '%#__accent_bold#%3l%#__restore__#/%L', ' ',
-            \ '%#__accent_bold#%3v%#__restore__#/%3{virtcol("$") - 1}', ' ',
-            \ '%3p%%',
-            \ ])
+      \ '%#__accent_bold#%3l%#__restore__#/%L', ' ',
+      \ '%#__accent_bold#%3v%#__restore__#/%3{virtcol("$") - 1}', ' ',
+      \ '%3p%%',
+      \ ])
 " deoplete
 let g:deoplete#enable_at_startup = 1                 " Run deoplete at startup
 call deoplete#custom#option('ignore_case', v:false)  " Case is not ignored
@@ -49,12 +49,16 @@ let g:gitgutter_map_keys = 0  " Disable all mappings
 let g:indentLine_fileType = ['c', 'cpp', 'python', 'sh']
 " languageclient-neovim
 let g:LanguageClient_useVirtualText = "Diagnostics"
+let g:LanguageClient_fzfOptions = [
+      \ '--delimiter', ':', '--preview-window', '+{2}-6',
+      \ '--preview', '~/.config/nvim/plugged/fzf.vim/bin/preview.sh {}'
+      \ ]
 let g:LanguageClient_serverCommands = {
-    \ 'c': ['ccls'], 'cpp': ['ccls'],
-    \ 'json': ['vscode-json-languageserver', '--stdio'],
-    \ 'python': ['pyls'],
-    \ 'sh': ['bash-language-server', 'start'],
-    \ }
+      \ 'c': ['ccls'], 'cpp': ['ccls'],
+      \ 'json': ['vscode-json-languageserver', '--stdio'],
+      \ 'python': ['pyls'],
+      \ 'sh': ['bash-language-server', 'start'],
+      \ }
 nnoremap <F10> :call LanguageClient_contextMenu()<CR>
 nnoremap <leader>d :call LanguageClient#textDocument_definition()<CR>
 nnoremap <leader>f :call LanguageClient#textDocument_formatting()<CR>
@@ -115,8 +119,8 @@ nnoremap <leader><Left> :cprev<CR>
 nnoremap <leader><Right> :cnext<CR>
 " Close buffer (without closing window)
 nnoremap <expr><leader>w len(getbufinfo("")[0].windows) > 1 ?
-    \ ":close<CR>" :
-    \ (bufnr("") == getbufinfo({"buflisted": 1})[-1].bufnr ? ":bp" : ":bn")."<bar>bd #<CR>"
+      \ ":close<CR>" :
+      \ (bufnr("") == getbufinfo({"buflisted": 1})[-1].bufnr ? ":bp" : ":bn")."<bar>bd #<CR>"
 " Close all buffers except current
 nnoremap <leader>W :%bd<bar>e #<bar>bd #<bar>normal `"<CR>
 " Quit
