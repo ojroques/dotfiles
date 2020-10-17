@@ -59,20 +59,18 @@ let g:LanguageClient_serverCommands = {
       \ 'python': ['pyls'],
       \ 'sh': ['bash-language-server', 'start'],
       \ }
-nnoremap <F10> :call LanguageClient_contextMenu()<CR>
-nnoremap <leader>d :call LanguageClient#textDocument_definition()<CR>
-nnoremap <leader>f :call LanguageClient#textDocument_formatting()<CR>
-nnoremap <leader>h :call LanguageClient#textDocument_hover()<CR>
-nnoremap <leader>r :call LanguageClient#textDocument_references()<CR>
-nnoremap <leader>y :call LanguageClient_textDocument_documentSymbol()<CR>
+nmap <F10> <Plug>(lcn-menu)
+nmap <leader>d <Plug>(lcn-definition)
+nmap <leader>e <Plug>(lcn-explain-error)
+nmap <leader>f <Plug>(lcn-format)
+nmap <leader>h <Plug>(lcn-hover)
+nmap <leader>r <Plug>(lcn-references)
+nmap <leader>y <Plug>(lcn-symbols)
 vnoremap <leader>f :call LanguageClient#textDocument_rangeFormatting()<CR>
 " netrw
 let g:netrw_banner = 0     " Suppress the banner
 let g:netrw_liststyle = 3  " Tree style listing
 let g:netrw_winsize = 20   " Window size
-" vim-abolish
-nnoremap <leader>s :%Subvert//gc<Left><Left><Left>
-vnoremap <leader>s :Subvert//gc<Left><Left><Left>
 " vim-sandwich
 runtime macros/sandwich/keymap/surround.vim  " Use vim-surround mappings
 " vimtex
@@ -129,14 +127,14 @@ nnoremap <leader>i :confirm qall<CR>
 nnoremap <leader>o m`o<Esc>``
 " Save buffer
 nnoremap <leader>u :update<CR>
+" Substitute
+nnoremap <leader>s :%s//gcI<Left><Left><Left><Left>
+vnoremap <leader>s :s//gcI<Left><Left><Left><Left>
 " Toggle fold
 nnoremap <space> za
 " Next and previous buffer
 nnoremap S :bn<CR>
 nnoremap X :bp<CR>
-" Move accross display lines
-nnoremap j gj
-nnoremap k gk
 " Copy to system clipboard
 vnoremap <leader>c "+y
 " }}}

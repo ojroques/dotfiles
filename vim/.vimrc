@@ -23,8 +23,6 @@ nnoremap <leader>W :%bd<bar>e #<bar>bd #<bar>normal `"<CR>
 nnoremap <leader>i :confirm qall<CR>
 nnoremap <leader>o m`o<Esc>``
 nnoremap <leader>u :update<CR>
-nnoremap j gj
-nnoremap k gk
 nnoremap <leader>s :%s//gcI<Left><Left><Left><Left>
 vnoremap <leader>s :s//gcI<Left><Left><Left><Left>
 vnoremap <leader>c "+y
