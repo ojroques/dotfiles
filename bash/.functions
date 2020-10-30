@@ -57,6 +57,18 @@ function pdiff() {
     fi
 }
 
+# Push dotfiles
+function pushdot() {
+  scp "$HOME"/.aliases "$1":
+  scp "$HOME"/.functions "$1":
+  scp "$HOME"/.vimrc "$1":
+  ssh "$1" "sed -i -e '/vim/d' .aliases"
+  line="source .aliases" && echo "$line"
+  ssh "$1" "grep -qxF '"$line"' .bashrc || echo -ne '\n"$line"' >> .bashrc"
+  line="source .functions" && echo "$line"
+  ssh "$1" "grep -qxF '"$line"' .bashrc || echo -ne '\n"$line"' >> .bashrc"
+}
+
 # Print command cheatsheet
 cheat() {
     curl -s "cheat.sh/$1"

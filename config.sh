@@ -19,7 +19,7 @@ cp -v bash/.mybashrc "$HOME"
 cp -v bash/.aliases "$HOME"
 cp -v bash/.functions "$HOME"
 line="source ~/.mybashrc"
-grep -qxF "$line" "$HOME"/.bashrc || echo -e "\n$line" >> $HOME/.bashrc
+grep -qxF "$line" "$HOME"/.bashrc || echo -ne "\n$line" >> "$HOME"/.bashrc
 
 echo "[GIT]"
 cp -v git/.gitconfig "$HOME"
