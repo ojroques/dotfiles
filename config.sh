@@ -15,11 +15,8 @@ if [[ ! -d "$HOME"/.tmp ]]; then
 fi
 
 echo "[BASH]"
-cp -v bash/.mybashrc "$HOME"
-cp -v bash/.aliases "$HOME"
-cp -v bash/.functions "$HOME"
-line="source ~/.mybashrc"
-grep -qxF "$line" "$HOME"/.bashrc || echo -ne "\n$line" >> "$HOME"/.bashrc
+cp -vr bash/.shell "$HOME"
+cp -v bash/.bashrc "$HOME"
 
 echo "[GIT]"
 cp -v git/.gitconfig "$HOME"
