@@ -6,13 +6,10 @@ CONFIG_DIR="$HOME"/.config
 echo "DOTFILES CONFIGURATION"
 echo "------------------------------------------------------------"
 
-if [[ ! -d "$CONFIG_DIR" ]]; then
-    mkdir -vp "$CONFIG_DIR"
-fi
-
-if [[ ! -d "$HOME"/.tmp ]]; then
-    mkdir -vp "$HOME"/.tmp
-fi
+mkdir -vp "$HOME"/Documents
+mkdir -vp "$HOME"/Downloads
+mkdir -vp "$HOME"/.tmp
+mkdir -vp "$CONFIG_DIR"
 
 echo "[BASH]"
 cp -vr bash/.shell "$HOME"
@@ -38,16 +35,14 @@ echo "[VIM]"
 cp -v vim/.vimrc "$HOME"
 
 if [[ -d "$CONFIG_DIR"/xfce4/xfconf/xfce-perchannel-xml ]]; then
-    echo "[THUNAR]"
-    cp -v xfce/thunar.xml "$CONFIG_DIR"/xfce4/xfconf/xfce-perchannel-xml/
+  echo "[THUNAR]"
+  cp -v xfce/thunar.xml "$CONFIG_DIR"/xfce4/xfconf/xfce-perchannel-xml/
 
-    echo "[XFCE]"
-    cp -v xfce/keyboards.xml "$CONFIG_DIR"/xfce4/xfconf/xfce-perchannel-xml/
-    cp -v xfce/keyboard-layout.xml "$CONFIG_DIR"/xfce4/xfconf/xfce-perchannel-xml/
-    cp -v xfce/xfce4-keyboard-shortcuts.xml "$CONFIG_DIR"/xfce4/xfconf/xfce-perchannel-xml/
+  echo "[XFCE]"
+  cp -v xfce/keyboards.xml "$CONFIG_DIR"/xfce4/xfconf/xfce-perchannel-xml/
+  cp -v xfce/keyboard-layout.xml "$CONFIG_DIR"/xfce4/xfconf/xfce-perchannel-xml/
+  cp -v xfce/xfce4-keyboard-shortcuts.xml "$CONFIG_DIR"/xfce4/xfconf/xfce-perchannel-xml/
 fi
 
 echo "------------------------------------------------------------"
 echo "Configuration done."
-echo "Add your email to ~/.gitconfig."
-echo "Run vim then execute ':PlugInstall' to install vim plugins."

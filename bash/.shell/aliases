@@ -26,6 +26,8 @@ alias ipl='ip -br link'
 alias ssp='ss -lnptu'
 
 # Shortcuts
-alias dl='cd $HOME/Downloads && ls'
-alias doc='cd $HOME/Documents && ls'
-alias tmp='cd $HOME/.tmp && ls'
+alias dl="cd $HOME/Downloads && ls"
+alias doc="cd $HOME/Documents && ls"
+alias tmp="cd $HOME/.tmp && ls"
+[[ -n $WSL_HOME ]] && alias wdl="cd $WSL_HOME/Downloads && ls"
+[[ -n $WSL_HOME ]] && alias wdoc="cd $WSL_HOME/Documents && ls"

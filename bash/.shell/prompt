@@ -3,7 +3,7 @@
 # Get current status of a git repository
 function parse_git_status {
   status=$(git status 2> /dev/null)
-  local bits=""
+  bits=""
 
   if [[ "$status" == *"Your branch is ahead"* ]]; then
     bits+=">"
@@ -32,7 +32,7 @@ function parse_git_status {
 
 # Get branch and status of a git repository
 function parse_git() {
-  br=$(git branch --show-current 2> /dev/null)
+  br=$(git rev-parse --abbrev-ref HEAD 2> /dev/null)
   st=""
 
   if [[ -n "$br" ]]; then

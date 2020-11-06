@@ -1,0 +1,24 @@
+#!/bin/bash
+
+env="$HOME/.ssh/agent.env"
+
+agent_load_env () {
+  [[ -r "$env" ]] && source "$env" > /dev/null
+}
+
+agent_start () {
+  (umask 077; ssh-agent > "$env")
+  source "$env" > /dev/null
+}
+
+agent_load_env
+agent_run_state=$(ssh-add -l > /dev/null 2>&1; echo $?)
+
+if [[ -z "$SSH_AUTH_SOCK" ]] || [[ $agent_run_state -eq 2 ]]; then
+  agent_start
+  ssh-add
+elif [[ -n "$SSH_AUTH_SOCK" ]] && [[ $agent_run_state -eq 1 ]]; then
+  ssh-add
+fi
+
+unset env

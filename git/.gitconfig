@@ -2,50 +2,50 @@
 ; github.com/ojroques
 
 [user]
-    useConfigOnly = true
-    name = Olivier Roques
-    ; email =
+  useConfigOnly = true
+  name = Olivier Roques
+  ; email =
 
 [core]
-    editor = nvim
-    pager = diff-so-fancy | less --tabs=4 -RFX
+  pager = diff-so-fancy | less --tabs=4 -RFX
 
 [alias]
-    a = add
-    cm = commit
-    co = checkout
-    d = diff
-    dc = diff --cached
-    ds = diff --compact-summary
-    i = show --format='%C(bold yellow)COMMIT%Creset %C(yellow)%H%Cred%d%n%C(bold blue)AUTHOR%Creset %Cblue%an <%ae>%n%C(bold green)DATE%Creset   %Cgreen%ai (%ar)%Creset%n%n%s%n%n%b'
-    ls = ls-tree --full-tree --name-only -r HEAD
-    rb = rebase
-    rs = reset
-    s = status
-    t = log --graph --format='%C(yellow)%h%Cred%d %Creset%s %Cgreen(%ar) %Cblue%an%Creset' --abbrev-commit --all
+  a = add
+  cm = commit
+  co = checkout
+  d = diff
+  dc = diff --cached
+  ds = diff --compact-summary
+  i = show --format='%C(bold yellow)COMMIT%Creset %C(yellow)%H%Cred%d%n%C(bold blue)AUTHOR%Creset %Cblue%an <%ae>%n%C(bold green)DATE%Creset   %Cgreen%ai (%ar)%Creset%n%n%s%n%n%b'
+  ls = ls-tree --full-tree --name-only -r HEAD
+  rb = rebase
+  rs = reset
+  s = status
+  t = log --graph --format='%C(yellow)%h%Cred%d %Creset%s %Cgreen(%ar) %Cblue%an%Creset' --abbrev-commit --all
+  ua = restore --staged
 
 [fetch]
-    prune = true
+  prune = true
 
 [merge]
-    tool = vimdiff
+  tool = vimdiff
 
 [pull]
-    rebase = true
+  rebase = true
 
 [color]
-    ui = true
+  ui = true
 
 [color "diff-highlight"]
-    oldNormal = red bold
-    oldHighlight = red bold 52
-    newNormal = green bold
-    newHighlight = green bold 22
+  oldNormal = red bold
+  oldHighlight = red bold 52
+  newNormal = green bold
+  newHighlight = green bold 22
 
 [color "diff"]
-    meta = 11
-    frag = magenta bold
-    commit = yellow bold
-    old = red bold
-    new = green bold
-    whitespace = red reverse
+  meta = 11
+  frag = magenta bold
+  commit = yellow bold
+  old = red bold
+  new = green bold
+  whitespace = red reverse

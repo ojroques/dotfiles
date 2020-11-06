@@ -1,54 +1,55 @@
 # bash config
 # github.com/ojroques
 
-# Exit if not running interactively
-case $- in
-  *i*) ;;
-  *) return;;
-esac
-
+export BAT_THEME="OneHalfDark"
 export EDITOR="nvim"
-export VISUAL="$EDITOR"
-export PAGER="less"
-export MANPAGER="less -s -M +Gg"
+export FZF_DEFAULT_COMMAND="rg --files --hidden -g '!.git/'"
 export HISTCONTROL="ignoreboth:erasedups"
 export HISTIGNORE="cd:ls:pwd:clear:exit"
 export HISTSIZE=1000
 export PROMPT_COMMAND="history -a; history -c; history -r"
-export FZF_DEFAULT_COMMAND="rg --files"
-export BAT_THEME="OneHalfDark"
+export PS1="\u@\h:\w\$ "
+export VISUAL="$EDITOR"
 
+shopt -s dotglob
 shopt -s histappend
-shopt -s checkwinsize
 
 # Make less more friendly for non-text input files
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+[[ -x /usr/bin/lesspipe ]] && eval "$(SHELL=/bin/sh lesspipe)"
 
-# Enable color support of ls
-if [ -x /usr/bin/dircolors ]; then
-  [ -r ~/.dircolors ] && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+# Enable color support for ls
+if [[ -x /usr/bin/dircolors ]]; then
+  [[ -r ~/.dircolors ]] && eval "$(dircolors -b ~/.dircolors)"
 fi
 
 # Enable completion
 if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
+  if [[ -r /usr/share/bash-completion/bash_completion ]]; then
     source /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
+  elif [[ -r /etc/bash_completion ]]; then
     source /etc/bash_completion
   fi
 fi
 
-# Set prompt
-export PS1="\u@\h:\w\$"
-case "$TERM" in
-  xterm-color|*-256color)
-    if [ -r .shell/prompt ]; then
-      source .shell/prompt
-      PS1="\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[01;33m\]\$(parse_git status)\[\033[00m\]\$ "
-    fi
-    ;;
-esac
+# Set colored prompt
+if [[ -x /usr/bin/tput ]] && tput setaf 1 &> /dev/null; then
+  PS1="\e[1;32m\u@\h\e[0m:\e[1;34m\w\e[0m\$ "
+  if [[ -r .shell/prompt ]]; then
+    source .shell/prompt
+    PS1="\e[1;32m\u@\h\e[0m:\e[1;34m\w\e[1;33m\$(parse_git status)\e[0m\$ "
+  fi
+fi
 
-[ -r .shell/aliases ] && source .shell/aliases
-[ -r .shell/functions ] && source .shell/functions
-[ -r .shell/less ] && source .shell/less
+# Set WSL environment variables
+if grep -q "Microsoft" /proc/sys/kernel/osrelease; then
+  if [[ ! -r .shell/wsl.env ]]; then
+    mkdir -p .shell
+    echo "WSL_HOME=$(wslpath "$(wslvar USERPROFILE)")" > .shell/wsl.env
+  fi
+  source .shell/wsl.env
+  [[ -r .shell/ssh-agent ]] && source .shell/ssh-agent
+fi
+
+[[ -r .shell/aliases ]] && source .shell/aliases
+[[ -r .shell/functions ]] && source .shell/functions
+[[ -r .shell/less ]] && source .shell/less

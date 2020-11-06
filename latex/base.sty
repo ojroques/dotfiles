@@ -21,7 +21,7 @@
 \usepackage{todonotes}       % To-do notes
 \usepackage{xurl}            % URL line breaks
 \usepackage[
-    style=numeric
+  style=numeric
 ]{biblatex}                  % Bibliographies
 
 %%%%%%%%%%%%%%%%%%%% PACKAGE OPTIONS %%%%%%%%%%%%%%%%%%%%%%%
@@ -29,47 +29,47 @@
 \definecolor{myblue}{rgb}{0, 0.2, 0.8}
 \definecolor{mygreen}{rgb}{0.2, 0.8, 0}
 \captionsetup{
-    font=small,
-    labelfont=bf,
-    labelsep=endash,
-    margin=10pt,
+  font=small,
+  labelfont=bf,
+  labelsep=endash,
+  margin=10pt,
 }  % caption
 \hypersetup{
-    colorlinks=true,
-    citecolor=mygreen,
-    filecolor=myred,
-    linkcolor=myblue,
-    menucolor=myred,
-    runcolor=myred,
-    urlcolor=myblue,
-    hidelinks,  % Comment to enable color links
+  colorlinks=true,
+  citecolor=mygreen,
+  filecolor=myred,
+  linkcolor=myblue,
+  menucolor=myred,
+  runcolor=myred,
+  urlcolor=myblue,
+  hidelinks,  % Comment to enable color links
 }  % hyperref
 \lstset{
-    basicstyle=\ttfamily,
-    breaklines=true,
-    breakatwhitespace=true,
-    columns=fullflexible,
-    frame=single,
+  basicstyle=\ttfamily,
+  breaklines=true,
+  breakatwhitespace=true,
+  columns=fullflexible,
+  frame=single,
 }  % listings
 \renewcommand\tabularxcolumn[1]{m{#1}}  % Vertical alignment in tables
 
 %%%%%%%%%%%%%%%%%%%% COMMANDS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\pic}[4]{
-    \begin{figure}[ht]
-        \centering
-        \includegraphics[width=#2\textwidth]{#1}
-        \caption{#3}
-        \label{fig:#4}
-    \end{figure}
+  \begin{figure}[ht]
+    \centering
+    \includegraphics[width=#2\textwidth]{#1}
+    \caption{#3}
+    \label{fig:#4}
+  \end{figure}
 }
 
 \newcommand{\subpic}[4]{
-    \begin{subfigure}[b]{#2\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{#1}
-        \subcaption{#3}
-        \label{fig:#4}
-    \end{subfigure}
+  \begin{subfigure}[b]{#2\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{#1}
+    \subcaption{#3}
+    \label{fig:#4}
+  \end{subfigure}
 }
 
 \newcommand{\eg}{\textit{e.g.}\ }

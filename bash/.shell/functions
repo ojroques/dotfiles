@@ -2,7 +2,7 @@
 
 # Update and upgrade packages
 apt-update() {
-  sudo apt -y update
+  sudo apt update
   sudo apt -y upgrade
 }
 
@@ -64,9 +64,9 @@ cheat() {
 
 # Push dotfiles
 function pushdot() {
-  scp -r "$HOME"/.shell "$1":
-  scp "$HOME"/.bashrc "$1":
-  scp "$HOME"/.vimrc "$1":
+  rsync -a --info=NAME,PROGRESS --exclude='*.env' "$HOME"/.shell "$1":
+  rsync -a --info=NAME,PROGRESS "$HOME"/.bashrc "$1":
+  rsync -a --info=NAME,PROGRESS "$HOME"/.vimrc "$1":
   ssh "$1" "sed -i -e 's/EDITOR=\"nvim\"/EDITOR=\"vim\"/g' .bashrc"
 }
 
