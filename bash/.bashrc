@@ -19,37 +19,37 @@ shopt -s histappend
 
 # Enable color support for ls
 if [[ -x /usr/bin/dircolors ]]; then
-  [[ -r ~/.dircolors ]] && eval "$(dircolors -b ~/.dircolors)"
+  [[ -f ~/.dircolors ]] && eval "$(dircolors -b ~/.dircolors)"
 fi
 
 # Enable completion
 if ! shopt -oq posix; then
-  if [[ -r /usr/share/bash-completion/bash_completion ]]; then
+  if [[ -f /usr/share/bash-completion/bash_completion ]]; then
     source /usr/share/bash-completion/bash_completion
-  elif [[ -r /etc/bash_completion ]]; then
+  elif [[ -f /etc/bash_completion ]]; then
     source /etc/bash_completion
   fi
 fi
 
 # Set colored prompt
 if [[ -x /usr/bin/tput ]] && tput setaf 1 &> /dev/null; then
-  PS1="\e[1;32m\u@\h\e[0m:\e[1;34m\w\e[0m\$ "
-  if [[ -r .shell/prompt ]]; then
-    source .shell/prompt
-    PS1="\e[1;32m\u@\h\e[0m:\e[1;34m\w\e[1;33m\$(parse_git status)\e[0m\$ "
+  PS1="\[\e[1;32m\]\u@\h\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\]\$ "
+  if [[ -f ~/.shell/prompt ]]; then
+    source ~/.shell/prompt
+    PS1="\[\e[1;32m\]\u@\h\[\e[0m\]:\[\e[1;34m\]\w\[\e[1;33m\]\$(parse_git status)\[\e[0m\]\$ "
   fi
 fi
 
 # Set WSL environment variables
-if grep -q "Microsoft" /proc/sys/kernel/osrelease; then
-  if [[ ! -r .shell/wsl.env ]]; then
+if grep -q -i "microsoft" /proc/sys/kernel/osrelease; then
+  if [[ ! -f ~/.shell/wsl.env ]]; then
     mkdir -p .shell
     echo "WSL_HOME=$(wslpath "$(wslvar USERPROFILE)")" > .shell/wsl.env
   fi
-  source .shell/wsl.env
-  [[ -r .shell/ssh-agent ]] && source .shell/ssh-agent
+  source ~/.shell/wsl.env
+  [[ -f ~/.shell/ssh-agent ]] && source ~/.shell/ssh-agent
 fi
 
-[[ -r .shell/aliases ]] && source .shell/aliases
-[[ -r .shell/functions ]] && source .shell/functions
-[[ -r .shell/less ]] && source .shell/less
+[[ -f ~/.shell/aliases ]] && source ~/.shell/aliases
+[[ -f ~/.shell/functions ]] && source ~/.shell/functions
+[[ -f ~/.shell/less ]] && source ~/.shell/less
