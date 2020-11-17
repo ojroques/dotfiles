@@ -11,6 +11,7 @@
   "disableAnimations": true,
   "profiles": {
     "defaults": {
+      "bellStyle": "none",
       "fontFace": "Hack",
       "cursorShape": "underscore",
       "colorScheme": "One Half Dark",
