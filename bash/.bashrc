@@ -42,12 +42,13 @@ fi
 
 # Set WSL environment variables
 if grep -q -i "microsoft" /proc/sys/kernel/osrelease; then
+  export DISPLAY="localhost:0.0"
+  [[ -f ~/.shell/ssh-agent ]] && source ~/.shell/ssh-agent
   if [[ ! -f ~/.shell/wsl.env ]]; then
     mkdir -p .shell
     echo "WSL_HOME=$(wslpath "$(wslvar USERPROFILE)")" > .shell/wsl.env
   fi
   source ~/.shell/wsl.env
-  [[ -f ~/.shell/ssh-agent ]] && source ~/.shell/ssh-agent
 fi
 
 [[ -f ~/.shell/aliases ]] && source ~/.shell/aliases
