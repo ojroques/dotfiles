@@ -12,6 +12,7 @@ Plug 'junegunn/fzf', {'do': {-> fzf#install()}}
 Plug 'junegunn/fzf.vim'
 Plug 'lervag/vimtex'
 Plug 'machakann/vim-sandwich'
+Plug 'ojroques/vim-oscyank'
 Plug 'sheerun/vim-polyglot'
 Plug 'shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
 Plug 'tpope/vim-abolish'
@@ -48,7 +49,7 @@ let g:gitgutter_map_keys = 0  " Disable all mappings
 " indentline
 let g:indentLine_fileType = ['c', 'cpp', 'python', 'sh']
 " languageclient-neovim
-let g:LanguageClient_useVirtualText = "Diagnostics"
+let g:LanguageClient_useVirtualText = 'Diagnostics'
 let g:LanguageClient_fzfOptions = [
       \ '--delimiter', ':', '--preview-window', '+{2}-6',
       \ '--preview', '~/.config/nvim/plugged/fzf.vim/bin/preview.sh {}'
@@ -71,10 +72,11 @@ vnoremap <leader>f :call LanguageClient#textDocument_rangeFormatting()<CR>
 let g:netrw_banner = 0     " Suppress the banner
 let g:netrw_liststyle = 3  " Tree style listing
 let g:netrw_winsize = 20   " Window size
+" vim-oscyank
+vnoremap <leader>c :OSCYank<CR>
 " vim-sandwich
 runtime macros/sandwich/keymap/surround.vim  " Use vim-surround mappings
 " vimtex
-let g:tex_flavor = "latex"              " Change default tex flavor
 let g:vimtex_quickfix_mode = 0          " Disable quickfix window popup
 let g:vimtex_view_method = 'zathura'    " Default PDF viewer
 let g:vimtex_compiler_progname = 'nvr'  " Path to nvim executable
@@ -135,8 +137,6 @@ nnoremap <space> za
 " Next and previous buffer
 nnoremap S :bn<CR>
 nnoremap X :bp<CR>
-" Copy to system clipboard
-vnoremap <leader>c "+y
 " }}}
 
 " GENERAL {{{
