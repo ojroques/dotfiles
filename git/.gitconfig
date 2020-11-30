@@ -12,6 +12,7 @@
 [alias]
   a = add
   cm = commit
+  cma = commit --amend
   co = checkout
   d = diff
   dc = diff --cached
