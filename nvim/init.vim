@@ -77,22 +77,21 @@ vnoremap <leader>c :OSCYank<CR>
 " vim-sandwich
 runtime macros/sandwich/keymap/surround.vim  " Use vim-surround mappings
 " vimtex
-let g:vimtex_quickfix_mode = 0          " Disable quickfix window popup
-let g:vimtex_view_method = 'zathura'    " Default PDF viewer
-let g:vimtex_compiler_progname = 'nvr'  " Path to nvim executable
+let g:vimtex_quickfix_mode = 0        " Disable quickfix window popup
+let g:vimtex_view_method = 'zathura'  " Default PDF viewer
 call deoplete#custom#var('omni', 'input_patterns', {'tex': g:vimtex#re#deoplete})
 " }}}
 
 " MAPPINGS {{{
 " Disable mappings
-nnoremap Q :echohl WarningMsg<bar>echo "WARNING: Caps Lock may be on"<bar>echohl None<CR>
+nnoremap Q :echohl WarningMsg<bar>echo "Caps Lock may be on"<bar>echohl None<CR>
 nmap U Q
 " Break undo sequence
 inoremap <C-u> <C-g>u<C-u>
 inoremap <C-w> <C-g>u<C-w>
 " Cycle between completion entries
-inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr><Tab> pumvisible() ? "<C-n>" : "<Tab>"
+inoremap <expr><S-Tab> pumvisible() ? "<C-p>" : "<S-Tab>"
 " Exit insert mode
 inoremap jj <ESC>
 " Remove search highlights
@@ -150,12 +149,14 @@ set expandtab                   " Use spaces instead of tabs
 set hidden                      " Enable background buffers
 set ignorecase                  " Ignore case
 set list                        " List mode
+set nojoinspaces                " No double spaces after a dot with join
 set nowrap                      " Disable line wrap
 set number relativenumber       " Relative line number
 set pastetoggle=<F2>            " Paste mode
+set scrolloff=4                 " Lines of context
 set shiftround                  " Round indent
 set shiftwidth=2                " Number of spaces when indenting
-set sidescrolloff=10            " Columns of context
+set sidescrolloff=8             " Columns of context
 set signcolumn=yes              " Show sign column
 set smartcase                   " Do not ignore case with uppercase character
 set smartindent                 " Insert indents automatically

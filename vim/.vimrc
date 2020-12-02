@@ -44,15 +44,17 @@ set incsearch                         " Highlight search patterns
 set laststatus=2                      " Always display status line
 set list                              " List mode
 set listchars=tab:>\ ,trail:-,nbsp:+  " Characters to show for spaces
+set nojoinspaces                      " No double spaces after a dot with join
 set nowrap                            " Disable line wrap
 set number relativenumber             " Relative line number
 set pastetoggle=<F2>                  " Paste mode
 set ruler                             " Show cursor line and column
+set scrolloff=4                       " Lines of context
 set shiftround                        " Round indent
 set shiftwidth=2                      " Number of spaces when indenting
 set shortmess=filnxtToOF              " Configure vim messages
 set showcmd                           " Show current command
-set sidescrolloff=10                  " Columns of context
+set sidescrolloff=8                   " Columns of context
 set smartcase                         " Do not ignore case with uppercase character
 set smartindent                       " Insert indents automatically
 set softtabstop=2                     " Number of spaces for tabs when editing
