@@ -23,7 +23,7 @@ function c_ls() {
   elif [[ ! -x $(command -v ccls) ]]; then
     sudo apt install -y cmake make gcc zlib1g-dev libncurses-dev
     sudo apt install -y clang-"$clang_version" libclang-"$clang_version"-dev
-    pushd "/tmp"
+    pushd /tmp
       rm -rf ccls
       git clone --depth=1 --recursive https://github.com/MaskRay/ccls
       cd ccls
