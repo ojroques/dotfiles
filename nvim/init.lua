@@ -1,40 +1,39 @@
 -- neovim config
 -- github.com/ojroques
 
--- HELPERS
-local api, cmd, fn = vim.api, vim.cmd, vim.fn
-local g = vim.g
-local o, wo, bo = vim.o, vim.wo, vim.bo
+-------------------- HELPERS -------------------------------
+local cmd, fn, g = vim.cmd, vim.fn, vim.g
+local o, bo, wo = vim.o, vim.bo, vim.wo
 
 local function map(mode, lhs, rhs, opts)
   local options = {noremap = true}
   if opts then for k, v in pairs(opts) do options[k] = v end end
-  api.nvim_set_keymap(mode, lhs, rhs, options)
+  vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
--- PLUGINS
+-------------------- PLUGINS -------------------------------
 cmd 'packadd paq-nvim'
 local paq = require('paq-nvim').paq
-paq 'airblade/vim-gitgutter'
-paq 'airblade/vim-rooter'
-paq 'joshdick/onedark.vim'
-paq 'junegunn/fzf'
-paq 'junegunn/fzf.vim'
-paq 'lervag/vimtex'
-paq 'machakann/vim-sandwich'
-paq 'neovim/nvim-lspconfig'
-paq 'nvim-treesitter/nvim-treesitter'
-paq 'ojroques/nvim-lspfuzzy'
-paq 'ojroques/vim-oscyank'
-paq 'shougo/deoplete-lsp'
-paq 'shougo/deoplete.nvim'
-paq 'tpope/vim-commentary'
-paq 'tpope/vim-fugitive'
-paq 'vim-airline/vim-airline'
-paq 'yggdroot/indentLine'
+paq {'airblade/vim-gitgutter'}
+paq {'airblade/vim-rooter'}
+paq {'joshdick/onedark.vim'}
+paq {'junegunn/fzf', hook = fn['fzf#install']}
+paq {'junegunn/fzf.vim'}
+paq {'lervag/vimtex'}
+paq {'machakann/vim-sandwich'}
+paq {'neovim/nvim-lspconfig'}
+paq {'nvim-treesitter/nvim-treesitter'}
+paq {'ojroques/nvim-lspfuzzy'}
+paq {'ojroques/vim-oscyank'}
 paq {'savq/paq-nvim', opt = true}
+paq {'shougo/deoplete-lsp'}
+paq {'shougo/deoplete.nvim', hook = fn['remote#host#UpdateRemotePlugins']}
+paq {'tpope/vim-commentary'}
+paq {'tpope/vim-fugitive'}
+paq {'vim-airline/vim-airline'}
+paq {'yggdroot/indentLine'}
 
--- PLUGIN CONFIGURATION
+-------------------- PLUGIN SETUP --------------------------
 -- airline
 g['airline#extensions#tabline#enabled'] = 1
 g['airline#extensions#tabline#fnamemod'] = ':p:t'
@@ -56,8 +55,6 @@ map('n', '<C-p>', '<cmd>Files<CR>')
 map('n', '<leader>g', '<cmd>Commits<CR>')
 map('n', '<leader>p', '<cmd>Rg<CR>')
 map('n', 's', '<cmd>Buffers<CR>')
--- gitgutter
-g['gitgutter_map_keys'] = 0
 -- indentline
 g['indentLine_fileType'] = {'c', 'cpp', 'lua', 'python', 'sh'}
 -- netrw
@@ -70,7 +67,7 @@ cmd 'runtime macros/sandwich/keymap/surround.vim'
 g['vimtex_quickfix_mode'] = 0
 g['vimtex_view_method'] = 'zathura'
 
--- OPTIONS
+-------------------- OPTIONS -------------------------------
 local indent = 2
 cmd 'colorscheme onedark'
 bo.expandtab = true               -- Use spaces instead of tabs
@@ -92,13 +89,13 @@ o.updatetime = 100                -- Delay before swap file is saved
 o.wildmode = 'longest:full,full'  -- Command-line completion mode
 wo.colorcolumn = '80'             -- Line length marker
 wo.cursorline = true              -- Highlight cursor line
-wo.list = true                    -- Show invisible characters
+wo.list = true                    -- Show some invisible characters
 wo.number = true                  -- Print line number
 wo.relativenumber = true          -- Relative line numbers
 wo.signcolumn = 'yes'             -- Show sign column
 wo.wrap = false                   -- Disable line wrap
 
--- MAPPINGS
+-------------------- MAPPINGS ------------------------------
 map('', '<leader>c', '"+y')
 map('i', '<C-u>', '<C-g>u<C-u>')
 map('i', '<C-w>', '<C-g>u<C-w>')
@@ -119,7 +116,6 @@ map('n', '<leader><Down>', '<cmd>cclose<CR>')
 map('n', '<leader><Left>', '<cmd>cprev<CR>')
 map('n', '<leader><Right>', '<cmd>cnext<CR>')
 map('n', '<leader><Up>', '<cmd>copen<CR>')
-map('n', '<leader><space>', 'za')
 map('n', '<leader>i', '<cmd>conf qa<CR>')
 map('n', '<leader>o', 'm`o<Esc>``')
 map('n', '<leader>s', ':%s//gcI<Left><Left><Left><Left>')
@@ -131,21 +127,12 @@ map('n', 'U', '<cmd>lua warn_caps_lock()<CR>')
 map('n', 'X', '<cmd>bp<CR>')
 map('v', '<leader>s', ':s//gcI<Left><Left><Left><Left>')
 
--- LSP
+-------------------- LSP -----------------------------------
 local lsp = require 'lspconfig'
-local lspconfigs = require'lspconfig/configs'
-local lspfuzzy = require'lspfuzzy'
-lspconfigs.luals = {
-  default_config = {
-    cmd = {'lua-lsp'},
-    filetypes = {'lua'},
-    root_dir = lsp.util.root_pattern('.git', fn.getcwd()),
-  }
-}
+local lspfuzzy = require 'lspfuzzy'
 lsp.bashls.setup {}
 lsp.ccls.setup {}
 lsp.jsonls.setup {}
-lsp.luals.setup {}
 lsp.pyls.setup {root_dir = lsp.util.root_pattern('.git', fn.getcwd())}
 lspfuzzy.setup {}
 map('n', '<space>,', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
@@ -157,11 +144,11 @@ map('n', '<space>m', '<cmd>lua vim.lsp.buf.rename()<CR>')
 map('n', '<space>r', '<cmd>lua vim.lsp.buf.references()<CR>')
 map('n', '<space>s', '<cmd>lua vim.lsp.buf.document_symbol()<CR>')
 
--- TREE-SITTER
+-------------------- TREE-SITTER ---------------------------
 local ts = require 'nvim-treesitter.configs'
 ts.setup {ensure_installed = 'maintained', highlight = {enable = true}}
 
--- AUTOCOMMANDS & FUNCTIONS
+-------------------- COMMANDS ------------------------------
 function close_buffer()
   if #fn.getbufinfo('')[1]['windows'] > 1 then cmd 'close'; return end
   local buflisted = fn.getbufinfo {buflisted = 1}

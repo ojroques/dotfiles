@@ -2,6 +2,9 @@
 " github.com/ojroques
 " vim: foldmethod=marker foldlevel=1
 
+" USE INIT.LUA INSTEAD FOR NEOVIM 0.5
+" WILL BE REMOVED AFTER THE RELEASE OF NEOVIM 0.5
+
 " PLUGINS {{{
 call plug#begin()
 Plug 'airblade/vim-gitgutter'

@@ -23,6 +23,7 @@ cp -vr kitty/ "$CONFIG_DIR"
 
 echo "[NEOVIM]"
 cp -vr nvim/ "$CONFIG_DIR"
+rm -f "$CONFIG_DIR"/nvim/init.vim
 rm -f "$CONFIG_DIR"/nvim/lsp.sh
 
 echo "[ROFI]"

@@ -3,6 +3,7 @@
 
 set nocompatible
 
+noremap <leader>c "+y
 inoremap <C-u> <C-g>u<C-u>
 inoremap <C-w> <C-g>u<C-w>
 inoremap jj <ESC>
@@ -25,7 +26,6 @@ nnoremap <leader>o m`o<Esc>``
 nnoremap <leader>u :update<CR>
 nnoremap <leader>s :%s//gcI<Left><Left><Left><Left>
 vnoremap <leader>s :s//gcI<Left><Left><Left><Left>
-vnoremap <leader>c "+y
 
 filetype plugin indent on
 syntax enable
@@ -42,11 +42,11 @@ set hlsearch                          " Highlight search terms
 set ignorecase                        " Ignore case
 set incsearch                         " Highlight search patterns
 set laststatus=2                      " Always display status line
-set list                              " List mode
+set list                              " Show some invisible characters
 set listchars=tab:>\ ,trail:-,nbsp:+  " Characters to show for spaces
 set nojoinspaces                      " No double spaces after a dot with join
 set nowrap                            " Disable line wrap
-set number relativenumber             " Relative line number
+set number relativenumber             " Relative line numbers
 set pastetoggle=<F2>                  " Paste mode
 set ruler                             " Show cursor line and column
 set scrolloff=4                       " Lines of context
@@ -55,11 +55,14 @@ set shiftwidth=2                      " Number of spaces when indenting
 set shortmess=filnxtToOF              " Configure vim messages
 set showcmd                           " Show current command
 set sidescrolloff=8                   " Columns of context
-set smartcase                         " Do not ignore case with uppercase character
+set smartcase                         " Don't ignore case with capital letters
 set smartindent                       " Insert indents automatically
-set softtabstop=2                     " Number of spaces for tabs when editing
 set splitbelow splitright             " Change position of new windows
 set tabstop=2                         " Number of spaces tabs count for
 set termguicolors                     " True color support
 set wildmenu                          " Enhanced command-line completion
 set wildmode=longest:full,full        " Command-line completion mode
+
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_winsize = 20

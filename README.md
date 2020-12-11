@@ -34,9 +34,9 @@ sudo ./install.sh
 ```sh
 latex/latex_setup.sh
 ```
-4. (Optional) Run `lsp.sh` to install language servers for
-`LanguageClient-neovim` (a plugin to use the
-[Language Server Protocol](https://langserver.org)):
+4. (Optional) Run `lsp.sh` to install language servers for `nvim-lsp` (the
+built-in [LSP](https://microsoft.github.io/language-server-protocol/) client
+of Neovim 0.5+)
 ```sh
 nvim/lsp.sh
 ```
@@ -44,6 +44,6 @@ nvim/lsp.sh
 
 ## After Installation
 - Add email to [git config](git/.gitconfig)
-- Run `nvim` and execute `:PlugInstall` to install plugins
+- Run `nvim` and execute `:PaqInstall` to install plugins
 - Install fzf: `~/.fzf/install`
 - Generate SSH keys: `ssh-keygen -t ed25519 -a 100 -C "email@example.com"`
