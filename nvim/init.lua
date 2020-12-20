@@ -3,17 +3,17 @@
 
 -------------------- HELPERS -------------------------------
 local cmd, fn, g = vim.cmd, vim.fn, vim.g
+local scopes = {o = vim.o, b = vim.bo, w = vim.wo}
+
+local function opt(scope, key, value)
+  scopes[scope][key] = value
+  if scope ~= 'o' then scopes['o'][key] = value end
+end
 
 local function map(mode, lhs, rhs, opts)
   local options = {noremap = true}
-  if opts then for k, v in pairs(opts) do options[k] = v end end
+  if opts then options = vim.tbl_extend('force', options, opts) end
   vim.api.nvim_set_keymap(mode, lhs, rhs, options)
-end
-
-local function opt(scope, key, value)
-  local scopes = {o = vim.o, b = vim.bo, w = vim.wo}
-  scopes['o'][key] = value
-  scopes[scope][key] = value
 end
 
 -------------------- PLUGINS -------------------------------
@@ -75,37 +75,37 @@ g['vimtex_view_method'] = 'zathura'
 -------------------- OPTIONS -------------------------------
 local indent = 2
 cmd 'colorscheme onedark'
-opt('b', 'expandtab' , true)                -- Use spaces instead of tabs
-opt('b', 'shiftwidth' , indent)             -- Size of an indent
-opt('b', 'smartindent' , true)              -- Insert indents automatically
-opt('b', 'tabstop' , indent)                -- Number of spaces tabs count for
-opt('o', 'hidden' , true)                   -- Enable background buffers
-opt('o', 'ignorecase' , true)               -- Ignore case
-opt('o', 'joinspaces' , false)              -- No double spaces with join
-opt('o', 'pastetoggle' , '<F2>')            -- Paste mode
-opt('o', 'scrolloff' , 4 )                  -- Lines of context
-opt('o', 'shiftround' , true)               -- Round indent
-opt('o', 'sidescrolloff' , 8 )              -- Columns of context
-opt('o', 'smartcase' , true)                -- Don't ignore case with capitals
-opt('o', 'splitbelow' , true)               -- Put new windows below current
-opt('o', 'splitright' , true)               -- Put new windows right of current
-opt('o', 'termguicolors' , true)            -- True color support
-opt('o', 'updatetime' , 100)                -- Delay before swap file is saved
-opt('o', 'wildmode' , 'longest:full,full')  -- Command-line completion mode
-opt('w', 'colorcolumn' , '80')              -- Line length marker
-opt('w', 'cursorline' , true)               -- Highlight cursor line
-opt('w', 'list' , true)                     -- Show some invisible characters
-opt('w', 'number' , true)                   -- Print line number
-opt('w', 'relativenumber' , true)           -- Relative line numbers
-opt('w', 'signcolumn' , 'yes')              -- Show sign column
-opt('w', 'wrap' , false)                    -- Disable line wrap
+opt('b', 'expandtab', true)                -- Use spaces instead of tabs
+opt('b', 'shiftwidth', indent)             -- Size of an indent
+opt('b', 'smartindent', true)              -- Insert indents automatically
+opt('b', 'tabstop', indent)                -- Number of spaces tabs count for
+opt('o', 'hidden', true)                   -- Enable background buffers
+opt('o', 'ignorecase', true)               -- Ignore case
+opt('o', 'joinspaces', false)              -- No double spaces with join
+opt('o', 'pastetoggle', '<F2>')            -- Paste mode
+opt('o', 'scrolloff', 4 )                  -- Lines of context
+opt('o', 'shiftround', true)               -- Round indent
+opt('o', 'sidescrolloff', 8 )              -- Columns of context
+opt('o', 'smartcase', true)                -- Don't ignore case with capitals
+opt('o', 'splitbelow', true)               -- Put new windows below current
+opt('o', 'splitright', true)               -- Put new windows right of current
+opt('o', 'termguicolors', true)            -- True color support
+opt('o', 'updatetime', 200)                -- Delay before swap file is saved
+opt('o', 'wildmode', 'longest:full,full')  -- Command-line completion mode
+opt('w', 'colorcolumn', '80')              -- Line length marker
+opt('w', 'cursorline', true)               -- Highlight cursor line
+opt('w', 'list', true)                     -- Show some invisible characters
+opt('w', 'number', true)                   -- Print line number
+opt('w', 'relativenumber', true)           -- Relative line numbers
+opt('w', 'signcolumn', 'yes')              -- Show sign column
+opt('w', 'wrap', false)                    -- Disable line wrap
 
 -------------------- MAPPINGS ------------------------------
 map('', '<leader>c', '"+y')
 map('i', '<C-u>', '<C-g>u<C-u>')
 map('i', '<C-w>', '<C-g>u<C-w>')
-map('i', '<S-Tab>', 'pumvisible() ? "<C-p>" : "<Tab>"', {expr = true})
-map('i', '<Tab>', 'pumvisible() ? "<C-n>" : "<Tab>"', {expr = true})
+map('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<Tab>"', {expr = true})
+map('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', {expr = true})
 map('i', 'jj', '<ESC>')
 map('n', '<C-l>', '<cmd>noh<CR>')
 map('n', '<F3>', '<cmd>lua toggle_wrap()<CR>')
@@ -142,6 +142,7 @@ lsp.pyls.setup {root_dir = lsp.util.root_pattern('.git', fn.getcwd())}
 lspfuzzy.setup {}
 map('n', '<space>,', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
 map('n', '<space>;', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
+map('n', '<space>a', '<cmd>lua vim.lsp.buf.code_action()<CR>')
 map('n', '<space>d', '<cmd>lua vim.lsp.buf.definition()<CR>')
 map('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>')
 map('n', '<space>h', '<cmd>lua vim.lsp.buf.hover()<CR>')
