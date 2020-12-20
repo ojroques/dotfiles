@@ -7,7 +7,13 @@
   ; email =
 
 [core]
-  pager = diff-so-fancy | less --tabs=4 -RFX
+  pager = delta
+
+[interactive]
+  diffFilter = delta --color-only
+
+[delta]
+  line-numbers = true
 
 [alias]
   a = add
@@ -28,25 +34,8 @@
 [fetch]
   prune = true
 
-[merge]
-  tool = vimdiff
-
 [pull]
   rebase = true
 
-[color]
-  ui = true
-
-[color "diff-highlight"]
-  oldNormal = red bold
-  oldHighlight = red bold 52
-  newNormal = green bold
-  newHighlight = green bold 22
-
-[color "diff"]
-  meta = 11
-  frag = magenta bold
-  commit = yellow bold
-  old = red bold
-  new = green bold
-  whitespace = red reverse
+[merge]
+  tool = vimdiff

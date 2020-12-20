@@ -5,7 +5,6 @@ if [[ $EUID -ne 0 ]]; then
   exit 1
 fi
 
-BIN_DIR="/usr/local/bin"
 CLI=(  # 18.04
   "build-essential"
   "curl"
@@ -72,11 +71,15 @@ function install() {
     apt install -y "${GUI_RECENT[@]}"
   fi
 
+  version="0.4.4"
+  delta="git-delta_"$version"_amd64.deb"
+  curl -fsSL \
+    https://github.com/dandavison/delta/releases/download/"$version"/"$delta" \
+    -o "$delta"
+  dpkg -i "$delta" && rm -f "$delta"
+
   sudo -u "$SUDO_USER" git clone https://github.com/savq/paq-nvim.git \
     /home/"$SUDO_USER"/.local/share/nvim/site/pack/paqs/opt/paq-nvim
-  curl -o "$BIN_DIR"/diff-so-fancy --create-dirs \
-    https://raw.githubusercontent.com/so-fancy/diff-so-fancy/master/third_party/build_fatpack/diff-so-fancy
-  chmod 755 "$BIN_DIR"/diff-so-fancy
 }
 
 function purge() {
@@ -102,7 +105,7 @@ function main() {
   for pkg in "${CLI[@]}" "${CLI_RECENT[@]}"; do
     echo "* $pkg"
   done
-  echo "* diff-so-fancy"
+  echo "* delta"
   echo "* paq-nvim"
 
   echo "Full installation includes CLI packages and:"
