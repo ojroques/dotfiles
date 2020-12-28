@@ -28,6 +28,7 @@ paq {'lervag/vimtex'}
 paq {'machakann/vim-sandwich'}
 paq {'neovim/nvim-lspconfig'}
 paq {'nvim-treesitter/nvim-treesitter'}
+paq {'ojroques/nvim-hardline'}
 paq {'ojroques/nvim-lspfuzzy'}
 paq {'ojroques/vim-oscyank'}
 paq {'savq/paq-nvim', opt = true}
@@ -35,21 +36,9 @@ paq {'shougo/deoplete-lsp'}
 paq {'shougo/deoplete.nvim', hook = fn['remote#host#UpdateRemotePlugins']}
 paq {'tpope/vim-commentary'}
 paq {'tpope/vim-fugitive'}
-paq {'vim-airline/vim-airline'}
 paq {'yggdroot/indentLine'}
 
 -------------------- PLUGIN SETUP --------------------------
--- airline
-g['airline#extensions#tabline#enabled'] = 1
-g['airline#extensions#tabline#fnamemod'] = ':p:t'
-g['airline#extensions#tabline#formatter'] = 'unique_tail_improved'
-g['airline_section_x'] = ''
-g['airline_section_y'] = fn['airline#section#create_right'] {'filetype'}
-g['airline_section_z'] = fn['airline#section#create'] {
-  '%#__accent_bold#%3l%#__restore__#/%L', ' ',
-  '%#__accent_bold#%3v%#__restore__#/%3{virtcol("$") - 1}', ' ',
-  '%3p%%',
-}
 -- deoplete
 opt('o', 'completeopt', 'menuone,noinsert,noselect')
 g['deoplete#enable_at_startup'] = 1
@@ -60,6 +49,8 @@ map('n', '<C-p>', '<cmd>Files<CR>')
 map('n', '<leader>g', '<cmd>Commits<CR>')
 map('n', '<leader>p', '<cmd>Rg<CR>')
 map('n', 's', '<cmd>Buffers<CR>')
+-- hardline
+require('hardline').setup {bufferline = true, theme = 'one'}
 -- indentline
 g['indentLine_fileType'] = {'c', 'cpp', 'lua', 'python', 'sh'}
 -- netrw
