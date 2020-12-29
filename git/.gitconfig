@@ -13,7 +13,12 @@
   diffFilter = delta --color-only
 
 [delta]
-  line-numbers = true
+  features = diff-so-fancy line-numbers
+  file-modified-label = modified:
+  hunk-header-decoration-style = blue box
+  line-numbers-minus-style = red
+  line-numbers-plus-style = green
+  line-numbers-zero-style = 244
 
 [alias]
   a = add

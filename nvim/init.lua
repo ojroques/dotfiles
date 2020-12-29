@@ -22,7 +22,7 @@ local paq = require('paq-nvim').paq
 paq {'airblade/vim-gitgutter'}
 paq {'airblade/vim-rooter'}
 paq {'joshdick/onedark.vim'}
-paq {'junegunn/fzf', hook = fn['fzf#install']}
+paq {'junegunn/fzf'}
 paq {'junegunn/fzf.vim'}
 paq {'lervag/vimtex'}
 paq {'machakann/vim-sandwich'}

@@ -71,7 +71,7 @@ function install() {
     apt install -y "${GUI_RECENT[@]}"
   fi
 
-  version="0.4.4"
+  version="0.5.0"
   delta="git-delta_"$version"_amd64.deb"
   curl -fsSL \
     https://github.com/dandavison/delta/releases/download/"$version"/"$delta" \

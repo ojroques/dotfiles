@@ -50,8 +50,8 @@ function pdiff() {
     return 1
   fi
 
-  if [[ -x $(command -v diff-so-fancy) ]]; then
-    diff -s -u --color=always "$1" "$2" | diff-so-fancy
+  if [[ -x $(command -v delta) ]]; then
+    delta "$1" "$2"
   else
     diff -s -u --color=always "$1" "$2"
   fi
@@ -74,7 +74,7 @@ function pushdot() {
 glog() {
   local log_fmt="%C(yellow)%h%Cred%d %Creset%s %Cgreen(%ar)%Creset"
   local commit_hash="echo {} | grep -o '[a-f0-9]\{7\}' | head -1"
-  local view_commit="$commit_hash | xargs -I hash sh -c \"git i --color=always hash | diff-so-fancy\""
+  local view_commit="$commit_hash | xargs -I hash sh -c \"git i --color=always hash | delta\""
 
   git log --color=always --format="$log_fmt" --abbrev-commit "$@" | \
     fzf --no-sort --tiebreak=index --no-multi --reverse --ansi \
