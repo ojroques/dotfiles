@@ -24,6 +24,7 @@ paq {'airblade/vim-rooter'}
 paq {'joshdick/onedark.vim'}
 paq {'junegunn/fzf'}
 paq {'junegunn/fzf.vim'}
+paq {'justinmk/vim-dirvish'}
 paq {'lervag/vimtex'}
 paq {'machakann/vim-sandwich'}
 paq {'neovim/nvim-lspconfig'}
@@ -44,6 +45,8 @@ opt('o', 'completeopt', 'menuone,noinsert,noselect')
 g['deoplete#enable_at_startup'] = 1
 fn['deoplete#custom#option']('ignore_case', false)
 fn['deoplete#custom#option']('max_list', 10)
+-- dirvish
+g['dirvish_mode'] = [[:sort ,^.*[\/],]]
 -- fzf
 map('n', '<C-p>', '<cmd>Files<CR>')
 map('n', '<leader>g', '<cmd>Commits<CR>')
@@ -53,10 +56,6 @@ map('n', 's', '<cmd>Buffers<CR>')
 require('hardline').setup {bufferline = true, theme = 'one'}
 -- indentline
 g['indentLine_fileType'] = {'c', 'cpp', 'lua', 'python', 'sh'}
--- netrw
-g['netrw_banner'] = 0
-g['netrw_liststyle'] = 3
-g['netrw_winsize'] = 20
 -- vim-sandwich
 cmd 'runtime macros/sandwich/keymap/surround.vim'
 -- vimtex
@@ -65,31 +64,34 @@ g['vimtex_view_method'] = 'zathura'
 
 -------------------- OPTIONS -------------------------------
 local indent = 2
+local width = 80
 cmd 'colorscheme onedark'
-opt('b', 'expandtab', true)                -- Use spaces instead of tabs
-opt('b', 'shiftwidth', indent)             -- Size of an indent
-opt('b', 'smartindent', true)              -- Insert indents automatically
-opt('b', 'tabstop', indent)                -- Number of spaces tabs count for
-opt('o', 'hidden', true)                   -- Enable background buffers
-opt('o', 'ignorecase', true)               -- Ignore case
-opt('o', 'joinspaces', false)              -- No double spaces with join
-opt('o', 'pastetoggle', '<F2>')            -- Paste mode
-opt('o', 'scrolloff', 4 )                  -- Lines of context
-opt('o', 'shiftround', true)               -- Round indent
-opt('o', 'sidescrolloff', 8 )              -- Columns of context
-opt('o', 'smartcase', true)                -- Don't ignore case with capitals
-opt('o', 'splitbelow', true)               -- Put new windows below current
-opt('o', 'splitright', true)               -- Put new windows right of current
-opt('o', 'termguicolors', true)            -- True color support
-opt('o', 'updatetime', 200)                -- Delay before swap file is saved
-opt('o', 'wildmode', 'longest:full,full')  -- Command-line completion mode
-opt('w', 'colorcolumn', '80')              -- Line length marker
-opt('w', 'cursorline', true)               -- Highlight cursor line
-opt('w', 'list', true)                     -- Show some invisible characters
-opt('w', 'number', true)                   -- Print line number
-opt('w', 'relativenumber', true)           -- Relative line numbers
-opt('w', 'signcolumn', 'yes')              -- Show sign column
-opt('w', 'wrap', false)                    -- Disable line wrap
+opt('b', 'expandtab', true)               -- Use spaces instead of tabs
+opt('b', 'formatoptions', 'tcrqnj')       -- Automatic formatting options
+opt('b', 'shiftwidth', indent)            -- Size of an indent
+opt('b', 'smartindent', true)             -- Insert indents automatically
+opt('b', 'tabstop', indent)               -- Number of spaces tabs count for
+opt('b', 'textwidth', width)              -- Maximum width of text
+opt('o', 'hidden', true)                  -- Enable background buffers
+opt('o', 'ignorecase', true)              -- Ignore case
+opt('o', 'joinspaces', false)             -- No double spaces with join
+opt('o', 'pastetoggle', '<F2>')           -- Paste mode
+opt('o', 'scrolloff', 4 )                 -- Lines of context
+opt('o', 'shiftround', true)              -- Round indent
+opt('o', 'sidescrolloff', 8 )             -- Columns of context
+opt('o', 'smartcase', true)               -- Don't ignore case with capitals
+opt('o', 'splitbelow', true)              -- Put new windows below current
+opt('o', 'splitright', true)              -- Put new windows right of current
+opt('o', 'termguicolors', true)           -- True color support
+opt('o', 'updatetime', 200)               -- Delay before swap file is saved
+opt('o', 'wildmode', 'list:longest')      -- Command-line completion mode
+opt('w', 'colorcolumn', tostring(width))  -- Line length marker
+opt('w', 'cursorline', true)              -- Highlight cursor line
+opt('w', 'list', true)                    -- Show some invisible characters
+opt('w', 'number', true)                  -- Show line numbers
+opt('w', 'relativenumber', true)          -- Relative line numbers
+opt('w', 'signcolumn', 'yes')             -- Show sign column
+opt('w', 'wrap', false)                   -- Disable line wrap
 
 -------------------- MAPPINGS ------------------------------
 map('', '<leader>c', '"+y')
@@ -103,7 +105,6 @@ map('n', '<F3>', '<cmd>lua toggle_wrap()<CR>')
 map('n', '<F4>', '<cmd>set spell!<CR>')
 map('n', '<F5>', '<cmd>checkt<CR>')
 map('n', '<F6>', '<cmd>set scb!<CR>')
-map('n', '<F9>', '<cmd>Lexplore<CR>')
 map('n', '<S-Down>', '<C-w>2<')
 map('n', '<S-Left>', '<C-w>2-')
 map('n', '<S-Right>', '<C-w>2+')
@@ -168,3 +169,4 @@ end
 
 cmd 'au TextYankPost * lua vim.highlight.on_yank {on_visual = false, timeout = 200}'
 cmd 'au TextYankPost * if v:event.operator is "y" && v:event.regname is "+" | call YankOSC52(getreg("+")) | endif'
+cmd 'au VimEnter * call deoplete#custom#var("omni", "input_patterns", {"tex": g:vimtex#re#deoplete})'
