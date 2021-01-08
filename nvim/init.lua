@@ -41,7 +41,6 @@ paq {'yggdroot/indentLine'}
 
 -------------------- PLUGIN SETUP --------------------------
 -- deoplete
-opt('o', 'completeopt', 'menuone,noinsert,noselect')
 g['deoplete#enable_at_startup'] = 1
 fn['deoplete#custom#option']('ignore_case', false)
 fn['deoplete#custom#option']('max_list', 10)
@@ -72,6 +71,7 @@ opt('b', 'shiftwidth', indent)            -- Size of an indent
 opt('b', 'smartindent', true)             -- Insert indents automatically
 opt('b', 'tabstop', indent)               -- Number of spaces tabs count for
 opt('b', 'textwidth', width)              -- Maximum width of text
+opt('o', 'completeopt', 'menuone,noinsert,noselect')  -- Completion options
 opt('o', 'hidden', true)                  -- Enable background buffers
 opt('o', 'ignorecase', true)              -- Ignore case
 opt('o', 'joinspaces', false)             -- No double spaces with join
@@ -100,11 +100,11 @@ map('i', '<C-w>', '<C-g>u<C-w>')
 map('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<Tab>"', {expr = true})
 map('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', {expr = true})
 map('i', 'jj', '<ESC>')
-map('n', '<C-l>', '<cmd>noh<CR>')
+map('n', '<C-l>', '<cmd>nohlsearch<CR>')
 map('n', '<F3>', '<cmd>lua toggle_wrap()<CR>')
 map('n', '<F4>', '<cmd>set spell!<CR>')
-map('n', '<F5>', '<cmd>checkt<CR>')
-map('n', '<F6>', '<cmd>set scb!<CR>')
+map('n', '<F5>', '<cmd>checktime<CR>')
+map('n', '<F6>', '<cmd>set scrollbind!<CR>')
 map('n', '<S-Down>', '<C-w>2<')
 map('n', '<S-Left>', '<C-w>2-')
 map('n', '<S-Right>', '<C-w>2+')
@@ -118,9 +118,9 @@ map('n', '<leader>o', 'm`o<Esc>``')
 map('n', '<leader>s', ':%s//gcI<Left><Left><Left><Left>')
 map('n', '<leader>u', '<cmd>update<CR>')
 map('n', '<leader>w', '<cmd>lua close_buffer()<CR>')
-map('n', 'Q', '<cmd>lua warn_caps_lock()<CR>')
+map('n', 'Q', '<cmd>lua warn_caps()<CR>')
 map('n', 'S', '<cmd>bn<CR>')
-map('n', 'U', '<cmd>lua warn_caps_lock()<CR>')
+map('n', 'U', '<cmd>lua warn_caps()<CR>')
 map('n', 'X', '<cmd>bp<CR>')
 map('v', '<leader>s', ':s//gcI<Left><Left><Left><Left>')
 
@@ -148,10 +148,10 @@ ts.setup {ensure_installed = 'maintained', highlight = {enable = true}}
 
 -------------------- COMMANDS ------------------------------
 function close_buffer()
-  if #fn.getbufinfo('')[1]['windows'] > 1 then cmd 'close'; return end
+  if #fn.getbufinfo('')[1].windows > 1 then cmd 'close'; return end
   local buflisted = fn.getbufinfo {buflisted = 1}
-  local last_bufnr = buflisted[#buflisted]['bufnr']
-  if fn.bufnr '' == last_bufnr then cmd 'bp' else cmd 'bn' end
+  if #buflisted < 2 then cmd 'confirm quit'; return end
+  if fn.bufnr '' == buflisted[#buflisted].bufnr then cmd 'bp' else cmd 'bn' end
   cmd 'bd #'
 end
 
@@ -161,7 +161,7 @@ function toggle_wrap()
   opt('w', 'wrap', not vim.wo.wrap)
 end
 
-function warn_caps_lock()
+function warn_caps()
   cmd 'echohl WarningMsg'
   cmd 'echo "Caps Lock may be on"'
   cmd 'echohl None'
