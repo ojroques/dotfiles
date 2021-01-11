@@ -97,10 +97,12 @@ opt('w', 'wrap', false)                   -- Disable line wrap
 map('', '<leader>c', '"+y')
 map('i', '<C-u>', '<C-g>u<C-u>')
 map('i', '<C-w>', '<C-g>u<C-w>')
-map('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<Tab>"', {expr = true})
+map('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<S-Tab>"', {expr = true})
 map('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', {expr = true})
 map('i', 'jj', '<ESC>')
 map('n', '<C-l>', '<cmd>nohlsearch<CR>')
+map('n', '<C-w>ts', '<cmd>split<CR><leader>t', {noremap = false})
+map('n', '<C-w>tv', '<cmd>vsplit<CR><leader>t', {noremap = false})
 map('n', '<F3>', '<cmd>lua toggle_wrap()<CR>')
 map('n', '<F4>', '<cmd>set spell!<CR>')
 map('n', '<F5>', '<cmd>checktime<CR>')
@@ -116,12 +118,15 @@ map('n', '<leader><Up>', '<cmd>copen<CR>')
 map('n', '<leader>i', '<cmd>conf qa<CR>')
 map('n', '<leader>o', 'm`o<Esc>``')
 map('n', '<leader>s', ':%s//gcI<Left><Left><Left><Left>')
+map('n', '<leader>t', '<cmd>terminal<CR>')
 map('n', '<leader>u', '<cmd>update<CR>')
 map('n', '<leader>w', '<cmd>lua close_buffer()<CR>')
 map('n', 'Q', '<cmd>lua warn_caps()<CR>')
 map('n', 'S', '<cmd>bn<CR>')
 map('n', 'U', '<cmd>lua warn_caps()<CR>')
 map('n', 'X', '<cmd>bp<CR>')
+map('t', '<ESC>', 'len(getbufvar("", "fzf")) == 0 ? "\\<C-\\>\\<C-n>" : "\\<ESC>"' , {expr = true})
+map('t', 'jj', '<ESC>', {noremap = false})
 map('v', '<leader>s', ':s//gcI<Left><Left><Left><Left>')
 
 -------------------- LSP -----------------------------------
@@ -152,7 +157,15 @@ function close_buffer()
   local buflisted = fn.getbufinfo {buflisted = 1}
   if #buflisted < 2 then cmd 'confirm quit'; return end
   if fn.bufnr '' == buflisted[#buflisted].bufnr then cmd 'bp' else cmd 'bn' end
+  if fn.getbufvar('#', '&buftype') == 'terminal' then cmd 'bd! #'; return end
   cmd 'bd #'
+end
+
+function init_term()
+  vim.wo.number = false
+  vim.wo.relativenumber = false
+  vim.wo.signcolumn = 'auto'
+  cmd 'startinsert'
 end
 
 function toggle_wrap()
@@ -168,5 +181,6 @@ function warn_caps()
 end
 
 cmd 'au TextYankPost * lua vim.highlight.on_yank {on_visual = false, timeout = 200}'
-cmd 'au TextYankPost * if v:event.operator is "y" && v:event.regname is "+" | call YankOSC52(getreg("+")) | endif'
+cmd 'au TextYankPost * if v:event.operator is "y" && v:event.regname is "+" | OSCYankReg + | endif'
+cmd 'au TermOpen * lua init_term()'
 cmd 'au VimEnter * call deoplete#custom#var("omni", "input_patterns", {"tex": g:vimtex#re#deoplete})'

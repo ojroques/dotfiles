@@ -26,6 +26,7 @@ nnoremap <leader><Up> :copen<CR>
 nnoremap <leader>i :conf qa<CR>
 nnoremap <leader>o m`o<Esc>``
 nnoremap <leader>s :%s//gcI<Left><Left><Left><Left>
+nnoremap <leader>t :terminal ++curwin<CR>
 nnoremap <leader>u :update<CR>
 nnoremap <leader>w :CloseBuffer<CR>
 nnoremap Q :WarnCaps<CR>
@@ -33,6 +34,8 @@ nnoremap S :bn<CR>
 nnoremap U :WarnCaps<CR>
 nnoremap X :bp<CR>
 noremap <leader>c "+y
+tnoremap <ESC> <C-\><C-n>
+tnoremap jj <C-\><C-n>
 vnoremap <leader>s :s//gcI<Left><Left><Left><Left>
 
 " PLUGIN OPTIONS
@@ -88,6 +91,7 @@ function! s:close_buffer()
   let l:buflisted = getbufinfo({'buflisted': 1})
   if len(l:buflisted) < 2 | confirm quit | return | endif
   if bufnr('') == l:buflisted[-1].bufnr | bp | else | bn | endif
+  if getbufvar('#', '&buftype') == 'terminal' | bd! # | return | end
   bd #
 endfunction
 
