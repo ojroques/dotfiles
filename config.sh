@@ -9,6 +9,7 @@ echo "------------------------------------------------------------"
 mkdir -vp "$HOME"/Documents
 mkdir -vp "$HOME"/Downloads
 mkdir -vp "$HOME"/.tmp
+mkdir -vp "$HOME"/.local/bin
 mkdir -vp "$CONFIG_DIR"
 
 echo "[BASH]"
@@ -22,9 +23,9 @@ echo "[KITTY]"
 cp -vr kitty/ "$CONFIG_DIR"
 
 echo "[NEOVIM]"
-cp -vr nvim/ "$CONFIG_DIR"
-rm -f "$CONFIG_DIR"/nvim/init.vim
-rm -f "$CONFIG_DIR"/nvim/lsp.sh
+mkdir -vp "$CONFIG_DIR"/nvim
+cp -v nvim/init.lua "$CONFIG_DIR"/nvim
+cp -v nvim/nvc.py "$HOME"/.local/bin/nvc
 
 echo "[ROFI]"
 cp -vr rofi/ "$CONFIG_DIR"

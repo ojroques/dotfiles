@@ -101,8 +101,8 @@ map('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<S-Tab>"', {expr = true})
 map('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', {expr = true})
 map('i', 'jj', '<ESC>')
 map('n', '<C-l>', '<cmd>nohlsearch<CR>')
-map('n', '<C-w>ts', '<cmd>split<CR><leader>t', {noremap = false})
-map('n', '<C-w>tv', '<cmd>vsplit<CR><leader>t', {noremap = false})
+map('n', '<C-w>ts', '<cmd>split<bar>terminal<CR>')
+map('n', '<C-w>tv', '<cmd>vsplit<bar>terminal<CR>')
 map('n', '<F3>', '<cmd>lua toggle_wrap()<CR>')
 map('n', '<F4>', '<cmd>set spell!<CR>')
 map('n', '<F5>', '<cmd>checktime<CR>')
@@ -162,9 +162,8 @@ function close_buffer()
 end
 
 function init_term()
-  vim.wo.number = false
-  vim.wo.relativenumber = false
-  vim.wo.signcolumn = 'auto'
+  cmd 'setlocal nonumber norelativenumber'
+  cmd 'setlocal signcolumn=auto'
   cmd 'startinsert'
 end
 
