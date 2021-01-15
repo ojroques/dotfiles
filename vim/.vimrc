@@ -10,6 +10,8 @@ inoremap <expr> <S-Tab> pumvisible() ? '\<C-p>' : '\<Tab>'
 inoremap <expr> <Tab> pumvisible() ? '\<C-n>' : '\<Tab>'
 inoremap jj <ESC>
 nnoremap <C-l> :nohlsearch<CR>
+nnoremap <C-w>ts :split<bar>terminal ++curwin<CR>
+nnoremap <C-w>tv :vsplit<bar>terminal ++curwin<CR>
 nnoremap <F3> :ToggleWrap<CR>
 nnoremap <F4> :set spell!<CR>
 nnoremap <F5> :checktime<CR>

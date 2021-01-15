@@ -5,15 +5,15 @@
 local cmd, fn, g = vim.cmd, vim.fn, vim.g
 local scopes = {o = vim.o, b = vim.bo, w = vim.wo}
 
-local function opt(scope, key, value)
-  scopes[scope][key] = value
-  if scope ~= 'o' then scopes['o'][key] = value end
-end
-
 local function map(mode, lhs, rhs, opts)
   local options = {noremap = true}
   if opts then options = vim.tbl_extend('force', options, opts) end
   vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+end
+
+local function opt(scope, key, value)
+  scopes[scope][key] = value
+  if scope ~= 'o' then scopes['o'][key] = value end
 end
 
 -------------------- PLUGINS -------------------------------
@@ -60,6 +60,7 @@ cmd 'runtime macros/sandwich/keymap/surround.vim'
 -- vimtex
 g['vimtex_quickfix_mode'] = 0
 g['vimtex_view_method'] = 'zathura'
+cmd 'au VimEnter * call deoplete#custom#var("omni", "input_patterns", {"tex": g:vimtex#re#deoplete})'
 
 -------------------- OPTIONS -------------------------------
 local indent = 2
@@ -125,7 +126,7 @@ map('n', 'Q', '<cmd>lua warn_caps()<CR>')
 map('n', 'S', '<cmd>bn<CR>')
 map('n', 'U', '<cmd>lua warn_caps()<CR>')
 map('n', 'X', '<cmd>bp<CR>')
-map('t', '<ESC>', 'len(getbufvar("", "fzf")) == 0 ? "\\<C-\\>\\<C-n>" : "\\<ESC>"' , {expr = true})
+map('t', '<ESC>', '&filetype == "fzf" ? "\\<ESC>" : "\\<C-\\>\\<C-n>"' , {expr = true})
 map('t', 'jj', '<ESC>', {noremap = false})
 map('v', '<leader>s', ':s//gcI<Left><Left><Left><Left>')
 
@@ -163,6 +164,7 @@ end
 
 function init_term()
   cmd 'setlocal nonumber norelativenumber'
+  cmd 'setlocal nospell'
   cmd 'setlocal signcolumn=auto'
   cmd 'startinsert'
 end
@@ -179,7 +181,8 @@ function warn_caps()
   cmd 'echohl None'
 end
 
-cmd 'au TextYankPost * lua vim.highlight.on_yank {on_visual = false, timeout = 200}'
-cmd 'au TextYankPost * if v:event.operator is "y" && v:event.regname is "+" | OSCYankReg + | endif'
-cmd 'au TermOpen * lua init_term()'
-cmd 'au VimEnter * call deoplete#custom#var("omni", "input_patterns", {"tex": g:vimtex#re#deoplete})'
+vim.tbl_map(function(c) cmd(string.format('autocmd %s', c)) end, {
+  'TermOpen * lua init_term()',
+  'TextYankPost * if v:event.operator is "y" && v:event.regname is "+" | OSCYankReg + | endif',
+  'TextYankPost * lua vim.highlight.on_yank {on_visual = false, timeout = 200}',
+})
