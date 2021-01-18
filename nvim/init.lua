@@ -29,6 +29,7 @@ paq {'lervag/vimtex'}
 paq {'machakann/vim-sandwich'}
 paq {'neovim/nvim-lspconfig'}
 paq {'nvim-treesitter/nvim-treesitter'}
+paq {'ojroques/nvim-buildme'}
 paq {'ojroques/nvim-hardline'}
 paq {'ojroques/nvim-lspfuzzy'}
 paq {'ojroques/vim-oscyank'}
@@ -40,6 +41,10 @@ paq {'tpope/vim-fugitive'}
 paq {'yggdroot/indentLine'}
 
 -------------------- PLUGIN SETUP --------------------------
+-- buildme
+map('n', '<leader>bb', '<cmd>BuildMe<CR>')
+map('n', '<leader>be', '<cmd>BuildMeEdit<CR>')
+map('n', '<leader>bs', '<cmd>BuildMeStop<CR>')
 -- deoplete
 g['deoplete#enable_at_startup'] = 1
 fn['deoplete#custom#option']('ignore_case', false)
