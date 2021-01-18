@@ -72,7 +72,7 @@ local indent = 2
 local width = 80
 cmd 'colorscheme onedark'
 opt('b', 'expandtab', true)               -- Use spaces instead of tabs
-opt('b', 'formatoptions', 'tcrqnj')       -- Automatic formatting options
+opt('b', 'formatoptions', 'crqnj')        -- Automatic formatting options
 opt('b', 'shiftwidth', indent)            -- Size of an indent
 opt('b', 'smartindent', true)             -- Insert indents automatically
 opt('b', 'tabstop', indent)               -- Number of spaces tabs count for
@@ -188,6 +188,6 @@ end
 
 vim.tbl_map(function(c) cmd(string.format('autocmd %s', c)) end, {
   'TermOpen * lua init_term()',
-  'TextYankPost * if v:event.operator is "y" && v:event.regname is "+" | OSCYankReg + | endif',
   'TextYankPost * lua vim.highlight.on_yank {on_visual = false, timeout = 200}',
+  'TextYankPost * if v:event.operator is "y" && v:event.regname is "+" | OSCYankReg + | endif',
 })

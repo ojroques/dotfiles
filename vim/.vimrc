@@ -66,7 +66,7 @@ set wildmenu                          " Enhanced command-line completion
 colorscheme desert
 set completeopt=menuone,noinsert,noselect  " Completion options
 set expandtab              " Use spaces instead of tabs
-set formatoptions=tcrqnj   " Automatic formatting options
+set formatoptions=crqnj    " Automatic formatting options
 set hidden                 " Enable background buffers
 set ignorecase             " Ignore case
 set list                   " Show some invisible characters
