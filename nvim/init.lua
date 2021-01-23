@@ -136,12 +136,15 @@ map('t', 'jj', '<ESC>', {noremap = false})
 map('v', '<leader>s', ':s//gcI<Left><Left><Left><Left>')
 
 -------------------- LSP -----------------------------------
-local lsp = require 'lspconfig'
-local lspfuzzy = require 'lspfuzzy'
-lsp.bashls.setup {}
-lsp.ccls.setup {}
-lsp.jsonls.setup {}
-lsp.pyls.setup {root_dir = lsp.util.root_pattern('.git', fn.getcwd())}
+local lsp = require('lspconfig')
+local lspfuzzy = require('lspfuzzy')
+local lspconfigs = {
+  bashls = {},
+  ccls = {},
+  jsonls = {},
+  pyls = {root_dir = lsp.util.root_pattern('.git', fn.getcwd())},
+}
+for ls, cfg in pairs(lspconfigs) do lsp[ls].setup(cfg) end
 lspfuzzy.setup {}
 map('n', '<space>,', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
 map('n', '<space>;', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')

@@ -3,7 +3,7 @@
 This repository contains my config files for:
 - **bash**
 - **git**
-- [**kitty**](https://github.com/kovidgoyal/kitty)
+- **kitty**
 - **latex**
 - **rofi**
 - **neovim**, **vim**, **vimium**
@@ -15,17 +15,17 @@ recent Ubuntu (18.04+) flavor.
 
 
 ## Screenshots
-Wallpaper can be found [here](./screenshots/wallpaper.png)
 ![Kitty and Thunar](./screenshots/shell.png)
 ![Neovim](./screenshots/neovim.png)
+Wallpaper can be found [here](./screenshots/wallpaper.png)
 
 
 ## Installation
-1. Run `install.sh` as root to install the packages:
+1. Run `install.sh` as root to install apps:
 ```sh
 sudo ./install.sh
 ```
-2. Run `config.sh` to copy config files to the right places:
+2. Run `config.sh` to install config files:
 ```sh
 ./config.sh
 ```
@@ -44,5 +44,5 @@ nvim/lsp.sh
 ## After Installation
 - Add email to [git config](git/.gitconfig)
 - Run `nvim` and execute `:PaqInstall` to install plugins
-- Install fzf: `~/.fzf/install`
+- Install fzf: `~/.local/share/nvim/site/pack/paqs/start/fzf/install`
 - Generate SSH keys: `ssh-keygen -t ed25519 -a 100 -C "email@example.com"`

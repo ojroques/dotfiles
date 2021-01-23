@@ -15,7 +15,7 @@ alias rm='rm --preserve-root -I'
 alias tree='tree -F -C --dirsfirst'
 
 # Development
-alias ipy='ipython --no-confirm-exit'
+alias ipy='ipython --pylab --no-confirm-exit'
 alias py='python3'
 alias vim="$EDITOR"
 

@@ -6,11 +6,12 @@ CONFIG_DIR="$HOME"/.config
 echo "DOTFILES CONFIGURATION"
 echo "------------------------------------------------------------"
 
+mkdir -vp "$CONFIG_DIR"
+mkdir -vp "$CONFIG_DIR"/nvim
+mkdir -vp "$HOME"/.local/bin
+mkdir -vp "$HOME"/.tmp
 mkdir -vp "$HOME"/Documents
 mkdir -vp "$HOME"/Downloads
-mkdir -vp "$HOME"/.tmp
-mkdir -vp "$HOME"/.local/bin
-mkdir -vp "$CONFIG_DIR"
 
 echo "[BASH]"
 cp -vr bash/.shell "$HOME"
@@ -23,7 +24,6 @@ echo "[KITTY]"
 cp -vr kitty/ "$CONFIG_DIR"
 
 echo "[NEOVIM]"
-mkdir -vp "$CONFIG_DIR"/nvim
 cp -v nvim/init.lua "$CONFIG_DIR"/nvim
 cp -v nvim/nvim-client.py "$HOME"/.local/bin/nvim-client
 
