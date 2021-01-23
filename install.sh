@@ -15,7 +15,6 @@ CLI=(  # 18.04
   "python3-pip"
   "shellcheck"
   "software-properties-common"
-  "tmux"
   "tree"
   "unzip"
   "vim"

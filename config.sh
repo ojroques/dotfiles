@@ -30,9 +30,6 @@ cp -v nvim/nvim-client.py "$HOME"/.local/bin/nvim-client
 echo "[ROFI]"
 cp -vr rofi/ "$CONFIG_DIR"
 
-echo "[TMUX]"
-cp -v tmux/.tmux.conf "$HOME"
-
 echo "[VIM]"
 cp -v vim/.vimrc "$HOME"
 

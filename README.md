@@ -6,7 +6,6 @@ This repository contains my config files for:
 - [**kitty**](https://github.com/kovidgoyal/kitty)
 - **latex**
 - **rofi**
-- **tmux**
 - **neovim**, **vim**, **vimium**
 - **windows terminal**
 - **thunar** and **xfce**
