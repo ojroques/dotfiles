@@ -89,12 +89,16 @@ set wildmode=list:longest  " Command-line completion mode
 
 " COMMANDS
 function! s:close_buffer()
-  if len(getbufinfo('')[0].windows) > 1 | close | return | endif
   let l:buflisted = getbufinfo({'buflisted': 1})
-  if len(l:buflisted) < 2 | confirm quit | return | endif
-  if bufnr('') == l:buflisted[-1].bufnr | bp | else | bn | endif
-  if getbufvar('#', '&buftype') == 'terminal' | bd! # | return | end
-  bd #
+  let [l:cur_winnr, l:cur_bufnr] = [winnr(), bufnr()]
+  if len(l:buflisted) < 2 | confirm qall | return | endif
+  for l:winid in getbufinfo(l:cur_bufnr)[0].windows
+    execute(win_id2win(l:winid) . 'wincmd w')
+    if l:cur_bufnr == l:buflisted[-1].bufnr | bp | else | bn | endif
+  endfor
+  execute(l:cur_winnr . 'wincmd w')
+  let l:is_terminal = getbufvar(l:cur_bufnr, '&buftype') == 'terminal'
+  if l:is_terminal | bd! # | else | silent! confirm bd # | endif
 endfunction
 
 function! s:toggle_wrap()
