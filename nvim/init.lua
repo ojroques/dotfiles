@@ -29,21 +29,25 @@ paq {'lervag/vimtex'}
 paq {'machakann/vim-sandwich'}
 paq {'neovim/nvim-lspconfig'}
 paq {'nvim-treesitter/nvim-treesitter'}
+paq {'ojroques/nvim-bufdel'}
 paq {'ojroques/nvim-buildme'}
 paq {'ojroques/nvim-hardline'}
 paq {'ojroques/nvim-lspfuzzy'}
 paq {'ojroques/vim-oscyank'}
 paq {'savq/paq-nvim', opt = true}
 paq {'shougo/deoplete-lsp'}
-paq {'shougo/deoplete.nvim', hook = fn['remote#host#UpdateRemotePlugins']}
+paq {'shougo/deoplete.nvim'}
 paq {'tpope/vim-commentary'}
 paq {'tpope/vim-fugitive'}
 paq {'yggdroot/indentLine'}
 
 -------------------- PLUGIN SETUP --------------------------
+-- bufdel
+map('n', '<leader>w', '<cmd>BufDel<CR>')
 -- buildme
 map('n', '<leader>bb', '<cmd>BuildMe<CR>')
 map('n', '<leader>be', '<cmd>BuildMeEdit<CR>')
+map('n', '<leader>bj', '<cmd>BuildMeJump<CR>')
 map('n', '<leader>bs', '<cmd>BuildMeStop<CR>')
 -- deoplete
 g['deoplete#enable_at_startup'] = 1
@@ -126,7 +130,6 @@ map('n', '<leader>o', 'm`o<Esc>``')
 map('n', '<leader>s', ':%s//gcI<Left><Left><Left><Left>')
 map('n', '<leader>t', '<cmd>terminal<CR>')
 map('n', '<leader>u', '<cmd>update<CR>')
-map('n', '<leader>w', '<cmd>lua close_buffer()<CR>')
 map('n', 'Q', '<cmd>lua warn_caps()<CR>')
 map('n', 'S', '<cmd>bn<CR>')
 map('n', 'U', '<cmd>lua warn_caps()<CR>')
@@ -161,19 +164,6 @@ local ts = require 'nvim-treesitter.configs'
 ts.setup {ensure_installed = 'maintained', highlight = {enable = true}}
 
 -------------------- COMMANDS ------------------------------
-function close_buffer()
-  local buflisted = fn.getbufinfo({buflisted = 1})
-  local cur_winnr, cur_bufnr = fn.winnr(), fn.bufnr()
-  if #buflisted < 2 then cmd 'confirm qall' return end
-  for _, winid in ipairs(fn.getbufinfo(cur_bufnr)[1].windows) do
-    cmd(string.format('%d wincmd w', fn.win_id2win(winid)))
-    cmd(cur_bufnr == buflisted[#buflisted].bufnr and 'bp' or 'bn')
-  end
-  cmd(string.format('%d wincmd w', cur_winnr))
-  local is_terminal = fn.getbufvar(cur_bufnr, '&buftype') == 'terminal'
-  cmd(is_terminal and 'bd! #' or 'silent! confirm bd #')
-end
-
 function init_term()
   cmd 'setlocal nonumber norelativenumber'
   cmd 'setlocal nospell'
