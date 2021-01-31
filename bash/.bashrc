@@ -43,6 +43,7 @@ fi
 # Set WSL environment variables
 if grep -q -i "microsoft" /proc/sys/kernel/osrelease; then
   export DISPLAY="localhost:0.0"
+  export PROMPT_COMMAND='printf "\e]9;9;%s\e\\" "$(wslpath -m "$PWD")"'
   [[ -f ~/.shell/ssh-agent ]] && source ~/.shell/ssh-agent
   if [[ ! -f ~/.shell/wsl.env ]]; then
     mkdir -p ~/.shell
