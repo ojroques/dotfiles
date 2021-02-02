@@ -44,10 +44,10 @@ paq {'yggdroot/indentLine'}
 -------------------- PLUGIN SETUP --------------------------
 -- bufdel
 map('n', '<leader>w', '<cmd>BufDel<CR>')
+require('bufdel').setup {next = 'alternate'}
 -- buildme
 map('n', '<leader>bb', '<cmd>BuildMe<CR>')
 map('n', '<leader>be', '<cmd>BuildMeEdit<CR>')
-map('n', '<leader>bj', '<cmd>BuildMeJump<CR>')
 map('n', '<leader>bs', '<cmd>BuildMeStop<CR>')
 -- deoplete
 g['deoplete#enable_at_startup'] = 1
