@@ -2,13 +2,13 @@
 -- github.com/ojroques
 
 -------------------- HELPERS -------------------------------
-local cmd, fn, g = vim.cmd, vim.fn, vim.g
+local api, cmd, fn, g = vim.api, vim.cmd, vim.fn, vim.g
 local scopes = {o = vim.o, b = vim.bo, w = vim.wo}
 
 local function map(mode, lhs, rhs, opts)
   local options = {noremap = true}
   if opts then options = vim.tbl_extend('force', options, opts) end
-  vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+  api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
 local function opt(scope, key, value)
@@ -137,9 +137,11 @@ map('n', 'Q', '<cmd>lua warn_caps()<CR>')
 map('n', 'S', '<cmd>bn<CR>')
 map('n', 'U', '<cmd>lua warn_caps()<CR>')
 map('n', 'X', '<cmd>bp<CR>')
+map('n', 'gs', '<cmd>set opfunc=v:lua.substitute_operator<CR>g@')
 map('t', '<ESC>', '&filetype == "fzf" ? "\\<ESC>" : "\\<C-\\>\\<C-n>"' , {expr = true})
 map('t', 'jj', '<ESC>', {noremap = false})
 map('v', '<leader>s', ':s//gcI<Left><Left><Left><Left>')
+map('v', 'gs', '"sy<cmd>lua substitute_operator("visual")<CR>')
 
 -------------------- LSP -----------------------------------
 local lsp = require('lspconfig')
@@ -171,6 +173,20 @@ function init_term()
   cmd 'setlocal nospell'
   cmd 'setlocal signcolumn=auto'
   cmd 'startinsert'
+end
+
+function substitute_operator(type)
+  if type == 'char' then
+    cmd('normal! `[v`]"sy')
+  elseif type == 'line' then
+    cmd('normal! `[V`]"sy')
+  end
+  local raw = fn.getreg('s')
+  local pattern = fn.substitute(fn.escape(raw, '/\\'), '\\n', '\\\\n', 'g')
+  local string = fn.substitute(fn.escape(raw, '/\\&~'), '\\n', '\\\\r', 'g')
+  fn.setreg('s', string)
+  local cmd = string.format(':%%s/\\V%s//gcI<Left><Left><Left><Left>', pattern)
+  fn.feedkeys(api.nvim_replace_termcodes(cmd, true, false, true))
 end
 
 function toggle_wrap()
