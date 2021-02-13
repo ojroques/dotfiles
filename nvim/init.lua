@@ -29,9 +29,10 @@ paq {'lervag/vimtex'}
 paq {'machakann/vim-sandwich'}
 paq {'neovim/nvim-lspconfig'}
 paq {'nvim-treesitter/nvim-treesitter'}
+paq {'ojroques/nvim-bufbar'}
 paq {'ojroques/nvim-bufdel'}
 paq {'ojroques/nvim-buildme'}
-paq {'ojroques/nvim-hardline'}
+paq {'ojroques/nvim-hardline', branch = 'personal'}
 paq {'ojroques/nvim-lspfuzzy'}
 paq {'ojroques/vim-oscyank'}
 paq {'savq/paq-nvim', opt = true}
@@ -42,6 +43,8 @@ paq {'tpope/vim-fugitive'}
 paq {'yggdroot/indentLine'}
 
 -------------------- PLUGIN SETUP --------------------------
+-- bufbar
+require('bufbar').setup {theme = 'one'}
 -- bufdel
 map('n', '<leader>w', '<cmd>BufDel<CR>')
 require('bufdel').setup {next = 'alternate'}
@@ -61,7 +64,7 @@ map('n', '<leader>g', '<cmd>Commits<CR>')
 map('n', '<leader>p', '<cmd>Rg<CR>')
 map('n', 's', '<cmd>Buffers<CR>')
 -- hardline
-require('hardline').setup {bufferline = true, theme = 'one'}
+require('hardline').setup {theme = 'one'}
 -- indentline
 g['indentLine_fileType'] = {'c', 'cpp', 'lua', 'python', 'sh'}
 -- vim-sandwich
@@ -151,7 +154,6 @@ for ls, cfg in pairs(lspconfigs) do lsp[ls].setup(cfg) end
 lspfuzzy.setup {}
 map('n', '<space>,', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
 map('n', '<space>;', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
-map('n', '<space>a', '<cmd>lua vim.lsp.buf.code_action()<CR>')
 map('n', '<space>d', '<cmd>lua vim.lsp.buf.definition()<CR>')
 map('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>')
 map('n', '<space>h', '<cmd>lua vim.lsp.buf.hover()<CR>')
