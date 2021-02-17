@@ -32,7 +32,7 @@ paq {'nvim-treesitter/nvim-treesitter'}
 paq {'ojroques/nvim-bufbar'}
 paq {'ojroques/nvim-bufdel'}
 paq {'ojroques/nvim-buildme'}
-paq {'ojroques/nvim-hardline', branch = 'personal'}
+paq {'ojroques/nvim-hardline'}
 paq {'ojroques/nvim-lspfuzzy'}
 paq {'ojroques/vim-oscyank'}
 paq {'savq/paq-nvim', opt = true}
@@ -40,11 +40,14 @@ paq {'shougo/deoplete-lsp'}
 paq {'shougo/deoplete.nvim'}
 paq {'tpope/vim-commentary'}
 paq {'tpope/vim-fugitive'}
-paq {'yggdroot/indentLine'}
 
 -------------------- PLUGIN SETUP --------------------------
 -- bufbar
-require('bufbar').setup {theme = 'one'}
+require('bufbar').setup {
+  counters = false,
+  show_bufname = 'visible',
+  show_flags = false,
+}
 -- bufdel
 map('n', '<leader>w', '<cmd>BufDel<CR>')
 require('bufdel').setup {next = 'alternate'}
@@ -63,10 +66,9 @@ map('n', '<C-p>', '<cmd>Files<CR>')
 map('n', '<leader>g', '<cmd>Commits<CR>')
 map('n', '<leader>p', '<cmd>Rg<CR>')
 map('n', 's', '<cmd>Buffers<CR>')
+g['fzf_action'] = {['ctrl-s'] = 'split', ['ctrl-v'] = 'vsplit'}
 -- hardline
-require('hardline').setup {theme = 'one'}
--- indentline
-g['indentLine_fileType'] = {'c', 'cpp', 'lua', 'python', 'sh'}
+require('hardline').setup {}
 -- vim-sandwich
 cmd 'runtime macros/sandwich/keymap/surround.vim'
 -- vimtex
@@ -114,8 +116,6 @@ map('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<S-Tab>"', {expr = true})
 map('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', {expr = true})
 map('i', 'jj', '<ESC>')
 map('n', '<C-l>', '<cmd>nohlsearch<CR>')
-map('n', '<C-w>ts', '<cmd>split<bar>terminal<CR>')
-map('n', '<C-w>tv', '<cmd>vsplit<bar>terminal<CR>')
 map('n', '<F3>', '<cmd>lua toggle_wrap()<CR>')
 map('n', '<F4>', '<cmd>set spell!<CR>')
 map('n', '<F5>', '<cmd>checktime<CR>')
@@ -129,7 +129,7 @@ map('n', '<leader><Left>', '<cmd>cprev<CR>')
 map('n', '<leader><Right>', '<cmd>cnext<CR>')
 map('n', '<leader><Up>', '<cmd>copen<CR>')
 map('n', '<leader>i', '<cmd>conf qa<CR>')
-map('n', '<leader>o', 'm`o<Esc>``')
+map('n', '<leader>o', 'm`o<Esc>0D``')
 map('n', '<leader>s', ':%s//gcI<Left><Left><Left><Left>')
 map('n', '<leader>t', '<cmd>terminal<CR>')
 map('n', '<leader>u', '<cmd>update<CR>')
@@ -137,11 +137,9 @@ map('n', 'Q', '<cmd>lua warn_caps()<CR>')
 map('n', 'S', '<cmd>bn<CR>')
 map('n', 'U', '<cmd>lua warn_caps()<CR>')
 map('n', 'X', '<cmd>bp<CR>')
-map('n', 'gs', '<cmd>set opfunc=v:lua.substitute_operator<CR>g@')
 map('t', '<ESC>', '&filetype == "fzf" ? "\\<ESC>" : "\\<C-\\>\\<C-n>"' , {expr = true})
 map('t', 'jj', '<ESC>', {noremap = false})
 map('v', '<leader>s', ':s//gcI<Left><Left><Left><Left>')
-map('v', 'gs', '"sy<cmd>lua substitute_operator("visual")<CR>')
 
 -------------------- LSP -----------------------------------
 local lsp = require('lspconfig')
@@ -173,20 +171,6 @@ function init_term()
   cmd 'setlocal nospell'
   cmd 'setlocal signcolumn=auto'
   cmd 'startinsert'
-end
-
-function substitute_operator(type)
-  if type == 'char' then
-    cmd('normal! `[v`]"sy')
-  elseif type == 'line' then
-    cmd('normal! `[V`]"sy')
-  end
-  local raw = fn.getreg('s')
-  local pattern = fn.substitute(fn.escape(raw, '/\\'), '\\n', '\\\\n', 'g')
-  local string = fn.substitute(fn.escape(raw, '/\\&~'), '\\n', '\\\\r', 'g')
-  fn.setreg('s', string)
-  local cmd = string.format(':%%s/\\V%s//gcI<Left><Left><Left><Left>', pattern)
-  fn.feedkeys(api.nvim_replace_termcodes(cmd, true, false, true))
 end
 
 function toggle_wrap()
