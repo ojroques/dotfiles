@@ -23,12 +23,12 @@ nnoremap <leader><Down> :cclose<CR>
 nnoremap <leader><Left> :cprev<CR>
 nnoremap <leader><Right> :cnext<CR>
 nnoremap <leader><Up> :copen<CR>
-nnoremap <leader>i :conf qa<CR>
 nnoremap <leader>o m`o<Esc>0D``
 nnoremap <leader>s :%s//gcI<Left><Left><Left><Left>
 nnoremap <leader>t :terminal ++curwin<CR>
 nnoremap <leader>u :update<CR>
 nnoremap <leader>w :CloseBuffer<CR>
+nnoremap <leader>x :conf qa<CR>
 nnoremap Q :WarnCaps<CR>
 nnoremap S :bn<CR>
 nnoremap U :WarnCaps<CR>

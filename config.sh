@@ -25,7 +25,7 @@ cp -vr kitty/ "$CONFIG_DIR"
 
 echo "[NEOVIM]"
 cp -v nvim/init.lua "$CONFIG_DIR"/nvim
-cp -v nvim/nvim-client.py "$HOME"/.local/bin/nvim-client
+cp -v nvim/nvimc.py "$HOME"/.local/bin/nvimc
 
 echo "[ROFI]"
 cp -vr rofi/ "$CONFIG_DIR"

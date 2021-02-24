@@ -26,6 +26,7 @@ paq {'junegunn/fzf'}
 paq {'junegunn/fzf.vim'}
 paq {'justinmk/vim-dirvish'}
 paq {'lervag/vimtex'}
+paq {'lukas-reineke/indent-blankline.nvim', branch = 'lua'}
 paq {'machakann/vim-sandwich'}
 paq {'neovim/nvim-lspconfig'}
 paq {'nvim-treesitter/nvim-treesitter'}
@@ -43,11 +44,7 @@ paq {'tpope/vim-fugitive'}
 
 -------------------- PLUGIN SETUP --------------------------
 -- bufbar
-require('bufbar').setup {
-  counters = false,
-  show_bufname = 'visible',
-  show_flags = false,
-}
+require('bufbar').setup {show_bufname = 'visible', show_flags = false}
 -- bufdel
 map('n', '<leader>w', '<cmd>BufDel<CR>')
 require('bufdel').setup {next = 'alternate'}
@@ -62,13 +59,17 @@ fn['deoplete#custom#option']('max_list', 10)
 -- dirvish
 g['dirvish_mode'] = [[:sort ,^.*[\/],]]
 -- fzf
-map('n', '<C-p>', '<cmd>Files<CR>')
+map('n', '<leader>f', '<cmd>Files<CR>')
 map('n', '<leader>g', '<cmd>Commits<CR>')
-map('n', '<leader>p', '<cmd>Rg<CR>')
+map('n', '<leader>r', '<cmd>Rg<CR>')
 map('n', 's', '<cmd>Buffers<CR>')
 g['fzf_action'] = {['ctrl-s'] = 'split', ['ctrl-v'] = 'vsplit'}
 -- hardline
 require('hardline').setup {}
+-- indent-blankline
+g['indent_blankline_char'] = '┊'
+g['indent_blankline_filetype_exclude'] = {'fzf', 'help'}
+g['indent_blankline_buftype_exclude'] = {'terminal'}
 -- vim-sandwich
 cmd 'runtime macros/sandwich/keymap/surround.vim'
 -- vimtex
@@ -77,8 +78,7 @@ g['vimtex_view_method'] = 'zathura'
 cmd 'au VimEnter * call deoplete#custom#var("omni", "input_patterns", {"tex": g:vimtex#re#deoplete})'
 
 -------------------- OPTIONS -------------------------------
-local indent = 2
-local width = 80
+local indent, width = 2, 80
 cmd 'colorscheme onedark'
 opt('b', 'expandtab', true)               -- Use spaces instead of tabs
 opt('b', 'formatoptions', 'crqnj')        -- Automatic formatting options
@@ -128,11 +128,11 @@ map('n', '<leader><Down>', '<cmd>cclose<CR>')
 map('n', '<leader><Left>', '<cmd>cprev<CR>')
 map('n', '<leader><Right>', '<cmd>cnext<CR>')
 map('n', '<leader><Up>', '<cmd>copen<CR>')
-map('n', '<leader>i', '<cmd>conf qa<CR>')
 map('n', '<leader>o', 'm`o<Esc>0D``')
 map('n', '<leader>s', ':%s//gcI<Left><Left><Left><Left>')
 map('n', '<leader>t', '<cmd>terminal<CR>')
 map('n', '<leader>u', '<cmd>update<CR>')
+map('n', '<leader>x', '<cmd>conf qa<CR>')
 map('n', 'Q', '<cmd>lua warn_caps()<CR>')
 map('n', 'S', '<cmd>bn<CR>')
 map('n', 'U', '<cmd>lua warn_caps()<CR>')
@@ -144,13 +144,12 @@ map('v', '<leader>s', ':s//gcI<Left><Left><Left><Left>')
 -------------------- LSP -----------------------------------
 local lsp = require('lspconfig')
 local lspfuzzy = require('lspfuzzy')
-local lspconfigs = {
+for ls, cfg in pairs({
   bashls = {},
   ccls = {},
   jsonls = {},
   pyls = {root_dir = lsp.util.root_pattern('.git', fn.getcwd())},
-}
-for ls, cfg in pairs(lspconfigs) do lsp[ls].setup(cfg) end
+}) do lsp[ls].setup(cfg) end
 lspfuzzy.setup {}
 map('n', '<space>,', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
 map('n', '<space>;', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
@@ -170,7 +169,6 @@ function init_term()
   cmd 'setlocal nonumber norelativenumber'
   cmd 'setlocal nospell'
   cmd 'setlocal signcolumn=auto'
-  cmd 'startinsert'
 end
 
 function toggle_wrap()
