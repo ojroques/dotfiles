@@ -63,7 +63,11 @@ map('n', '<leader>f', '<cmd>Files<CR>')
 map('n', '<leader>g', '<cmd>Commits<CR>')
 map('n', '<leader>r', '<cmd>Rg<CR>')
 map('n', 's', '<cmd>Buffers<CR>')
-g['fzf_action'] = {['ctrl-s'] = 'split', ['ctrl-v'] = 'vsplit'}
+g['fzf_action'] = {
+  ['ctrl-t'] = 'tab split',
+  ['ctrl-s'] = 'split',
+  ['ctrl-v'] = 'vsplit',
+}
 -- hardline
 require('hardline').setup {}
 -- indent-blankline
@@ -116,6 +120,8 @@ map('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<S-Tab>"', {expr = true})
 map('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', {expr = true})
 map('i', 'jj', '<ESC>')
 map('n', '<C-l>', '<cmd>nohlsearch<CR>')
+map('n', '<C-w>T', '<cmd>tabclose<CR>')
+map('n', '<C-w>t', '<cmd>tabnew<CR>')
 map('n', '<F3>', '<cmd>lua toggle_wrap()<CR>')
 map('n', '<F4>', '<cmd>set spell!<CR>')
 map('n', '<F5>', '<cmd>checktime<CR>')
