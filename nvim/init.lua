@@ -28,6 +28,7 @@ paq {'justinmk/vim-dirvish'}
 paq {'lervag/vimtex'}
 paq {'lukas-reineke/indent-blankline.nvim', branch = 'lua'}
 paq {'machakann/vim-sandwich'}
+paq {'michaeljsmith/vim-indent-object'}
 paq {'neovim/nvim-lspconfig'}
 paq {'nvim-treesitter/nvim-treesitter'}
 paq {'ojroques/nvim-bufbar'}
@@ -41,6 +42,7 @@ paq {'shougo/deoplete-lsp'}
 paq {'shougo/deoplete.nvim'}
 paq {'tpope/vim-commentary'}
 paq {'tpope/vim-fugitive'}
+paq {'wellle/targets.vim'}
 
 -------------------- PLUGIN SETUP --------------------------
 -- bufbar
@@ -74,12 +76,13 @@ require('hardline').setup {}
 g['indent_blankline_char'] = '┊'
 g['indent_blankline_filetype_exclude'] = {'fzf', 'help'}
 g['indent_blankline_buftype_exclude'] = {'terminal'}
+-- targets
+g['targets_nl'] = '  '
 -- vim-sandwich
 cmd 'runtime macros/sandwich/keymap/surround.vim'
 -- vimtex
 g['vimtex_quickfix_mode'] = 0
 g['vimtex_view_method'] = 'zathura'
-cmd 'au VimEnter * call deoplete#custom#var("omni", "input_patterns", {"tex": g:vimtex#re#deoplete})'
 
 -------------------- OPTIONS -------------------------------
 local indent, width = 2, 80
@@ -191,6 +194,7 @@ end
 
 vim.tbl_map(function(c) cmd(string.format('autocmd %s', c)) end, {
   'TermOpen * lua init_term()',
-  'TextYankPost * lua vim.highlight.on_yank {on_visual = false, timeout = 200}',
+  'TextYankPost * lua vim.highlight.on_yank {timeout = 200}',
   'TextYankPost * if v:event.operator is "y" && v:event.regname is "+" | OSCYankReg + | endif',
+  'VimEnter * call deoplete#custom#var("omni", "input_patterns", {"tex": g:vimtex#re#deoplete})',
 })
