@@ -25,6 +25,7 @@ paq {'joshdick/onedark.vim'}
 paq {'junegunn/fzf'}
 paq {'junegunn/fzf.vim'}
 paq {'justinmk/vim-dirvish'}
+paq {'kosayoda/nvim-lightbulb'}
 paq {'lervag/vimtex'}
 paq {'lukas-reineke/indent-blankline.nvim', branch = 'lua'}
 paq {'machakann/vim-sandwich'}
@@ -42,7 +43,6 @@ paq {'shougo/deoplete-lsp'}
 paq {'shougo/deoplete.nvim'}
 paq {'tpope/vim-commentary'}
 paq {'tpope/vim-fugitive'}
-paq {'wellle/targets.vim'}
 
 -------------------- PLUGIN SETUP --------------------------
 -- bufbar
@@ -74,15 +74,17 @@ g['fzf_action'] = {
 require('hardline').setup {}
 -- indent-blankline
 g['indent_blankline_char'] = '┊'
-g['indent_blankline_filetype_exclude'] = {'fzf', 'help'}
 g['indent_blankline_buftype_exclude'] = {'terminal'}
--- targets
-g['targets_nl'] = '  '
+g['indent_blankline_filetype_exclude'] = {'fzf', 'help', 'man'}
+g['indent_blankline_show_current_context'] = true
+-- lightbulb
+cmd 'au CursorHold,CursorHoldI * lua require("nvim-lightbulb").update_lightbulb()'
 -- vim-sandwich
 cmd 'runtime macros/sandwich/keymap/surround.vim'
 -- vimtex
 g['vimtex_quickfix_mode'] = 0
 g['vimtex_view_method'] = 'zathura'
+cmd 'au VimEnter * call deoplete#custom#var("omni", "input_patterns", {"tex": g:vimtex#re#deoplete})'
 
 -------------------- OPTIONS -------------------------------
 local indent, width = 2, 80
@@ -105,7 +107,7 @@ opt('o', 'smartcase', true)               -- Don't ignore case with capitals
 opt('o', 'splitbelow', true)              -- Put new windows below current
 opt('o', 'splitright', true)              -- Put new windows right of current
 opt('o', 'termguicolors', true)           -- True color support
-opt('o', 'updatetime', 200)               -- Delay before swap file is saved
+opt('o', 'updatetime', 100)               -- Delay before swap file is saved
 opt('o', 'wildmode', 'list:longest')      -- Command-line completion mode
 opt('w', 'colorcolumn', tostring(width))  -- Line length marker
 opt('w', 'cursorline', true)              -- Highlight cursor line
@@ -162,6 +164,7 @@ for ls, cfg in pairs({
 lspfuzzy.setup {}
 map('n', '<space>,', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
 map('n', '<space>;', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
+map('n', '<space>a', '<cmd>lua vim.lsp.buf.code_action()<CR>')
 map('n', '<space>d', '<cmd>lua vim.lsp.buf.definition()<CR>')
 map('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>')
 map('n', '<space>h', '<cmd>lua vim.lsp.buf.hover()<CR>')
@@ -194,7 +197,6 @@ end
 
 vim.tbl_map(function(c) cmd(string.format('autocmd %s', c)) end, {
   'TermOpen * lua init_term()',
-  'TextYankPost * lua vim.highlight.on_yank {timeout = 200}',
+  'TextYankPost * lua vim.highlight.on_yank {on_visual = false, timeout = 200}',
   'TextYankPost * if v:event.operator is "y" && v:event.regname is "+" | OSCYankReg + | endif',
-  'VimEnter * call deoplete#custom#var("omni", "input_patterns", {"tex": g:vimtex#re#deoplete})',
 })
