@@ -62,7 +62,6 @@ fn['deoplete#custom#option']('max_list', 10)
 g['dirvish_mode'] = [[:sort ,^.*[\/],]]
 -- fzf
 map('n', '<leader>f', '<cmd>Files<CR>')
-map('n', '<leader>g', '<cmd>Commits<CR>')
 map('n', '<leader>r', '<cmd>Rg<CR>')
 map('n', 's', '<cmd>Buffers<CR>')
 g['fzf_action'] = {
@@ -70,12 +69,17 @@ g['fzf_action'] = {
   ['ctrl-s'] = 'split',
   ['ctrl-v'] = 'vsplit',
 }
+-- fugitive
+map('n', '<leader>gb', '<cmd>Git blame<CR>')
+map('n', '<leader>gd', '<cmd>Gvdiffsplit<CR>')
+map('n', '<leader>gg', '<cmd>Git<CR>')
+map('n', '<leader>gl', '<cmd>Commits<CR>')
 -- hardline
 require('hardline').setup {}
 -- indent-blankline
 g['indent_blankline_char'] = '┊'
 g['indent_blankline_buftype_exclude'] = {'terminal'}
-g['indent_blankline_filetype_exclude'] = {'fzf', 'help', 'man'}
+g['indent_blankline_filetype_exclude'] = {'fugitive', 'fzf', 'help', 'man'}
 g['indent_blankline_show_current_context'] = true
 -- lightbulb
 cmd 'au CursorHold,CursorHoldI * lua require("nvim-lightbulb").update_lightbulb()'
