@@ -4,6 +4,7 @@
 -------------------- HELPERS -------------------------------
 local api, cmd, fn, g = vim.api, vim.cmd, vim.fn, vim.g
 local scopes = {o = vim.o, b = vim.bo, w = vim.wo}
+local fmt = string.format
 
 local function map(mode, lhs, rhs, opts)
   local options = {noremap = true}
@@ -156,6 +157,17 @@ map('t', '<ESC>', '&filetype == "fzf" ? "\\<ESC>" : "\\<C-\\>\\<C-n>"' , {expr =
 map('t', 'jj', '<ESC>', {noremap = false})
 map('v', '<leader>s', ':s//gcI<Left><Left><Left><Left>')
 
+-------------------- TEXT OBJECTS --------------------------
+for _, ch in ipairs({
+  '<space>', '!', '#', '$', '%', '&', '*', '+', ',', '-', '.',
+  '/', ':', ';', '=', '?', '@', '<bslash>', '^', '_', '~', '<bar>',
+}) do
+  map('x', fmt('i%s', ch), fmt(':<C-u>normal! T%svt%s<CR>', ch, ch), {silent = true})
+  map('o', fmt('i%s', ch), fmt(':<C-u>normal vi%s<CR>', ch), {silent = true})
+  map('x', fmt('a%s', ch), fmt(':<C-u>normal! F%svf%s<CR>', ch, ch), {silent = true})
+  map('o', fmt('a%s', ch), fmt(':<C-u>normal va%s<CR>', ch), {silent = true})
+end
+
 -------------------- LSP -----------------------------------
 local lsp = require('lspconfig')
 local lspfuzzy = require('lspfuzzy')
@@ -199,8 +211,8 @@ function warn_caps()
   cmd 'echohl None'
 end
 
-vim.tbl_map(function(c) cmd(string.format('autocmd %s', c)) end, {
+vim.tbl_map(function(c) cmd(fmt('autocmd %s', c)) end, {
   'TermOpen * lua init_term()',
-  'TextYankPost * lua vim.highlight.on_yank {on_visual = false, timeout = 200}',
+  'TextYankPost * lua vim.highlight.on_yank {timeout = 200}',
   'TextYankPost * if v:event.operator is "y" && v:event.regname is "+" | OSCYankReg + | endif',
 })
