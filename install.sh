@@ -70,13 +70,20 @@ function install() {
     apt install -y "${GUI_RECENT[@]}"
   fi
 
-  version="0.5.1"
-  delta="git-delta_"$version"_amd64.deb"
+  # delta
+  delta_version="0.7.1"
+  delta="git-delta_"$delta_version"_amd64.deb"
   curl -fsSL \
-    https://github.com/dandavison/delta/releases/download/"$version"/"$delta" \
+    https://github.com/dandavison/delta/releases/download/"$delta_version"/"$delta" \
     -o "$delta"
   dpkg -i "$delta" && rm -f "$delta"
 
+  # gdb-dashboard
+  sudo -u "$SUDO_USER" curl -fsSL \
+    https://raw.githubusercontent.com/cyrus-and/gdb-dashboard/master/.gdbinit
+    -o /home/"$SUDO_USER"/.gdbinit
+
+  # paq-nvim
   sudo -u "$SUDO_USER" git clone https://github.com/savq/paq-nvim.git \
     /home/"$SUDO_USER"/.local/share/nvim/site/pack/paqs/opt/paq-nvim
 }
@@ -105,6 +112,7 @@ function main() {
     echo "* $pkg"
   done
   echo "* delta"
+  echo "* gdb-dashboard"
   echo "* paq-nvim"
 
   echo "Full installation includes CLI packages and:"
