@@ -13,28 +13,24 @@ nnoremap <C-l> :nohlsearch<CR>
 nnoremap <C-w>T :tabclose<CR>
 nnoremap <C-w>t :tabnew<CR>
 nnoremap <F3> :ToggleWrap<CR>
-nnoremap <F4> :set spell!<CR>
+nnoremap <F4> :set scrollbind!<CR>
 nnoremap <F5> :checktime<CR>
-nnoremap <F6> :set scrollbind!<CR>
 nnoremap <F9> :Lexplore<CR>
 nnoremap <S-Down> <C-w>2<
 nnoremap <S-Left> <C-w>2-
 nnoremap <S-Right> <C-w>2+
 nnoremap <S-Up> <C-w>2>
-nnoremap <leader><Down> :cclose<CR>
-nnoremap <leader><Left> :cprev<CR>
-nnoremap <leader><Right> :cnext<CR>
-nnoremap <leader><Up> :copen<CR>
-nnoremap <leader>o m`o<Esc>0D``
 nnoremap <leader>s :%s//gcI<Left><Left><Left><Left>
 nnoremap <leader>t :terminal ++curwin<CR>
 nnoremap <leader>u :update<CR>
 nnoremap <leader>w :CloseBuffer<CR>
 nnoremap <leader>x :conf qa<CR>
 nnoremap Q :WarnCaps<CR>
-nnoremap S :bn<CR>
 nnoremap U :WarnCaps<CR>
-nnoremap X :bp<CR>
+nnoremap [<space> m`O<Esc>0D``
+nnoremap [b :bprevious<CR>
+nnoremap ]<space> m`o<Esc>0D``
+nnoremap ]b :bnext<CR>
 noremap <leader>c "+y
 tnoremap <ESC> <C-\><C-n>
 tnoremap jj <C-\><C-n>
