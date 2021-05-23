@@ -62,7 +62,10 @@ fn['deoplete#custom#option']('max_list', 10)
 -- dirvish
 g['dirvish_mode'] = [[:sort ,^.*[\/],]]
 -- fzf
+map('n', '<leader>/', '<cmd>BLines<CR>')
 map('n', '<leader>f', '<cmd>Files<CR>')
+map('n', '<leader>gC', '<cmd>Commits<CR>')
+map('n', '<leader>gc', '<cmd>BCommits<CR>')
 map('n', '<leader>r', '<cmd>Rg<CR>')
 map('n', 's', '<cmd>Buffers<CR>')
 g['fzf_action'] = {
@@ -74,7 +77,6 @@ g['fzf_action'] = {
 map('n', '<leader>gb', '<cmd>Git blame<CR>')
 map('n', '<leader>gd', '<cmd>Gvdiffsplit<CR>')
 map('n', '<leader>gg', '<cmd>Git<CR>')
-map('n', '<leader>gl', '<cmd>Commits<CR>')
 -- hardline
 require('hardline').setup {}
 -- indent-blankline
