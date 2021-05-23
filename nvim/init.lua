@@ -64,8 +64,6 @@ g['dirvish_mode'] = [[:sort ,^.*[\/],]]
 -- fzf
 map('n', '<leader>/', '<cmd>BLines<CR>')
 map('n', '<leader>f', '<cmd>Files<CR>')
-map('n', '<leader>gC', '<cmd>Commits<CR>')
-map('n', '<leader>gc', '<cmd>BCommits<CR>')
 map('n', '<leader>r', '<cmd>Rg<CR>')
 map('n', 's', '<cmd>Buffers<CR>')
 g['fzf_action'] = {
@@ -73,10 +71,12 @@ g['fzf_action'] = {
   ['ctrl-s'] = 'split',
   ['ctrl-v'] = 'vsplit',
 }
--- fugitive
-map('n', '<leader>gb', '<cmd>Git blame<CR>')
+-- fugitive and git
+local log = [[\%C(yellow)\%h\%Cred\%d \%Creset\%s \%Cgreen\%as \%Cblue\%an\%Creset]]
+map('n', '<leader>g<space>', ':Git ')
 map('n', '<leader>gd', '<cmd>Gvdiffsplit<CR>')
 map('n', '<leader>gg', '<cmd>Git<CR>')
+map('n', '<leader>gl', fmt('<cmd>term git log --graph --all --format="%s"<CR><cmd>start<CR>', log))
 -- hardline
 require('hardline').setup {}
 -- indent-blankline

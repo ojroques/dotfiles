@@ -28,12 +28,13 @@
   d = diff
   dc = diff --cached
   ds = diff --compact-summary
-  i = show --format='%C(bold yellow)COMMIT%Creset %C(yellow)%H%Cred%d%n%C(bold blue)AUTHOR%Creset %Cblue%an <%ae>%n%C(bold green)DATE%Creset   %Cgreen%ai (%ar)%Creset%n%n%s%n%n%b'
+  i = show --abbrev-commit --date=iso
+  l = log --abbrev-commit --date=human
+  lg = log --graph --all --format='%C(yellow)%h%Cred%d %Creset%s %Cgreen%as %Cblue%an%Creset'
   ls = ls-tree --full-tree --name-only -r HEAD
   rb = rebase
   rs = reset
   s = status
-  t = log --graph --format='%C(yellow)%h%Cred%d %Creset%s %Cgreen(%ar) %Cblue%an%Creset' --abbrev-commit --all
   ua = restore --staged
 
 [fetch]
