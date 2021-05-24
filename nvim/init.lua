@@ -26,7 +26,6 @@ paq {'joshdick/onedark.vim'}
 paq {'junegunn/fzf'}
 paq {'junegunn/fzf.vim'}
 paq {'justinmk/vim-dirvish'}
-paq {'kosayoda/nvim-lightbulb'}
 paq {'lervag/vimtex'}
 paq {'lukas-reineke/indent-blankline.nvim', branch = 'lua'}
 paq {'machakann/vim-sandwich'}
@@ -38,6 +37,7 @@ paq {'ojroques/nvim-buildme'}
 paq {'ojroques/nvim-hardline'}
 paq {'ojroques/nvim-lspfuzzy'}
 paq {'ojroques/vim-oscyank'}
+paq {'sakhnik/nvim-gdb'}
 paq {'savq/paq-nvim', opt = true}
 paq {'shougo/deoplete-lsp'}
 paq {'shougo/deoplete.nvim'}
@@ -77,6 +77,21 @@ map('n', '<leader>g<space>', ':Git ')
 map('n', '<leader>gd', '<cmd>Gvdiffsplit<CR>')
 map('n', '<leader>gg', '<cmd>Git<CR>')
 map('n', '<leader>gl', fmt('<cmd>term git log --graph --all --format="%s"<CR><cmd>start<CR>', log))
+-- gdb
+g['nvimgdb_disable_start_keymaps'] = true
+map('n', '<leader>dg', ':GdbStart gdb -q ')
+map('n', '<leader>dp', ':GdbStartPDB python3 -m pdb %')
+g['nvimgdb_config_override'] = {
+  key_breakpoint = '<F6>',
+  key_continue = '<F7>',
+  key_until = '<F8>',
+  key_next = '<F9>',
+  key_step = '<F10>',
+  key_finish = '<F12>',
+  key_frameup = '<F99>',    -- disabled
+  key_framedown = '<F99>',  -- disabled
+  key_eval = '<F99>',       -- disabled
+}
 -- hardline
 require('hardline').setup {}
 -- indent-blankline
@@ -84,8 +99,6 @@ g['indent_blankline_char'] = '┊'
 g['indent_blankline_buftype_exclude'] = {'terminal'}
 g['indent_blankline_filetype_exclude'] = {'fugitive', 'fzf', 'help', 'man'}
 g['indent_blankline_show_current_context'] = true
--- lightbulb
-cmd 'au CursorHold,CursorHoldI * lua require("nvim-lightbulb").update_lightbulb()'
 -- vim-sandwich
 cmd 'runtime macros/sandwich/keymap/surround.vim'
 -- vimtex
@@ -174,7 +187,6 @@ for ls, cfg in pairs({
 lspfuzzy.setup {}
 map('n', '<space>,', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
 map('n', '<space>;', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
-map('n', '<space>a', '<cmd>lua vim.lsp.buf.code_action()<CR>')
 map('n', '<space>d', '<cmd>lua vim.lsp.buf.definition()<CR>')
 map('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>')
 map('n', '<space>h', '<cmd>lua vim.lsp.buf.hover()<CR>')
