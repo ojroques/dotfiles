@@ -72,7 +72,7 @@ function pushdot() {
 
 # Browse git commits
 glog() {
-  local log_fmt="%C(yellow)%h%Cred%d %Creset%s %Cgreen%as%Creset"
+  local log_fmt="%C(yellow)%h%Cred%d %Creset%s %Cgreen(%ar)%Creset"
   local commit_hash="echo {} | grep -o '[a-f0-9]\{7\}' | head -1"
   local view_commit="$commit_hash | xargs -I hash sh -c \"git i --color=always hash | delta\""
 
