@@ -30,7 +30,7 @@
   ds = diff --compact-summary
   i = show --abbrev-commit --date=iso
   l = log --abbrev-commit --date=human
-  lg = log --graph --all --format='%C(yellow)%h%Cred%d %Creset%s %Cgreen%as %Cblue%an%Creset'
+  lg = log --graph --all --format='%C(yellow)%h%Cred%d %Creset%s %Cgreen(%ar) %Cblue%an%Creset'
   ls = ls-tree --full-tree --name-only -r HEAD
   rb = rebase
   rs = reset

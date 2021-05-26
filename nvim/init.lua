@@ -64,15 +64,12 @@ g['dirvish_mode'] = [[:sort ,^.*[\/],]]
 -- fzf
 map('n', '<leader>/', '<cmd>BLines<CR>')
 map('n', '<leader>f', '<cmd>Files<CR>')
+map('n', '<leader>h', '<cmd>History:<CR>')
 map('n', '<leader>r', '<cmd>Rg<CR>')
 map('n', 's', '<cmd>Buffers<CR>')
-g['fzf_action'] = {
-  ['ctrl-t'] = 'tab split',
-  ['ctrl-s'] = 'split',
-  ['ctrl-v'] = 'vsplit',
-}
+g['fzf_action'] = {['ctrl-s'] = 'split', ['ctrl-v'] = 'vsplit'}
 -- fugitive and git
-local log = [[\%C(yellow)\%h\%Cred\%d \%Creset\%s \%Cgreen\%as \%Cblue\%an\%Creset]]
+local log = [[\%C(yellow)\%h\%Cred\%d \%Creset\%s \%Cgreen(\%ar) \%Cblue\%an\%Creset]]
 map('n', '<leader>g<space>', ':Git ')
 map('n', '<leader>gd', '<cmd>Gvdiffsplit<CR>')
 map('n', '<leader>gg', '<cmd>Git<CR>')
@@ -87,10 +84,10 @@ g['nvimgdb_config_override'] = {
   key_until = '<F8>',
   key_next = '<F9>',
   key_step = '<F10>',
+  key_eval = '<F11>',
   key_finish = '<F12>',
   key_frameup = '<F99>',    -- disabled
   key_framedown = '<F99>',  -- disabled
-  key_eval = '<F99>',       -- disabled
 }
 -- hardline
 require('hardline').setup {}
@@ -98,7 +95,6 @@ require('hardline').setup {}
 g['indent_blankline_char'] = '┊'
 g['indent_blankline_buftype_exclude'] = {'terminal'}
 g['indent_blankline_filetype_exclude'] = {'fugitive', 'fzf', 'help', 'man'}
-g['indent_blankline_show_current_context'] = true
 -- vim-sandwich
 cmd 'runtime macros/sandwich/keymap/surround.vim'
 -- vimtex
@@ -196,7 +192,11 @@ map('n', '<space>s', '<cmd>lua vim.lsp.buf.document_symbol()<CR>')
 
 -------------------- TREE-SITTER ---------------------------
 local ts = require 'nvim-treesitter.configs'
-ts.setup {ensure_installed = 'maintained', highlight = {enable = true}}
+ts.setup {
+  ensure_installed = 'maintained',
+  highlight = {enable = true},
+  indent = {enable = true},
+}
 
 -------------------- COMMANDS ------------------------------
 function init_term()
