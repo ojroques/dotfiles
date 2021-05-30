@@ -3,18 +3,13 @@
 
 -------------------- HELPERS -------------------------------
 local api, cmd, fn, g = vim.api, vim.cmd, vim.fn, vim.g
-local scopes = {o = vim.o, b = vim.bo, w = vim.wo}
+local opt, wo = vim.opt, vim.wo
 local fmt = string.format
 
 local function map(mode, lhs, rhs, opts)
   local options = {noremap = true}
   if opts then options = vim.tbl_extend('force', options, opts) end
   api.nvim_set_keymap(mode, lhs, rhs, options)
-end
-
-local function opt(scope, key, value)
-  scopes[scope][key] = value
-  if scope ~= 'o' then scopes['o'][key] = value end
 end
 
 -------------------- PLUGINS -------------------------------
@@ -49,8 +44,8 @@ paq {'tpope/vim-unimpaired'}
 -- bufbar
 require('bufbar').setup {show_bufname = 'visible', show_flags = false}
 -- bufdel
-map('n', '<leader>w', '<cmd>BufDel<CR>')
 require('bufdel').setup {next = 'alternate'}
+map('n', '<leader>w', '<cmd>BufDel<CR>')
 -- buildme
 map('n', '<leader>bb', '<cmd>BuildMe<CR>')
 map('n', '<leader>be', '<cmd>BuildMeEdit<CR>')
@@ -95,6 +90,8 @@ require('hardline').setup {}
 g['indent_blankline_char'] = '┊'
 g['indent_blankline_buftype_exclude'] = {'terminal'}
 g['indent_blankline_filetype_exclude'] = {'fugitive', 'fzf', 'help', 'man'}
+-- lspfuzzy
+require('lspfuzzy').setup {}
 -- vim-sandwich
 cmd 'runtime macros/sandwich/keymap/surround.vim'
 -- vimtex
@@ -105,33 +102,33 @@ cmd 'au VimEnter * call deoplete#custom#var("omni", "input_patterns", {"tex": g:
 -------------------- OPTIONS -------------------------------
 local indent, width = 2, 80
 cmd 'colorscheme onedark'
-opt('b', 'expandtab', true)               -- Use spaces instead of tabs
-opt('b', 'formatoptions', 'crqnj')        -- Automatic formatting options
-opt('b', 'shiftwidth', indent)            -- Size of an indent
-opt('b', 'smartindent', true)             -- Insert indents automatically
-opt('b', 'tabstop', indent)               -- Number of spaces tabs count for
-opt('b', 'textwidth', width)              -- Maximum width of text
-opt('o', 'completeopt', 'menuone,noinsert,noselect')  -- Completion options
-opt('o', 'hidden', true)                  -- Enable background buffers
-opt('o', 'ignorecase', true)              -- Ignore case
-opt('o', 'joinspaces', false)             -- No double spaces with join
-opt('o', 'pastetoggle', '<F2>')           -- Paste mode
-opt('o', 'scrolloff', 4 )                 -- Lines of context
-opt('o', 'shiftround', true)              -- Round indent
-opt('o', 'sidescrolloff', 8 )             -- Columns of context
-opt('o', 'smartcase', true)               -- Don't ignore case with capitals
-opt('o', 'splitbelow', true)              -- Put new windows below current
-opt('o', 'splitright', true)              -- Put new windows right of current
-opt('o', 'termguicolors', true)           -- True color support
-opt('o', 'updatetime', 100)               -- Delay before swap file is saved
-opt('o', 'wildmode', 'list:longest')      -- Command-line completion mode
-opt('w', 'colorcolumn', tostring(width))  -- Line length marker
-opt('w', 'cursorline', true)              -- Highlight cursor line
-opt('w', 'list', true)                    -- Show some invisible characters
-opt('w', 'number', true)                  -- Show line numbers
-opt('w', 'relativenumber', true)          -- Relative line numbers
-opt('w', 'signcolumn', 'yes')             -- Show sign column
-opt('w', 'wrap', false)                   -- Disable line wrap
+opt.colorcolumn = tostring(width)   -- Line length marker
+opt.completeopt = {'menuone', 'noinsert', 'noselect'}  -- Completion options
+opt.cursorline = true               -- Highlight cursor line
+opt.expandtab = true                -- Use spaces instead of tabs
+opt.formatoptions = 'crqnj'         -- Automatic formatting options
+opt.hidden = true                   -- Enable background buffers
+opt.ignorecase = true               -- Ignore case
+opt.joinspaces = false              -- No double spaces with join
+opt.list = true                     -- Show some invisible characters
+opt.number = true                   -- Show line numbers
+opt.pastetoggle = '<F2>'            -- Paste mode
+opt.relativenumber = true           -- Relative line numbers
+opt.scrolloff = 4                   -- Lines of context
+opt.shiftround = true               -- Round indent
+opt.shiftwidth = indent             -- Size of an indent
+opt.sidescrolloff = 8               -- Columns of context
+opt.signcolumn = 'yes'              -- Show sign column
+opt.smartcase = true                -- Do not ignore case with capitals
+opt.smartindent = true              -- Insert indents automatically
+opt.splitbelow = true               -- Put new windows below current
+opt.splitright = true               -- Put new windows right of current
+opt.tabstop = indent                -- Number of spaces tabs count for
+opt.termguicolors = true            -- True color support
+opt.textwidth = width               -- Maximum width of text
+opt.updatetime = 100                -- Delay before swap file is saved
+opt.wildmode = {'list', 'longest'}  -- Command-line completion mode
+opt.wrap = false                    -- Disable line wrap
 
 -------------------- MAPPINGS ------------------------------
 map('', '<leader>c', '"+y')
@@ -173,14 +170,12 @@ end
 
 -------------------- LSP -----------------------------------
 local lsp = require('lspconfig')
-local lspfuzzy = require('lspfuzzy')
 for ls, cfg in pairs({
   bashls = {},
   ccls = {},
   jsonls = {},
   pyls = {root_dir = lsp.util.root_pattern('.git', fn.getcwd())},
 }) do lsp[ls].setup(cfg) end
-lspfuzzy.setup {}
 map('n', '<space>,', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
 map('n', '<space>;', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
 map('n', '<space>d', '<cmd>lua vim.lsp.buf.definition()<CR>')
@@ -191,8 +186,7 @@ map('n', '<space>r', '<cmd>lua vim.lsp.buf.references()<CR>')
 map('n', '<space>s', '<cmd>lua vim.lsp.buf.document_symbol()<CR>')
 
 -------------------- TREE-SITTER ---------------------------
-local ts = require 'nvim-treesitter.configs'
-ts.setup {
+require('nvim-treesitter.configs').setup {
   ensure_installed = 'maintained',
   highlight = {enable = true},
   indent = {enable = true},
@@ -206,9 +200,9 @@ function init_term()
 end
 
 function toggle_wrap()
-  opt('w', 'breakindent', not vim.wo.breakindent)
-  opt('w', 'linebreak', not vim.wo.linebreak)
-  opt('w', 'wrap', not vim.wo.wrap)
+  wo.breakindent = not wo.breakindent
+  wo.linebreak = not wo.linebreak
+  wo.wrap = not wo.wrap
 end
 
 function warn_caps()
