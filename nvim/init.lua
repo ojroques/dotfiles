@@ -26,13 +26,13 @@ paq {'lukas-reineke/indent-blankline.nvim', branch = 'lua'}
 paq {'machakann/vim-sandwich'}
 paq {'neovim/nvim-lspconfig'}
 paq {'nvim-treesitter/nvim-treesitter'}
+paq {'nvim-treesitter/nvim-treesitter-textobjects'}
 paq {'ojroques/nvim-bufbar'}
 paq {'ojroques/nvim-bufdel'}
 paq {'ojroques/nvim-buildme'}
 paq {'ojroques/nvim-hardline'}
 paq {'ojroques/nvim-lspfuzzy'}
 paq {'ojroques/vim-oscyank'}
-paq {'sakhnik/nvim-gdb'}
 paq {'savq/paq-nvim', opt = true}
 paq {'shougo/deoplete-lsp'}
 paq {'shougo/deoplete.nvim'}
@@ -69,21 +69,6 @@ map('n', '<leader>g<space>', ':Git ')
 map('n', '<leader>gd', '<cmd>Gvdiffsplit<CR>')
 map('n', '<leader>gg', '<cmd>Git<CR>')
 map('n', '<leader>gl', fmt('<cmd>term git log --graph --all --format="%s"<CR><cmd>start<CR>', log))
--- gdb
-g['nvimgdb_disable_start_keymaps'] = true
-map('n', '<leader>dg', ':GdbStart gdb -q ')
-map('n', '<leader>dp', ':GdbStartPDB python3 -m pdb %')
-g['nvimgdb_config_override'] = {
-  key_breakpoint = '<F6>',
-  key_continue = '<F7>',
-  key_until = '<F8>',
-  key_next = '<F9>',
-  key_step = '<F10>',
-  key_eval = '<F11>',
-  key_finish = '<F12>',
-  key_frameup = '<F99>',    -- disabled
-  key_framedown = '<F99>',  -- disabled
-}
 -- hardline
 require('hardline').setup {}
 -- indent-blankline
@@ -190,6 +175,27 @@ require('nvim-treesitter.configs').setup {
   ensure_installed = 'maintained',
   highlight = {enable = true},
   indent = {enable = true},
+  textobjects = {
+    select = {
+      enable = true,
+      keymaps = {
+        ['aa'] = '@parameter.outer', ['ia'] = '@parameter.inner',
+        ['af'] = '@function.outer', ['if'] = '@function.inner',
+        ['ac'] = '@class.outer', ['ic'] = '@class.inner',
+      },
+    },
+    swap = {
+      enable = true,
+      swap_next = {['<leader>a'] = '@parameter.inner'},
+      swap_previous = {['<leader>A'] = '@parameter.inner'},
+    },
+    move = {
+      enable = true,
+      set_jumps = true,
+      goto_next_start = {[']f'] = '@function.outer', [']c'] = '@class.outer'},
+      goto_previous_start = {['[f'] = '@function.outer', ['[c'] = '@class.outer'},
+    },
+  },
 }
 
 -------------------- COMMANDS ------------------------------
