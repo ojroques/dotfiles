@@ -82,3 +82,15 @@ glog() {
     --bind="enter:execute:$view_commit | less -R" \
     --bind="alt-y:execute:$commit_hash | xclip -selection clipboard"
 }
+
+# Change directory using FZF and history
+__fzf_dirhistory__() {
+  local cmd=$(dirhistory show | fzf --height=40% --reverse +m | while read -r item; do printf "%q " "$item"; done && echo)
+  READLINE_LINE="${READLINE_LINE:0:$READLINE_POINT}$cmd${READLINE_LINE:$READLINE_POINT}"
+  READLINE_POINT=$(( READLINE_POINT + ${#cmd} ))
+}
+
+# FZF bindings
+bind -m emacs-standard -x '"\eh": __fzf_dirhistory__'
+bind -m vi-command -x '"\eh": __fzf_dirhistory__'
+bind -m vi-insert -x '"\eh": __fzf_dirhistory__'
