@@ -43,13 +43,18 @@ fi
 # Set WSL environment variables
 if grep -q -i "microsoft" /proc/sys/kernel/osrelease; then
   export DISPLAY="localhost:0.0"
-  export PROMPT_COMMAND='printf "\e]9;9;%s\e\\" "$(wslpath -m "$PWD")"'
+  export PROMPT_COMMAND=$PROMPT_COMMAND'; printf "\e]9;9;%s\e\\" "$(wslpath -m "$PWD")"'
   [[ -f ~/.shell/ssh-agent ]] && source ~/.shell/ssh-agent
   if [[ ! -f ~/.shell/wsl.env ]]; then
     mkdir -p ~/.shell
     echo "WSL_HOME=$(wslpath "$(wslvar USERPROFILE)")" > ~/.shell/wsl.env
   fi
   source ~/.shell/wsl.env
+fi
+
+# Keep history of directories
+if [[ -x ~/.local/bin/dirhistory ]]; then
+  export PROMPT_COMMAND=$PROMPT_COMMAND"; dirhistory log \"\$(pwd)\""
 fi
 
 [[ -f ~/.shell/aliases ]] && source ~/.shell/aliases
