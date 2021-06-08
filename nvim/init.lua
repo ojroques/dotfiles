@@ -81,8 +81,6 @@ require('lspfuzzy').setup {}
 cmd 'runtime macros/sandwich/keymap/surround.vim'
 -- vimtex
 g['vimtex_quickfix_mode'] = 0
-g['vimtex_view_method'] = 'zathura'
-cmd 'au VimEnter * call deoplete#custom#var("omni", "input_patterns", {"tex": g:vimtex#re#deoplete})'
 
 -------------------- OPTIONS -------------------------------
 local indent, width = 2, 80
@@ -174,7 +172,6 @@ map('n', '<space>s', '<cmd>lua vim.lsp.buf.document_symbol()<CR>')
 require('nvim-treesitter.configs').setup {
   ensure_installed = 'maintained',
   highlight = {enable = true},
-  indent = {enable = true},
   textobjects = {
     select = {
       enable = true,
@@ -192,8 +189,16 @@ require('nvim-treesitter.configs').setup {
     move = {
       enable = true,
       set_jumps = true,
-      goto_next_start = {[']f'] = '@function.outer', [']c'] = '@class.outer'},
-      goto_previous_start = {['[f'] = '@function.outer', ['[c'] = '@class.outer'},
+      goto_next_start = {
+        [']a'] = '@parameter.outer',
+        [']f'] = '@function.outer',
+        [']c'] = '@class.outer',
+      },
+      goto_previous_start = {
+        ['[a'] = '@parameter.outer',
+        ['[f'] = '@function.outer',
+        ['[c'] = '@class.outer',
+      },
     },
   },
 }
@@ -221,4 +226,5 @@ vim.tbl_map(function(c) cmd(fmt('autocmd %s', c)) end, {
   'TermOpen * lua init_term()',
   'TextYankPost * lua vim.highlight.on_yank {timeout = 200}',
   'TextYankPost * if v:event.operator is "y" && v:event.regname is "+" | OSCYankReg + | endif',
+  'VimEnter * call deoplete#custom#var("omni", "input_patterns", {"tex": g:vimtex#re#deoplete})',
 })
