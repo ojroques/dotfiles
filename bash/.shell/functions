@@ -85,12 +85,9 @@ glog() {
 
 # Change directory using FZF and history
 __fzf_dirhistory__() {
-  local cmd=$(dirhistory show | fzf --height=40% --reverse +m | while read -r item; do printf "%q " "$item"; done && echo)
-  READLINE_LINE="${READLINE_LINE:0:$READLINE_POINT}$cmd${READLINE_LINE:$READLINE_POINT}"
-  READLINE_POINT=$(( READLINE_POINT + ${#cmd} ))
+  local dir=$(python3 -m fzfdirhist show | fzf --height=40% --reverse +m)
+  cd "$dir"
 }
 
 # FZF bindings
-bind -m emacs-standard -x '"\eh": __fzf_dirhistory__'
-bind -m vi-command -x '"\eh": __fzf_dirhistory__'
-bind -m vi-insert -x '"\eh": __fzf_dirhistory__'
+bind '"\eh": "\C-k\C-u __fzf_dirhistory__\n"'
