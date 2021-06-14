@@ -54,9 +54,10 @@ fi
 
 # Keep history of directories
 if [[ -x ~/.local/bin/dirhistory ]]; then
-  export PROMPT_COMMAND=$PROMPT_COMMAND"; dirhistory log \"\$(pwd)\""
+  export PROMPT_COMMAND=$PROMPT_COMMAND'; dirhistory log "$(pwd)"'
 fi
 
 [[ -f ~/.shell/aliases ]] && source ~/.shell/aliases
 [[ -f ~/.shell/functions ]] && source ~/.shell/functions
 [[ -f ~/.shell/less ]] && source ~/.shell/less
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

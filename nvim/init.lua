@@ -59,7 +59,7 @@ g['dirvish_mode'] = [[:sort ,^.*[\/],]]
 -- fzf
 map('n', '<leader>/', '<cmd>BLines<CR>')
 map('n', '<leader>f', '<cmd>Files<CR>')
-map('n', '<leader>h', '<cmd>History:<CR>')
+map('n', '<leader>;', '<cmd>History:<CR>')
 map('n', '<leader>r', '<cmd>Rg<CR>')
 map('n', 's', '<cmd>Buffers<CR>')
 g['fzf_action'] = {['ctrl-s'] = 'split', ['ctrl-v'] = 'vsplit'}
