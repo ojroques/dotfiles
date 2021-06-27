@@ -3,39 +3,6 @@
 
 set nocompatible
 
-" MAPPINGS
-inoremap <C-u> <C-g>u<C-u>
-inoremap <C-w> <C-g>u<C-w>
-inoremap <expr> <S-Tab> pumvisible() ? '\<C-p>' : '\<Tab>'
-inoremap <expr> <Tab> pumvisible() ? '\<C-n>' : '\<Tab>'
-inoremap jj <ESC>
-nnoremap <C-l> :nohlsearch<CR>
-nnoremap <C-w>T :tabclose<CR>
-nnoremap <C-w>t :tabnew<CR>
-nnoremap <F3> :ToggleWrap<CR>
-nnoremap <F4> :set scrollbind!<CR>
-nnoremap <F5> :checktime<CR>
-nnoremap <F9> :Lexplore<CR>
-nnoremap <S-Down> <C-w>2<
-nnoremap <S-Left> <C-w>2-
-nnoremap <S-Right> <C-w>2+
-nnoremap <S-Up> <C-w>2>
-nnoremap <leader>s :%s//gcI<Left><Left><Left><Left>
-nnoremap <leader>t :terminal ++curwin<CR>
-nnoremap <leader>u :update<CR>
-nnoremap <leader>w :CloseBuffer<CR>
-nnoremap <leader>x :conf qa<CR>
-nnoremap Q :WarnCaps<CR>
-nnoremap U :WarnCaps<CR>
-nnoremap [<space> m`O<Esc>0D``
-nnoremap [b :bprevious<CR>
-nnoremap ]<space> m`o<Esc>0D``
-nnoremap ]b :bnext<CR>
-noremap <leader>c "+y
-tnoremap <ESC> <C-\><C-n>
-tnoremap jj <C-\><C-n>
-vnoremap <leader>s :s//gcI<Left><Left><Left><Left>
-
 " PLUGIN OPTIONS
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
@@ -54,12 +21,10 @@ set incsearch                         " Highlight search patterns
 set laststatus=2                      " Always display status line
 set listchars=tab:>\ ,trail:-,nbsp:+  " Characters to show for spaces
 set ruler                             " Show cursor line and column
-set shortmess=filnxtToOF              " Configure vim messages
 set showcmd                           " Show current command
 set wildmenu                          " Enhanced command-line completion
 
 " OPTIONS
-colorscheme desert
 set completeopt=menuone,noinsert,noselect  " Completion options
 set expandtab              " Use spaces instead of tabs
 set formatoptions=crqnj    " Automatic formatting options
@@ -80,8 +45,39 @@ set splitbelow splitright  " Location of new windows
 set tabstop=2              " Number of spaces tabs count for
 set termguicolors          " True color support
 set textwidth=80           " Maximum width of text
-set updatetime=200         " Delay before swap file is saved
+set updatetime=100         " Delay before swap file is saved
 set wildmode=list:longest  " Command-line completion mode
+colorscheme desert
+
+" MAPPINGS
+inoremap <C-u> <C-g>u<C-u>
+inoremap <C-w> <C-g>u<C-w>
+inoremap jj <ESC>
+nnoremap <C-l> :nohlsearch<CR>
+nnoremap <C-w>T :tabclose<CR>
+nnoremap <C-w>t :tabnew<CR>
+nnoremap <F3> :ToggleWrap<CR>
+nnoremap <F4> :set scrollbind!<CR>
+nnoremap <F5> :checktime<CR>
+nnoremap <S-Down> <C-w>2<
+nnoremap <S-Left> <C-w>2-
+nnoremap <S-Right> <C-w>2+
+nnoremap <S-Up> <C-w>2>
+nnoremap <leader>s :%s//gcI<Left><Left><Left><Left>
+nnoremap <leader>t :terminal ++curwin<CR>
+nnoremap <leader>u :update<CR>
+nnoremap <leader>w :CloseBuffer<CR>
+nnoremap <leader>x :conf qa<CR>
+nnoremap Q :WarnCaps<CR>
+nnoremap U :WarnCaps<CR>
+nnoremap [<space> m`O<Esc>0D``
+nnoremap [b :bprevious<CR>
+nnoremap ]<space> m`o<Esc>0D``
+nnoremap ]b :bnext<CR>
+noremap <leader>c "+y
+tnoremap <ESC> <C-\><C-n>
+tnoremap jj <C-\><C-n>
+vnoremap <leader>s :s//gcI<Left><Left><Left><Left>
 
 " COMMANDS
 function! s:close_buffer()

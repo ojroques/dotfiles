@@ -57,12 +57,12 @@ fn['deoplete#custom#option']('max_list', 10)
 -- dirvish
 g['dirvish_mode'] = [[:sort ,^.*[\/],]]
 -- fzf
+g['fzf_action'] = {['ctrl-s'] = 'split', ['ctrl-v'] = 'vsplit'}
 map('n', '<leader>/', '<cmd>BLines<CR>')
 map('n', '<leader>f', '<cmd>Files<CR>')
 map('n', '<leader>;', '<cmd>History:<CR>')
 map('n', '<leader>r', '<cmd>Rg<CR>')
 map('n', 's', '<cmd>Buffers<CR>')
-g['fzf_action'] = {['ctrl-s'] = 'split', ['ctrl-v'] = 'vsplit'}
 -- fugitive and git
 local log = [[\%C(yellow)\%h\%Cred\%d \%Creset\%s \%Cgreen(\%ar) \%Cblue\%an\%Creset]]
 map('n', '<leader>g<space>', ':Git ')
@@ -84,7 +84,6 @@ g['vimtex_quickfix_mode'] = 0
 
 -------------------- OPTIONS -------------------------------
 local indent, width = 2, 80
-cmd 'colorscheme onedark'
 opt.colorcolumn = tostring(width)   -- Line length marker
 opt.completeopt = {'menuone', 'noinsert', 'noselect'}  -- Completion options
 opt.cursorline = true               -- Highlight cursor line
@@ -112,6 +111,7 @@ opt.textwidth = width               -- Maximum width of text
 opt.updatetime = 100                -- Delay before swap file is saved
 opt.wildmode = {'list', 'longest'}  -- Command-line completion mode
 opt.wrap = false                    -- Disable line wrap
+cmd 'colorscheme onedark'
 
 -------------------- MAPPINGS ------------------------------
 map('', '<leader>c', '"+y')
@@ -140,27 +140,15 @@ map('t', '<ESC>', '&filetype == "fzf" ? "\\<ESC>" : "\\<C-\\>\\<C-n>"' , {expr =
 map('t', 'jj', '<ESC>', {noremap = false})
 map('v', '<leader>s', ':s//gcI<Left><Left><Left><Left>')
 
--------------------- TEXT OBJECTS --------------------------
-for _, ch in ipairs({
-  '<space>', '!', '#', '$', '%', '&', '*', '+', ',', '-', '.',
-  '/', ':', ';', '=', '?', '@', '<bslash>', '^', '_', '~', '<bar>',
-}) do
-  map('x', fmt('i%s', ch), fmt(':<C-u>normal! T%svt%s<CR>', ch, ch), {silent = true})
-  map('o', fmt('i%s', ch), fmt(':<C-u>normal vi%s<CR>', ch), {silent = true})
-  map('x', fmt('a%s', ch), fmt(':<C-u>normal! F%svf%s<CR>', ch, ch), {silent = true})
-  map('o', fmt('a%s', ch), fmt(':<C-u>normal va%s<CR>', ch), {silent = true})
-end
-
 -------------------- LSP -----------------------------------
 local lsp = require('lspconfig')
 for ls, cfg in pairs({
-  bashls = {},
-  ccls = {},
-  jsonls = {},
+  bashls = {}, gopls = {}, ccls = {}, jsonls = {},
   pyls = {root_dir = lsp.util.root_pattern('.git', fn.getcwd())},
 }) do lsp[ls].setup(cfg) end
 map('n', '<space>,', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
 map('n', '<space>;', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
+map('n', '<space>a', '<cmd>lua vim.lsp.buf.code_action()<CR>')
 map('n', '<space>d', '<cmd>lua vim.lsp.buf.definition()<CR>')
 map('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>')
 map('n', '<space>h', '<cmd>lua vim.lsp.buf.hover()<CR>')
@@ -189,16 +177,10 @@ require('nvim-treesitter.configs').setup {
     move = {
       enable = true,
       set_jumps = true,
-      goto_next_start = {
-        [']a'] = '@parameter.outer',
-        [']f'] = '@function.outer',
-        [']c'] = '@class.outer',
-      },
-      goto_previous_start = {
-        ['[a'] = '@parameter.outer',
-        ['[f'] = '@function.outer',
-        ['[c'] = '@class.outer',
-      },
+      goto_next_start = {[']a'] = '@parameter.outer', [']f'] = '@function.outer', [']c'] = '@class.outer'},
+      goto_next_end = {[']A'] = '@parameter.outer', [']F'] = '@function.outer', [']C'] = '@class.outer'},
+      goto_previous_start = {['[a'] = '@parameter.outer', ['[f'] = '@function.outer', ['[c'] = '@class.outer'},
+      goto_previous_end = {['[A'] = '@parameter.outer', ['[F'] = '@function.outer', ['[C'] = '@class.outer'},
     },
   },
 }
@@ -224,7 +206,7 @@ end
 
 vim.tbl_map(function(c) cmd(fmt('autocmd %s', c)) end, {
   'TermOpen * lua init_term()',
-  'TextYankPost * lua vim.highlight.on_yank {timeout = 200}',
+  'TextYankPost * lua vim.highlight.on_yank {timeout = 200, on_visual = false}',
   'TextYankPost * if v:event.operator is "y" && v:event.regname is "+" | OSCYankReg + | endif',
   'VimEnter * call deoplete#custom#var("omni", "input_patterns", {"tex": g:vimtex#re#deoplete})',
 })
