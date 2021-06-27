@@ -16,7 +16,6 @@ mkdir -vp "$HOME"/Downloads
 echo "[BASH]"
 cp -vr bash/.shell "$HOME"
 cp -v bash/.bashrc "$HOME"
-cp -v bash/dirhistory.py "$HOME"/.local/bin/dirhistory
 
 echo "[GIT]"
 cp -v git/.gitconfig "$HOME"
