@@ -37,6 +37,11 @@ function c_ls() {
   fi
 }
 
+function go_ls() {
+  sudo apt install -y golang-go
+  GO111MODULE=on go get golang.org/x/tools/gopls@latest
+}
+
 function json_ls() {
   echo "[JSON language server]"
   sudo apt install -y nodejs npm
@@ -58,6 +63,7 @@ function main() {
   update && echo
   bash_ls && echo
   c_ls && echo
+  go_ls && echo
   json_ls && echo
   python_ls && echo
   clean
