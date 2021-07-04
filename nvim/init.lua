@@ -22,7 +22,7 @@ paq {'junegunn/fzf'}
 paq {'junegunn/fzf.vim'}
 paq {'justinmk/vim-dirvish'}
 paq {'lervag/vimtex'}
-paq {'lukas-reineke/indent-blankline.nvim', branch = 'lua'}
+paq {'lukas-reineke/indent-blankline.nvim'}
 paq {'machakann/vim-sandwich'}
 paq {'neovim/nvim-lspconfig'}
 paq {'nvim-treesitter/nvim-treesitter'}
