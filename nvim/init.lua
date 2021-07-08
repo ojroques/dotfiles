@@ -17,6 +17,7 @@ cmd 'packadd paq-nvim'
 local paq = require('paq-nvim').paq
 paq {'airblade/vim-gitgutter'}
 paq {'airblade/vim-rooter'}
+paq {'hrsh7th/nvim-compe'}
 paq {'joshdick/onedark.vim'}
 paq {'junegunn/fzf'}
 paq {'junegunn/fzf.vim'}
@@ -34,8 +35,7 @@ paq {'ojroques/nvim-hardline'}
 paq {'ojroques/nvim-lspfuzzy'}
 paq {'ojroques/vim-oscyank'}
 paq {'savq/paq-nvim', opt = true}
-paq {'shougo/deoplete-lsp'}
-paq {'shougo/deoplete.nvim'}
+paq {'shougo/echodoc.vim'}
 paq {'tpope/vim-commentary'}
 paq {'tpope/vim-fugitive'}
 paq {'tpope/vim-unimpaired'}
@@ -50,12 +50,18 @@ map('n', '<leader>w', '<cmd>BufDel<CR>')
 map('n', '<leader>bb', '<cmd>BuildMe<CR>')
 map('n', '<leader>be', '<cmd>BuildMeEdit<CR>')
 map('n', '<leader>bs', '<cmd>BuildMeStop<CR>')
--- deoplete
-g['deoplete#enable_at_startup'] = 1
-fn['deoplete#custom#option']('ignore_case', false)
-fn['deoplete#custom#option']('max_list', 10)
+-- compe
+require('compe').setup {
+  min_length = 2,
+  preselect = 'disable',
+  max_abbr_width = 80, max_kind_width = 40, max_menu_width = 40,
+  source = {buffer = true, path = true, nvim_lsp = true, omni = {filetypes = {'tex'}}},
+}
 -- dirvish
 g['dirvish_mode'] = [[:sort ,^.*[\/],]]
+-- echodoc
+g['echodoc#enable_at_startup'] = true
+g['echodoc#type'] = 'floating'
 -- fzf
 g['fzf_action'] = {['ctrl-s'] = 'split', ['ctrl-v'] = 'vsplit'}
 map('n', '<leader>/', '<cmd>BLines<CR>')
@@ -80,7 +86,7 @@ require('lspfuzzy').setup {}
 -- vim-sandwich
 cmd 'runtime macros/sandwich/keymap/surround.vim'
 -- vimtex
-g['vimtex_quickfix_mode'] = 0
+g['vimtex_quickfix_mode'] = false
 
 -------------------- OPTIONS -------------------------------
 local indent, width = 2, 80
@@ -95,6 +101,7 @@ opt.joinspaces = false              -- No double spaces with join
 opt.list = true                     -- Show some invisible characters
 opt.number = true                   -- Show line numbers
 opt.pastetoggle = '<F2>'            -- Paste mode
+opt.pumheight = 12                  -- Max height of popup menu
 opt.relativenumber = true           -- Relative line numbers
 opt.scrolloff = 4                   -- Lines of context
 opt.shiftround = true               -- Round indent
@@ -208,5 +215,4 @@ vim.tbl_map(function(c) cmd(fmt('autocmd %s', c)) end, {
   'TermOpen * lua init_term()',
   'TextYankPost * lua vim.highlight.on_yank {timeout = 200, on_visual = false}',
   'TextYankPost * if v:event.operator is "y" && v:event.regname is "+" | OSCYankReg + | endif',
-  'VimEnter * call deoplete#custom#var("omni", "input_patterns", {"tex": g:vimtex#re#deoplete})',
 })
