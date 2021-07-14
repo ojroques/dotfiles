@@ -15,17 +15,19 @@ end
 -------------------- PLUGINS -------------------------------
 cmd 'packadd paq-nvim'
 local paq = require('paq-nvim').paq
-paq {'airblade/vim-gitgutter'}
 paq {'airblade/vim-rooter'}
+paq {'b3nj5m1n/kommentary'}
 paq {'hrsh7th/nvim-compe'}
 paq {'joshdick/onedark.vim'}
 paq {'junegunn/fzf'}
 paq {'junegunn/fzf.vim'}
 paq {'justinmk/vim-dirvish'}
 paq {'lervag/vimtex'}
+paq {'lewis6991/gitsigns.nvim'}
 paq {'lukas-reineke/indent-blankline.nvim'}
 paq {'machakann/vim-sandwich'}
 paq {'neovim/nvim-lspconfig'}
+paq {'nvim-lua/plenary.nvim'}
 paq {'nvim-treesitter/nvim-treesitter'}
 paq {'nvim-treesitter/nvim-treesitter-textobjects'}
 paq {'ojroques/nvim-bufbar'}
@@ -35,8 +37,6 @@ paq {'ojroques/nvim-hardline'}
 paq {'ojroques/nvim-lspfuzzy'}
 paq {'ojroques/vim-oscyank'}
 paq {'savq/paq-nvim', opt = true}
-paq {'shougo/echodoc.vim'}
-paq {'tpope/vim-commentary'}
 paq {'tpope/vim-fugitive'}
 paq {'tpope/vim-unimpaired'}
 
@@ -59,9 +59,12 @@ require('compe').setup {
 }
 -- dirvish
 g['dirvish_mode'] = [[:sort ,^.*[\/],]]
--- echodoc
-g['echodoc#enable_at_startup'] = true
-g['echodoc#type'] = 'floating'
+-- fugitive and git
+local log = [[\%C(yellow)\%h\%Cred\%d \%Creset\%s \%Cgreen(\%ar) \%Cblue\%an\%Creset]]
+map('n', '<leader>g<space>', ':Git ')
+map('n', '<leader>gd', '<cmd>Gvdiffsplit<CR>')
+map('n', '<leader>gg', '<cmd>Git<CR>')
+map('n', '<leader>gl', fmt('<cmd>term git log --graph --all --format="%s"<CR><cmd>start<CR>', log))
 -- fzf
 g['fzf_action'] = {['ctrl-s'] = 'split', ['ctrl-v'] = 'vsplit'}
 map('n', '<leader>/', '<cmd>BLines<CR>')
@@ -69,12 +72,14 @@ map('n', '<leader>f', '<cmd>Files<CR>')
 map('n', '<leader>;', '<cmd>History:<CR>')
 map('n', '<leader>r', '<cmd>Rg<CR>')
 map('n', 's', '<cmd>Buffers<CR>')
--- fugitive and git
-local log = [[\%C(yellow)\%h\%Cred\%d \%Creset\%s \%Cgreen(\%ar) \%Cblue\%an\%Creset]]
-map('n', '<leader>g<space>', ':Git ')
-map('n', '<leader>gd', '<cmd>Gvdiffsplit<CR>')
-map('n', '<leader>gg', '<cmd>Git<CR>')
-map('n', '<leader>gl', fmt('<cmd>term git log --graph --all --format="%s"<CR><cmd>start<CR>', log))
+-- gitsigns
+require('gitsigns').setup {
+  signs = {
+    add = {text = '+'},
+    change = {text = '~'},
+    delete = {text = '-'}, topdelete = {text = '-'}, changedelete = {text = '≃'},
+  },
+}
 -- hardline
 require('hardline').setup {}
 -- indent-blankline
@@ -106,6 +111,7 @@ opt.relativenumber = true           -- Relative line numbers
 opt.scrolloff = 4                   -- Lines of context
 opt.shiftround = true               -- Round indent
 opt.shiftwidth = indent             -- Size of an indent
+opt.shortmess = 'atToOFc'           -- Prompt message options
 opt.sidescrolloff = 8               -- Columns of context
 opt.signcolumn = 'yes'              -- Show sign column
 opt.smartcase = true                -- Do not ignore case with capitals
