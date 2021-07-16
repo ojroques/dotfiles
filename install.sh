@@ -11,18 +11,12 @@ CLI=(  # 18.04
   "git"
   "htop"
   "manpages-posix"
-  "neovim"
   "python3-pip"
   "shellcheck"
   "software-properties-common"
   "tree"
   "unzip"
   "vim"
-)
-CLI_RECENT=(
-  "bat"      # 19.10
-  "fd-find"  # 19.04
-  "ripgrep"  # 19.04
 )
 GUI=(  # 18.04
   "arc-theme"
@@ -71,7 +65,7 @@ function install() {
   fi
 
   # delta
-  delta_version="0.7.1"
+  delta_version="0.8.3"
   delta="git-delta_"$delta_version"_amd64.deb"
   curl -fsSL \
     https://github.com/dandavison/delta/releases/download/"$delta_version"/"$delta" \
@@ -80,8 +74,13 @@ function install() {
 
   # gdb-dashboard
   sudo -u "$SUDO_USER" curl -fsSL \
-    https://raw.githubusercontent.com/cyrus-and/gdb-dashboard/master/.gdbinit
+    https://raw.githubusercontent.com/cyrus-and/gdb-dashboard/master/.gdbinit \
     -o /home/"$SUDO_USER"/.gdbinit
+
+  # neovim
+  add-apt-repository -y ppa:neovim-ppa/unstable
+  apt-get update
+  apt-get install -y neovim
 
   # paq-nvim
   sudo -u "$SUDO_USER" git clone https://github.com/savq/paq-nvim.git \
@@ -113,6 +112,7 @@ function main() {
   done
   echo "* delta"
   echo "* gdb-dashboard"
+  echo "* neovim"
   echo "* paq-nvim"
 
   echo "Full installation includes CLI packages and:"

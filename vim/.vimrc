@@ -38,6 +38,7 @@ set pastetoggle='<F2>'     " Paste mode
 set scrolloff=4            " Lines of context
 set shiftround             " Round indent
 set shiftwidth=2           " Size of an indent
+set shortmess="atToOFc"    " Prompt message options
 set sidescrolloff=8        " Columns of context
 set smartcase              " Don't ignore case with capitals
 set smartindent            " Insert indents automatically
