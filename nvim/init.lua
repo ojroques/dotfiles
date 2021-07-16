@@ -16,7 +16,6 @@ end
 cmd 'packadd paq-nvim'
 local paq = require('paq-nvim').paq
 paq {'airblade/vim-rooter'}
-paq {'b3nj5m1n/kommentary'}
 paq {'hrsh7th/nvim-compe'}
 paq {'joshdick/onedark.vim'}
 paq {'junegunn/fzf'}
@@ -37,6 +36,7 @@ paq {'ojroques/nvim-hardline'}
 paq {'ojroques/nvim-lspfuzzy'}
 paq {'ojroques/vim-oscyank'}
 paq {'savq/paq-nvim', opt = true}
+paq {'terrortylor/nvim-comment'}
 paq {'tpope/vim-fugitive'}
 paq {'tpope/vim-unimpaired'}
 
@@ -50,6 +50,8 @@ map('n', '<leader>w', '<cmd>BufDel<CR>')
 map('n', '<leader>bb', '<cmd>BuildMe<CR>')
 map('n', '<leader>be', '<cmd>BuildMeEdit<CR>')
 map('n', '<leader>bs', '<cmd>BuildMeStop<CR>')
+-- comment
+require('nvim_comment').setup {}
 -- compe
 require('compe').setup {
   min_length = 2,
@@ -154,11 +156,9 @@ map('t', 'jj', '<ESC>', {noremap = false})
 map('v', '<leader>s', ':s//gcI<Left><Left><Left><Left>')
 
 -------------------- LSP -----------------------------------
-local lsp = require('lspconfig')
 for ls, cfg in pairs({
-  bashls = {}, gopls = {}, ccls = {}, jsonls = {},
-  pyls = {root_dir = lsp.util.root_pattern('.git', fn.getcwd())},
-}) do lsp[ls].setup(cfg) end
+  bashls = {}, gopls = {}, ccls = {}, jsonls = {}, pylsp = {},
+}) do require('lspconfig')[ls].setup(cfg) end
 map('n', '<space>,', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
 map('n', '<space>;', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
 map('n', '<space>a', '<cmd>lua vim.lsp.buf.code_action()<CR>')

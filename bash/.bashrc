@@ -33,10 +33,10 @@ fi
 
 # Set colored prompt
 if [[ -x /usr/bin/tput ]] && tput setaf 1 &> /dev/null; then
-  PS1="\[\e[1;32m\]\u@\h\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\]\$ "
+  PS1="\[\e[32m\]\u@\h\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\]\$ "
   if [[ -f ~/.shell/prompt ]]; then
     source ~/.shell/prompt
-    PS1="\[\e[1;32m\]\u@\h\[\e[0m\]:\[\e[1;34m\]\w\[\e[1;33m\]\$(parse_git status)\[\e[0m\]\$ "
+    PS1="\[\e[32m\]\u@\h\[\e[0m\]:\[\e[1;34m\]\w\[\e[0;33m\]\$(parse_git status)\[\e[0m\]\$ "
   fi
 fi
 
@@ -52,10 +52,8 @@ if grep -q -i "microsoft" /proc/sys/kernel/osrelease; then
   source ~/.shell/wsl.env
 fi
 
-# Keep history of directories
-if [[ -x ~/.local/bin/dirhistory ]]; then
-  export PROMPT_COMMAND=$PROMPT_COMMAND'; dirhistory log "$(pwd)"'
-fi
+# Go environment
+export PATH=$PATH:/usr/local/go/bin:/usr/local/protobuf/bin:~/go/bin
 
 [[ -f ~/.shell/aliases ]] && source ~/.shell/aliases
 [[ -f ~/.shell/functions ]] && source ~/.shell/functions
