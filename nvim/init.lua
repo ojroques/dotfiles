@@ -44,7 +44,7 @@ paq {'tpope/vim-unimpaired'}
 -- bufbar
 require('bufbar').setup {show_bufname = 'visible', show_flags = false}
 -- bufdel
-require('bufdel').setup {next = 'alternate'}
+require('bufdel').setup {next = 'alternate', quit = false}
 map('n', '<leader>w', '<cmd>BufDel<CR>')
 -- buildme
 map('n', '<leader>bb', '<cmd>BuildMe<CR>')
