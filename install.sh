@@ -5,20 +5,22 @@ if [[ $EUID -ne 0 ]]; then
   exit 1
 fi
 
-CLI=(  # 18.04
+CLI=(
   "build-essential"
   "curl"
+  "fd-find"
   "git"
   "htop"
   "manpages-posix"
   "python3-pip"
   "shellcheck"
   "software-properties-common"
+  "stow"
   "tree"
   "unzip"
   "vim"
 )
-GUI=(  # 18.04
+GUI=(
   "arc-theme"
   "firefox"
   "fonts-hack"
@@ -29,9 +31,6 @@ GUI=(  # 18.04
   "vim-gtk3"
   "vlc"
   "zathura"
-)
-GUI_RECENT=(
-  "kitty"  # 19.04
 )
 PURGE=(
   "atril atril-common"
@@ -57,12 +56,14 @@ function install() {
   echo "[INSTALL PACKAGES]"
 
   apt install -y "${CLI[@]}"
-  apt install -y "${CLI_RECENT[@]}"
 
-  if [[ $1 == true ]]; then
-    apt install -y "${GUI[@]}"
-    apt install -y "${GUI_RECENT[@]}"
-  fi
+  # bat
+  bat_version="0.18.2"
+  bat="bat_"$bat_version"_amd64.deb"
+  curl -fsSL \
+    https://github.com/sharkdp/bat/releases/download/v"$bat_version"/"$bat" \
+    -o "$bat"
+  dpkg -i "$bat" && rm -f "$bat"
 
   # delta
   delta_version="0.8.3"
@@ -85,6 +86,19 @@ function install() {
   # paq-nvim
   sudo -u "$SUDO_USER" git clone https://github.com/savq/paq-nvim.git \
     /home/"$SUDO_USER"/.local/share/nvim/site/pack/paqs/opt/paq-nvim
+
+  # ripgrep
+  ripgrep_version="13.0.0"
+  ripgrep="ripgrep_"$ripgrep_version"_amd64.deb"
+  curl -fsSL \
+    https://github.com/BurntSushi/ripgrep/releases/download/"$ripgrep_version"/"$ripgrep" \
+    -o "$ripgrep"
+  dpkg -i "$ripgrep" && rm -f "$ripgrep"
+
+  if [[ $1 == true ]]; then
+    apt install -y "${GUI[@]}"
+    curl -fsSL https://sw.kovidgoyal.net/kitty/installer.sh | sh
+  fi
 }
 
 function purge() {
@@ -107,35 +121,38 @@ function main() {
   echo "------------------------------------------------------------"
 
   echo "CLI installation includes:"
-  for pkg in "${CLI[@]}" "${CLI_RECENT[@]}"; do
+  for pkg in "${CLI[@]}"; do
     echo "* $pkg"
   done
+  echo "* bat"
   echo "* delta"
   echo "* gdb-dashboard"
   echo "* neovim"
   echo "* paq-nvim"
+  echo "* ripgrep"
 
-  echo "Full installation includes CLI packages and:"
-  for pkg in "${GUI[@]}" "${GUI_RECENT[@]}"; do
+  echo "GUI installation includes CLI packages and:"
+  for pkg in "${GUI[@]}"; do
     echo "* $pkg"
   done
+  echo "* kitty"
 
-  echo "[WARNING] Full installation also purges:"
+  echo "[WARNING] GUI installation also purges:"
   for pkg in "${PURGE[@]}"; do
     echo "* $pkg"
   done
 
   echo "Select one:"
-  select installation in "CLI installation" "Full installation" "Abort"; do
+  select installation in "CLI installation" "GUI installation" "Abort"; do
     case "$installation" in
       "CLI installation")
         echo "CLI installation selected."
-        full_installation=false
+        gui_installation=false
         break
         ;;
-      "Full installation")
-        echo "Full installation selected."
-        full_installation=true
+      "GUI installation")
+        echo "GUI installation selected."
+        gui_installation=true
         break
         ;;
       "Abort")
@@ -147,8 +164,8 @@ function main() {
   done
 
   echo && update
-  echo && install $full_installation
-  echo && purge $full_installation
+  echo && install $gui_installation
+  echo && purge $gui_installation
   echo && clean
 
   echo "------------------------------------------------------------"

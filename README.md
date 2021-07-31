@@ -6,12 +6,12 @@ This repository contains my config files for:
 - **kitty**
 - **latex**
 - **rofi**
-- **neovim**, **vim**, **vimium**
+- **neovim** and **vim**
 - **windows terminal**
-- **thunar** and **xfce**
+- **xfce** and **thunar**
 
 I use [Xubuntu](https://xubuntu.org/) but installation should work fine on any
-recent Ubuntu (18.04+) flavor.
+recent Ubuntu (20.04+) flavor.
 
 
 ## Screenshots
@@ -25,19 +25,18 @@ Wallpaper can be found [here](./screenshots/wallpaper.png)
 ```sh
 sudo ./install.sh
 ```
-2. Run `config.sh` to install config files:
+2. Run [stow](https://www.gnu.org/software/stow/) to install config files:
 ```sh
-./config.sh
+stow bash git kitty nvim rofi vim xfce
 ```
-3. (Optional) Run `latex.sh` to install LaTeX:
+3. (Optional) Run `lsp.sh` to install
+  [language servers](https://microsoft.github.io/language-server-protocol/):
 ```sh
-latex/latex_setup.sh
+./lsp.sh
 ```
-4. (Optional) Run `lsp.sh` to install language servers for `nvim-lsp` (the
-built-in [LSP](https://microsoft.github.io/language-server-protocol/) client
-of Neovim 0.5+)
+4. (Optional) Run `latex/latex.sh` to install LaTeX:
 ```sh
-nvim/lsp.sh
+./latex/latex_setup.sh
 ```
 
 

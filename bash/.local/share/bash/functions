@@ -62,14 +62,6 @@ cheat() {
   curl -s "cheat.sh/$1"
 }
 
-# Push dotfiles
-function pushdot() {
-  rsync -a --info=NAME,PROGRESS --exclude='*.env' "$HOME"/.shell "$1":
-  rsync -a --info=NAME,PROGRESS "$HOME"/.bashrc "$1":
-  rsync -a --info=NAME,PROGRESS "$HOME"/.vimrc "$1":
-  ssh "$1" "sed -i -e 's/EDITOR=\"nvim\"/EDITOR=\"vim\"/g' .bashrc"
-}
-
 # Browse git commits
 glog() {
   local log_fmt="%C(yellow)%h%Cred%d %Creset%s %Cgreen(%ar)%Creset"

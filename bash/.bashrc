@@ -1,6 +1,8 @@
 # bash config
 # github.com/ojroques
 
+BASH_DIR="$HOME/.local/share/bash"
+
 export BAT_THEME="OneHalfDark"
 export EDITOR="nvim"
 export FZF_DEFAULT_COMMAND="rg --files --hidden -g '!.git/'"
@@ -34,8 +36,8 @@ fi
 # Set colored prompt
 if [[ -x /usr/bin/tput ]] && tput setaf 1 &> /dev/null; then
   PS1="\[\e[32m\]\u@\h\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\]\$ "
-  if [[ -f ~/.shell/prompt ]]; then
-    source ~/.shell/prompt
+  if [[ -f $BASH_DIR/prompt ]]; then
+    source $BASH_DIR/prompt
     PS1="\[\e[32m\]\u@\h\[\e[0m\]:\[\e[1;34m\]\w\[\e[0;33m\]\$(parse_git status)\[\e[0m\]\$ "
   fi
 fi
@@ -44,18 +46,18 @@ fi
 if grep -q -i "microsoft" /proc/sys/kernel/osrelease; then
   export DISPLAY="localhost:0.0"
   export PROMPT_COMMAND=$PROMPT_COMMAND'; printf "\e]9;9;%s\e\\" "$(wslpath -m "$PWD")"'
-  [[ -f ~/.shell/ssh-agent ]] && source ~/.shell/ssh-agent
-  if [[ ! -f ~/.shell/wsl.env ]]; then
-    mkdir -p ~/.shell
-    echo "WSL_HOME=$(wslpath "$(wslvar USERPROFILE)")" > ~/.shell/wsl.env
+  [[ -f $BASH_DIR/ssh-agent ]] && source $BASH_DIR/ssh-agent
+  if [[ ! -f $BASH_DIR/wsl.env ]]; then
+    mkdir -p $BASH_DIR
+    echo "WSL_HOME=$(wslpath "$(wslvar USERPROFILE)")" > $BASH_DIR/wsl.env
   fi
-  source ~/.shell/wsl.env
+  source $BASH_DIR/wsl.env
 fi
 
 # Go environment
 export PATH=$PATH:/usr/local/go/bin:/usr/local/protobuf/bin:~/go/bin
 
-[[ -f ~/.shell/aliases ]] && source ~/.shell/aliases
-[[ -f ~/.shell/functions ]] && source ~/.shell/functions
-[[ -f ~/.shell/less ]] && source ~/.shell/less
+[[ -f $BASH_DIR/aliases ]] && source $BASH_DIR/aliases
+[[ -f $BASH_DIR/functions ]] && source $BASH_DIR/functions
+[[ -f $BASH_DIR/less ]] && source $BASH_DIR/less
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
