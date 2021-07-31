@@ -11,7 +11,7 @@ This repository contains my config files for:
 - **xfce** and **thunar**
 
 I use [Xubuntu](https://xubuntu.org/) but installation should work fine on any
-recent Ubuntu (20.04+) flavor.
+recent Ubuntu flavor (20.04+).
 
 
 ## Screenshots

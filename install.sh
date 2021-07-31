@@ -5,6 +5,9 @@ if [[ $EUID -ne 0 ]]; then
   exit 1
 fi
 
+SUSER=${SUDO_USER:-root}
+SHOME=$(getent passwd "$SUSER" | cut -d: -f6)
+
 CLI=(
   "build-essential"
   "curl"
@@ -48,18 +51,18 @@ PURGE=(
 
 function update() {
   echo "[UPDATE SYSTEM]"
-  apt update
-  apt upgrade -y
+  apt-get update
+  apt-get upgrade -y
 }
 
 function install() {
   echo "[INSTALL PACKAGES]"
 
-  apt install -y "${CLI[@]}"
+  apt-get install -y "${CLI[@]}"
 
   # bat
   bat_version="0.18.2"
-  bat="bat_"$bat_version"_amd64.deb"
+  bat="bat_${bat_version}_amd64.deb"
   curl -fsSL \
     https://github.com/sharkdp/bat/releases/download/v"$bat_version"/"$bat" \
     -o "$bat"
@@ -67,16 +70,16 @@ function install() {
 
   # delta
   delta_version="0.8.3"
-  delta="git-delta_"$delta_version"_amd64.deb"
+  delta="git-delta_${delta_version}_amd64.deb"
   curl -fsSL \
     https://github.com/dandavison/delta/releases/download/"$delta_version"/"$delta" \
     -o "$delta"
   dpkg -i "$delta" && rm -f "$delta"
 
   # gdb-dashboard
-  sudo -u "$SUDO_USER" curl -fsSL \
+  sudo -u "$SUSER" curl -fsSL \
     https://raw.githubusercontent.com/cyrus-and/gdb-dashboard/master/.gdbinit \
-    -o /home/"$SUDO_USER"/.gdbinit
+    -o "$SHOME"/.gdbinit
 
   # neovim
   add-apt-repository -y ppa:neovim-ppa/unstable
@@ -84,19 +87,19 @@ function install() {
   apt-get install -y neovim
 
   # paq-nvim
-  sudo -u "$SUDO_USER" git clone https://github.com/savq/paq-nvim.git \
-    /home/"$SUDO_USER"/.local/share/nvim/site/pack/paqs/opt/paq-nvim
+  sudo -u "$SUSER" git clone https://github.com/savq/paq-nvim.git \
+    "$SHOME"/.local/share/nvim/site/pack/paqs/opt/paq-nvim
 
   # ripgrep
   ripgrep_version="13.0.0"
-  ripgrep="ripgrep_"$ripgrep_version"_amd64.deb"
+  ripgrep="ripgrep_${ripgrep_version}_amd64.deb"
   curl -fsSL \
     https://github.com/BurntSushi/ripgrep/releases/download/"$ripgrep_version"/"$ripgrep" \
     -o "$ripgrep"
   dpkg -i "$ripgrep" && rm -f "$ripgrep"
 
   if [[ $1 == true ]]; then
-    apt install -y "${GUI[@]}"
+    apt-get install -y "${GUI[@]}"
     curl -fsSL https://sw.kovidgoyal.net/kitty/installer.sh | sh
   fi
 }
@@ -106,14 +109,14 @@ function purge() {
     echo "[PURGE PACKAGES]"
 
     for pkg in "${PURGE[@]}"; do
-      apt purge -y "$pkg"
+      apt-get purge -y "$pkg"
     done
   fi
 }
 
 function clean() {
   echo "[CLEAN SYSTEM]"
-  apt autoremove -y
+  apt-get autoremove -y
 }
 
 function main() {

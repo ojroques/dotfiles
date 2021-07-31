@@ -4,32 +4,32 @@ set -e
 
 function update() {
   echo "[Update]"
-  sudo apt update
-  sudo apt upgrade -y
+  sudo apt-get update
+  sudo apt-get upgrade -y
 }
 
 function bash_ls() {
   echo "[Bash language server]"
-  sudo apt install -y nodejs npm
+  sudo apt-get install -y nodejs npm
   sudo npm install -g bash-language-server
 }
 
 function c_ls() {
   echo "[C/C++ language server]"
-  sudo apt install -y ccls
+  sudo apt-get install -y ccls
 }
 
 function go_ls() {
   echo "[Go language server]"
   sudo add-apt-repository -y ppa:longsleep/golang-backports
-  sudo apt update
-  sudo apt install -y golang-go
+  sudo apt-get update
+  sudo apt-get install -y golang-go
   GO111MODULE=on go get golang.org/x/tools/gopls@latest
 }
 
 function json_ls() {
   echo "[JSON language server]"
-  sudo apt install -y nodejs npm
+  sudo apt-get install -y nodejs npm
   sudo npm install -g vscode-json-languageserver
 }
 
@@ -41,7 +41,7 @@ function python_ls() {
 
 function clean() {
   echo "[Clean]"
-  sudo apt autoremove -y
+  sudo apt-get autoremove -y
 }
 
 function main() {
