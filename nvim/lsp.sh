@@ -16,28 +16,13 @@ function bash_ls() {
 
 function c_ls() {
   echo "[C/C++ language server]"
-  clang_version=7
-
-  if [[ $(apt-cache search --names-only "^ccls$") ]]; then
-    sudo apt install -y ccls
-  elif [[ ! -x $(command -v ccls) ]]; then
-    sudo apt install -y cmake make gcc zlib1g-dev libncurses-dev
-    sudo apt install -y clang-"$clang_version" libclang-"$clang_version"-dev
-    pushd /tmp
-      rm -rf ccls
-      git clone --depth=1 --recursive https://github.com/MaskRay/ccls
-      cd ccls
-      cmake -H. -BRelease -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_PREFIX_PATH=/usr/lib/llvm-"$clang_version" \
-        -DLLVM_INCLUDE_DIR=/usr/lib/llvm-"$clang_version"/include \
-        -DLLVM_BUILD_INCLUDE_DIR=/usr/include/llvm-"$clang_version"
-      cmake --build Release
-      sudo cmake --build Release --target install
-    popd
-  fi
+  sudo apt install -y ccls
 }
 
 function go_ls() {
+  echo "[Go language server]"
+  sudo add-apt-repository -y ppa:longsleep/golang-backports
+  sudo apt update
   sudo apt install -y golang-go
   GO111MODULE=on go get golang.org/x/tools/gopls@latest
 }

@@ -36,6 +36,8 @@
   rb = rebase
   rs = reset
   s = status
+  sw = update-index --skip-worktree
+  swn = update-index --no-skip-worktree
   ua = restore --staged
 
 [fetch]
