@@ -56,6 +56,7 @@ inoremap <C-w> <C-g>u<C-w>
 inoremap jj <ESC>
 nnoremap <C-l> :nohlsearch<CR>
 nnoremap <C-w>T :tabclose<CR>
+nnoremap <C-w>m :ToggleZoom<CR>
 nnoremap <C-w>t :tabnew<CR>
 nnoremap <F3> :ToggleWrap<CR>
 nnoremap <F4> :set scrollbind!<CR>
@@ -71,6 +72,7 @@ nnoremap <leader>w :CloseBuffer<CR>
 nnoremap <leader>x :conf qa<CR>
 nnoremap Q :WarnCaps<CR>
 nnoremap U :WarnCaps<CR>
+nnoremap Y y$
 nnoremap [<space> m`O<Esc>0D``
 nnoremap [b :bprevious<CR>
 nnoremap ]<space> m`o<Esc>0D``
@@ -100,6 +102,18 @@ function! s:toggle_wrap()
   set wrap!
 endfunction
 
+function! s:toggle_zoom()
+  if exists('t:zoomed') && t:zoomed
+    execute t:layout
+    let t:zoomed = 0
+  else
+    let t:layout = winrestcmd()
+    resize
+    vertical resize
+    let t:zoomed = 1
+  endif
+endfunction
+
 function! s:warn_caps()
   echohl WarningMsg
   echo 'Caps Lock may be on'
@@ -108,4 +122,5 @@ endfunction
 
 command! CloseBuffer call s:close_buffer()
 command! ToggleWrap call s:toggle_wrap()
+command! ToggleZoom call s:toggle_zoom()
 command! WarnCaps call s:warn_caps()

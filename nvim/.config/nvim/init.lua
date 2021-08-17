@@ -137,10 +137,11 @@ map('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', {expr = true})
 map('i', 'jj', '<ESC>')
 map('n', '<C-l>', '<cmd>nohlsearch<CR>')
 map('n', '<C-w>T', '<cmd>tabclose<CR>')
+map('n', '<C-w>m', '<cmd>lua toggle_zoom()<CR>')
 map('n', '<C-w>t', '<cmd>tabnew<CR>')
-map('n', '<F3>', '<cmd>lua toggle_wrap()<CR>')
-map('n', '<F4>', '<cmd>set scrollbind!<CR>')
-map('n', '<F5>', '<cmd>checktime<CR>')
+map('n', '<F3>', ':lua toggle_wrap()<CR>')
+map('n', '<F4>', ':set scrollbind!<CR>')
+map('n', '<F5>', ':checktime<CR>')
 map('n', '<S-Down>', '<C-w>2<')
 map('n', '<S-Left>', '<C-w>2-')
 map('n', '<S-Right>', '<C-w>2+')
@@ -179,7 +180,6 @@ require('nvim-treesitter.configs').setup {
       keymaps = {
         ['aa'] = '@parameter.outer', ['ia'] = '@parameter.inner',
         ['af'] = '@function.outer', ['if'] = '@function.inner',
-        ['ac'] = '@class.outer', ['ic'] = '@class.inner',
       },
     },
     swap = {
@@ -190,10 +190,10 @@ require('nvim-treesitter.configs').setup {
     move = {
       enable = true,
       set_jumps = true,
-      goto_next_start = {[']a'] = '@parameter.outer', [']f'] = '@function.outer', [']c'] = '@class.outer'},
-      goto_next_end = {[']A'] = '@parameter.outer', [']F'] = '@function.outer', [']C'] = '@class.outer'},
-      goto_previous_start = {['[a'] = '@parameter.outer', ['[f'] = '@function.outer', ['[c'] = '@class.outer'},
-      goto_previous_end = {['[A'] = '@parameter.outer', ['[F'] = '@function.outer', ['[C'] = '@class.outer'},
+      goto_next_start = {[']a'] = '@parameter.outer', [']f'] = '@function.outer'},
+      goto_next_end = {[']A'] = '@parameter.outer', [']F'] = '@function.outer'},
+      goto_previous_start = {['[a'] = '@parameter.outer', ['[f'] = '@function.outer'},
+      goto_previous_end = {['[A'] = '@parameter.outer', ['[F'] = '@function.outer'},
     },
   },
 }
@@ -209,6 +209,18 @@ function toggle_wrap()
   wo.breakindent = not wo.breakindent
   wo.linebreak = not wo.linebreak
   wo.wrap = not wo.wrap
+end
+
+function toggle_zoom()
+  if zoomed then
+    cmd(layout)
+    zoomed = false
+  else
+    layout = fn.winrestcmd()
+    cmd 'resize'
+    cmd 'vertical resize'
+    zoomed = true
+  end
 end
 
 function warn_caps()
