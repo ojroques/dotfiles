@@ -41,40 +41,14 @@ paq {'tpope/vim-fugitive'}
 paq {'tpope/vim-unimpaired'}
 
 -------------------- PLUGIN SETUP --------------------------
--- bufbar
-require('bufbar').setup {show_bufname = 'visible', show_flags = false}
--- bufdel
-require('bufdel').setup {next = 'alternate', quit = false}
-map('n', '<leader>w', '<cmd>BufDel<CR>')
--- buildme
-map('n', '<leader>bb', '<cmd>BuildMe<CR>')
-map('n', '<leader>be', '<cmd>BuildMeEdit<CR>')
-map('n', '<leader>bs', '<cmd>BuildMeStop<CR>')
--- comment
-require('nvim_comment').setup {}
--- compe
-require('compe').setup {
-  min_length = 2,
-  preselect = 'disable',
-  max_abbr_width = 80, max_kind_width = 40, max_menu_width = 40,
-  source = {buffer = true, path = true, nvim_lsp = true, omni = {filetypes = {'tex'}}},
-}
--- dirvish
-g['dirvish_mode'] = [[:sort ,^.*[\/],]]
--- fugitive and git
-local log = [[\%C(yellow)\%h\%Cred\%d \%Creset\%s \%Cgreen(\%ar) \%Cblue\%an\%Creset]]
-map('n', '<leader>g<space>', ':Git ')
-map('n', '<leader>gd', '<cmd>Gvdiffsplit<CR>')
-map('n', '<leader>gg', '<cmd>Git<CR>')
-map('n', '<leader>gl', fmt('<cmd>term git log --graph --all --format="%s"<CR><cmd>start<CR>', log))
--- fzf
+-- fzf & fzf.vim
 g['fzf_action'] = {['ctrl-s'] = 'split', ['ctrl-v'] = 'vsplit'}
 map('n', '<leader>/', '<cmd>BLines<CR>')
 map('n', '<leader>f', '<cmd>Files<CR>')
 map('n', '<leader>;', '<cmd>History:<CR>')
 map('n', '<leader>r', '<cmd>Rg<CR>')
 map('n', 's', '<cmd>Buffers<CR>')
--- gitsigns
+-- gitsigns.nvim
 require('gitsigns').setup {
   signs = {
     add = {text = '+'},
@@ -82,14 +56,41 @@ require('gitsigns').setup {
     delete = {text = '-'}, topdelete = {text = '-'}, changedelete = {text = '≃'},
   },
 }
--- hardline
-require('hardline').setup {}
--- indent-blankline
+-- indent-blankline.nvim
 g['indent_blankline_char'] = '┊'
 g['indent_blankline_buftype_exclude'] = {'terminal'}
 g['indent_blankline_filetype_exclude'] = {'fugitive', 'fzf', 'help', 'man'}
--- lspfuzzy
+-- nvim-bufbar
+require('bufbar').setup {show_bufname = 'visible', show_flags = false}
+-- nvim-bufdel
+require('bufdel').setup {next = 'alternate', quit = false}
+map('n', '<leader>w', '<cmd>BufDel<CR>')
+-- nvim-buildme
+map('n', '<leader>bb', '<cmd>BuildMe<CR>')
+map('n', '<leader>be', '<cmd>BuildMeEdit<CR>')
+map('n', '<leader>bs', '<cmd>BuildMeStop<CR>')
+-- nvim-comment
+require('nvim_comment').setup {}
+-- nvim-compe
+require('compe').setup {
+  min_length = 2,
+  preselect = 'disable',
+  max_abbr_width = 80, max_kind_width = 40, max_menu_width = 40,
+  source = {buffer = true, path = true, nvim_lsp = true, omni = {filetypes = {'tex'}}},
+}
+-- nvim-hardline
+require('hardline').setup {}
+-- nvim-lspfuzzy
 require('lspfuzzy').setup {}
+-- vim-dirvish
+g['dirvish_mode'] = [[:sort ,^.*[\/],]]
+map('', '<leader>d', ':Shdo ')
+-- vim-fugitive & git
+local log = [[\%C(yellow)\%h\%Cred\%d \%Creset\%s \%Cgreen(\%ar) \%Cblue\%an\%Creset]]
+map('n', '<leader>g<space>', ':Git ')
+map('n', '<leader>gd', '<cmd>Gvdiffsplit<CR>')
+map('n', '<leader>gg', '<cmd>Git<CR>')
+map('n', '<leader>gl', fmt('<cmd>term git log --graph --all --format="%s"<CR><cmd>start<CR>', log))
 -- vim-sandwich
 cmd 'runtime macros/sandwich/keymap/surround.vim'
 -- vimtex
@@ -217,8 +218,7 @@ function toggle_zoom()
     zoomed = false
   else
     layout = fn.winrestcmd()
-    cmd 'resize'
-    cmd 'vertical resize'
+    cmd 'resize | vertical resize'
     zoomed = true
   end
 end
