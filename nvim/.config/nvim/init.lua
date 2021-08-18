@@ -131,12 +131,9 @@ cmd 'colorscheme onedark'
 
 -------------------- MAPPINGS ------------------------------
 map('', '<leader>c', '"+y')
-map('i', '<C-u>', '<C-g>u<C-u>')
-map('i', '<C-w>', '<C-g>u<C-w>')
 map('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<S-Tab>"', {expr = true})
 map('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', {expr = true})
 map('i', 'jj', '<ESC>')
-map('n', '<C-l>', '<cmd>nohlsearch<CR>')
 map('n', '<C-w>T', '<cmd>tabclose<CR>')
 map('n', '<C-w>m', '<cmd>lua toggle_zoom()<CR>')
 map('n', '<C-w>t', '<cmd>tabnew<CR>')
@@ -201,8 +198,7 @@ require('nvim-treesitter.configs').setup {
 
 -------------------- COMMANDS ------------------------------
 function init_term()
-  cmd 'setlocal nonumber norelativenumber'
-  cmd 'setlocal nospell'
+  cmd 'setlocal nonumber norelativenumber nospell'
   cmd 'setlocal signcolumn=auto'
 end
 
