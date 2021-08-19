@@ -149,6 +149,7 @@ map('n', '<leader>t', '<cmd>terminal<CR>')
 map('n', '<leader>u', '<cmd>update<CR>')
 map('n', '<leader>x', '<cmd>conf qa<CR>')
 map('n', 'Q', '<cmd>lua warn_caps()<CR>')
+map('n', 'S', '<cmd>lua split_line()<CR>')
 map('n', 'U', '<cmd>lua warn_caps()<CR>')
 map('t', '<ESC>', '&filetype == "fzf" ? "\\<ESC>" : "\\<C-\\>\\<C-n>"' , {expr = true})
 map('t', 'jj', '<ESC>', {noremap = false})
@@ -200,6 +201,15 @@ require('nvim-treesitter.configs').setup {
 function init_term()
   cmd 'setlocal nonumber norelativenumber nospell'
   cmd 'setlocal signcolumn=auto'
+end
+
+function split_line()
+  local cursor = fn.getcurpos()
+  local char = string.find(fn.getline('.'), '%S', cursor[3])
+  if not char then return end
+  fn.cursor(cursor[2], char)
+  local keys = [[i<CR><ESC>k:s/\s\+$//e<CR>$]]
+  api.nvim_feedkeys(api.nvim_replace_termcodes(keys, true, false, true) , 'n', true)
 end
 
 function toggle_wrap()
