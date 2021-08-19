@@ -103,9 +103,8 @@ opt.completeopt = {'menuone', 'noinsert', 'noselect'}  -- Completion options
 opt.cursorline = true               -- Highlight cursor line
 opt.expandtab = true                -- Use spaces instead of tabs
 opt.formatoptions = 'crqnj'         -- Automatic formatting options
-opt.hidden = true                   -- Enable background buffers
 opt.ignorecase = true               -- Ignore case
-opt.joinspaces = false              -- No double spaces with join
+opt.inccommand = ''                 -- Disable substitution preview
 opt.list = true                     -- Show some invisible characters
 opt.number = true                   -- Show line numbers
 opt.pastetoggle = '<F2>'            -- Paste mode
@@ -149,7 +148,6 @@ map('n', '<leader>t', '<cmd>terminal<CR>')
 map('n', '<leader>u', '<cmd>update<CR>')
 map('n', '<leader>x', '<cmd>conf qa<CR>')
 map('n', 'Q', '<cmd>lua warn_caps()<CR>')
-map('n', 'S', '<cmd>lua split_line()<CR>')
 map('n', 'U', '<cmd>lua warn_caps()<CR>')
 map('t', '<ESC>', '&filetype == "fzf" ? "\\<ESC>" : "\\<C-\\>\\<C-n>"' , {expr = true})
 map('t', 'jj', '<ESC>', {noremap = false})
@@ -188,7 +186,6 @@ require('nvim-treesitter.configs').setup {
     },
     move = {
       enable = true,
-      set_jumps = true,
       goto_next_start = {[']a'] = '@parameter.outer', [']f'] = '@function.outer'},
       goto_next_end = {[']A'] = '@parameter.outer', [']F'] = '@function.outer'},
       goto_previous_start = {['[a'] = '@parameter.outer', ['[f'] = '@function.outer'},
@@ -199,17 +196,9 @@ require('nvim-treesitter.configs').setup {
 
 -------------------- COMMANDS ------------------------------
 function init_term()
-  cmd 'setlocal nonumber norelativenumber nospell'
+  cmd 'setlocal nonumber norelativenumber'
+  cmd 'setlocal nospell'
   cmd 'setlocal signcolumn=auto'
-end
-
-function split_line()
-  local cursor = fn.getcurpos()
-  local char = string.find(fn.getline('.'), '%S', cursor[3])
-  if not char then return end
-  fn.cursor(cursor[2], char)
-  local keys = [[i<CR><ESC>k:s/\s\+$//e<CR>$]]
-  api.nvim_feedkeys(api.nvim_replace_termcodes(keys, true, false, true) , 'n', true)
 end
 
 function toggle_wrap()
@@ -220,10 +209,9 @@ end
 
 function toggle_zoom()
   if zoomed then
-    cmd(layout)
+    cmd 'wincmd ='
     zoomed = false
   else
-    layout = fn.winrestcmd()
     cmd 'resize | vertical resize'
     zoomed = true
   end

@@ -16,10 +16,12 @@ set autoread                          " Reload file modified outside vim
 set background=dark                   " Adjust default color groups
 set backspace=indent,eol,start        " Enhanced backspace in insert mode
 set complete=.,w,b,u,t                " Location of completion keywords
+set hidden                            " Enable background buffers
 set hlsearch                          " Highlight search terms
 set incsearch                         " Highlight search patterns
 set laststatus=2                      " Always display status line
 set listchars=tab:>\ ,trail:-,nbsp:+  " Characters to show for spaces
+set nojoinspaces                      " No double spaces with join
 set ruler                             " Show cursor line and column
 set showcmd                           " Show current command
 set wildmenu                          " Enhanced command-line completion
@@ -28,13 +30,12 @@ set wildmenu                          " Enhanced command-line completion
 set completeopt=menuone,noinsert,noselect  " Completion options
 set expandtab              " Use spaces instead of tabs
 set formatoptions=crqnj    " Automatic formatting options
-set hidden                 " Enable background buffers
 set ignorecase             " Ignore case
 set list                   " Show some invisible characters
-set nojoinspaces           " No double spaces with join
 set nowrap                 " Disable line wrap
 set number relativenumber  " Relative line numbers
 set pastetoggle='<F2>'     " Paste mode
+set pumheight=12           " Max height of popup menu
 set scrolloff=4            " Lines of context
 set shiftround             " Round indent
 set shiftwidth=2           " Size of an indent
@@ -104,12 +105,10 @@ endfunction
 
 function! s:toggle_zoom()
   if exists('t:zoomed') && t:zoomed
-    execute t:layout
+    wincmd =
     let t:zoomed = 0
   else
-    let t:layout = winrestcmd()
-    resize
-    vertical resize
+    resize | vertical resize
     let t:zoomed = 1
   endif
 endfunction

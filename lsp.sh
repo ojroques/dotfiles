@@ -36,7 +36,7 @@ function json_ls() {
 function python_ls() {
   echo "[Python language server]"
   pip3 install --user ipython jedi matplotlib numpy pynvim scipy
-  pip3 install --user python-lsp-server[mccabe,pyflakes,pycodestyle,yapf]
+  pip3 install --user python-lsp-server[pyflakes,pycodestyle,yapf]
 }
 
 function clean() {
