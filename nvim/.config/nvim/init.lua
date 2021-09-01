@@ -41,11 +41,11 @@ paq {'tpope/vim-fugitive'}
 paq {'tpope/vim-unimpaired'}
 
 -------------------- PLUGIN SETUP --------------------------
--- fzf & fzf.vim
+-- fzf and fzf.vim
 g['fzf_action'] = {['ctrl-s'] = 'split', ['ctrl-v'] = 'vsplit'}
-map('n', '<leader>/', '<cmd>BLines<CR>')
-map('n', '<leader>f', '<cmd>Files<CR>')
+map('n', '<leader>/', '<cmd>History/<CR>')
 map('n', '<leader>;', '<cmd>History:<CR>')
+map('n', '<leader>f', '<cmd>Files<CR>')
 map('n', '<leader>r', '<cmd>Rg<CR>')
 map('n', 's', '<cmd>Buffers<CR>')
 -- gitsigns.nvim
@@ -85,7 +85,7 @@ require('lspfuzzy').setup {}
 -- vim-dirvish
 g['dirvish_mode'] = [[:sort ,^.*[\/],]]
 map('', '<leader>d', ':Shdo ')
--- vim-fugitive & git
+-- vim-fugitive and git
 local log = [[\%C(yellow)\%h\%Cred\%d \%Creset\%s \%Cgreen(\%ar) \%Cblue\%an\%Creset]]
 map('n', '<leader>g<space>', ':Git ')
 map('n', '<leader>gd', '<cmd>Gvdiffsplit<CR>')
