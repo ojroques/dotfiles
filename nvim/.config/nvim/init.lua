@@ -13,32 +13,37 @@ local function map(mode, lhs, rhs, opts)
 end
 
 -------------------- PLUGINS -------------------------------
-cmd 'packadd paq-nvim'
-local paq = require('paq-nvim').paq
-paq {'airblade/vim-rooter'}
-paq {'hrsh7th/nvim-compe'}
-paq {'joshdick/onedark.vim'}
-paq {'junegunn/fzf'}
-paq {'junegunn/fzf.vim'}
-paq {'justinmk/vim-dirvish'}
-paq {'lervag/vimtex'}
-paq {'lewis6991/gitsigns.nvim'}
-paq {'lukas-reineke/indent-blankline.nvim'}
-paq {'machakann/vim-sandwich'}
-paq {'neovim/nvim-lspconfig'}
-paq {'nvim-lua/plenary.nvim'}
-paq {'nvim-treesitter/nvim-treesitter'}
-paq {'nvim-treesitter/nvim-treesitter-textobjects'}
-paq {'ojroques/nvim-bufbar'}
-paq {'ojroques/nvim-bufdel'}
-paq {'ojroques/nvim-buildme'}
-paq {'ojroques/nvim-hardline'}
-paq {'ojroques/nvim-lspfuzzy'}
-paq {'ojroques/vim-oscyank'}
-paq {'savq/paq-nvim', opt = true}
-paq {'terrortylor/nvim-comment'}
-paq {'tpope/vim-fugitive'}
-paq {'tpope/vim-unimpaired'}
+local paq_dir = fmt('%s/site/pack/paqs/start/paq-nvim', fn.stdpath('data'))
+if fn.empty(fn.glob(paq_dir)) > 0 then
+  fn.system({'git', 'clone', '--depth=1', 'https://github.com/savq/paq-nvim.git', paq_dir})
+end
+
+require 'paq' {
+  'airblade/vim-rooter',
+  'hrsh7th/nvim-compe',
+  'joshdick/onedark.vim',
+  'junegunn/fzf',
+  'junegunn/fzf.vim',
+  'justinmk/vim-dirvish',
+  'lervag/vimtex',
+  'lewis6991/gitsigns.nvim',
+  'lukas-reineke/indent-blankline.nvim',
+  'machakann/vim-sandwich',
+  'neovim/nvim-lspconfig',
+  'nvim-lua/plenary.nvim',
+  'nvim-treesitter/nvim-treesitter',
+  'nvim-treesitter/nvim-treesitter-textobjects',
+  'ojroques/nvim-bufbar',
+  'ojroques/nvim-bufdel',
+  'ojroques/nvim-buildme',
+  'ojroques/nvim-hardline',
+  'ojroques/nvim-lspfuzzy',
+  'ojroques/vim-oscyank',
+  'savq/paq-nvim',
+  'terrortylor/nvim-comment',
+  'tpope/vim-fugitive',
+  'tpope/vim-unimpaired',
+}
 
 -------------------- PLUGIN SETUP --------------------------
 -- fzf and fzf.vim
@@ -212,7 +217,8 @@ function toggle_zoom()
     cmd 'wincmd ='
     zoomed = false
   else
-    cmd 'resize | vertical resize'
+    cmd 'resize'
+    cmd 'vertical resize'
     zoomed = true
   end
 end

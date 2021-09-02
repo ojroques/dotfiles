@@ -86,10 +86,6 @@ function install() {
   apt-get update
   apt-get install -y neovim
 
-  # paq-nvim
-  sudo -u "$SUSER" git clone https://github.com/savq/paq-nvim.git \
-    "$SHOME"/.local/share/nvim/site/pack/paqs/opt/paq-nvim
-
   # ripgrep
   ripgrep_version="13.0.0"
   ripgrep="ripgrep_${ripgrep_version}_amd64.deb"
@@ -131,7 +127,6 @@ function main() {
   echo "* delta"
   echo "* gdb-dashboard"
   echo "* neovim"
-  echo "* paq-nvim"
   echo "* ripgrep"
 
   echo "GUI installation includes CLI packages and:"
