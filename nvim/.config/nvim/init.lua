@@ -19,30 +19,32 @@ if fn.empty(fn.glob(paq_dir)) > 0 then
 end
 
 require 'paq' {
-  'airblade/vim-rooter',
-  'hrsh7th/nvim-compe',
-  'joshdick/onedark.vim',
-  'junegunn/fzf',
-  'junegunn/fzf.vim',
-  'justinmk/vim-dirvish',
-  'lervag/vimtex',
-  'lewis6991/gitsigns.nvim',
-  'lukas-reineke/indent-blankline.nvim',
-  'machakann/vim-sandwich',
-  'neovim/nvim-lspconfig',
-  'nvim-lua/plenary.nvim',
-  'nvim-treesitter/nvim-treesitter',
-  'nvim-treesitter/nvim-treesitter-textobjects',
-  'ojroques/nvim-bufbar',
-  'ojroques/nvim-bufdel',
-  'ojroques/nvim-buildme',
-  'ojroques/nvim-hardline',
-  'ojroques/nvim-lspfuzzy',
-  'ojroques/vim-oscyank',
-  'savq/paq-nvim',
-  'terrortylor/nvim-comment',
-  'tpope/vim-fugitive',
-  'tpope/vim-unimpaired',
+  {'airblade/vim-rooter'},
+  {'hrsh7th/nvim-compe'},
+  {'joshdick/onedark.vim'},
+  {'junegunn/fzf'},
+  {'junegunn/fzf.vim'},
+  {'justinmk/vim-dirvish'},
+  {'lervag/vimtex'},
+  {'lewis6991/gitsigns.nvim'},
+  {'lukas-reineke/indent-blankline.nvim'},
+  {'machakann/vim-sandwich'},
+  {'neovim/nvim-lspconfig'},
+  {'norcalli/nvim-colorizer.lua'},
+  {'nvim-lua/plenary.nvim'},
+  {'nvim-treesitter/nvim-treesitter'},
+  {'nvim-treesitter/nvim-treesitter-textobjects'},
+  {'ojroques/nvim-bufbar'},
+  {'ojroques/nvim-bufdel'},
+  {'ojroques/nvim-buildme'},
+  {'ojroques/nvim-hardline', branch = 'personal'},
+  {'ojroques/nvim-lspfuzzy'},
+  {'ojroques/vim-oscyank'},
+  {'savq/paq-nvim'},
+  {'smiteshp/nvim-gps'},
+  {'terrortylor/nvim-comment'},
+  {'tpope/vim-fugitive'},
+  {'tpope/vim-unimpaired'},
 }
 
 -------------------- PLUGIN SETUP --------------------------
@@ -74,6 +76,8 @@ map('n', '<leader>w', '<cmd>BufDel<CR>')
 map('n', '<leader>bb', '<cmd>BuildMe<CR>')
 map('n', '<leader>be', '<cmd>BuildMeEdit<CR>')
 map('n', '<leader>bs', '<cmd>BuildMeStop<CR>')
+-- nvim-colorizer.lua
+require('colorizer').setup()
 -- nvim-comment
 require('nvim_comment').setup {}
 -- nvim-compe
@@ -82,6 +86,10 @@ require('compe').setup {
   preselect = 'disable',
   max_abbr_width = 80, max_kind_width = 40, max_menu_width = 40,
   source = {buffer = true, path = true, nvim_lsp = true, omni = {filetypes = {'tex'}}},
+}
+-- nvim-gps
+require("nvim-gps").setup {
+  icons = {["class-name"] = '', ["function-name"] = '', ["method-name"] = ''},
 }
 -- nvim-hardline
 require('hardline').setup {}
