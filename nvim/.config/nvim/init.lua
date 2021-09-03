@@ -30,7 +30,6 @@ require 'paq' {
   {'lukas-reineke/indent-blankline.nvim'},
   {'machakann/vim-sandwich'},
   {'neovim/nvim-lspconfig'},
-  {'norcalli/nvim-colorizer.lua'},
   {'nvim-lua/plenary.nvim'},
   {'nvim-treesitter/nvim-treesitter'},
   {'nvim-treesitter/nvim-treesitter-textobjects'},
@@ -38,7 +37,7 @@ require 'paq' {
   {'ojroques/nvim-bufdel'},
   {'ojroques/nvim-buildme'},
   {'ojroques/nvim-hardline', branch = 'personal'},
-  {'ojroques/nvim-lspfuzzy'},
+  {'ojroques/nvim-lspfuzzy', branch = 'dev'},
   {'ojroques/vim-oscyank'},
   {'savq/paq-nvim'},
   {'smiteshp/nvim-gps'},
@@ -76,10 +75,8 @@ map('n', '<leader>w', '<cmd>BufDel<CR>')
 map('n', '<leader>bb', '<cmd>BuildMe<CR>')
 map('n', '<leader>be', '<cmd>BuildMeEdit<CR>')
 map('n', '<leader>bs', '<cmd>BuildMeStop<CR>')
--- nvim-colorizer.lua
-require('colorizer').setup()
 -- nvim-comment
-require('nvim_comment').setup {}
+require('nvim_comment').setup()
 -- nvim-compe
 require('compe').setup {
   min_length = 2,
@@ -88,13 +85,11 @@ require('compe').setup {
   source = {buffer = true, path = true, nvim_lsp = true, omni = {filetypes = {'tex'}}},
 }
 -- nvim-gps
-require("nvim-gps").setup {
-  icons = {["class-name"] = '', ["function-name"] = '', ["method-name"] = ''},
-}
+require("nvim-gps").setup {icons = {["class-name"] = '', ["function-name"] = '', ["method-name"] = ''}}
 -- nvim-hardline
-require('hardline').setup {}
+require('hardline').setup()
 -- nvim-lspfuzzy
-require('lspfuzzy').setup {}
+require('lspfuzzy').setup()
 -- vim-dirvish
 g['dirvish_mode'] = [[:sort ,^.*[\/],]]
 map('', '<leader>d', ':Shdo ')
@@ -239,6 +234,6 @@ end
 
 vim.tbl_map(function(c) cmd(fmt('autocmd %s', c)) end, {
   'TermOpen * lua init_term()',
+  'TextYankPost * if v:event.operator is "y" && v:event.regname is "+" | execute "OSCYankReg +" | endif',
   'TextYankPost * lua vim.highlight.on_yank {timeout = 200, on_visual = false}',
-  'TextYankPost * if v:event.operator is "y" && v:event.regname is "+" | OSCYankReg + | endif',
 })
