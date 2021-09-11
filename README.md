@@ -40,6 +40,21 @@ stow bash git kitty nvim rofi vim xfce
 ```
 
 
+## Docker
+A Docker image is present that sets up an Ubuntu 20.04 environment with all
+dotfiles installed.
+
+Build it with:
+```sh
+docker build -t dotfiles:latest .
+```
+
+And run it like so:
+```sh
+docker run -it dotfiles
+```
+
+
 ## After Installation
 - Add email to [git config](git/.gitconfig)
 - Run `nvim` and execute `:PaqInstall` to install plugins

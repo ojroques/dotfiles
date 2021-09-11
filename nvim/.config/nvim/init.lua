@@ -37,7 +37,7 @@ require 'paq' {
   {'ojroques/nvim-bufdel'},
   {'ojroques/nvim-buildme'},
   {'ojroques/nvim-hardline', branch = 'personal'},
-  {'ojroques/nvim-lspfuzzy', branch = 'dev'},
+  {'ojroques/nvim-lspfuzzy'},
   {'ojroques/vim-oscyank'},
   {'savq/paq-nvim'},
   {'smiteshp/nvim-gps'},
@@ -89,7 +89,8 @@ require("nvim-gps").setup {icons = {["class-name"] = '', ["function-name"] = '',
 -- nvim-hardline
 require('hardline').setup()
 -- nvim-lspfuzzy
-require('lspfuzzy').setup()
+require('lspfuzzy').setup {save_last = true}
+map('n', '<space>l', '<cmd>LspFuzzyLast<CR>')
 -- vim-dirvish
 g['dirvish_mode'] = [[:sort ,^.*[\/],]]
 map('', '<leader>d', ':Shdo ')

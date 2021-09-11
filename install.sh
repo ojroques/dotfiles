@@ -61,7 +61,7 @@ function install() {
   apt-get install -y "${CLI[@]}"
 
   # bat
-  bat_version="0.18.2"
+  bat_version="0.18.3"
   bat="bat_${bat_version}_amd64.deb"
   curl -fsSL \
     https://github.com/sharkdp/bat/releases/download/v"$bat_version"/"$bat" \
