@@ -29,6 +29,7 @@ require 'paq' {
   {'lewis6991/gitsigns.nvim'},
   {'lukas-reineke/indent-blankline.nvim'},
   {'machakann/vim-sandwich'},
+  {'nathom/filetype.nvim'},
   {'neovim/nvim-lspconfig'},
   {'nvim-lua/plenary.nvim'},
   {'nvim-treesitter/nvim-treesitter'},
@@ -41,7 +42,7 @@ require 'paq' {
   {'ojroques/vim-oscyank'},
   {'savq/paq-nvim'},
   {'smiteshp/nvim-gps'},
-  {'terrortylor/nvim-comment'},
+  {'tpope/vim-commentary'},
   {'tpope/vim-fugitive'},
   {'tpope/vim-unimpaired'},
 }
@@ -75,8 +76,6 @@ map('n', '<leader>w', '<cmd>BufDel<CR>')
 map('n', '<leader>bb', '<cmd>BuildMe<CR>')
 map('n', '<leader>be', '<cmd>BuildMeEdit<CR>')
 map('n', '<leader>bs', '<cmd>BuildMeStop<CR>')
--- nvim-comment
-require('nvim_comment').setup()
 -- nvim-compe
 require('compe').setup {
   min_length = 2,
@@ -187,11 +186,6 @@ require('nvim-treesitter.configs').setup {
         ['aa'] = '@parameter.outer', ['ia'] = '@parameter.inner',
         ['af'] = '@function.outer', ['if'] = '@function.inner',
       },
-    },
-    swap = {
-      enable = true,
-      swap_next = {['<leader>a'] = '@parameter.inner'},
-      swap_previous = {['<leader>A'] = '@parameter.inner'},
     },
     move = {
       enable = true,
