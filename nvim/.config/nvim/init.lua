@@ -25,7 +25,6 @@ require 'paq' {
   {'hrsh7th/cmp-omni'},
   {'hrsh7th/cmp-path'},
   {'hrsh7th/nvim-cmp'},
-  {'joshdick/onedark.vim'},
   {'junegunn/fzf'},
   {'junegunn/fzf.vim'},
   {'justinmk/vim-dirvish'},
@@ -34,11 +33,12 @@ require 'paq' {
   {'lukas-reineke/indent-blankline.nvim'},
   {'machakann/vim-sandwich'},
   {'nathom/filetype.nvim'},
+  {'navarasu/onedark.nvim'},
   {'neovim/nvim-lspconfig'},
   {'nvim-lua/plenary.nvim'},
   {'nvim-treesitter/nvim-treesitter'},
   {'nvim-treesitter/nvim-treesitter-textobjects'},
-  {'ojroques/nvim-bufbar'},
+  {'ojroques/nvim-bufbar', branch = 'personal'},
   {'ojroques/nvim-bufdel'},
   {'ojroques/nvim-buildme'},
   {'ojroques/nvim-hardline', branch = 'personal'},
@@ -104,7 +104,6 @@ cmp.setup {
     ['<S-Tab>'] = function(fb) if cmp.visible() then cmp.select_prev_item() else fb() end end,
   },
   preselect = require('cmp.types').cmp.PreselectMode.None,
-  snippet = {expand = function() end},
   sources = cmp.config.sources({
     {name = 'nvim_lsp'},
     {name = 'omni'},
@@ -113,12 +112,23 @@ cmp.setup {
   }),
 }
 -- nvim-gps
-require("nvim-gps").setup {icons = {["class-name"] = '', ["function-name"] = '', ["method-name"] = ''}}
+require("nvim-gps").setup {
+  icons = {
+    ["class-name"] = '',
+    ["function-name"] = '',
+    ["method-name"] = '',
+    ["container-name"] = '',
+    ["tag-name"] = '',
+  },
+}
 -- nvim-hardline
 require('hardline').setup()
 -- nvim-lspfuzzy
 require('lspfuzzy').setup {save_last = true}
 map('n', '<space>l', '<cmd>LspFuzzyLast<CR>')
+-- onedark.nvim
+g['onedark_italic_comment'] = false
+g['onedark_toggle_style_keymap'] = '<NOP>'
 -- vim-dirvish
 g['dirvish_mode'] = [[:sort ,^.*[\/],]]
 map('', '<leader>d', ':Shdo ')
