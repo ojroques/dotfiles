@@ -2,7 +2,7 @@
 -- github.com/ojroques
 
 -------------------- HELPERS -------------------------------
-local api, cmd, fn, g = vim.api, vim.cmd, vim.fn, vim.g
+local api, cmd, fn, g, lsp = vim.api, vim.cmd, vim.fn, vim.g, vim.lsp
 local opt, wo = vim.opt, vim.wo
 local fmt = string.format
 
@@ -20,7 +20,11 @@ end
 
 require 'paq' {
   {'airblade/vim-rooter'},
-  {'hrsh7th/nvim-compe'},
+  {'hrsh7th/cmp-buffer'},
+  {'hrsh7th/cmp-nvim-lsp'},
+  {'hrsh7th/cmp-omni'},
+  {'hrsh7th/cmp-path'},
+  {'hrsh7th/nvim-cmp'},
   {'joshdick/onedark.vim'},
   {'junegunn/fzf'},
   {'junegunn/fzf.vim'},
@@ -74,14 +78,39 @@ require('bufdel').setup {next = 'alternate', quit = false}
 map('n', '<leader>w', '<cmd>BufDel<CR>')
 -- nvim-buildme
 map('n', '<leader>bb', '<cmd>BuildMe<CR>')
+map('n', '<leader>bB', '<cmd>BuildMe!<CR>')
 map('n', '<leader>be', '<cmd>BuildMeEdit<CR>')
 map('n', '<leader>bs', '<cmd>BuildMeStop<CR>')
--- nvim-compe
-require('compe').setup {
-  min_length = 2,
-  preselect = 'disable',
-  max_abbr_width = 80, max_kind_width = 40, max_menu_width = 40,
-  source = {buffer = true, path = true, nvim_lsp = true, omni = {filetypes = {'tex'}}},
+-- nvim-cmp
+local cmp = require('cmp')
+local cmp_cap = require('cmp_nvim_lsp').update_capabilities(lsp.protocol.make_client_capabilities())
+local menu = {buffer = '[Buf]', nvim_lsp = '[LSP]', omni = '[Omni]', path = '[Path]'}
+local widths = {abbr = 80, kind = 40, menu = 40}
+cmp.setup {
+  completion = {keyword_length = 2},
+  formatting = {
+    format = function(entry, vim_item)
+      vim_item.menu = vim_item.menu or menu[entry.source.name]
+      for k, width in pairs(widths) do
+        if #vim_item[k] > width then
+          vim_item[k] = fmt('%s...', string.sub(vim_item[k], 1, width))
+        end
+      end
+      return vim_item
+    end,
+  },
+  mapping = {
+    ['<Tab>'] = function(fb) if cmp.visible() then cmp.select_next_item() else fb() end end,
+    ['<S-Tab>'] = function(fb) if cmp.visible() then cmp.select_prev_item() else fb() end end,
+  },
+  preselect = require('cmp.types').cmp.PreselectMode.None,
+  snippet = {expand = function() end},
+  sources = cmp.config.sources({
+    {name = 'nvim_lsp'},
+    {name = 'omni'},
+    {name = 'path'},
+    {name = 'buffer'},
+  }),
 }
 -- nvim-gps
 require("nvim-gps").setup {icons = {["class-name"] = '', ["function-name"] = '', ["method-name"] = ''}}
@@ -138,8 +167,6 @@ cmd 'colorscheme onedark'
 
 -------------------- MAPPINGS ------------------------------
 map('', '<leader>c', '"+y')
-map('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<S-Tab>"', {expr = true})
-map('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', {expr = true})
 map('i', 'jj', '<ESC>')
 map('n', '<C-w>T', '<cmd>tabclose<CR>')
 map('n', '<C-w>m', '<cmd>lua toggle_zoom()<CR>')
@@ -162,9 +189,10 @@ map('t', 'jj', '<ESC>', {noremap = false})
 map('v', '<leader>s', ':s//gcI<Left><Left><Left><Left>')
 
 -------------------- LSP -----------------------------------
+local defaults = {capabilities = cmp_cap}
 for ls, cfg in pairs({
   bashls = {}, gopls = {}, ccls = {}, jsonls = {}, pylsp = {},
-}) do require('lspconfig')[ls].setup(cfg) end
+}) do require('lspconfig')[ls].setup(vim.tbl_extend('keep', cfg, defaults)) end
 map('n', '<space>,', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
 map('n', '<space>;', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
 map('n', '<space>a', '<cmd>lua vim.lsp.buf.code_action()<CR>')
