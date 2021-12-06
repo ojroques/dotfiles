@@ -45,7 +45,7 @@ fi
 # Set WSL environment variables
 if grep -q -i "microsoft" /proc/sys/kernel/osrelease; then
   export DISPLAY="localhost:0.0"
-  export PROMPT_COMMAND=$PROMPT_COMMAND'; printf "\e]9;9;%s\e\\" "$(wslpath -m "$PWD")"'
+  export PROMPT_COMMAND=$PROMPT_COMMAND'; printf "\e]9;9;%s\e\\" "$PWD"'
   [[ -f $BASH_DIR/ssh-agent ]] && source $BASH_DIR/ssh-agent
   if [[ ! -f $BASH_DIR/wsl.env ]]; then
     mkdir -p $BASH_DIR

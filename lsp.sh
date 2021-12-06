@@ -30,7 +30,7 @@ function go_ls() {
 function json_ls() {
   echo "[JSON language server]"
   sudo apt-get install -y nodejs npm
-  sudo npm install -g vscode-json-languageserver
+  sudo npm install -g vscode-langservers-extracted
 }
 
 function python_ls() {
