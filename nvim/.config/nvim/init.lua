@@ -41,6 +41,7 @@ require 'paq' {
   {'ojroques/nvim-buildme'},
   {'ojroques/nvim-hardline', branch = 'personal'},
   {'ojroques/nvim-lspfuzzy'},
+  {'ojroques/nvim-scrollbar'},
   {'ojroques/vim-oscyank'},
   {'savq/paq-nvim'},
   {'smiteshp/nvim-gps'},
@@ -110,12 +111,14 @@ cmp.setup {
   }),
 }
 -- nvim-gps
-require("nvim-gps").setup {disable_icons = true}
+require('nvim-gps').setup {disable_icons = true}
 -- nvim-hardline
 require('hardline').setup()
 -- nvim-lspfuzzy
 require('lspfuzzy').setup {save_last = true}
 map('n', '<space>l', '<cmd>LspFuzzyLast<CR>')
+-- nvim-scrollbar
+require('scrollbar').setup()
 -- onedark.nvim
 vim.g['onedark_italic_comment'] = false
 vim.g['onedark_toggle_style_keymap'] = '<NOP>'
