@@ -1,21 +1,15 @@
 -- neovim config
 -- github.com/ojroques
 
--------------------- HELPERS -------------------------------
+-------------------- INIT ----------------------------------
 local fmt = string.format
-
-local function map(mode, lhs, rhs, opts)
-  local options = {noremap = true}
-  if opts then options = vim.tbl_extend('force', options, opts) end
-  vim.api.nvim_set_keymap(mode, lhs, rhs, options)
-end
-
--------------------- PLUGINS -------------------------------
 local paq_dir = fmt('%s/site/pack/paqs/start/paq-nvim', vim.fn.stdpath('data'))
+
 if vim.fn.empty(vim.fn.glob(paq_dir)) > 0 then
   vim.fn.system {'git', 'clone', '--depth=1', 'https://github.com/savq/paq-nvim.git', paq_dir}
 end
 
+-------------------- PLUGINS -------------------------------
 require 'paq' {
   {'airblade/vim-rooter'},
   {'hrsh7th/cmp-buffer'},
@@ -53,11 +47,11 @@ require 'paq' {
 -------------------- PLUGIN SETUP --------------------------
 -- fzf and fzf.vim
 vim.g['fzf_action'] = {['ctrl-s'] = 'split', ['ctrl-v'] = 'vsplit'}
-map('n', '<leader>/', '<cmd>History/<CR>')
-map('n', '<leader>;', '<cmd>History:<CR>')
-map('n', '<leader>f', '<cmd>Files<CR>')
-map('n', '<leader>r', '<cmd>Rg<CR>')
-map('n', 's', '<cmd>Buffers<CR>')
+vim.keymap.set('n', '<leader>/', '<cmd>History/<CR>')
+vim.keymap.set('n', '<leader>;', '<cmd>History:<CR>')
+vim.keymap.set('n', '<leader>f', '<cmd>Files<CR>')
+vim.keymap.set('n', '<leader>r', '<cmd>Rg<CR>')
+vim.keymap.set('n', 's', '<cmd>Buffers<CR>')
 -- gitsigns.nvim
 require('gitsigns').setup {
   signs = {
@@ -74,12 +68,12 @@ vim.g['indent_blankline_filetype_exclude'] = {'fugitive', 'fzf', 'help', 'man'}
 require('bufbar').setup {show_bufname = 'visible', show_flags = false}
 -- nvim-bufdel
 require('bufdel').setup {next = 'alternate', quit = false}
-map('n', '<leader>w', '<cmd>BufDel<CR>')
+vim.keymap.set('n', '<leader>w', '<cmd>BufDel<CR>')
 -- nvim-buildme
-map('n', '<leader>bb', '<cmd>BuildMe<CR>')
-map('n', '<leader>bB', '<cmd>BuildMe!<CR>')
-map('n', '<leader>be', '<cmd>BuildMeEdit<CR>')
-map('n', '<leader>bs', '<cmd>BuildMeStop<CR>')
+vim.keymap.set('n', '<leader>bb', '<cmd>BuildMe<CR>')
+vim.keymap.set('n', '<leader>bB', '<cmd>BuildMe!<CR>')
+vim.keymap.set('n', '<leader>be', '<cmd>BuildMeEdit<CR>')
+vim.keymap.set('n', '<leader>bs', '<cmd>BuildMeStop<CR>')
 -- nvim-cmp
 local cmp = require('cmp')
 local cmp_cap = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
@@ -116,7 +110,7 @@ require('nvim-gps').setup {disable_icons = true}
 require('hardline').setup()
 -- nvim-lspfuzzy
 require('lspfuzzy').setup {save_last = true}
-map('n', '<space>l', '<cmd>LspFuzzyLast<CR>')
+vim.keymap.set('n', '<space>l', '<cmd>LspFuzzyLast<CR>')
 -- nvim-scrollbar
 require('scrollbar').setup()
 -- onedark.nvim
@@ -124,13 +118,11 @@ vim.g['onedark_italic_comment'] = false
 vim.g['onedark_toggle_style_keymap'] = '<NOP>'
 -- vim-dirvish
 vim.g['dirvish_mode'] = [[:sort ,^.*[\/],]]
-map('', '<leader>d', ':Shdo ')
+vim.keymap.set('', '<leader>d', ':Shdo ')
 -- vim-fugitive and git
-local log = [[\%C(yellow)\%h\%Cred\%d \%Creset\%s \%Cgreen(\%ar) \%Cblue\%an\%Creset]]
-map('n', '<leader>g<space>', ':Git ')
-map('n', '<leader>gd', '<cmd>Gvdiffsplit<CR>')
-map('n', '<leader>gg', '<cmd>Git<CR>')
-map('n', '<leader>gl', fmt('<cmd>term git log --graph --all --format="%s"<CR><cmd>start<CR>', log))
+vim.keymap.set('n', '<leader>g<space>', ':Git ')
+vim.keymap.set('n', '<leader>gd', '<cmd>Gvdiffsplit<CR>')
+vim.keymap.set('n', '<leader>gg', '<cmd>Git<CR>')
 -- vim-sandwich
 vim.cmd 'runtime macros/sandwich/keymap/surround.vim'
 -- vimtex
@@ -169,69 +161,13 @@ vim.opt.wrap = false                    -- Disable line wrap
 vim.cmd 'colorscheme onedark'
 
 -------------------- MAPPINGS ------------------------------
-map('', '<leader>c', '"+y')
-map('i', 'jj', '<ESC>')
-map('n', '<C-w>T', '<cmd>tabclose<CR>')
-map('n', '<C-w>m', '<cmd>lua toggle_zoom()<CR>')
-map('n', '<C-w>t', '<cmd>tabnew<CR>')
-map('n', '<F3>', ':lua toggle_wrap()<CR>')
-map('n', '<F4>', ':set scrollbind!<CR>')
-map('n', '<F5>', ':checktime<CR>')
-map('n', '<S-Down>', '<C-w>2<')
-map('n', '<S-Left>', '<C-w>2-')
-map('n', '<S-Right>', '<C-w>2+')
-map('n', '<S-Up>', '<C-w>2>')
-map('n', '<leader>s', ':%s//gcI<Left><Left><Left><Left>')
-map('n', '<leader>t', '<cmd>terminal<CR>')
-map('n', '<leader>u', '<cmd>update<CR>')
-map('n', '<leader>x', '<cmd>conf qa<CR>')
-map('n', 'U', '<cmd>lua warn_caps()<CR>')
-map('t', '<ESC>', '&filetype == "fzf" ? "\\<ESC>" : "\\<C-\\>\\<C-n>"' , {expr = true})
-map('t', 'jj', '<ESC>', {noremap = false})
-map('v', '<leader>s', ':s//gcI<Left><Left><Left><Left>')
+function escape_term()
+  return vim.bo.filetype == 'fzf' and '<ESC>' or '<C-\\><C-n>'
+end
 
--------------------- LSP -----------------------------------
-local defaults = {capabilities = cmp_cap}
-for ls, cfg in pairs({
-  bashls = {}, gopls = {}, ccls = {}, jsonls = {}, pylsp = {},
-}) do require('lspconfig')[ls].setup(vim.tbl_extend('keep', cfg, defaults)) end
-map('n', '<space>,', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
-map('n', '<space>;', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
-map('n', '<space>a', '<cmd>lua vim.lsp.buf.code_action()<CR>')
-map('n', '<space>d', '<cmd>lua vim.lsp.buf.definition()<CR>')
-map('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>')
-map('n', '<space>h', '<cmd>lua vim.lsp.buf.hover()<CR>')
-map('n', '<space>m', '<cmd>lua vim.lsp.buf.rename()<CR>')
-map('n', '<space>r', '<cmd>lua vim.lsp.buf.references()<CR>')
-map('n', '<space>s', '<cmd>lua vim.lsp.buf.document_symbol()<CR>')
-
--------------------- TREE-SITTER ---------------------------
-require('nvim-treesitter.configs').setup {
-  ensure_installed = 'maintained',
-  highlight = {enable = true},
-  textobjects = {
-    select = {
-      enable = true,
-      keymaps = {
-        ['aa'] = '@parameter.outer', ['ia'] = '@parameter.inner',
-        ['af'] = '@function.outer', ['if'] = '@function.inner',
-      },
-    },
-    move = {
-      enable = true,
-      goto_next_start = {[']a'] = '@parameter.inner', [']f'] = '@function.outer'},
-      goto_next_end = {[']A'] = '@parameter.inner', [']F'] = '@function.outer'},
-      goto_previous_start = {['[a'] = '@parameter.inner', ['[f'] = '@function.outer'},
-      goto_previous_end = {['[A'] = '@parameter.inner', ['[F'] = '@function.outer'},
-    },
-  },
-}
-
--------------------- COMMANDS ------------------------------
-function init_term()
-  vim.cmd 'setlocal nonumber norelativenumber'
-  vim.cmd 'setlocal nospell'
-  vim.cmd 'setlocal signcolumn=auto'
+function substitute()
+  local cmd = ':%s//gcI<Left><Left><Left><Left>'
+  return vim.fn.mode() == 'n' and fmt(cmd, '%s') or fmt(cmd, 's')
 end
 
 function toggle_wrap()
@@ -255,6 +191,70 @@ function warn_caps()
   vim.cmd 'echohl WarningMsg'
   vim.cmd 'echo "Caps Lock may be on"'
   vim.cmd 'echohl None'
+end
+
+vim.keymap.set('', '<leader>c', '"+y')
+vim.keymap.set('', '<leader>s', substitute, {expr = true})
+vim.keymap.set('i', 'jj', '<ESC>')
+vim.keymap.set('n', '<C-w>T', '<cmd>tabclose<CR>')
+vim.keymap.set('n', '<C-w>m', toggle_zoom)
+vim.keymap.set('n', '<C-w>t', '<cmd>tabnew<CR>')
+vim.keymap.set('n', '<F3>', toggle_wrap)
+vim.keymap.set('n', '<F4>', ':set scrollbind!<CR>')
+vim.keymap.set('n', '<F5>', ':checktime<CR>')
+vim.keymap.set('n', '<S-Down>', '<C-w>2<')
+vim.keymap.set('n', '<S-Left>', '<C-w>2-')
+vim.keymap.set('n', '<S-Right>', '<C-w>2+')
+vim.keymap.set('n', '<S-Up>', '<C-w>2>')
+vim.keymap.set('n', '<leader>t', '<cmd>terminal<CR>')
+vim.keymap.set('n', '<leader>u', '<cmd>update<CR>')
+vim.keymap.set('n', '<leader>x', '<cmd>conf qa<CR>')
+vim.keymap.set('n', 'U', warn_caps)
+vim.keymap.set('t', '<ESC>', escape_term, {expr = true})
+vim.keymap.set('t', 'jj', escape_term, {expr = true})
+
+-------------------- LSP -----------------------------------
+local defaults = {capabilities = cmp_cap}
+for ls, cfg in pairs({
+  bashls = {}, gopls = {}, ccls = {}, jsonls = {}, pylsp = {},
+}) do require('lspconfig')[ls].setup(vim.tbl_extend('keep', cfg, defaults)) end
+vim.keymap.set('n', '<space>,', vim.lsp.diagnostic.goto_prev)
+vim.keymap.set('n', '<space>;', vim.lsp.diagnostic.goto_next)
+vim.keymap.set('n', '<space>a', vim.lsp.buf.code_action)
+vim.keymap.set('n', '<space>d', vim.lsp.buf.definition)
+vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting)
+vim.keymap.set('n', '<space>h', vim.lsp.buf.hover)
+vim.keymap.set('n', '<space>m', vim.lsp.buf.rename)
+vim.keymap.set('n', '<space>r', vim.lsp.buf.references)
+vim.keymap.set('n', '<space>s', vim.lsp.buf.document_symbol)
+
+-------------------- TREE-SITTER ---------------------------
+require('nvim-treesitter.configs').setup {
+  ensure_installed = 'maintained',
+  highlight = {enable = true},
+  textobjects = {
+    select = {
+      enable = true,
+      keymaps = {
+        ['aa'] = '@parameter.outer', ['ia'] = '@parameter.inner',
+        ['af'] = '@function.outer', ['if'] = '@function.inner',
+      },
+    },
+    move = {
+      enable = true,
+      goto_next_start = {[']a'] = '@parameter.inner', [']f'] = '@function.outer'},
+      goto_next_end = {[']A'] = '@parameter.inner', [']F'] = '@function.outer'},
+      goto_previous_start = {['[a'] = '@parameter.inner', ['[f'] = '@function.outer'},
+      goto_previous_end = {['[A'] = '@parameter.inner', ['[F'] = '@function.outer'},
+    },
+  },
+}
+
+-------------------- AUTOCOMMANDS --------------------------
+function init_term()
+  vim.cmd 'setlocal nonumber norelativenumber'
+  vim.cmd 'setlocal nospell'
+  vim.cmd 'setlocal signcolumn=auto'
 end
 
 vim.tbl_map(function(c) vim.cmd(fmt('autocmd %s', c)) end, {
