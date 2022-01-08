@@ -24,7 +24,6 @@ require 'paq' {
   {'lewis6991/gitsigns.nvim'},
   {'lukas-reineke/indent-blankline.nvim'},
   {'machakann/vim-sandwich'},
-  {'nathom/filetype.nvim'},
   {'navarasu/onedark.nvim'},
   {'neovim/nvim-lspconfig'},
   {'nvim-lua/plenary.nvim'},
@@ -61,11 +60,13 @@ require('gitsigns').setup {
   },
 }
 -- indent-blankline.nvim
-vim.g['indent_blankline_buftype_exclude'] = {'terminal'}
-vim.g['indent_blankline_char'] = '┊'
-vim.g['indent_blankline_filetype_exclude'] = {'fugitive', 'fzf', 'help', 'man'}
+require('indent_blankline').setup {
+  char = '┊',
+  buftype_exclude = {'terminal'},
+  filetype_exclude = {'fugitive', 'fzf', 'help', 'man'},
+}
 -- nvim-bufbar
-require('bufbar').setup {show_bufname = 'visible', show_flags = false}
+require('bufbar').setup {modifier = ':~:.', show_flags = false}
 -- nvim-bufdel
 require('bufdel').setup {next = 'alternate', quit = false}
 vim.keymap.set('n', '<leader>w', '<cmd>BufDel<CR>')
@@ -76,7 +77,6 @@ vim.keymap.set('n', '<leader>be', '<cmd>BuildMeEdit<CR>')
 vim.keymap.set('n', '<leader>bs', '<cmd>BuildMeStop<CR>')
 -- nvim-cmp
 local cmp = require('cmp')
-local cmp_cap = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 local menu = {buffer = '[Buf]', nvim_lsp = '[LSP]', omni = '[Omni]', path = '[Path]'}
 local widths = {abbr = 80, kind = 40, menu = 40}
 cmp.setup {
@@ -110,12 +110,14 @@ require('nvim-gps').setup {disable_icons = true}
 require('hardline').setup()
 -- nvim-lspfuzzy
 require('lspfuzzy').setup {save_last = true}
-vim.keymap.set('n', '<space>l', '<cmd>LspFuzzyLast<CR>')
 -- nvim-scrollbar
 require('scrollbar').setup()
 -- onedark.nvim
-vim.g['onedark_italic_comment'] = false
-vim.g['onedark_toggle_style_keymap'] = '<NOP>'
+require('onedark').setup {
+  code_style = {comments = 'none'},
+  ending_tildes = true,
+  toggle_style_key = '<NOP>',
+}
 -- vim-dirvish
 vim.g['dirvish_mode'] = [[:sort ,^.*[\/],]]
 vim.keymap.set('', '<leader>d', ':Shdo ')
@@ -123,6 +125,8 @@ vim.keymap.set('', '<leader>d', ':Shdo ')
 vim.keymap.set('n', '<leader>g<space>', ':Git ')
 vim.keymap.set('n', '<leader>gd', '<cmd>Gvdiffsplit<CR>')
 vim.keymap.set('n', '<leader>gg', '<cmd>Git<CR>')
+-- vim-rooter
+vim.g['rooter_patterns'] = {'.buildme.sh', '.git'}
 -- vim-sandwich
 vim.cmd 'runtime macros/sandwich/keymap/surround.vim'
 -- vimtex
@@ -134,7 +138,6 @@ vim.opt.colorcolumn = tostring(width)   -- Line length marker
 vim.opt.completeopt = {'menuone', 'noinsert', 'noselect'}  -- Completion options
 vim.opt.cursorline = true               -- Highlight cursor line
 vim.opt.expandtab = true                -- Use spaces instead of tabs
-vim.opt.formatoptions = 'crqnj'         -- Automatic formatting options
 vim.opt.ignorecase = true               -- Ignore case
 vim.opt.inccommand = ''                 -- Disable substitution preview
 vim.opt.list = true                     -- Show some invisible characters
@@ -181,16 +184,13 @@ function toggle_zoom()
     vim.cmd 'wincmd ='
     zoomed = false
   else
-    vim.cmd 'resize'
-    vim.cmd 'vertical resize'
+    vim.cmd 'resize | vertical resize'
     zoomed = true
   end
 end
 
 function warn_caps()
-  vim.cmd 'echohl WarningMsg'
-  vim.cmd 'echo "Caps Lock may be on"'
-  vim.cmd 'echohl None'
+  vim.api.nvim_echo({{'Caps Lock may be on', 'WarningMsg'}}, false, {})
 end
 
 vim.keymap.set('', '<leader>c', '"+y')
@@ -214,12 +214,13 @@ vim.keymap.set('t', '<ESC>', escape_term, {expr = true})
 vim.keymap.set('t', 'jj', escape_term, {expr = true})
 
 -------------------- LSP -----------------------------------
+local cmp_cap = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 local defaults = {capabilities = cmp_cap}
 for ls, cfg in pairs({
   bashls = {}, gopls = {}, ccls = {}, jsonls = {}, pylsp = {},
 }) do require('lspconfig')[ls].setup(vim.tbl_extend('keep', cfg, defaults)) end
-vim.keymap.set('n', '<space>,', vim.lsp.diagnostic.goto_prev)
-vim.keymap.set('n', '<space>;', vim.lsp.diagnostic.goto_next)
+vim.keymap.set('n', '<space>,', vim.diagnostic.goto_prev)
+vim.keymap.set('n', '<space>;', vim.diagnostic.goto_next)
 vim.keymap.set('n', '<space>a', vim.lsp.buf.code_action)
 vim.keymap.set('n', '<space>d', vim.lsp.buf.definition)
 vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting)
@@ -258,6 +259,7 @@ function init_term()
 end
 
 vim.tbl_map(function(c) vim.cmd(fmt('autocmd %s', c)) end, {
+  'FileType * set formatoptions-=o',
   'TermOpen * lua init_term()',
   'TextYankPost * if v:event.operator is "y" && v:event.regname is "+" | execute "OSCYankReg +" | endif',
   'TextYankPost * lua vim.highlight.on_yank {timeout = 200, on_visual = false}',
