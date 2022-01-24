@@ -63,14 +63,14 @@ gitsigns.setup {
     local function map(m, l, r) vim.keymap.set(m, l, r, {buffer = bufnr}) end
     map('n', ']c', gitsigns.next_hunk)
     map('n', '[c', gitsigns.prev_hunk)
-    map('n', '<leader>hd', gitsigns.diffthis)
-    map('n', '<leader>hp', gitsigns.preview_hunk)
-    map('n', '<leader>hr', gitsigns.reset_hunk)
-    map('n', '<leader>hs', gitsigns.stage_hunk)
-    map('n', '<leader>hu', gitsigns.undo_stage_hunk)
-    map('n', '<leader>hD', function() gitsigns.diffthis('~') end)
-    map('n', '<leader>hR', gitsigns.reset_buffer)
-    map('n', '<leader>hS', gitsigns.stage_buffer)
+    map('n', '<leader>gd', gitsigns.diffthis)
+    map('n', '<leader>gp', gitsigns.preview_hunk)
+    map('n', '<leader>gr', gitsigns.reset_hunk)
+    map('n', '<leader>gs', gitsigns.stage_hunk)
+    map('n', '<leader>gu', gitsigns.undo_stage_hunk)
+    map('n', '<leader>gD', function() gitsigns.diffthis('~') end)
+    map('n', '<leader>gR', gitsigns.reset_buffer)
+    map('n', '<leader>gS', gitsigns.stage_buffer)
   end,
 }
 -- indent-blankline.nvim
@@ -123,7 +123,7 @@ require('nvim-gps').setup {disable_icons = true}
 -- nvim-hardline
 require('hardline').setup()
 -- nvim-lspfuzzy
-require('lspfuzzy').setup {save_last = true}
+require('lspfuzzy').setup()
 -- nvim-scrollbar
 require('scrollbar').setup()
 -- onedark.nvim
@@ -135,7 +135,7 @@ require('onedark').setup {
 -- vim-dirvish
 vim.g['dirvish_mode'] = [[:sort ,^.*[\/],]]
 vim.keymap.set('', '<leader>d', ':Shdo ')
--- vim-fugitive and git
+-- vim-fugitive
 vim.keymap.set('n', '<leader>gg', '<cmd>Git<CR>')
 -- vim-rooter
 vim.g['rooter_patterns'] = {'.buildme.sh', '.git'}
@@ -146,6 +146,8 @@ vim.g['vimtex_quickfix_mode'] = false
 
 -------------------- OPTIONS -------------------------------
 local indent, width = 2, 80
+vim.g.did_load_filetypes = 0            -- Disable filetype.vim
+vim.g.do_filetype_lua = 1               -- Enable filetype.lua
 vim.opt.colorcolumn = tostring(width)   -- Line length marker
 vim.opt.completeopt = {'menuone', 'noinsert', 'noselect'}  -- Completion options
 vim.opt.cursorline = true               -- Highlight cursor line

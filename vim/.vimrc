@@ -29,7 +29,6 @@ set wildmenu                          " Enhanced command-line completion
 " OPTIONS
 set completeopt=menuone,noinsert,noselect  " Completion options
 set expandtab              " Use spaces instead of tabs
-set formatoptions=crqnj    " Automatic formatting options
 set ignorecase             " Ignore case
 set list                   " Show some invisible characters
 set nowrap                 " Disable line wrap
@@ -71,7 +70,7 @@ nnoremap <leader>t :terminal ++curwin<CR>
 nnoremap <leader>u :update<CR>
 nnoremap <leader>w :CloseBuffer<CR>
 nnoremap <leader>x :conf qa<CR>
-nnoremap Q :WarnCaps<CR>
+nnoremap Q @@
 nnoremap U :WarnCaps<CR>
 nnoremap Y y$
 nnoremap [<space> m`O<Esc>0D``

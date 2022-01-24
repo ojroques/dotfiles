@@ -11,6 +11,7 @@ export HISTIGNORE="cd:ls:pwd:clear:exit"
 export HISTSIZE=10000
 export PROMPT_COMMAND="history -a; history -c; history -r"
 export PS1="\u@\h:\w\$ "
+export SUDO_EDITOR="$EDITOR"
 export VISUAL="$EDITOR"
 
 shopt -s dotglob
