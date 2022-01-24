@@ -52,12 +52,26 @@ vim.keymap.set('n', '<leader>f', '<cmd>Files<CR>')
 vim.keymap.set('n', '<leader>r', '<cmd>Rg<CR>')
 vim.keymap.set('n', 's', '<cmd>Buffers<CR>')
 -- gitsigns.nvim
-require('gitsigns').setup {
+local gitsigns = require('gitsigns')
+gitsigns.setup {
   signs = {
     add = {text = '+'},
     change = {text = '~'},
     delete = {text = '-'}, topdelete = {text = '-'}, changedelete = {text = '≃'},
   },
+  on_attach = function(bufnr)
+    local function map(m, l, r) vim.keymap.set(m, l, r, {buffer = bufnr}) end
+    map('n', ']c', gitsigns.next_hunk)
+    map('n', '[c', gitsigns.prev_hunk)
+    map('n', '<leader>hd', gitsigns.diffthis)
+    map('n', '<leader>hp', gitsigns.preview_hunk)
+    map('n', '<leader>hr', gitsigns.reset_hunk)
+    map('n', '<leader>hs', gitsigns.stage_hunk)
+    map('n', '<leader>hu', gitsigns.undo_stage_hunk)
+    map('n', '<leader>hD', function() gitsigns.diffthis('~') end)
+    map('n', '<leader>hR', gitsigns.reset_buffer)
+    map('n', '<leader>hS', gitsigns.stage_buffer)
+  end,
 }
 -- indent-blankline.nvim
 require('indent_blankline').setup {
@@ -122,8 +136,6 @@ require('onedark').setup {
 vim.g['dirvish_mode'] = [[:sort ,^.*[\/],]]
 vim.keymap.set('', '<leader>d', ':Shdo ')
 -- vim-fugitive and git
-vim.keymap.set('n', '<leader>g<space>', ':Git ')
-vim.keymap.set('n', '<leader>gd', '<cmd>Gvdiffsplit<CR>')
 vim.keymap.set('n', '<leader>gg', '<cmd>Git<CR>')
 -- vim-rooter
 vim.g['rooter_patterns'] = {'.buildme.sh', '.git'}
