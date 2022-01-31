@@ -140,7 +140,10 @@ vim.keymap.set('n', '<leader>gg', '<cmd>Git<CR>')
 -- vim-rooter
 vim.g['rooter_patterns'] = {'.buildme.sh', '.git'}
 -- vim-sandwich
-vim.cmd 'runtime macros/sandwich/keymap/surround.vim'
+vim.g['operator_sandwich_no_default_key_mappings'] = true
+vim.keymap.set('n', 'cs', '<Plug>(sandwich-replace)')
+vim.keymap.set('n', 'ds', '<Plug>(sandwich-delete)')
+vim.keymap.set('n', 'ys', '<Plug>(sandwich-add)')
 -- vimtex
 vim.g['vimtex_quickfix_mode'] = false
 
@@ -173,7 +176,7 @@ vim.opt.tabstop = indent                -- Number of spaces tabs count for
 vim.opt.termguicolors = true            -- True color support
 vim.opt.textwidth = width               -- Maximum width of text
 vim.opt.updatetime = 100                -- Delay before swap file is saved
-vim.opt.wildmode = {'list', 'longest'}  -- Command-line completion mode
+vim.opt.wildmode = {'list:longest'}     -- Command-line completion mode
 vim.opt.wrap = false                    -- Disable line wrap
 vim.cmd 'colorscheme onedark'
 
@@ -268,8 +271,7 @@ require('nvim-treesitter.configs').setup {
 -------------------- AUTOCOMMANDS --------------------------
 function init_term()
   vim.cmd 'setlocal nonumber norelativenumber'
-  vim.cmd 'setlocal nospell'
-  vim.cmd 'setlocal signcolumn=auto'
+  vim.cmd 'setlocal signcolumn=no'
 end
 
 vim.tbl_map(function(c) vim.cmd(fmt('autocmd %s', c)) end, {
