@@ -3,7 +3,7 @@
 # System
 alias df='df -Th --total'
 alias du='du -ch'
-alias dua='du -a --max-depth=1 | sort -h'
+alias dua='du -a --max-depth=1 | sort -hr'
 alias free='free -ht'
 alias grep='grep --color=auto'
 alias ls='ls -F --color=auto --group-directories-first'
@@ -15,9 +15,8 @@ alias rm='rm --preserve-root -I'
 alias tree='tree -F -C --dirsfirst'
 
 # Development
-alias ipy='ipython --pylab --no-confirm-exit'
+alias e="$EDITOR"
 alias py='python3'
-alias vim="$EDITOR"
 
 # Network
 alias ip='ip -c -h'

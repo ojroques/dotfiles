@@ -80,7 +80,7 @@ require('indent_blankline').setup {
   filetype_exclude = {'fugitive', 'fzf', 'help', 'man'},
 }
 -- nvim-bufbar
-require('bufbar').setup {modifier = ':~:.', show_flags = false}
+require('bufbar').setup {modifier = ':~:.', term_modifier = ':p', show_flags = false}
 -- nvim-bufdel
 require('bufdel').setup {next = 'alternate', quit = false}
 vim.keymap.set('n', '<leader>w', '<cmd>BufDel<CR>')

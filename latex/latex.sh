@@ -5,9 +5,6 @@ set -e
 echo "[Update]"
 sudo apt-get update
 
-echo -e "\n[neovim-remote]"
-pip3 install --user neovim-remote
-
 echo -e "\n[latexmk]"
 sudo apt-get install -y latexmk
 

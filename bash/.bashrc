@@ -61,4 +61,4 @@ export PATH=$PATH:/usr/local/go/bin:/usr/local/protobuf/bin:~/go/bin
 [[ -f $BASH_DIR/aliases ]] && source $BASH_DIR/aliases
 [[ -f $BASH_DIR/functions ]] && source $BASH_DIR/functions
 [[ -f $BASH_DIR/less ]] && source $BASH_DIR/less
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+[[ -f ~/.fzf.bash ]] && source ~/.fzf.bash
