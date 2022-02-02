@@ -3,51 +3,46 @@
 
 set nocompatible
 
-" PLUGIN OPTIONS
-let g:netrw_banner = 0
-let g:netrw_liststyle = 3
-let g:netrw_winsize = 20
-
 " VIM-SPECIFIC OPTIONS
 filetype plugin indent on
 syntax enable
-set autoindent                        " Copy indent from previous line
-set autoread                          " Reload file modified outside vim
-set background=dark                   " Adjust default color groups
-set backspace=indent,eol,start        " Enhanced backspace in insert mode
-set complete=.,w,b,u,t                " Location of completion keywords
-set hidden                            " Enable background buffers
-set hlsearch                          " Highlight search terms
-set incsearch                         " Highlight search patterns
-set laststatus=2                      " Always display status line
-set listchars=tab:>\ ,trail:-,nbsp:+  " Characters to show for spaces
-set nojoinspaces                      " No double spaces with join
-set ruler                             " Show cursor line and column
-set showcmd                           " Show current command
-set wildmenu                          " Enhanced command-line completion
+set autoindent
+set autoread
+set background=dark
+set backspace=indent,eol,start
+set complete=.,w,b,u,t
+set hidden
+set hlsearch
+set incsearch
+set laststatus=2
+set listchars=tab:>\ ,trail:-,nbsp:+
+set nojoinspaces
+set ruler
+set showcmd
+set wildmenu
 
 " OPTIONS
-set completeopt=menuone,noinsert,noselect  " Completion options
-set expandtab              " Use spaces instead of tabs
-set ignorecase             " Ignore case
-set list                   " Show some invisible characters
-set nowrap                 " Disable line wrap
-set number relativenumber  " Relative line numbers
-set pastetoggle='<F2>'     " Paste mode
-set pumheight=12           " Max height of popup menu
-set scrolloff=4            " Lines of context
-set shiftround             " Round indent
-set shiftwidth=2           " Size of an indent
-set shortmess="atToOFc"    " Prompt message options
-set sidescrolloff=8        " Columns of context
-set smartcase              " Don't ignore case with capitals
-set smartindent            " Insert indents automatically
-set splitbelow splitright  " Location of new windows
-set tabstop=2              " Number of spaces tabs count for
-set termguicolors          " True color support
-set textwidth=80           " Maximum width of text
-set updatetime=100         " Delay before swap file is saved
-set wildmode=list:longest  " Command-line completion mode
+set completeopt=menuone,noinsert,noselect
+set expandtab
+set ignorecase
+set list
+set nowrap
+set number relativenumber
+set pastetoggle='<F2>'
+set pumheight=12
+set scrolloff=4
+set shiftround
+set shiftwidth=2
+set shortmess="atToOFc"
+set sidescrolloff=8
+set smartcase
+set smartindent
+set splitbelow splitright
+set tabstop=2
+set termguicolors
+set textwidth=80
+set updatetime=100
+set wildmode=list:longest
 colorscheme desert
 
 " MAPPINGS
@@ -55,70 +50,21 @@ inoremap <C-u> <C-g>u<C-u>
 inoremap <C-w> <C-g>u<C-w>
 inoremap jj <ESC>
 nnoremap <C-l> :nohlsearch<CR>
-nnoremap <C-w>T :tabclose<CR>
-nnoremap <C-w>m :ToggleZoom<CR>
-nnoremap <C-w>t :tabnew<CR>
-nnoremap <F3> :ToggleWrap<CR>
-nnoremap <F4> :set scrollbind!<CR>
-nnoremap <F5> :checktime<CR>
 nnoremap <S-Down> <C-w>2<
 nnoremap <S-Left> <C-w>2-
 nnoremap <S-Right> <C-w>2+
 nnoremap <S-Up> <C-w>2>
 nnoremap <leader>s :%s//gcI<Left><Left><Left><Left>
-nnoremap <leader>t :terminal ++curwin<CR>
 nnoremap <leader>u :update<CR>
-nnoremap <leader>w :CloseBuffer<CR>
+nnoremap <leader>w :conf bd<CR>
 nnoremap <leader>x :conf qa<CR>
 nnoremap Q @@
-nnoremap U :WarnCaps<CR>
+nnoremap U <NOP>
 nnoremap Y y$
 nnoremap [<space> m`O<Esc>0D``
 nnoremap [b :bprevious<CR>
 nnoremap ]<space> m`o<Esc>0D``
 nnoremap ]b :bnext<CR>
+nnoremap s :ls<CR>:b<Space>
 noremap <leader>c "+y
-tnoremap <ESC> <C-\><C-n>
-tnoremap jj <C-\><C-n>
 vnoremap <leader>s :s//gcI<Left><Left><Left><Left>
-
-" COMMANDS
-function! s:close_buffer()
-  let l:buflisted = getbufinfo({'buflisted': 1})
-  let [l:cur_winnr, l:cur_bufnr] = [winnr(), bufnr()]
-  if len(l:buflisted) < 2 | confirm qall | return | endif
-  for l:winid in getbufinfo(l:cur_bufnr)[0].windows
-    execute(win_id2win(l:winid) . 'wincmd w')
-    if l:cur_bufnr == l:buflisted[-1].bufnr | bp | else | bn | endif
-  endfor
-  execute(l:cur_winnr . 'wincmd w')
-  let l:is_terminal = getbufvar(l:cur_bufnr, '&buftype') == 'terminal'
-  if l:is_terminal | bd! # | else | silent! confirm bd # | endif
-endfunction
-
-function! s:toggle_wrap()
-  set breakindent!
-  set linebreak!
-  set wrap!
-endfunction
-
-function! s:toggle_zoom()
-  if exists('t:zoomed') && t:zoomed
-    wincmd =
-    let t:zoomed = 0
-  else
-    resize | vertical resize
-    let t:zoomed = 1
-  endif
-endfunction
-
-function! s:warn_caps()
-  echohl WarningMsg
-  echo 'Caps Lock may be on'
-  echohl None
-endfunction
-
-command! CloseBuffer call s:close_buffer()
-command! ToggleWrap call s:toggle_wrap()
-command! ToggleZoom call s:toggle_zoom()
-command! WarnCaps call s:warn_caps()
