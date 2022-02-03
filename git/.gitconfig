@@ -13,12 +13,9 @@
   diffFilter = delta --color-only
 
 [delta]
-  features = diff-so-fancy line-numbers
-  file-modified-label = modified:
-  hunk-header-decoration-style = blue box
-  line-numbers-minus-style = red
-  line-numbers-plus-style = green
-  line-numbers-zero-style = 244
+  line-numbers = true
+  navigate = true
+  syntax-theme = none
 
 [alias]
   a = add
@@ -40,11 +37,14 @@
   swn = update-index --no-skip-worktree
   ua = restore --staged
 
+[diff]
+  colorMoved = default
+
 [fetch]
   prune = true
 
+[merge]
+  conflictstyle = diff3
+
 [pull]
   rebase = true
-
-[merge]
-  tool = vimdiff

@@ -49,7 +49,7 @@ vim.g['fzf_action'] = {['ctrl-s'] = 'split', ['ctrl-v'] = 'vsplit'}
 vim.keymap.set('n', '<leader>/', '<cmd>History/<CR>')
 vim.keymap.set('n', '<leader>;', '<cmd>History:<CR>')
 vim.keymap.set('n', '<leader>f', '<cmd>Files<CR>')
-vim.keymap.set('n', '<leader>r', '<cmd>Rg<CR>')
+vim.keymap.set('n', '<leader>r', ':Rg ')
 vim.keymap.set('n', 's', '<cmd>Buffers<CR>')
 -- gitsigns.nvim
 local gitsigns = require('gitsigns')

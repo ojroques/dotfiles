@@ -4,6 +4,7 @@
 BASH_DIR="$HOME/.local/share/bash"
 
 export BAT_THEME="OneHalfDark"
+export BAT_STYLE="header,numbers"
 export EDITOR="nvim"
 export FZF_DEFAULT_COMMAND="rg --files --hidden -g '!.git/'"
 export HISTCONTROL="ignoreboth:erasedups"

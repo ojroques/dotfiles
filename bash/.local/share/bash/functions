@@ -18,7 +18,7 @@ apt-list() {
   (zcat "$(ls -tr /var/log/apt/history.log*.gz)"; cat /var/log/apt/history.log) 2> /dev/null |
   grep -E '^Commandline' |
   sed -e 's/Commandline: \(.*\)/\1/' |
-  grep -E -v '^/usr/bin/unattended-upgrade$'
+  grep -E -v '^/usr/bin/unattended-upgrade'
 }
 
 # Delete swap files
