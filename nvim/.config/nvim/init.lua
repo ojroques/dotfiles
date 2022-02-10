@@ -20,6 +20,7 @@ require 'paq' {
   {'junegunn/fzf'},
   {'junegunn/fzf.vim'},
   {'justinmk/vim-dirvish'},
+  {'l3mon4d3/luasnip'},
   {'lervag/vimtex'},
   {'lewis6991/gitsigns.nvim'},
   {'lukas-reineke/indent-blankline.nvim'},
@@ -44,12 +45,20 @@ require 'paq' {
 }
 
 -------------------- PLUGIN SETUP --------------------------
+function ripgrep_live()
+  local cmd_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s'
+  local init_cmd = fmt(cmd_fmt, "''")
+  local reload_cmd = fmt(cmd_fmt, '{q}')
+  local spec = {options = {'--phony', '--bind', fmt('change:reload:%s', reload_cmd)}}
+  vim.fn['fzf#vim#grep'](init_cmd, 1, vim.fn['fzf#vim#with_preview'](spec), 0)
+end
+
 -- fzf and fzf.vim
 vim.g['fzf_action'] = {['ctrl-s'] = 'split', ['ctrl-v'] = 'vsplit'}
 vim.keymap.set('n', '<leader>/', '<cmd>History/<CR>')
 vim.keymap.set('n', '<leader>;', '<cmd>History:<CR>')
 vim.keymap.set('n', '<leader>f', '<cmd>Files<CR>')
-vim.keymap.set('n', '<leader>r', ':Rg ')
+vim.keymap.set('n', '<leader>r', ripgrep_live)
 vim.keymap.set('n', 's', '<cmd>Buffers<CR>')
 -- gitsigns.nvim
 local gitsigns = require('gitsigns')
@@ -112,11 +121,9 @@ cmp.setup {
   },
   preselect = require('cmp.types').cmp.PreselectMode.None,
   sources = cmp.config.sources({
-    {name = 'nvim_lsp'},
-    {name = 'omni'},
-    {name = 'path'},
-    {name = 'buffer'},
+    {name = 'nvim_lsp'}, {name = 'omni'}, {name = 'path'}, {name = 'buffer'},
   }),
+  snippet = {expand = function(args) require('luasnip').lsp_expand(args.body) end},
 }
 -- nvim-gps
 require('nvim-gps').setup {disable_icons = true}
@@ -152,7 +159,7 @@ local indent, width = 2, 80
 vim.g.did_load_filetypes = 0            -- Disable filetype.vim
 vim.g.do_filetype_lua = 1               -- Enable filetype.lua
 vim.opt.colorcolumn = tostring(width)   -- Line length marker
-vim.opt.completeopt = {'menuone', 'noinsert', 'noselect'}  -- Completion options
+vim.opt.completeopt = {'menu', 'menuone', 'noselect'}  -- Completion options
 vim.opt.cursorline = true               -- Highlight cursor line
 vim.opt.expandtab = true                -- Use spaces instead of tabs
 vim.opt.ignorecase = true               -- Ignore case

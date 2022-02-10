@@ -22,7 +22,7 @@ set showcmd
 set wildmenu
 
 " OPTIONS
-set completeopt=menuone,noinsert,noselect
+set completeopt=menu,menuone,noselect
 set expandtab
 set ignorecase
 set list
