@@ -35,7 +35,6 @@ require 'paq' {
   {'ojroques/nvim-buildme'},
   {'ojroques/nvim-hardline', branch = 'personal'},
   {'ojroques/nvim-lspfuzzy'},
-  {'ojroques/nvim-scrollbar'},
   {'ojroques/vim-oscyank'},
   {'savq/paq-nvim'},
   {'smiteshp/nvim-gps'},
@@ -45,20 +44,12 @@ require 'paq' {
 }
 
 -------------------- PLUGIN SETUP --------------------------
-function ripgrep_live()
-  local cmd_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s'
-  local init_cmd = fmt(cmd_fmt, "''")
-  local reload_cmd = fmt(cmd_fmt, '{q}')
-  local spec = {options = {'--phony', '--bind', fmt('change:reload:%s', reload_cmd)}}
-  vim.fn['fzf#vim#grep'](init_cmd, 1, vim.fn['fzf#vim#with_preview'](spec), 0)
-end
-
 -- fzf and fzf.vim
 vim.g['fzf_action'] = {['ctrl-s'] = 'split', ['ctrl-v'] = 'vsplit'}
 vim.keymap.set('n', '<leader>/', '<cmd>History/<CR>')
 vim.keymap.set('n', '<leader>;', '<cmd>History:<CR>')
 vim.keymap.set('n', '<leader>f', '<cmd>Files<CR>')
-vim.keymap.set('n', '<leader>r', ripgrep_live)
+vim.keymap.set('n', '<leader>r', '<cmd>Rg<CR>')
 vim.keymap.set('n', 's', '<cmd>Buffers<CR>')
 -- gitsigns.nvim
 local gitsigns = require('gitsigns')
@@ -120,25 +111,20 @@ cmp.setup {
     ['<S-Tab>'] = function(fb) if cmp.visible() then cmp.select_prev_item() else fb() end end,
   },
   preselect = require('cmp.types').cmp.PreselectMode.None,
+  snippet = {expand = function(args) require('luasnip').lsp_expand(args.body) end},
   sources = cmp.config.sources({
     {name = 'nvim_lsp'}, {name = 'omni'}, {name = 'path'}, {name = 'buffer'},
   }),
-  snippet = {expand = function(args) require('luasnip').lsp_expand(args.body) end},
 }
 -- nvim-gps
 require('nvim-gps').setup {disable_icons = true}
 -- nvim-hardline
-require('hardline').setup()
+require('hardline').setup {}
 -- nvim-lspfuzzy
-require('lspfuzzy').setup()
--- nvim-scrollbar
-require('scrollbar').setup()
+require('lspfuzzy').setup {}
 -- onedark.nvim
-require('onedark').setup {
-  code_style = {comments = 'none'},
-  ending_tildes = true,
-  toggle_style_key = '<NOP>',
-}
+require('onedark').setup {code_style = {comments = 'none'}, toggle_style_key = '<NOP>'}
+require('onedark').load()
 -- vim-dirvish
 vim.g['dirvish_mode'] = [[:sort ,^.*[\/],]]
 vim.keymap.set('', '<leader>d', ':Shdo ')
@@ -167,7 +153,7 @@ vim.opt.inccommand = ''                 -- Disable substitution preview
 vim.opt.list = true                     -- Show some invisible characters
 vim.opt.number = true                   -- Show line numbers
 vim.opt.pastetoggle = '<F2>'            -- Paste mode
-vim.opt.pumheight = 12                  -- Max height of popup menu
+vim.opt.pumheight = 12                  -- Max height of pop-up menu
 vim.opt.relativenumber = true           -- Relative line numbers
 vim.opt.scrolloff = 4                   -- Lines of context
 vim.opt.shiftround = true               -- Round indent
@@ -185,7 +171,6 @@ vim.opt.textwidth = width               -- Maximum width of text
 vim.opt.updatetime = 100                -- Delay before swap file is saved
 vim.opt.wildmode = {'list:longest'}     -- Command-line completion mode
 vim.opt.wrap = false                    -- Disable line wrap
-vim.cmd 'colorscheme onedark'
 
 -------------------- MAPPINGS ------------------------------
 function escape_term()
@@ -197,20 +182,22 @@ function substitute()
   return vim.fn.mode() == 'n' and fmt(cmd, '%s') or fmt(cmd, 's')
 end
 
+function toggle_scrollbind()
+  vim.wo.scrollbind = not vim.wo.scrollbind
+  vim.api.nvim_echo({{fmt('scrollbind: %s', vim.wo.scrollbind)}}, false, {})
+end
+
 function toggle_wrap()
   vim.wo.breakindent = not vim.wo.breakindent
   vim.wo.linebreak = not vim.wo.linebreak
   vim.wo.wrap = not vim.wo.wrap
+  vim.api.nvim_echo({{fmt('wrap: %s', vim.wo.wrap)}}, false, {})
 end
 
-function toggle_zoom()
-  if zoomed then
-    vim.cmd 'wincmd ='
-    zoomed = false
-  else
-    vim.cmd 'resize | vertical resize'
-    zoomed = true
-  end
+function trim_whitespaces()
+  local view = vim.fn.winsaveview()
+  vim.cmd [[keeppatterns %s/\s\+$//e]]
+  vim.fn.winrestview(view)
 end
 
 function warn_caps()
@@ -221,28 +208,27 @@ vim.keymap.set('', '<leader>c', '"+y')
 vim.keymap.set('', '<leader>s', substitute, {expr = true})
 vim.keymap.set('i', 'jj', '<ESC>')
 vim.keymap.set('n', '<C-w>T', '<cmd>tabclose<CR>')
-vim.keymap.set('n', '<C-w>m', toggle_zoom)
 vim.keymap.set('n', '<C-w>t', '<cmd>tabnew<CR>')
-vim.keymap.set('n', '<F3>', toggle_wrap)
-vim.keymap.set('n', '<F4>', ':set scrollbind!<CR>')
-vim.keymap.set('n', '<F5>', ':checktime<CR>')
+vim.keymap.set('n', '<F5>', '<cmd>checktime<CR>')
 vim.keymap.set('n', '<S-Down>', '<C-w>2<')
 vim.keymap.set('n', '<S-Left>', '<C-w>2-')
 vim.keymap.set('n', '<S-Right>', '<C-w>2+')
 vim.keymap.set('n', '<S-Up>', '<C-w>2>')
+vim.keymap.set('n', '<leader>e', trim_whitespaces)
 vim.keymap.set('n', '<leader>t', '<cmd>terminal<CR>')
 vim.keymap.set('n', '<leader>u', '<cmd>update<CR>')
 vim.keymap.set('n', '<leader>x', '<cmd>conf qa<CR>')
 vim.keymap.set('n', 'U', warn_caps)
+vim.keymap.set('n', 'yos', toggle_scrollbind)
+vim.keymap.set('n', 'yow', toggle_wrap)
 vim.keymap.set('t', '<ESC>', escape_term, {expr = true})
 vim.keymap.set('t', 'jj', escape_term, {expr = true})
 
 -------------------- LSP -----------------------------------
 local cmp_cap = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-local defaults = {capabilities = cmp_cap}
-for ls, cfg in pairs({
-  bashls = {}, gopls = {}, ccls = {}, jsonls = {}, pylsp = {},
-}) do require('lspconfig')[ls].setup(vim.tbl_extend('keep', cfg, defaults)) end
+for _, ls in ipairs({'bashls', 'gopls', 'ccls', 'jsonls', 'pylsp'}) do
+  require('lspconfig')[ls].setup {capabilities = cmp_cap}
+end
 vim.keymap.set('n', '<space>,', vim.diagnostic.goto_prev)
 vim.keymap.set('n', '<space>;', vim.diagnostic.goto_next)
 vim.keymap.set('n', '<space>a', vim.lsp.buf.code_action)
@@ -276,14 +262,9 @@ require('nvim-treesitter.configs').setup {
 }
 
 -------------------- AUTOCOMMANDS --------------------------
-function init_term()
-  vim.cmd 'setlocal nonumber norelativenumber'
-  vim.cmd 'setlocal signcolumn=no'
-end
-
 vim.tbl_map(function(c) vim.cmd(fmt('autocmd %s', c)) end, {
   'FileType * set formatoptions-=o',
-  'TermOpen * lua init_term()',
+  'TermOpen * setlocal nonumber norelativenumber signcolumn=no',
   'TextYankPost * if v:event.operator is "y" && v:event.regname is "+" | execute "OSCYankReg +" | endif',
   'TextYankPost * lua vim.highlight.on_yank {timeout = 200, on_visual = false}',
 })
