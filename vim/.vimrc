@@ -28,8 +28,8 @@ set ignorecase
 set list
 set nowrap
 set number relativenumber
-set pastetoggle='<F2>'
 set pumheight=12
+set report=0
 set scrolloff=4
 set shiftround
 set shiftwidth=2

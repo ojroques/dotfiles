@@ -150,11 +150,11 @@ vim.opt.cursorline = true               -- Highlight cursor line
 vim.opt.expandtab = true                -- Use spaces instead of tabs
 vim.opt.ignorecase = true               -- Ignore case
 vim.opt.inccommand = ''                 -- Disable substitution preview
-vim.opt.list = true                     -- Show some invisible characters
+vim.opt.list = true                     -- Show invisible characters
 vim.opt.number = true                   -- Show line numbers
-vim.opt.pastetoggle = '<F2>'            -- Paste mode
 vim.opt.pumheight = 12                  -- Max height of pop-up menu
-vim.opt.relativenumber = true           -- Relative line numbers
+vim.opt.relativenumber = true           -- Show relative line numbers
+vim.opt.report = 0                      -- Always report changed lines
 vim.opt.scrolloff = 4                   -- Lines of context
 vim.opt.shiftround = true               -- Round indent
 vim.opt.shiftwidth = indent             -- Size of an indent
@@ -169,7 +169,7 @@ vim.opt.tabstop = indent                -- Number of spaces tabs count for
 vim.opt.termguicolors = true            -- True color support
 vim.opt.textwidth = width               -- Maximum width of text
 vim.opt.updatetime = 100                -- Delay before swap file is saved
-vim.opt.wildmode = {'list:longest'}     -- Command-line completion mode
+vim.opt.wildmode = {'list:longest'}     -- Command completion options
 vim.opt.wrap = false                    -- Disable line wrap
 
 -------------------- MAPPINGS ------------------------------
@@ -226,7 +226,7 @@ vim.keymap.set('t', 'jj', escape_term, {expr = true})
 
 -------------------- LSP -----------------------------------
 local cmp_cap = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-for _, ls in ipairs({'bashls', 'gopls', 'ccls', 'jsonls', 'pylsp'}) do
+for _, ls in ipairs({'bashls', 'clangd', 'gopls', 'pylsp'}) do
   require('lspconfig')[ls].setup {capabilities = cmp_cap}
 end
 vim.keymap.set('n', '<space>,', vim.diagnostic.goto_prev)
@@ -262,9 +262,21 @@ require('nvim-treesitter.configs').setup {
 }
 
 -------------------- AUTOCOMMANDS --------------------------
-vim.tbl_map(function(c) vim.cmd(fmt('autocmd %s', c)) end, {
-  'FileType * set formatoptions-=o',
-  'TermOpen * setlocal nonumber norelativenumber signcolumn=no',
-  'TextYankPost * if v:event.operator is "y" && v:event.regname is "+" | execute "OSCYankReg +" | endif',
-  'TextYankPost * lua vim.highlight.on_yank {timeout = 200, on_visual = false}',
-})
+function init_term()
+  vim.wo.number = false
+  vim.wo.relativenumber = false
+  vim.wo.signcolumn = 'no'
+end
+
+function process_yank()
+  vim.highlight.on_yank {timeout = 200, on_visual = false}
+  if vim.g.loaded_oscyank == 1 and vim.v.event.operator == 'y' and vim.v.event.regname == '+' then
+    vim.cmd 'OSCYankReg +'
+  end
+end
+
+local group = 'init'
+vim.api.nvim_create_augroup(group, {clear = true})
+vim.api.nvim_create_autocmd('FileType', {group = group, command = 'set formatoptions-=o'})
+vim.api.nvim_create_autocmd('TermOpen', {group = group, callback = init_term})
+vim.api.nvim_create_autocmd('TextYankPost', {group = group, callback = process_yank})

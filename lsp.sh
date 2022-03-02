@@ -16,7 +16,8 @@ function bash_ls() {
 
 function c_ls() {
   echo "[C/C++ language server]"
-  sudo apt-get install -y ccls
+  sudo apt-get install -y clangd-12
+  sudo update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-12 100
 }
 
 function go_ls() {
@@ -25,12 +26,6 @@ function go_ls() {
   sudo apt-get update
   sudo apt-get install -y golang-go
   go install golang.org/x/tools/gopls@latest
-}
-
-function json_ls() {
-  echo "[JSON language server]"
-  sudo apt-get install -y nodejs npm
-  sudo npm install -g vscode-langservers-extracted
 }
 
 function python_ls() {
@@ -49,7 +44,6 @@ function main() {
   bash_ls && echo
   c_ls && echo
   go_ls && echo
-  json_ls && echo
   python_ls && echo
   clean
 }
