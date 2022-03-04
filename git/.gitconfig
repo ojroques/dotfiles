@@ -37,9 +37,6 @@
   swn = update-index --no-skip-worktree
   ua = restore --staged
 
-[diff]
-  colorMoved = default
-
 [fetch]
   prune = true
 

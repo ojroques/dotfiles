@@ -12,6 +12,7 @@ end
 -------------------- PLUGINS -------------------------------
 require 'paq' {
   {'airblade/vim-rooter'},
+  {'elihunter173/dirbuf.nvim'},
   {'hrsh7th/cmp-buffer'},
   {'hrsh7th/cmp-nvim-lsp'},
   {'hrsh7th/cmp-omni'},
@@ -19,7 +20,6 @@ require 'paq' {
   {'hrsh7th/nvim-cmp'},
   {'junegunn/fzf'},
   {'junegunn/fzf.vim'},
-  {'justinmk/vim-dirvish'},
   {'l3mon4d3/luasnip'},
   {'lervag/vimtex'},
   {'lewis6991/gitsigns.nvim'},
@@ -44,6 +44,8 @@ require 'paq' {
 }
 
 -------------------- PLUGIN SETUP --------------------------
+-- dirbuf.nvim
+require('dirbuf').setup {hash_first = false, sort_order = 'directories_first'}
 -- fzf and fzf.vim
 vim.g['fzf_action'] = {['ctrl-s'] = 'split', ['ctrl-v'] = 'vsplit'}
 vim.keymap.set('n', '<leader>/', '<cmd>History/<CR>')
@@ -60,17 +62,16 @@ gitsigns.setup {
     delete = {text = '-'}, topdelete = {text = '-'}, changedelete = {text = '≃'},
   },
   on_attach = function(bufnr)
-    local function map(m, l, r) vim.keymap.set(m, l, r, {buffer = bufnr}) end
-    map('n', ']c', gitsigns.next_hunk)
-    map('n', '[c', gitsigns.prev_hunk)
-    map('n', '<leader>gd', gitsigns.diffthis)
-    map('n', '<leader>gp', gitsigns.preview_hunk)
-    map('n', '<leader>gr', gitsigns.reset_hunk)
-    map('n', '<leader>gs', gitsigns.stage_hunk)
-    map('n', '<leader>gu', gitsigns.undo_stage_hunk)
-    map('n', '<leader>gD', function() gitsigns.diffthis('~') end)
-    map('n', '<leader>gR', gitsigns.reset_buffer)
-    map('n', '<leader>gS', gitsigns.stage_buffer)
+    vim.keymap.set('n', '<leader>gD', function() gitsigns.diffthis('~') end, {buffer = bufnr})
+    vim.keymap.set('n', '<leader>gR', gitsigns.reset_buffer, {buffer = bufnr})
+    vim.keymap.set('n', '<leader>gS', gitsigns.stage_buffer, {buffer = bufnr})
+    vim.keymap.set('n', '<leader>gd', gitsigns.diffthis, {buffer = bufnr})
+    vim.keymap.set('n', '<leader>gp', gitsigns.preview_hunk, {buffer = bufnr})
+    vim.keymap.set('n', '<leader>gr', gitsigns.reset_hunk, {buffer = bufnr})
+    vim.keymap.set('n', '<leader>gs', gitsigns.stage_hunk, {buffer = bufnr})
+    vim.keymap.set('n', '<leader>gu', gitsigns.undo_stage_hunk, {buffer = bufnr})
+    vim.keymap.set('n', '[c', gitsigns.prev_hunk, {buffer = bufnr})
+    vim.keymap.set('n', ']c', gitsigns.next_hunk, {buffer = bufnr})
   end,
 }
 -- indent-blankline.nvim
@@ -125,9 +126,6 @@ require('lspfuzzy').setup {}
 -- onedark.nvim
 require('onedark').setup {code_style = {comments = 'none'}, toggle_style_key = '<NOP>'}
 require('onedark').load()
--- vim-dirvish
-vim.g['dirvish_mode'] = [[:sort ,^.*[\/],]]
-vim.keymap.set('', '<leader>d', ':Shdo ')
 -- vim-fugitive
 vim.keymap.set('n', '<leader>gg', '<cmd>Git<CR>')
 -- vim-rooter
