@@ -4,7 +4,7 @@
 [user]
   useConfigOnly = true
   name = Olivier Roques
-  ; email =
+  email = olvrqs+github@gmail.com
 
 [core]
   pager = delta

@@ -56,7 +56,7 @@ docker run -it dotfiles
 
 
 ## After Installation
-- Add email to [git config](git/.gitconfig)
+- Update email in [git config](git/.gitconfig)
 - Run `nvim` and execute `:PaqInstall` to install plugins
 - Install fzf: `~/.local/share/nvim/site/pack/paqs/start/fzf/install`
 - Generate SSH keys: `ssh-keygen -t ed25519 -a 100 -C "email@example.com"`
