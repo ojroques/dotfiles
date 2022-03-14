@@ -58,6 +58,8 @@ nnoremap <leader>s :%s//gcI<Left><Left><Left><Left>
 nnoremap <leader>u :update<CR>
 nnoremap <leader>w :conf bd<CR>
 nnoremap <leader>x :conf qa<CR>
+nnoremap H zh
+nnoremap L zl
 nnoremap Q @@
 nnoremap U <NOP>
 nnoremap Y y$

@@ -60,7 +60,7 @@ function install() {
   apt-get install -y "${CLI[@]}"
 
   # bat
-  bat_version="0.19.0"
+  bat_version="0.20.0"
   bat="bat_${bat_version}_amd64.deb"
   curl -fsSL \
     https://github.com/sharkdp/bat/releases/download/v"$bat_version"/"$bat" \
@@ -68,7 +68,7 @@ function install() {
   dpkg -i "$bat" && rm -f "$bat"
 
   # delta
-  delta_version="0.11.3"
+  delta_version="0.12.1"
   delta="git-delta_${delta_version}_amd64.deb"
   curl -fsSL \
     https://github.com/dandavison/delta/releases/download/"$delta_version"/"$delta" \
