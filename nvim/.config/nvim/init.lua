@@ -45,7 +45,7 @@ require 'paq' {
 
 -------------------- PLUGIN SETUP --------------------------
 -- dirbuf.nvim
-require('dirbuf').setup {hash_first = false, sort_order = 'directories_first'}
+require('dirbuf').setup {sort_order = 'directories_first', write_cmd = 'DirbufSync -confirm'}
 -- fzf and fzf.vim
 vim.g['fzf_action'] = {['ctrl-s'] = 'split', ['ctrl-v'] = 'vsplit'}
 vim.keymap.set('n', '<leader>/', '<cmd>History/<CR>')
@@ -198,10 +198,6 @@ function trim_whitespaces()
   vim.fn.winrestview(view)
 end
 
-function warn_caps()
-  vim.api.nvim_echo({{'Caps Lock may be on', 'WarningMsg'}}, false, {})
-end
-
 vim.keymap.set('', '<leader>c', '"+y')
 vim.keymap.set('', '<leader>s', substitute, {expr = true})
 vim.keymap.set('i', 'jj', '<ESC>')
@@ -212,11 +208,13 @@ vim.keymap.set('n', '<S-Down>', '<C-w>2<')
 vim.keymap.set('n', '<S-Left>', '<C-w>2-')
 vim.keymap.set('n', '<S-Right>', '<C-w>2+')
 vim.keymap.set('n', '<S-Up>', '<C-w>2>')
+vim.keymap.set('n', '<leader>cc', '"+yy')
 vim.keymap.set('n', '<leader>e', trim_whitespaces)
 vim.keymap.set('n', '<leader>t', '<cmd>terminal<CR>')
 vim.keymap.set('n', '<leader>u', '<cmd>update<CR>')
 vim.keymap.set('n', '<leader>x', '<cmd>conf qa<CR>')
-vim.keymap.set('n', 'U', warn_caps)
+vim.keymap.set('n', 'H', 'zh')
+vim.keymap.set('n', 'L', 'zl')
 vim.keymap.set('n', 'yos', toggle_scrollbind)
 vim.keymap.set('n', 'yow', toggle_wrap)
 vim.keymap.set('t', '<ESC>', escape_term, {expr = true})
