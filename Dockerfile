@@ -1,12 +1,12 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 ARG DEBIAN_FRONTEND="noninteractive"
 
+WORKDIR /root
+
 RUN true \
   && apt-get update \
-  && apt-get -y install git sudo
-
-WORKDIR /root
+  && apt-get -y install git make
 
 RUN true \
   && mkdir Documents Downloads .tmp \
@@ -16,15 +16,6 @@ RUN true \
   && cd Documents \
   && git clone https://github.com/ojroques/dotfiles.git \
   && cd dotfiles \
-  && git config user.email "olivier@oroques.dev"
-
-RUN true \
-  && cd Documents/dotfiles \
-  && git pull \
-  && echo "1" | ./install.sh \
-  && ./lsp.sh
-
-RUN true \
-  && cd Documents/dotfiles \
-  && git pull \
+  && make install-cli \
+  && make clean \
   && stow bash git nvim vim
