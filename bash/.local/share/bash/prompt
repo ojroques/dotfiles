@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Get current status of a git repository
+# Get current git status
 function parse_git_status {
-  status=$(git status 2> /dev/null)
-  bits=""
+  local status=$(git status 2> /dev/null)
+  local bits=""
 
   if [[ "$status" == *"Your branch is ahead"* ]]; then
     bits+=">"
@@ -30,15 +30,13 @@ function parse_git_status {
   fi
 }
 
-# Get branch and status of a git repository
+# Get current git branch and status
 function parse_git() {
-  br=$(git rev-parse --abbrev-ref HEAD 2> /dev/null)
-  st=""
+  local br=$(git rev-parse --abbrev-ref HEAD 2> /dev/null)
+  local st=""
 
   if [[ -n "$br" ]]; then
-    if [[ $1 == "status" ]]; then
-      st=$(parse_git_status)
-    fi
+    st=$(parse_git_status)
     echo " [$br$st]"
   else
     echo ""

@@ -37,7 +37,6 @@ base:
 		build-essential \
 		curl \
 		git \
-		htop \
 		manpages-posix \
 		python3-pip \
 		software-properties-common \
@@ -53,6 +52,7 @@ cli: bat delta gdb-dashboard neovim python ripgrep
 	@apt-get -y install \
 		fd-find \
 		fzf \
+		htop \
 		shellcheck \
 		> $(LOG)
 

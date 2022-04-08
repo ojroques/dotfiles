@@ -1,15 +1,18 @@
+#!/bin/bash
+
 # bash config
 # github.com/ojroques
 
 BASH_DIR="$HOME/.local/share/bash"
 
-export BAT_THEME="OneHalfDark"
 export BAT_STYLE="header,numbers"
+export BAT_THEME="OneHalfDark"
 export EDITOR="nvim"
 export FZF_DEFAULT_COMMAND="rg --files --hidden -g '!.git/'"
 export HISTCONTROL="ignoreboth:erasedups"
-export HISTIGNORE="cd:ls:pwd:clear:exit"
+export HISTIGNORE="cd:clear:exit:ls:pwd:up"
 export HISTSIZE=10000
+export PATH="$PATH:/usr/local/go/bin:/usr/local/protobuf/bin:~/go/bin"
 export PROMPT_COMMAND="history -a; history -c; history -r"
 export PS1="\u@\h:\w\$ "
 export SUDO_EDITOR="$EDITOR"
@@ -39,8 +42,8 @@ fi
 if [[ -x /usr/bin/tput ]] && tput setaf 1 &> /dev/null; then
   PS1="\[\e[32m\]\u@\h\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\]\$ "
   if [[ -f $BASH_DIR/prompt ]]; then
-    source $BASH_DIR/prompt
-    PS1="\[\e[32m\]\u@\h\[\e[0m\]:\[\e[1;34m\]\w\[\e[0;33m\]\$(parse_git status)\[\e[0m\]\$ "
+    source "$BASH_DIR/prompt"
+    PS1="\[\e[32m\]\u@\h\[\e[0m\]:\[\e[1;34m\]\w\[\e[0;33m\]\$(parse_git)\[\e[0m\]\$ "
   fi
 fi
 
@@ -48,18 +51,19 @@ fi
 if grep -q -i "microsoft" /proc/sys/kernel/osrelease; then
   export DISPLAY="localhost:0.0"
   export PROMPT_COMMAND=$PROMPT_COMMAND'; printf "\e]9;9;%s\e\\" "$PWD"'
-  [[ -f $BASH_DIR/ssh-agent ]] && source $BASH_DIR/ssh-agent
+  [[ -f $BASH_DIR/ssh-agent ]] && source "$BASH_DIR/ssh-agent"
   if [[ ! -f $BASH_DIR/wsl.env ]]; then
-    mkdir -p $BASH_DIR
-    echo "WSL_HOME=$(wslpath "$(wslvar USERPROFILE)")" > $BASH_DIR/wsl.env
+    mkdir -p "$BASH_DIR"
+    echo "WSL_HOME=$(wslpath "$(wslvar USERPROFILE)")" > "$BASH_DIR/wsl.env"
   fi
-  source $BASH_DIR/wsl.env
+  source "$BASH_DIR/wsl.env"
 fi
 
-# Go environment
-export PATH=$PATH:/usr/local/go/bin:/usr/local/protobuf/bin:~/go/bin
-
-[[ -f $BASH_DIR/aliases ]] && source $BASH_DIR/aliases
-[[ -f $BASH_DIR/functions ]] && source $BASH_DIR/functions
-[[ -f $BASH_DIR/less ]] && source $BASH_DIR/less
+# FZF
+[[ -f /usr/share/doc/fzf/examples/key-bindings.bash ]] && source /usr/share/doc/fzf/examples/key-bindings.bash
+[[ -f /usr/share/doc/fzf/examples/completion.bash ]] && source /usr/share/doc/fzf/examples/completion.bash
 [[ -f ~/.fzf.bash ]] && source ~/.fzf.bash
+
+[[ -f $BASH_DIR/aliases ]] && source "$BASH_DIR/aliases"
+[[ -f $BASH_DIR/functions ]] && source "$BASH_DIR/functions"
+[[ -f $BASH_DIR/less ]] && source "$BASH_DIR/less"

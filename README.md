@@ -37,8 +37,6 @@ stow bash git kitty nvim rofi vim xfce
 - Update email in [git config](git/.gitconfig)
 - Run `nvim`, wait for [paq](https://github.com/savq/paq-nvim) to install itself
   then execute `:PaqInstall` to install plugins
-- Setup [fzf](https://github.com/junegunn/fzf):
-  `~/.local/share/nvim/site/pack/paqs/start/fzf/install`
 - Generate SSH keys: `ssh-keygen -t ed25519 -a 100 -C "email@example.com"`
 
 

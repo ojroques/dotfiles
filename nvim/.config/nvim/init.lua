@@ -239,7 +239,7 @@ vim.keymap.set('n', '<space>s', vim.lsp.buf.document_symbol)
 
 -------------------- TREE-SITTER ---------------------------
 require('nvim-treesitter.configs').setup {
-  ensure_installed = 'maintained',
+  ensure_installed = 'all',
   highlight = {enable = true},
   textobjects = {
     select = {

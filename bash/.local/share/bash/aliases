@@ -10,7 +10,6 @@ alias ls='ls -F --color=auto --group-directories-first'
 alias ll='ls -lAh'
 alias mkd='mkdir -pv'
 alias psa='ps -e -o pid,euser,pcpu,pmem,command'
-alias pwo='poweroff'
 alias rm='rm --preserve-root -I'
 alias tree='tree -F -C --dirsfirst'
 
@@ -25,6 +24,7 @@ alias ipl='ip -br link'
 alias ssp='ss -lnptu'
 
 # Shortcuts
+alias h="cd $HOME && ls"
 alias dl="cd $HOME/Downloads && ls"
 alias doc="cd $HOME/Documents && ls"
 alias tmp="cd $HOME/.tmp && ls"
