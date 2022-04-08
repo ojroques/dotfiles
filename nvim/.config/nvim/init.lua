@@ -48,6 +48,8 @@ require 'paq' {
 require('dirbuf').setup {sort_order = 'directories_first', write_cmd = 'DirbufSync -confirm'}
 -- fzf and fzf.vim
 vim.g['fzf_action'] = {['ctrl-s'] = 'split', ['ctrl-v'] = 'vsplit'}
+vim.g['fzf_layout'] = {window = {width = 0.8, height = 0.8}}
+vim.g['fzf_preview_window'] = {'up:50%:+{2}-/2', 'ctrl-/'}
 vim.keymap.set('n', '<leader>/', '<cmd>History/<CR>')
 vim.keymap.set('n', '<leader>;', '<cmd>History:<CR>')
 vim.keymap.set('n', '<leader>f', '<cmd>Files<CR>')
