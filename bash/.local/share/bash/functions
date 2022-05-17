@@ -22,7 +22,7 @@ function apt-list() {
 # Delete swap files
 function rm-swap() {
   rm -fv "$PWD"/*.swp
-  rm -fv "$HOME"/.local/share/nvim/swap/*.swp
+  rm -fv "$HOME"/.local/state/nvim/swap/*.swp
 }
 
 # Go back up N directories
