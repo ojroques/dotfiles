@@ -6,7 +6,9 @@ local fmt = string.format
 local paq_dir = fmt('%s/site/pack/paqs/start/paq-nvim', vim.fn.stdpath('data'))
 
 if vim.fn.empty(vim.fn.glob(paq_dir)) > 0 then
+  vim.api.nvim_echo({{'Paq package manager is being installed'}}, false, {})
   vim.fn.system {'git', 'clone', '--depth=1', 'https://github.com/savq/paq-nvim.git', paq_dir}
+  return
 end
 
 -------------------- PLUGINS -------------------------------
@@ -29,6 +31,7 @@ require 'paq' {
   {'neovim/nvim-lspconfig'},
   {'nvim-lua/plenary.nvim'},
   {'nvim-treesitter/nvim-treesitter'},
+  {'nvim-treesitter/nvim-treesitter-context'},
   {'nvim-treesitter/nvim-treesitter-textobjects'},
   {'ojroques/nvim-bufbar', branch = 'personal'},
   {'ojroques/nvim-bufdel'},
@@ -37,7 +40,6 @@ require 'paq' {
   {'ojroques/nvim-lspfuzzy'},
   {'ojroques/vim-oscyank'},
   {'savq/paq-nvim'},
-  {'smiteshp/nvim-gps'},
   {'tpope/vim-commentary'},
   {'tpope/vim-fugitive'},
   {'tpope/vim-unimpaired'},
@@ -119,14 +121,19 @@ cmp.setup {
     {name = 'nvim_lsp'}, {name = 'omni'}, {name = 'path'}, {name = 'buffer'},
   }),
 }
--- nvim-gps
-require('nvim-gps').setup {disable_icons = true}
 -- nvim-hardline
 require('hardline').setup {}
 -- nvim-lspfuzzy
 require('lspfuzzy').setup {}
+-- nvim-treesitter-context
+require('treesitter-context').setup {mode = 'topline'}
 -- onedark.nvim
-require('onedark').setup {code_style = {comments = 'none'}, toggle_style_key = '<NOP>'}
+local colors = require('onedark.palette').dark
+require('onedark').setup {
+  code_style = {comments = 'none'},
+  toggle_style_key = '<NOP>',
+  highlights = {TreesitterContext = {fg = colors.fg, bg = colors.bg1, fmt = 'italic'}},
+}
 require('onedark').load()
 -- vim-fugitive
 vim.keymap.set('n', '<leader>gg', '<cmd>Git<CR>')
@@ -155,11 +162,11 @@ vim.opt.number = true                   -- Show line numbers
 vim.opt.pumheight = 12                  -- Max height of pop-up menu
 vim.opt.relativenumber = true           -- Show relative line numbers
 vim.opt.report = 0                      -- Always report changed lines
-vim.opt.scrolloff = 4                   -- Lines of context
+vim.opt.scrolloff = 6                   -- Lines of context
 vim.opt.shiftround = true               -- Round indent
 vim.opt.shiftwidth = indent             -- Size of an indent
 vim.opt.shortmess = 'atToOFc'           -- Prompt message options
-vim.opt.sidescrolloff = 8               -- Columns of context
+vim.opt.sidescrolloff = 12              -- Columns of context
 vim.opt.signcolumn = 'yes'              -- Show sign column
 vim.opt.smartcase = true                -- Do not ignore case with capitals
 vim.opt.smartindent = true              -- Insert indents automatically
@@ -205,7 +212,6 @@ vim.keymap.set('', '<leader>s', substitute, {expr = true})
 vim.keymap.set('i', 'jj', '<ESC>')
 vim.keymap.set('n', '<C-w>T', '<cmd>tabclose<CR>')
 vim.keymap.set('n', '<C-w>t', '<cmd>tabnew<CR>')
-vim.keymap.set('n', '<F5>', '<cmd>checktime<CR>')
 vim.keymap.set('n', '<S-Down>', '<C-w>2<')
 vim.keymap.set('n', '<S-Left>', '<C-w>2-')
 vim.keymap.set('n', '<S-Right>', '<C-w>2+')
@@ -231,7 +237,7 @@ vim.keymap.set('n', '<space>,', vim.diagnostic.goto_prev)
 vim.keymap.set('n', '<space>;', vim.diagnostic.goto_next)
 vim.keymap.set('n', '<space>a', vim.lsp.buf.code_action)
 vim.keymap.set('n', '<space>d', vim.lsp.buf.definition)
-vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting)
+vim.keymap.set('n', '<space>f', vim.lsp.buf.format)
 vim.keymap.set('n', '<space>h', vim.lsp.buf.hover)
 vim.keymap.set('n', '<space>m', vim.lsp.buf.rename)
 vim.keymap.set('n', '<space>r', vim.lsp.buf.references)
@@ -260,12 +266,6 @@ require('nvim-treesitter.configs').setup {
 }
 
 -------------------- AUTOCOMMANDS --------------------------
-function init_term()
-  vim.wo.number = false
-  vim.wo.relativenumber = false
-  vim.wo.signcolumn = 'no'
-end
-
 function process_yank()
   vim.highlight.on_yank {timeout = 200, on_visual = false}
   if vim.g.loaded_oscyank == 1 and vim.v.event.operator == 'y' and vim.v.event.regname == '+' then
@@ -273,8 +273,6 @@ function process_yank()
   end
 end
 
-local group = 'init'
-vim.api.nvim_create_augroup(group, {clear = true})
-vim.api.nvim_create_autocmd('FileType', {group = group, command = 'set formatoptions-=o'})
-vim.api.nvim_create_autocmd('TermOpen', {group = group, callback = init_term})
-vim.api.nvim_create_autocmd('TextYankPost', {group = group, callback = process_yank})
+vim.api.nvim_create_augroup('init', {clear = true})
+vim.api.nvim_create_autocmd('FileType', {group = 'init', command = 'set formatoptions-=o'})
+vim.api.nvim_create_autocmd('TextYankPost', {group = 'init', callback = process_yank})
