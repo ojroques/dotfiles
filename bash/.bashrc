@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# bash config
-# github.com/ojroques
-
 BASH_DIR="$HOME/.local/share/bash"
 
 export BAT_STYLE="header,numbers"

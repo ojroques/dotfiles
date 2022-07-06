@@ -1,6 +1,3 @@
--- neovim config
--- github.com/ojroques
-
 -------------------- INIT ----------------------------------
 local fmt = string.format
 local paq_dir = fmt('%s/site/pack/paqs/start/paq-nvim', vim.fn.stdpath('data'))
@@ -149,8 +146,6 @@ vim.g['vimtex_quickfix_mode'] = false
 
 -------------------- OPTIONS -------------------------------
 local indent, width = 2, 80
-vim.g.did_load_filetypes = 0            -- Disable filetype.vim
-vim.g.do_filetype_lua = 1               -- Enable filetype.lua
 vim.opt.colorcolumn = tostring(width)   -- Line length marker
 vim.opt.completeopt = {'menu', 'menuone', 'noselect'}  -- Completion options
 vim.opt.cursorline = true               -- Highlight cursor line
@@ -273,6 +268,7 @@ function process_yank()
   end
 end
 
-vim.api.nvim_create_augroup('init', {clear = true})
-vim.api.nvim_create_autocmd('FileType', {group = 'init', command = 'set formatoptions-=o'})
-vim.api.nvim_create_autocmd('TextYankPost', {group = 'init', callback = process_yank})
+local group = 'init'
+vim.api.nvim_create_augroup(group, {clear = true})
+vim.api.nvim_create_autocmd('FileType', {group = group, command = 'set formatoptions-=o'})
+vim.api.nvim_create_autocmd('TextYankPost', {group = group, callback = process_yank})

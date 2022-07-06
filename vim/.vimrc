@@ -1,11 +1,9 @@
-" vim config
-" github.com/ojroques
-
+" INIT
 set nocompatible
-
-" OPTIONS
 filetype plugin indent on
 syntax enable
+
+" OPTIONS
 set autoindent
 set autoread
 set background=dark
