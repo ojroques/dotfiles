@@ -19,11 +19,11 @@ require 'paq' {
   {'hrsh7th/nvim-cmp'},
   {'junegunn/fzf'},
   {'junegunn/fzf.vim'},
+  {'kylechui/nvim-surround'},
   {'l3mon4d3/luasnip'},
   {'lervag/vimtex'},
   {'lewis6991/gitsigns.nvim'},
   {'lukas-reineke/indent-blankline.nvim'},
-  {'machakann/vim-sandwich'},
   {'navarasu/onedark.nvim'},
   {'neovim/nvim-lspconfig'},
   {'nvim-lua/plenary.nvim'},
@@ -122,6 +122,8 @@ cmp.setup {
 require('hardline').setup {}
 -- nvim-lspfuzzy
 require('lspfuzzy').setup {}
+-- nvim-surround
+require('nvim-surround').setup {}
 -- nvim-treesitter-context
 require('treesitter-context').setup {mode = 'topline'}
 -- onedark.nvim
@@ -136,11 +138,6 @@ require('onedark').load()
 vim.keymap.set('n', '<leader>gg', '<cmd>Git<CR>')
 -- vim-rooter
 vim.g['rooter_patterns'] = {'.buildme.sh', '.git'}
--- vim-sandwich
-vim.g['operator_sandwich_no_default_key_mappings'] = true
-vim.keymap.set('n', 'cs', '<Plug>(sandwich-replace)')
-vim.keymap.set('n', 'ds', '<Plug>(sandwich-delete)')
-vim.keymap.set('n', 'ys', '<Plug>(sandwich-add)')
 -- vimtex
 vim.g['vimtex_quickfix_mode'] = false
 
@@ -234,6 +231,7 @@ vim.keymap.set('n', '<space>a', vim.lsp.buf.code_action)
 vim.keymap.set('n', '<space>d', vim.lsp.buf.definition)
 vim.keymap.set('n', '<space>f', vim.lsp.buf.format)
 vim.keymap.set('n', '<space>h', vim.lsp.buf.hover)
+vim.keymap.set('n', '<space>i', vim.lsp.buf.implementation)
 vim.keymap.set('n', '<space>m', vim.lsp.buf.rename)
 vim.keymap.set('n', '<space>r', vim.lsp.buf.references)
 vim.keymap.set('n', '<space>s', vim.lsp.buf.document_symbol)
@@ -247,15 +245,9 @@ require('nvim-treesitter.configs').setup {
       enable = true,
       keymaps = {
         ['aa'] = '@parameter.outer', ['ia'] = '@parameter.inner',
+        ['ac'] = '@class.outer', ['ic'] = '@class.inner',
         ['af'] = '@function.outer', ['if'] = '@function.inner',
       },
-    },
-    move = {
-      enable = true,
-      goto_next_start = {[']a'] = '@parameter.inner', [']f'] = '@function.outer'},
-      goto_next_end = {[']A'] = '@parameter.inner', [']F'] = '@function.outer'},
-      goto_previous_start = {['[a'] = '@parameter.inner', ['[f'] = '@function.outer'},
-      goto_previous_end = {['[A'] = '@parameter.inner', ['[F'] = '@function.outer'},
     },
   },
 }
