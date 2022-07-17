@@ -35,7 +35,7 @@ require 'paq' {
   {'ojroques/nvim-buildme'},
   {'ojroques/nvim-hardline', branch = 'personal'},
   {'ojroques/nvim-lspfuzzy'},
-  {'ojroques/vim-oscyank'},
+  {'ojroques/nvim-osc52'},
   {'savq/paq-nvim'},
   {'tpope/vim-commentary'},
   {'tpope/vim-fugitive'},
@@ -122,6 +122,8 @@ cmp.setup {
 require('hardline').setup {}
 -- nvim-lspfuzzy
 require('lspfuzzy').setup {}
+-- nvim-osc52
+require('osc52').setup {trim = true}
 -- nvim-surround
 require('nvim-surround').setup {}
 -- nvim-treesitter-context
@@ -150,6 +152,7 @@ vim.opt.expandtab = true                -- Use spaces instead of tabs
 vim.opt.ignorecase = true               -- Ignore case
 vim.opt.inccommand = ''                 -- Disable substitution preview
 vim.opt.list = true                     -- Show invisible characters
+vim.opt.mouse = ''                      -- Disable mouse
 vim.opt.number = true                   -- Show line numbers
 vim.opt.pumheight = 12                  -- Max height of pop-up menu
 vim.opt.relativenumber = true           -- Show relative line numbers
@@ -181,11 +184,6 @@ function substitute()
   return vim.fn.mode() == 'n' and fmt(cmd, '%s') or fmt(cmd, 's')
 end
 
-function toggle_scrollbind()
-  vim.wo.scrollbind = not vim.wo.scrollbind
-  vim.api.nvim_echo({{fmt('scrollbind: %s', vim.wo.scrollbind)}}, false, {})
-end
-
 function toggle_wrap()
   vim.wo.breakindent = not vim.wo.breakindent
   vim.wo.linebreak = not vim.wo.linebreak
@@ -215,7 +213,6 @@ vim.keymap.set('n', '<leader>u', '<cmd>update<CR>')
 vim.keymap.set('n', '<leader>x', '<cmd>conf qa<CR>')
 vim.keymap.set('n', 'H', 'zh')
 vim.keymap.set('n', 'L', 'zl')
-vim.keymap.set('n', 'yos', toggle_scrollbind)
 vim.keymap.set('n', 'yow', toggle_wrap)
 vim.keymap.set('t', '<ESC>', escape_term, {expr = true})
 vim.keymap.set('t', 'jj', escape_term, {expr = true})
@@ -245,22 +242,28 @@ require('nvim-treesitter.configs').setup {
       enable = true,
       keymaps = {
         ['aa'] = '@parameter.outer', ['ia'] = '@parameter.inner',
-        ['ac'] = '@class.outer', ['ic'] = '@class.inner',
         ['af'] = '@function.outer', ['if'] = '@function.inner',
       },
+    },
+    move = {
+      enable = true,
+      goto_next_start = {[']a'] = '@parameter.inner', [']f'] = '@function.outer'},
+      goto_previous_start = {['[a'] = '@parameter.inner', ['[f'] = '@function.outer'},
     },
   },
 }
 
--------------------- AUTOCOMMANDS --------------------------
-function process_yank()
-  vim.highlight.on_yank {timeout = 200, on_visual = false}
-  if vim.g.loaded_oscyank == 1 and vim.v.event.operator == 'y' and vim.v.event.regname == '+' then
-    vim.cmd 'OSCYankReg +'
-  end
-end
+-------------------- CLIPBOARD -----------------------------
+local copy = function(lines, _) require('osc52').copy(table.concat(lines, '\n')) end
+local paste = function() return {vim.fn.split(vim.fn.getreg(''), '\n'), vim.fn.getregtype('')} end
+vim.g.clipboard = {
+  name = 'osc52',
+  copy = {['+'] = copy, ['*'] = copy},
+  paste = {['+'] = paste, ['*'] = paste},
+}
 
+-------------------- AUTOCOMMANDS --------------------------
 local group = 'init'
 vim.api.nvim_create_augroup(group, {clear = true})
 vim.api.nvim_create_autocmd('FileType', {group = group, command = 'set formatoptions-=o'})
-vim.api.nvim_create_autocmd('TextYankPost', {group = group, callback = process_yank})
+vim.api.nvim_create_autocmd('TextYankPost', {group = group, callback = function() vim.highlight.on_yank() end})
