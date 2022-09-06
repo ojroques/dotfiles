@@ -71,17 +71,17 @@ gui: kitty
 
 .PHONY: bat
 bat:
-	@echo "Installing bat v0.20.0..."
+	@echo "Installing bat v0.21.0..."
 	@curl -fsSL -o /tmp/bat.dpkg \
-		https://github.com/sharkdp/bat/releases/download/v0.20.0/bat_0.20.0_amd64.deb > $(LOG)
+		https://github.com/sharkdp/bat/releases/download/v0.21.0/bat_0.21.0_amd64.deb > $(LOG)
 	@dpkg -i /tmp/bat.dpkg > $(LOG)
 	@rm -f /tmp/bat.dpkg
 
 .PHONY: delta
 delta:
-	@echo "Installing delta v0.12.1..."
+	@echo "Installing delta v0.14.0..."
 	@curl -fsSL -o /tmp/delta.dpkg \
-		https://github.com/dandavison/delta/releases/download/0.12.1/git-delta_0.12.1_amd64.deb > $(LOG)
+		https://github.com/dandavison/delta/releases/download/0.14.0/git-delta_0.14.0_amd64.deb > $(LOG)
 	@dpkg -i /tmp/delta.dpkg > $(LOG)
 	@rm -f /tmp/delta.dpkg
 
