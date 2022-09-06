@@ -11,12 +11,6 @@ This repository contains my config files for:
 - **xfce** and **thunar**
 
 
-## Screenshots
-![Kitty and Thunar](./screenshots/shell.png)
-![Neovim](./screenshots/neovim.png)
-Wallpaper can be found [here](./screenshots/wallpaper.png)
-
-
 ## Installation
 1. Use the [Makefile](./Makefile) to install apps (must be root):
 ```bash
