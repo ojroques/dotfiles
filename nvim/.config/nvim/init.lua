@@ -1,7 +1,6 @@
 -------------------- INIT ----------------------------------
 local fmt = string.format
 local paq_dir = fmt('%s/site/pack/paqs/start/paq-nvim', vim.fn.stdpath('data'))
-
 if vim.fn.empty(vim.fn.glob(paq_dir)) > 0 then
   vim.api.nvim_echo({{'Paq package manager is being installed'}}, false, {})
   vim.fn.system {'git', 'clone', '--depth=1', 'https://github.com/savq/paq-nvim.git', paq_dir}
@@ -26,7 +25,7 @@ require 'paq' {
   {'lukas-reineke/indent-blankline.nvim'},
   {'navarasu/onedark.nvim'},
   {'neovim/nvim-lspconfig'},
-  {'nvim-lua/plenary.nvim'},
+  {'numtostr/comment.nvim'},
   {'nvim-treesitter/nvim-treesitter'},
   {'nvim-treesitter/nvim-treesitter-context'},
   {'nvim-treesitter/nvim-treesitter-textobjects'},
@@ -37,12 +36,13 @@ require 'paq' {
   {'ojroques/nvim-lspfuzzy'},
   {'ojroques/nvim-osc52'},
   {'savq/paq-nvim'},
-  {'tpope/vim-commentary'},
   {'tpope/vim-fugitive'},
   {'tpope/vim-unimpaired'},
 }
 
 -------------------- PLUGIN SETUP --------------------------
+-- comment.nvim
+require('Comment').setup({mappings = {extra = false}})
 -- dirbuf.nvim
 require('dirbuf').setup {sort_order = 'directories_first', write_cmd = 'DirbufSync -confirm'}
 -- fzf and fzf.vim
@@ -63,6 +63,8 @@ gitsigns.setup {
     delete = {text = '-'}, topdelete = {text = '-'}, changedelete = {text = '≃'},
   },
   on_attach = function(bufnr)
+    vim.keymap.set('n', '<leader>g,', gitsigns.prev_hunk, {buffer = bufnr})
+    vim.keymap.set('n', '<leader>g;', gitsigns.next_hunk, {buffer = bufnr})
     vim.keymap.set('n', '<leader>gD', function() gitsigns.diffthis('~') end, {buffer = bufnr})
     vim.keymap.set('n', '<leader>gR', gitsigns.reset_buffer, {buffer = bufnr})
     vim.keymap.set('n', '<leader>gS', gitsigns.stage_buffer, {buffer = bufnr})
@@ -71,16 +73,10 @@ gitsigns.setup {
     vim.keymap.set('n', '<leader>gr', gitsigns.reset_hunk, {buffer = bufnr})
     vim.keymap.set('n', '<leader>gs', gitsigns.stage_hunk, {buffer = bufnr})
     vim.keymap.set('n', '<leader>gu', gitsigns.undo_stage_hunk, {buffer = bufnr})
-    vim.keymap.set('n', '[c', gitsigns.prev_hunk, {buffer = bufnr})
-    vim.keymap.set('n', ']c', gitsigns.next_hunk, {buffer = bufnr})
   end,
 }
 -- indent-blankline.nvim
-require('indent_blankline').setup {
-  char = '┊',
-  buftype_exclude = {'terminal'},
-  filetype_exclude = {'fugitive', 'fzf', 'help', 'man'},
-}
+require('indent_blankline').setup {char = '┊'}
 -- nvim-bufbar
 require('bufbar').setup {modifier = 'full', term_modifier = 'full', show_flags = false}
 -- nvim-bufdel
@@ -98,14 +94,12 @@ local widths = {abbr = 80, kind = 40, menu = 40}
 cmp.setup {
   completion = {keyword_length = 2},
   formatting = {
-    format = function(entry, vim_item)
-      vim_item.menu = vim_item.menu or menu[entry.source.name]
+    format = function(entry, item)
+      item.menu = item.menu or menu[entry.source.name]
       for k, width in pairs(widths) do
-        if #vim_item[k] > width then
-          vim_item[k] = fmt('%s...', string.sub(vim_item[k], 1, width))
-        end
+        if #item[k] > width then item[k] = fmt('%s...', string.sub(item[k], 1, width)) end
       end
-      return vim_item
+      return item
     end,
   },
   mapping = {
@@ -114,9 +108,7 @@ cmp.setup {
   },
   preselect = require('cmp.types').cmp.PreselectMode.None,
   snippet = {expand = function(args) require('luasnip').lsp_expand(args.body) end},
-  sources = cmp.config.sources({
-    {name = 'nvim_lsp'}, {name = 'omni'}, {name = 'path'}, {name = 'buffer'},
-  }),
+  sources = cmp.config.sources({{name = 'nvim_lsp'}, {name = 'omni'}, {name = 'path'}, {name = 'buffer'}}),
 }
 -- nvim-hardline
 require('hardline').setup {}
@@ -132,14 +124,13 @@ require('treesitter-context').setup {mode = 'topline'}
 local colors = require('onedark.palette').dark
 require('onedark').setup {
   code_style = {comments = 'none'},
-  toggle_style_key = '<NOP>',
-  highlights = {TreesitterContext = {fg = colors.fg, bg = colors.bg1, fmt = 'italic'}},
+  highlights = {TreesitterContext = {bg = colors.bg1, fmt = 'italic'}},
 }
 require('onedark').load()
 -- vim-fugitive
 vim.keymap.set('n', '<leader>gg', '<cmd>Git<CR>')
 -- vim-rooter
-vim.g['rooter_patterns'] = {'.buildme.sh', '.git'}
+vim.g['rooter_patterns'] = {'.buildme.sh', '.git', 'Makefile'}
 -- vimtex
 vim.g['vimtex_quickfix_mode'] = false
 
@@ -175,23 +166,23 @@ vim.opt.wildmode = {'list:longest'}     -- Command completion options
 vim.opt.wrap = false                    -- Disable line wrap
 
 -------------------- MAPPINGS ------------------------------
-function escape_term()
+local function escape_term()
   return vim.bo.filetype == 'fzf' and '<ESC>' or '<C-\\><C-n>'
 end
 
-function substitute()
+local function substitute()
   local cmd = ':%s//gcI<Left><Left><Left><Left>'
   return vim.fn.mode() == 'n' and fmt(cmd, '%s') or fmt(cmd, 's')
 end
 
-function toggle_wrap()
+local function toggle_wrap()
   vim.wo.breakindent = not vim.wo.breakindent
   vim.wo.linebreak = not vim.wo.linebreak
   vim.wo.wrap = not vim.wo.wrap
   vim.api.nvim_echo({{fmt('wrap: %s', vim.wo.wrap)}}, false, {})
 end
 
-function trim_whitespaces()
+local function trim_whitespaces()
   local view = vim.fn.winsaveview()
   vim.cmd [[keeppatterns %s/\s\+$//e]]
   vim.fn.winrestview(view)
@@ -218,7 +209,7 @@ vim.keymap.set('t', '<ESC>', escape_term, {expr = true})
 vim.keymap.set('t', 'jj', escape_term, {expr = true})
 
 -------------------- LSP -----------------------------------
-local cmp_cap = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local cmp_cap = require('cmp_nvim_lsp').default_capabilities()
 for _, ls in ipairs({'bashls', 'clangd', 'gopls', 'pylsp'}) do
   require('lspconfig')[ls].setup {capabilities = cmp_cap}
 end
@@ -254,8 +245,14 @@ require('nvim-treesitter.configs').setup {
 }
 
 -------------------- CLIPBOARD -----------------------------
-local copy = function(lines, _) require('osc52').copy(table.concat(lines, '\n')) end
-local paste = function() return {vim.fn.split(vim.fn.getreg(''), '\n'), vim.fn.getregtype('')} end
+local function copy(lines, _)
+  require('osc52').copy(table.concat(lines, '\n'))
+end
+
+local function paste()
+  return {vim.fn.split(vim.fn.getreg(''), '\n'), vim.fn.getregtype('')}
+end
+
 vim.g.clipboard = {
   name = 'osc52',
   copy = {['+'] = copy, ['*'] = copy},
