@@ -1,6 +1,7 @@
 -------------------- INIT ----------------------------------
 local fmt = string.format
 local paq_dir = fmt('%s/site/pack/paqs/start/paq-nvim', vim.fn.stdpath('data'))
+
 if vim.fn.empty(vim.fn.glob(paq_dir)) > 0 then
   vim.api.nvim_echo({{'Paq package manager is being installed'}}, false, {})
   vim.fn.system {'git', 'clone', '--depth=1', 'https://github.com/savq/paq-nvim.git', paq_dir}
@@ -136,34 +137,35 @@ vim.g['vimtex_quickfix_mode'] = false
 
 -------------------- OPTIONS -------------------------------
 local indent, width = 2, 80
-vim.opt.colorcolumn = tostring(width)   -- Line length marker
+vim.opt.colorcolumn = tostring(width)    -- Line length marker
 vim.opt.completeopt = {'menu', 'menuone', 'noselect'}  -- Completion options
-vim.opt.cursorline = true               -- Highlight cursor line
-vim.opt.expandtab = true                -- Use spaces instead of tabs
-vim.opt.ignorecase = true               -- Ignore case
-vim.opt.inccommand = ''                 -- Disable substitution preview
-vim.opt.list = true                     -- Show invisible characters
-vim.opt.mouse = ''                      -- Disable mouse
-vim.opt.number = true                   -- Show line numbers
-vim.opt.pumheight = 12                  -- Max height of pop-up menu
-vim.opt.relativenumber = true           -- Show relative line numbers
-vim.opt.report = 0                      -- Always report changed lines
-vim.opt.scrolloff = 6                   -- Lines of context
-vim.opt.shiftround = true               -- Round indent
-vim.opt.shiftwidth = indent             -- Size of an indent
-vim.opt.shortmess = 'atToOFc'           -- Prompt message options
-vim.opt.sidescrolloff = 12              -- Columns of context
-vim.opt.signcolumn = 'yes'              -- Show sign column
-vim.opt.smartcase = true                -- Do not ignore case with capitals
-vim.opt.smartindent = true              -- Insert indents automatically
-vim.opt.splitbelow = true               -- Put new windows below current
-vim.opt.splitright = true               -- Put new windows right of current
-vim.opt.tabstop = indent                -- Number of spaces tabs count for
-vim.opt.termguicolors = true            -- True color support
-vim.opt.textwidth = width               -- Maximum width of text
-vim.opt.updatetime = 100                -- Delay before swap file is saved
-vim.opt.wildmode = {'list:longest'}     -- Command completion options
-vim.opt.wrap = false                    -- Disable line wrap
+vim.opt.cursorline = true                -- Highlight cursor line
+vim.opt.diffopt:append {'linematch:60'}  -- Improve diff mode
+vim.opt.expandtab = true                 -- Use spaces instead of tabs
+vim.opt.ignorecase = true                -- Ignore case
+vim.opt.inccommand = ''                  -- Disable substitution preview
+vim.opt.list = true                      -- Show invisible characters
+vim.opt.mouse = ''                       -- Disable mouse
+vim.opt.number = true                    -- Show line numbers
+vim.opt.pumheight = 12                   -- Max height of pop-up menu
+vim.opt.relativenumber = true            -- Show relative line numbers
+vim.opt.report = 0                       -- Always report changed lines
+vim.opt.scrolloff = 6                    -- Lines of context
+vim.opt.shiftround = true                -- Round indent
+vim.opt.shiftwidth = indent              -- Size of an indent
+vim.opt.shortmess = 'atToOFc'            -- Prompt message options
+vim.opt.sidescrolloff = 12               -- Columns of context
+vim.opt.signcolumn = 'yes'               -- Show sign column
+vim.opt.smartcase = true                 -- Do not ignore case with capitals
+vim.opt.smartindent = true               -- Insert indents automatically
+vim.opt.splitbelow = true                -- Put new windows below current
+vim.opt.splitright = true                -- Put new windows right of current
+vim.opt.tabstop = indent                 -- Number of spaces tabs count for
+vim.opt.termguicolors = true             -- True color support
+vim.opt.textwidth = width                -- Maximum width of text
+vim.opt.updatetime = 100                 -- Delay before swap file is saved
+vim.opt.wildmode = {'list:longest'}      -- Command completion options
+vim.opt.wrap = false                     -- Disable line wrap
 
 -------------------- MAPPINGS ------------------------------
 local function escape_term()

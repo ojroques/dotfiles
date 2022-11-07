@@ -101,14 +101,14 @@ kitty:
 
 .PHONY: neovim
 neovim:
-	@echo "Installing Neovim nightly..."
+	@echo "Installing neovim nightly..."
 	@add-apt-repository -y ppa:neovim-ppa/unstable > $(LOG)
 	@apt-get update > $(LOG)
 	@apt-get -y install neovim > $(LOG)
 
 .PHONY: python
 python:
-	@echo "Installing Python3 packages..."
+	@echo "Installing python3 packages..."
 	@pip3 install matplotlib numpy scipy > $(LOG)
 
 .PHONY: ripgrep
@@ -125,7 +125,7 @@ lsp: bashls cls gols pythonls
 
 .PHONY: bashls
 bashls:
-	@echo "Installing Bash language server..."
+	@echo "Installing bash language server..."
 	@apt-get -y install nodejs npm > $(LOG)
 	@npm install -g bash-language-server > $(LOG)
 
@@ -137,12 +137,12 @@ cls:
 
 .PHONY: gols
 gols:
-	@echo "Installing Go language server..."
+	@echo "Installing go language server..."
 	@apt-get -y install golang > $(LOG)
 
 .PHONY: pythonls
 pythonls:
-	@echo "Installing Python3 language server..."
+	@echo "Installing python3 language server..."
 	@pip3 install jedi python-lsp-server[pyflakes,pycodestyle,yapf] > $(LOG)
 
 #################### LATEX #################################
