@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Go to the n-th parent folder
+function up {
+  if [[ $# -eq 0 ]]; then
+    cd "../"
+  elif [[ $# -eq 1 ]] && [[ $1 -gt 0 ]]; then
+    local up_dir=""
+    for _ in $(seq 1 "$1"); do
+      up_dir+="../"
+    done
+    cd "$up_dir" || return
+  else
+    echo "Usage: up [n > 0]"
+  fi
+}

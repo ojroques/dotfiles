@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Cheat sheet
+function cheat {
+  curl "cheat.sh/$1"
+}

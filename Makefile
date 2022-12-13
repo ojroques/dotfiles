@@ -9,9 +9,6 @@ install-base: update base
 .PHONY: install-cli
 install-cli: install-base cli
 
-.PHONY: install-gui
-install-gui: install-base gui
-
 .PHONY: install-lsp
 install-lsp: install-base lsp
 
@@ -37,6 +34,7 @@ base:
 		build-essential \
 		curl \
 		git \
+		htop \
 		manpages-posix \
 		python3-pip \
 		software-properties-common \
@@ -47,26 +45,15 @@ base:
 		> $(LOG)
 
 .PHONY: cli
-cli: bat delta gdb-dashboard neovim python ripgrep
-	@echo "Installing CLI packages..."
+cli: bat delta gdb-dashboard go neovim ripgrep
+	@echo "Installing cli packages..."
 	@apt-get -y install \
 		fd-find \
 		fzf \
-		htop \
+		keychain \
 		shellcheck \
-		> $(LOG)
-
-.PHONY: gui
-gui: kitty
-	@echo "Installing GUI packages..."
-	@apt-get -y install \
-		arc-theme \
-		firefox \
-		papirus-icon-theme \
-		redshift-gtk \
-		rofi \
-		viewnior \
-		vlc \
+		tmux \
+		zsh \
 		> $(LOG)
 
 .PHONY: bat
@@ -79,9 +66,9 @@ bat:
 
 .PHONY: delta
 delta:
-	@echo "Installing delta v0.14.0..."
+	@echo "Installing delta v0.15.1..."
 	@curl -fsSL -o /tmp/delta.dpkg \
-		https://github.com/dandavison/delta/releases/download/0.14.0/git-delta_0.14.0_amd64.deb > $(LOG)
+		https://github.com/dandavison/delta/releases/download/0.15.1/git-delta_0.15.1_amd64.deb > $(LOG)
 	@dpkg -i /tmp/delta.dpkg > $(LOG)
 	@rm -f /tmp/delta.dpkg
 
@@ -91,13 +78,13 @@ gdb-dashboard:
 	@curl -fsSL --create-dirs -o /etc/gdb/gdbinit \
 		https://raw.githubusercontent.com/cyrus-and/gdb-dashboard/master/.gdbinit > $(LOG)
 
-.PHONY: kitty
-kitty:
-	@echo "Installing kitty.."
-	@curl -fsSL -o /tmp/kitty.sh \
-		https://sw.kovidgoyal.net/kitty/installer.sh > $(LOG)
-	@bash /tmp/kitty.sh > $(LOG)
-	@rm -f /tmp/kitty.sh
+.PHONY: go
+go:
+	@echo "Installing go v1.19.4..."
+	@curl -fsSL -o /tmp/go.tar.gz \
+		https://go.dev/dl/go1.19.4.linux-amd64.tar.gz > $(LOG)
+	@rm -rf /usr/local/go && tar -C /usr/local -xzf /tmp/go.tar.gz > $(LOG)
+	@rm -f /tmp/go.tar.gz
 
 .PHONY: neovim
 neovim:
@@ -105,11 +92,6 @@ neovim:
 	@add-apt-repository -y ppa:neovim-ppa/unstable > $(LOG)
 	@apt-get update > $(LOG)
 	@apt-get -y install neovim > $(LOG)
-
-.PHONY: python
-python:
-	@echo "Installing python3 packages..."
-	@pip3 install matplotlib numpy scipy > $(LOG)
 
 .PHONY: ripgrep
 ripgrep:
@@ -131,14 +113,14 @@ bashls:
 
 .PHONY: cls
 cls:
-	@echo "Installing C/C++ language server..."
-	@apt-get -y install clangd-12 > $(LOG)
-	@update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-12 100 > $(LOG)
+	@echo "Installing c/c++ language server..."
+	@apt-get -y install clangd-14 > $(LOG)
+	@update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-14 100 > $(LOG)
 
 .PHONY: gols
-gols:
+gols: go
 	@echo "Installing go language server..."
-	@apt-get -y install golang > $(LOG)
+	@go install golang.org/x/tools/gopls@latest > $(LOG)
 
 .PHONY: pythonls
 pythonls:
@@ -148,9 +130,5 @@ pythonls:
 #################### LATEX #################################
 .PHONY: latex
 latex:
-	@echo "Installing LaTeX..."
-	@apt-get -y install \
-		latexmk \
-		texlive-full \
-		xdotool \
-		> $(LOG)
+	@echo "Installing latex..."
+	@apt-get -y install latexmk texlive-full > $(LOG)

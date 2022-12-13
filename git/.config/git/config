@@ -1,6 +1,3 @@
-; git config
-; github.com/ojroques
-
 [user]
   useConfigOnly = true
   name = Olivier Roques
@@ -29,7 +26,6 @@
   l = log --abbrev-commit --date=human
   lg = log --graph --format='%C(yellow)%h%Cred%d %Creset%s %Cgreen(%ar) %Cblue%an%Creset'
   lga = log --graph --all --format='%C(yellow)%h%Cred%d %Creset%s %Cgreen(%ar) %Cblue%an%Creset'
-  ls = ls-tree --full-tree --name-only -r HEAD
   rb = rebase
   rs = reset
   s = status

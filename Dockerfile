@@ -10,12 +10,9 @@ RUN true \
 
 RUN true \
   && mkdir Documents Downloads .tmp \
-  && rm -f ~/.bashrc
-
-RUN true \
   && cd Documents \
   && git clone https://github.com/ojroques/dotfiles.git \
   && cd dotfiles \
   && make install-cli \
   && make clean \
-  && stow bash git nvim vim
+  && stow git nvim tmux vim zsh

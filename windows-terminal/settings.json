@@ -10,7 +10,7 @@
       "bellStyle": "none",
       "colorScheme": "One Half Dark",
       "cursorShape": "underscore",
-      "fontFace": "JetBrains Mono NL",
+      "font": {"face": "JetBrains Mono NL"},
       "historySize": 100000
     },
     "list": [
@@ -24,7 +24,9 @@
     ]
   },
   "actions": [
-    {"command": "duplicateTab", "keys": "ctrl+shift+t"},
+    {"command": "newTab", "keys": "ctrl+shift+t"},
+    {"command": "nextTab", "keys": "ctrl+tab"},
+    {"command": "prevTab", "keys": "ctrl+shift+tab"},
     {"command": {"action": "switchToTab", "index": 0}, "keys": "ctrl+shift+1"},
     {"command": {"action": "switchToTab", "index": 1}, "keys": "ctrl+shift+2"},
     {"command": {"action": "switchToTab", "index": 2}, "keys": "ctrl+shift+3"},
@@ -33,12 +35,6 @@
     {"command": {"action": "switchToTab", "index": 5}, "keys": "ctrl+shift+6"},
     {"command": {"action": "switchToTab", "index": 6}, "keys": "ctrl+shift+7"},
     {"command": {"action": "switchToTab", "index": 7}, "keys": "ctrl+shift+8"},
-    {"command": {"action": "switchToTab", "index": 8}, "keys": "ctrl+shift+9"},
-    {"command": {"action": "moveFocus", "direction": "down"}, "keys": "ctrl+shift+j"},
-    {"command": {"action": "moveFocus", "direction": "left"}, "keys": "ctrl+shift+h"},
-    {"command": {"action": "moveFocus", "direction": "right"}, "keys": "ctrl+shift+l"},
-    {"command": {"action": "moveFocus", "direction": "up"}, "keys": "ctrl+shift+k"},
-    {"command": "togglePaneZoom", "keys": "ctrl+shift+m"},
-    {"command": {"action": "splitPane", "split": "auto", "splitMode": "duplicate"}, "keys": "ctrl+shift+enter"},
+    {"command": {"action": "switchToTab", "index": 8}, "keys": "ctrl+shift+9"}
   ]
 }

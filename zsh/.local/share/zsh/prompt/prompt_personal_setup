@@ -1,0 +1,18 @@
+#!/bin/bash
+
+function prompt_personal_precmd {
+  vcs_info
+  git=""
+  if [[ -n $vcs_info_msg_0_ ]]; then
+    git=" · %F{yellow}${vcs_info_msg_0_}%f"
+  fi
+}
+
+function prompt_personal_setup {
+  prompt_opts=(cr sp percent subst)
+  add-zsh-hook precmd prompt_personal_precmd
+  PS1='%F{green}%n@%M%f · %F{blue}%~%f${git}%(?.. · %F{red}%?%f)${prompt_newline}%F{magenta}%#%f '
+  PS2='%_ %F{magenta}>%f '
+}
+
+prompt_personal_setup "@"

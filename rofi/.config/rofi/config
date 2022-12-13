@@ -1,6 +1,0 @@
-rofi.display-drun: Run
-rofi.font: Hack 12
-rofi.lines: 12
-rofi.modi: drun
-rofi.show-icons: true
-rofi.theme: ~/.config/rofi/Arc-Dark.rasi

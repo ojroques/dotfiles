@@ -24,7 +24,7 @@ set number relativenumber
 set pumheight=12
 set report=0
 set ruler
-set scrolloff=6
+set scrolloff=4
 set shiftround
 set shiftwidth=2
 set shortmess=atToOFc
@@ -46,8 +46,6 @@ inoremap <C-u> <C-g>u<C-u>
 inoremap <C-w> <C-g>u<C-w>
 inoremap jj <ESC>
 nnoremap <C-l> :nohlsearch<CR>
-nnoremap H zh
-nnoremap L zl
 nnoremap Q @@
 nnoremap Y y$
 nnoremap [b :bprevious<CR>

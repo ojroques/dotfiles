@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Update and upgrade packages
+function apt-update {
+  sudo apt update
+  sudo apt -y upgrade
+}
