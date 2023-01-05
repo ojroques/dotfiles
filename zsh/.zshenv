@@ -11,6 +11,7 @@ export SUDO_EDITOR="vim"
 
 # APPS
 export BAT_THEME="OneHalfDark"
+export FZF_ALT_C_COMMAND="cdr -l | awk '{print \$2}' | sed 's?~?$HOME?g'"
 export FZF_DEFAULT_COMMAND="rg --files --hidden --glob '!.git'"
 export LESS="--raw-control-chars"
 

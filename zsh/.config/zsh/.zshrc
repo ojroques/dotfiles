@@ -3,10 +3,10 @@
 
 # Options
 bindkey -e
-setopt correct_all
 setopt glob_dots
 setopt hist_ignore_all_dups
 setopt hist_reduce_blanks
+setopt no_auto_menu
 setopt share_history
 
 # VCS
@@ -27,12 +27,11 @@ prompt personal
 autoload -Uz compinit
 compinit
 zstyle ':completion:*' completer _expand _complete _correct _approximate
-zstyle ':completion:*' menu select
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
-zstyle ':completion:*:descriptions' format '%F{magenta}== %d ==%f'
-zstyle ':completion:*:corrections' format '%F{yellow}== %d (errors: %e) ==%f'
-zstyle ':completion:*:warnings' format '%F{red}== no matches ==%f'
+zstyle ':completion:*:descriptions' format '%F{magenta}-- %d --%f'
+zstyle ':completion:*:corrections' format '%F{yellow}-- %d (errors: %e) --%f'
+zstyle ':completion:*:warnings' format '%F{red}-- no matches --%f'
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
 # CDR
@@ -49,22 +48,23 @@ autoload -Uz up
 
 # Aliases
 alias df='df -Th --total'
-alias diff='diff -s -u --color=auto'
-alias du='du -ch'
-alias dua='du -a --max-depth=1 | sort -hr'
-alias grep='grep --color=auto'
-alias ls='ls -F --color=auto --group-directories-first'
-alias ll='ls -lAh'
-alias tree='tree -F -C --dirsfirst'
-alias e="$VISUAL"
-alias py='python3'
-alias ip='ip -c -h'
-alias ssp='ss -lnptu'
-alias t='tmux'
-alias h="cd $HOME && ls"
+alias diff='diff -su --color=auto'
 alias dl="cd $HOME/Downloads && ls"
 alias doc="cd $HOME/Documents && ls"
+alias du='du -ch'
+alias dua='du -a --max-depth=1 | sort -hr'
+alias e="$VISUAL"
+alias g='git'
+alias glog="nvim -c '0Git log --oneline --decorate'"
+alias grep='grep --color=auto'
+alias h="cd $HOME && ls"
+alias ip='ip -ch'
+alias ll='ls -lAh'
+alias ls='ls -F --color=auto --group-directories-first'
+alias py='python3'
+alias t='tmux'
 alias tmp="cd $HOME/.tmp && ls"
+alias tree='tree -FC --dirsfirst'
 
 # FZF
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
