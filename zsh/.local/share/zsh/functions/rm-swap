@@ -2,6 +2,6 @@
 
 # Remove swap files
 function rm-swap {
-  rm -fv "$PWD/*.swp"
-  rm -fv "$XDG_STATE_HOME/nvim/swap/*.swp"
+  rm -fv $PWD/*.swp
+  rm -fv $XDG_STATE_HOME/nvim/swap/*.swp
 }

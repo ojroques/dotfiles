@@ -2,6 +2,6 @@
 
 # Update and upgrade packages
 function apt-update {
-  sudo apt update
-  sudo apt -y upgrade
+  sudo -E apt update
+  sudo -E apt -y upgrade
 }
