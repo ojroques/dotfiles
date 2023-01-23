@@ -57,14 +57,14 @@ alias e="$VISUAL"
 alias g='git'
 alias gdiff="nvim -c '0Git log --oneline --decorate'"
 alias grep='grep --color=auto'
-alias h="cd $HOME && ls"
-alias ip='ip -ch'
+alias ip='ip -c -h'
 alias ll='ls -lAh'
 alias ls='ls -F --color=auto --group-directories-first'
 alias py='python3'
 alias t='tmux'
 alias tmp="cd $HOME/.tmp && ls"
-alias tree='tree -FC --dirsfirst'
+alias tree='tree -FC --dirsfirst -I .git'
+alias wk="cd $HOME/Work && ls"
 
 # FZF
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh

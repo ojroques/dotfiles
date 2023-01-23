@@ -9,7 +9,7 @@ RUN true \
   && apt-get -y install git make
 
 RUN true \
-  && mkdir Documents Downloads .tmp \
+  && mkdir -p Documents Downloads Work .tmp \
   && cd Documents \
   && git clone https://github.com/ojroques/dotfiles.git \
   && cd dotfiles \

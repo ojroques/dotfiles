@@ -1,7 +1,11 @@
 [user]
   useConfigOnly = true
-  name = Olivier Roques
-  ; email =
+
+[include]
+  path = "personal"
+
+[includeIf "gitdir:~/Work/"]
+  path = "work"
 
 [core]
   pager = delta

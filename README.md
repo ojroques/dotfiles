@@ -26,10 +26,11 @@ stow git nvim tmux vim zsh
 
 ## After Installation
 - Change the default shell: `chsh -s /usr/bin/zsh`
-- Update email in [git config](./git/.config/git/config)
+- Create git configs `~/.config/git/personal` and `~/.config/git/work` with your
+  names and emails
 - Run `nvim`, wait for [paq](https://github.com/savq/paq-nvim) to install itself
   then execute `:PaqInstall` to install plugins
-- Generate SSH keys: `ssh-keygen -t ed25519 -C "email@example.com"`
+- Generate SSH keys if needed: `ssh-keygen -t ed25519 -C "email@example.com"`
 
 
 ## Docker

@@ -131,7 +131,7 @@ require('onedark').load()
 -- vim-fugitive
 vim.keymap.set('n', '<leader>gg', '<cmd>Git<CR>')
 -- vim-rooter
-vim.g['rooter_patterns'] = {'.buildme.sh', '.git', 'Makefile'}
+vim.g['rooter_patterns'] = {'.buildme.sh', '.git'}
 -- vimtex
 vim.g['vimtex_quickfix_mode'] = false
 
