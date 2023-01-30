@@ -127,7 +127,7 @@ cls:
 .PHONY: gols
 gols: go
 	@echo "Installing go language server..."
-	@go install golang.org/x/tools/gopls@latest > $(LOG)
+	@GOBIN=/usr/local/go/bin /usr/local/go/bin/go install golang.org/x/tools/gopls@latest > $(LOG)
 
 .PHONY: pythonls
 pythonls:

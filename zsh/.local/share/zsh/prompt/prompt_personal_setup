@@ -11,7 +11,7 @@ function prompt_personal_precmd {
 function prompt_personal_setup {
   prompt_opts=(cr sp percent subst)
   add-zsh-hook precmd prompt_personal_precmd
-  PS1='%F{green}%n@%M%f · %F{blue}%~%f${git}%(?.. · %F{red}%?%f)${prompt_newline}%F{magenta}%#%f '
+  PS1='%F{green}%n@%M%f · %B%F{blue}%~%f%b${git}%(?.. · %B%F{red}%?%f%b)${prompt_newline}%F{magenta}%#%f '
   PS2='%F{magenta}%_ >%f '
 }
 
