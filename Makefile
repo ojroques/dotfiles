@@ -9,6 +9,9 @@ install-base: update base
 .PHONY: install-cli
 install-cli: install-base cli
 
+.PHONY: install-gui
+install-gui: install-base gui
+
 .PHONY: install-lsp
 install-lsp: install-base lsp
 
@@ -45,24 +48,36 @@ base:
 		> $(LOG)
 
 .PHONY: cli
-cli: bat delta gdb-dashboard go neovim ripgrep
+cli: delta gdb-dashboard go neovim
 	@echo "Installing cli packages..."
 	@apt-get -y install \
+		bat \
 		fd-find \
-		fzf \
 		keychain \
+		ripgrep \
 		shellcheck \
 		tmux \
 		zsh \
 		> $(LOG)
 
-.PHONY: bat
-bat:
-	@echo "Installing bat v0.22.1..."
-	@curl -fsSL -o /tmp/bat.dpkg \
-		https://github.com/sharkdp/bat/releases/download/v0.22.1/bat_0.22.1_amd64.deb > $(LOG)
-	@dpkg -i /tmp/bat.dpkg > $(LOG)
-	@rm -f /tmp/bat.dpkg
+.PHONY: gui
+gui: alacritty
+	@echo "Installing gui packages..."
+	@apt-get -y install \
+		arc-theme \
+		firefox \
+		fonts-jetbrains-mono \
+		papirus-icon-theme \
+		viewnior \
+		vlc \
+		> $(LOG)
+
+.PHONY: alacritty
+alacritty:
+	@echo "Installing alacritty..."
+	@add-apt-repository -y ppa:aslatter/ppa > $(LOG)
+	@apt-get update > $(LOG)
+	@apt-get -y install alacritty > $(LOG)
 
 .PHONY: delta
 delta:
@@ -93,14 +108,6 @@ neovim:
 	@apt-get update > $(LOG)
 	@apt-get -y install neovim > $(LOG)
 
-.PHONY: ripgrep
-ripgrep:
-	@echo "Installing ripgrep v13.0.0..."
-	@curl -fsSL -o /tmp/ripgrep.dpkg \
-		https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep_13.0.0_amd64.deb > $(LOG)
-	@dpkg -i /tmp/ripgrep.dpkg > $(LOG)
-	@rm -f /tmp/ripgrep.dpkg
-
 #################### LANGUAGE SERVERS ######################
 .PHONY: lsp
 lsp: bashls cls gols pythonls
@@ -114,8 +121,8 @@ bashls:
 .PHONY: cls
 cls:
 	@echo "Installing c/c++ language server..."
-	@apt-get -y install clangd-14 > $(LOG)
-	@update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-14 100 > $(LOG)
+	@apt-get -y install clangd-15 > $(LOG)
+	@update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-15 100 > $(LOG)
 
 .PHONY: gols
 gols: go
