@@ -7,7 +7,7 @@ This repository contains my config files for:
 - **tmux**
 - **vim**
 - **windows terminal**
-- **xfce**
+- **xfce keyboard**
 - **zsh**
 
 

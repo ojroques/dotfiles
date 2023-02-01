@@ -70,6 +70,7 @@ gui: alacritty
 		papirus-icon-theme \
 		viewnior \
 		vlc \
+		xfce4-taskmanager \
 		> $(LOG)
 
 .PHONY: alacritty
