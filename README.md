@@ -35,6 +35,7 @@ stow alacritty xfce         # GUI configs
 - Run `nvim`, wait for [paq](https://github.com/savq/paq-nvim) to install itself
   then execute `:PaqInstall` to install plugins
 - Install [fzf](https://github.com/junegunn/fzf)
+- Configure XFCE if used
 - Generate SSH keys if needed: `ssh-keygen -t ed25519 -C "email@example.com"`
 
 
@@ -42,12 +43,12 @@ stow alacritty xfce         # GUI configs
 A [Dockerfile](./Dockerfile) is provided that sets up an Ubuntu 22.04
 environment with all dotfiles installed.
 
-Build it with:
+To build the image:
 ```bash
 docker build -t dotfiles:latest .
 ```
 
-And run it like so:
+To run it:
 ```bash
 docker run -it dotfiles
 ```

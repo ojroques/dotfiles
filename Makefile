@@ -96,9 +96,9 @@ gdb-dashboard:
 
 .PHONY: go
 go:
-	@echo "Installing go v1.19.5..."
+	@echo "Installing go v1.20..."
 	@curl -fsSL -o /tmp/go.tar.gz \
-		https://go.dev/dl/go1.19.5.linux-amd64.tar.gz > $(LOG)
+		https://go.dev/dl/go1.20.linux-amd64.tar.gz > $(LOG)
 	@rm -rf /usr/local/go && tar -C /usr/local -xzf /tmp/go.tar.gz > $(LOG)
 	@rm -f /tmp/go.tar.gz
 
