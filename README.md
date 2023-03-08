@@ -37,6 +37,7 @@ stow alacritty xfce         # GUI configs
 - Install [fzf](https://github.com/junegunn/fzf)
 - Configure XFCE if used
 - Generate SSH keys if needed: `ssh-keygen -t ed25519 -C "email@example.com"`
+- Run keychain if needed: `eval $(keychain --quiet --eval id_ed25519)`
 
 
 ## Docker
