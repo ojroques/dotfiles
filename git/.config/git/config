@@ -1,6 +1,9 @@
 [user]
   useConfigOnly = true
 
+[init]
+  defaultBranch = "main"
+
 [include]
   path = "personal"
 
