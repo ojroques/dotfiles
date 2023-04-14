@@ -52,6 +52,7 @@ cli: delta gdb-dashboard go neovim
 	@echo "Installing cli packages..."
 	@apt-get -y install \
 		bat \
+		direnv \
 		fd-find \
 		keychain \
 		ripgrep \

@@ -1,7 +1,7 @@
-# Colors
+# COLORS
 [[ -x /usr/bin/dircolors ]] && eval "$(dircolors -b)"
 
-# Options
+# OPTIONS
 bindkey -e
 setopt glob_dots
 setopt hist_ignore_all_dups
@@ -18,12 +18,12 @@ zstyle ':vcs_info:git:*' unstagedstr '~'
 zstyle ':vcs_info:git:*' formats '(%b)%c%u'
 zstyle ':vcs_info:git:*' actionformats '(%b)%c%u %a'
 
-# Prompt
+# PROMPT
 autoload -Uz promptinit
 promptinit
 prompt personal
 
-# Completion
+# COMPLETION
 autoload -Uz compinit
 compinit
 zstyle ':completion:*' completer _expand _complete _correct _approximate
@@ -38,7 +38,7 @@ zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
 add-zsh-hook chpwd chpwd_recent_dirs
 
-# Functions
+# FUNCTIONS
 autoload -Uz apt-clean
 autoload -Uz apt-list
 autoload -Uz apt-update
@@ -46,7 +46,7 @@ autoload -Uz cheat
 autoload -Uz rm-swap
 autoload -Uz up
 
-# Aliases
+# ALIASES
 alias df='df -Th --total'
 alias diff='diff -su --color=auto'
 alias dl="cd $HOME/Downloads && ls"
@@ -66,5 +66,6 @@ alias tmp="cd $HOME/.tmp && ls"
 alias tree='tree -FC --dirsfirst -I .git'
 alias wk="cd $HOME/Work && ls"
 
-# FZF
+# APPS
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+[[ -x /usr/bin/direnv ]] && eval "$(direnv hook zsh)"
