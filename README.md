@@ -3,6 +3,7 @@
 This repository contains my config files for:
 - **alacritty**
 - **git**
+- **helix**
 - **neovim**
 - **tmux**
 - **vim**
@@ -23,7 +24,7 @@ sudo make clean          # clean up packages
 ```
 2. Run [stow](https://www.gnu.org/software/stow/) to install config files:
 ```bash
-stow git nvim tmux vim zsh  # CLI configs
+stow git helix nvim tmux vim zsh  # CLI configs
 stow alacritty xfce         # GUI configs
 ```
 

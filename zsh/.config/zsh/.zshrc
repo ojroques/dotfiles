@@ -55,7 +55,7 @@ alias du='du -ch'
 alias dua='du -a --max-depth=1 | sort -hr'
 alias e="$VISUAL"
 alias g='git'
-alias gdiff="nvim -c '0Git log --oneline --decorate'"
+alias gdiff='nvim -c "0Git log --oneline --decorate"'
 alias grep='grep --color=auto'
 alias ip='ip -c -h'
 alias ll='ls -lAh'

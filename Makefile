@@ -48,7 +48,7 @@ base:
 		> $(LOG)
 
 .PHONY: cli
-cli: delta gdb-dashboard go neovim
+cli: delta gdb-dashboard go helix neovim
 	@echo "Installing cli packages..."
 	@apt-get -y install \
 		bat \
@@ -102,6 +102,13 @@ go:
 		https://go.dev/dl/go1.20.linux-amd64.tar.gz > $(LOG)
 	@rm -rf /usr/local/go && tar -C /usr/local -xzf /tmp/go.tar.gz > $(LOG)
 	@rm -f /tmp/go.tar.gz
+
+.PHONY: helix
+helix:
+	@echo "Installing helix..."
+	@add-apt-repository -y ppa:maveonair/helix-editor > $(LOG)
+	@apt-get update > $(LOG)
+	@apt-get -y install helix > $(LOG)
 
 .PHONY: neovim
 neovim:

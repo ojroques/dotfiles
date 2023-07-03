@@ -1,0 +1,18 @@
+theme = "onedark"
+
+[editor]
+auto-pairs = false
+bufferline = "always"
+color-modes = true
+cursorline = true
+line-number = "relative"
+mouse = false
+
+[editor.file-picker]
+hidden = false
+
+[editor.whitespace.render]
+tab = "all"
+
+[editor.indent-guides]
+render = true
