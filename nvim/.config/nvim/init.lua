@@ -14,7 +14,6 @@ require 'paq' {
   {'elihunter173/dirbuf.nvim'},
   {'hrsh7th/cmp-buffer'},
   {'hrsh7th/cmp-nvim-lsp'},
-  {'hrsh7th/cmp-omni'},
   {'hrsh7th/cmp-path'},
   {'hrsh7th/nvim-cmp'},
   {'junegunn/fzf'},
@@ -90,7 +89,7 @@ vim.keymap.set('n', '<leader>be', '<cmd>BuildMeEdit<CR>')
 vim.keymap.set('n', '<leader>bs', '<cmd>BuildMeStop<CR>')
 -- nvim-cmp
 local cmp = require('cmp')
-local menu = {buffer = '[Buf]', nvim_lsp = '[LSP]', omni = '[Omni]', path = '[Path]'}
+local menu = {buffer = '[Buf]', nvim_lsp = '[LSP]', path = '[Path]'}
 local widths = {abbr = 80, kind = 40, menu = 40}
 cmp.setup {
   completion = {keyword_length = 2},
@@ -109,7 +108,7 @@ cmp.setup {
   },
   preselect = require('cmp.types').cmp.PreselectMode.None,
   snippet = {expand = function(args) require('luasnip').lsp_expand(args.body) end},
-  sources = cmp.config.sources({{name = 'nvim_lsp'}, {name = 'omni'}, {name = 'path'}, {name = 'buffer'}}),
+  sources = cmp.config.sources({{name = 'nvim_lsp'}, {name = 'path'}, {name = 'buffer'}}),
 }
 -- nvim-hardline
 require('hardline').setup {}
