@@ -20,7 +20,6 @@ require 'paq' {
   {'junegunn/fzf.vim'},
   {'kylechui/nvim-surround'},
   {'l3mon4d3/luasnip'},
-  {'lervag/vimtex'},
   {'lewis6991/gitsigns.nvim'},
   {'lukas-reineke/indent-blankline.nvim'},
   {'navarasu/onedark.nvim'},
@@ -76,7 +75,7 @@ gitsigns.setup {
   end,
 }
 -- indent-blankline.nvim
-require('indent_blankline').setup {char = '┊'}
+require('ibl').setup {indent = {char = '┊'}}
 -- nvim-bufbar
 require('bufbar').setup {modifier = 'full', term_modifier = 'full', show_flags = false}
 -- nvim-bufdel
@@ -131,8 +130,6 @@ require('onedark').load()
 vim.keymap.set('n', '<leader>gg', '<cmd>Git<CR>')
 -- vim-rooter
 vim.g['rooter_patterns'] = {'.buildme.sh', '.git'}
--- vimtex
-vim.g['vimtex_quickfix_mode'] = false
 
 -------------------- OPTIONS -------------------------------
 local indent, width = 2, 80

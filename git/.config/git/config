@@ -28,11 +28,12 @@
   co = checkout
   d = diff
   dc = diff --cached
-  ds = diff --compact-summary
   i = show --abbrev-commit --date=iso
   l = log --abbrev-commit --date=human
   lg = log --graph --format='%C(yellow)%h%Cred%d %Creset%s %Cgreen(%ar) %Cblue%an%Creset'
   lga = log --graph --all --format='%C(yellow)%h%Cred%d %Creset%s %Cgreen(%ar) %Cblue%an%Creset'
+  pl = pull
+  ps = push
   rb = rebase
   rs = reset
   s = status

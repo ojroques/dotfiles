@@ -48,7 +48,7 @@ base:
 		> $(LOG)
 
 .PHONY: cli
-cli: delta gdb-dashboard go helix neovim
+cli: delta gdb-dashboard go neovim
 	@echo "Installing cli packages..."
 	@apt-get -y install \
 		bat \
