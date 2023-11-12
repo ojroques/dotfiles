@@ -33,7 +33,6 @@ require 'paq' {
   {'ojroques/nvim-buildme'},
   {'ojroques/nvim-hardline', branch = 'personal'},
   {'ojroques/nvim-lspfuzzy'},
-  {'ojroques/nvim-osc52'},
   {'savq/paq-nvim'},
   {'tpope/vim-fugitive'},
   {'tpope/vim-unimpaired'},
@@ -113,8 +112,6 @@ cmp.setup {
 require('hardline').setup {}
 -- nvim-lspfuzzy
 require('lspfuzzy').setup {}
--- nvim-osc52
-require('osc52').setup {trim = true}
 -- nvim-surround
 require('nvim-surround').setup {}
 -- nvim-treesitter-context
@@ -243,18 +240,11 @@ require('nvim-treesitter.configs').setup {
 }
 
 -------------------- CLIPBOARD -----------------------------
-local function copy(lines, _)
-  require('osc52').copy(table.concat(lines, '\n'))
-end
-
-local function paste()
-  return {vim.fn.split(vim.fn.getreg(''), '\n'), vim.fn.getregtype('')}
-end
-
+local osc52 = require('vim.clipboard.osc52')
 vim.g.clipboard = {
   name = 'osc52',
-  copy = {['+'] = copy, ['*'] = copy},
-  paste = {['+'] = paste, ['*'] = paste},
+  copy = {['+'] = osc52.copy, ['*'] = osc52.copy},
+  paste = {['+'] = osc52.paste, ['*'] = osc52.paste},
 }
 
 -------------------- AUTOCOMMANDS --------------------------
