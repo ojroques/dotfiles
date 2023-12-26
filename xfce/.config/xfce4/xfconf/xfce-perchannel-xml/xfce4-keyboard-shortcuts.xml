@@ -23,7 +23,6 @@
         <property name="&lt;Alt&gt;F4" type="string" value="close_window_key"/>
         <property name="&lt;Alt&gt;Tab" type="string" value="cycle_windows_key"/>
         <property name="&lt;Alt&gt;&lt;Shift&gt;Tab" type="string" value="cycle_reverse_windows_key"/>
-        <property name="&lt;Super&gt;z" type="string" value="maximize_window_key"/>
         <property name="&lt;Super&gt;d" type="string" value="show_desktop_key"/>
         <property name="&lt;Super&gt;Tab" type="string" value="next_workspace_key"/>
         <property name="&lt;Shift&gt;&lt;Super&gt;Tab" type="string" value="prev_workspace_key"/>

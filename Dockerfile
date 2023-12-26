@@ -15,4 +15,4 @@ RUN true \
   && cd dotfiles \
   && make install-cli \
   && make clean \
-  && stow git helix nvim tmux vim zsh
+  && stow git nvim tmux vim zsh

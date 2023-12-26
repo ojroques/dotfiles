@@ -7,7 +7,6 @@ This repository contains my config files for:
 - **neovim**
 - **tmux**
 - **vim**
-- **windows terminal**
 - **xfce keyboard**
 - **zsh**
 

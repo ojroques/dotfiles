@@ -39,9 +39,9 @@ autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
 add-zsh-hook chpwd chpwd_recent_dirs
 
 # FUNCTIONS
-autoload -Uz apt-clean
+autoload -Uz apt-autoremove
 autoload -Uz apt-list
-autoload -Uz apt-update
+autoload -Uz apt-upgrade
 autoload -Uz cheat
 autoload -Uz rm-swap
 autoload -Uz up
@@ -55,7 +55,6 @@ alias du='du -ch'
 alias dua='du -a --max-depth=1 | sort -hr'
 alias e="$VISUAL"
 alias g='git'
-alias gdiff='nvim -c "0Git log --oneline --decorate"'
 alias grep='grep --color=auto'
 alias ip='ip -c -h'
 alias ll='ls -lAh'

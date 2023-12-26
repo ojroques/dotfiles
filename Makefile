@@ -83,9 +83,9 @@ alacritty:
 
 .PHONY: delta
 delta:
-	@echo "Installing delta v0.15.1..."
+	@echo "Installing delta v0.16.5..."
 	@curl -fsSL -o /tmp/delta.dpkg \
-		https://github.com/dandavison/delta/releases/download/0.15.1/git-delta_0.15.1_amd64.deb > $(LOG)
+		https://github.com/dandavison/delta/releases/download/0.16.5/git-delta_0.16.5_amd64.deb > $(LOG)
 	@dpkg -i /tmp/delta.dpkg > $(LOG)
 	@rm -f /tmp/delta.dpkg
 
@@ -97,9 +97,9 @@ gdb-dashboard:
 
 .PHONY: go
 go:
-	@echo "Installing go v1.20..."
+	@echo "Installing go v1.21..."
 	@curl -fsSL -o /tmp/go.tar.gz \
-		https://go.dev/dl/go1.20.linux-amd64.tar.gz > $(LOG)
+		https://go.dev/dl/go1.21.5.linux-amd64.tar.gz > $(LOG)
 	@rm -rf /usr/local/go && tar -C /usr/local -xzf /tmp/go.tar.gz > $(LOG)
 	@rm -f /tmp/go.tar.gz
 

@@ -19,7 +19,6 @@ require 'paq' {
   {'junegunn/fzf'},
   {'junegunn/fzf.vim'},
   {'kylechui/nvim-surround'},
-  {'l3mon4d3/luasnip'},
   {'lewis6991/gitsigns.nvim'},
   {'lukas-reineke/indent-blankline.nvim'},
   {'navarasu/onedark.nvim'},
@@ -34,7 +33,6 @@ require 'paq' {
   {'ojroques/nvim-hardline', branch = 'personal'},
   {'ojroques/nvim-lspfuzzy'},
   {'savq/paq-nvim'},
-  {'tpope/vim-fugitive'},
   {'tpope/vim-unimpaired'},
 }
 
@@ -105,7 +103,6 @@ cmp.setup {
     ['<S-Tab>'] = function(fb) if cmp.visible() then cmp.select_prev_item() else fb() end end,
   },
   preselect = require('cmp.types').cmp.PreselectMode.None,
-  snippet = {expand = function(args) require('luasnip').lsp_expand(args.body) end},
   sources = cmp.config.sources({{name = 'nvim_lsp'}, {name = 'path'}, {name = 'buffer'}}),
 }
 -- nvim-hardline
@@ -123,8 +120,6 @@ require('onedark').setup {
   highlights = {TreesitterContext = {bg = colors.bg1, fmt = 'italic'}},
 }
 require('onedark').load()
--- vim-fugitive
-vim.keymap.set('n', '<leader>gg', '<cmd>Git<CR>')
 -- vim-rooter
 vim.g['rooter_patterns'] = {'.buildme.sh', '.git'}
 
@@ -161,10 +156,6 @@ vim.opt.wildmode = {'list:longest'}      -- Command completion options
 vim.opt.wrap = false                     -- Disable line wrap
 
 -------------------- MAPPINGS ------------------------------
-local function escape_term()
-  return vim.bo.filetype == 'fzf' and '<ESC>' or '<C-\\><C-n>'
-end
-
 local function substitute()
   local cmd = ':%s//gcI<Left><Left><Left><Left>'
   return vim.fn.mode() == 'n' and fmt(cmd, '%s') or fmt(cmd, 's')
@@ -174,7 +165,6 @@ local function toggle_wrap()
   vim.wo.breakindent = not vim.wo.breakindent
   vim.wo.linebreak = not vim.wo.linebreak
   vim.wo.wrap = not vim.wo.wrap
-  vim.api.nvim_echo({{fmt('wrap: %s', vim.wo.wrap)}}, false, {})
 end
 
 local function trim_whitespaces()
@@ -186,27 +176,24 @@ end
 vim.keymap.set('', '<leader>c', '"+y')
 vim.keymap.set('', '<leader>s', substitute, {expr = true})
 vim.keymap.set('i', 'jj', '<ESC>')
-vim.keymap.set('n', '<C-w>T', '<cmd>tabclose<CR>')
-vim.keymap.set('n', '<C-w>t', '<cmd>tabnew<CR>')
 vim.keymap.set('n', '<S-Down>', '<C-w>2<')
 vim.keymap.set('n', '<S-Left>', '<C-w>2-')
 vim.keymap.set('n', '<S-Right>', '<C-w>2+')
 vim.keymap.set('n', '<S-Up>', '<C-w>2>')
 vim.keymap.set('n', '<leader>cc', '"+yy')
 vim.keymap.set('n', '<leader>e', trim_whitespaces)
-vim.keymap.set('n', '<leader>t', '<cmd>terminal<CR>')
 vim.keymap.set('n', '<leader>u', '<cmd>update<CR>')
 vim.keymap.set('n', '<leader>x', '<cmd>conf qa<CR>')
 vim.keymap.set('n', 'H', 'zh')
 vim.keymap.set('n', 'L', 'zl')
 vim.keymap.set('n', 'yow', toggle_wrap)
-vim.keymap.set('t', '<ESC>', escape_term, {expr = true})
-vim.keymap.set('t', 'jj', escape_term, {expr = true})
+vim.keymap.set('t', 'jj', '<ESC>')
 
 -------------------- LSP -----------------------------------
-local cmp_cap = require('cmp_nvim_lsp').default_capabilities()
-for _, ls in ipairs({'bashls', 'clangd', 'gopls', 'pylsp'}) do
-  require('lspconfig')[ls].setup {capabilities = cmp_cap}
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = false
+for _, ls in ipairs({'bashls', 'clangd', 'gopls', 'pylsp', 'tsserver'}) do
+  require('lspconfig')[ls].setup {capabilities = capabilities}
 end
 vim.keymap.set('n', '<space>,', vim.diagnostic.goto_prev)
 vim.keymap.set('n', '<space>;', vim.diagnostic.goto_next)
@@ -218,6 +205,7 @@ vim.keymap.set('n', '<space>i', vim.lsp.buf.implementation)
 vim.keymap.set('n', '<space>m', vim.lsp.buf.rename)
 vim.keymap.set('n', '<space>r', vim.lsp.buf.references)
 vim.keymap.set('n', '<space>s', vim.lsp.buf.document_symbol)
+vim.keymap.set('n', '<space>t', vim.lsp.buf.type_definition)
 
 -------------------- TREE-SITTER ---------------------------
 require('nvim-treesitter.configs').setup {
@@ -237,14 +225,6 @@ require('nvim-treesitter.configs').setup {
       goto_previous_start = {['[a'] = '@parameter.inner', ['[f'] = '@function.outer'},
     },
   },
-}
-
--------------------- CLIPBOARD -----------------------------
-local osc52 = require('vim.ui.clipboard.osc52')
-vim.g.clipboard = {
-  name = 'OSC 52',
-  copy = {['+'] = osc52.copy('+'), ['*'] = osc52.copy('*')},
-  paste = {['+'] = osc52.paste('+'), ['*'] = osc52.paste('*')},
 }
 
 -------------------- AUTOCOMMANDS --------------------------

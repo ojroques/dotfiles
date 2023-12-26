@@ -1,6 +1,6 @@
 #!/bin/bash
 
 # Remove packages no longer needed
-function apt-clean {
+function apt-autoremove {
   sudo -E apt -y autoremove
 }
