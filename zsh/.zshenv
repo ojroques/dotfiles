@@ -13,9 +13,9 @@ export SUDO_EDITOR="vim"
 export BAT_THEME="OneHalfDark"
 export FZF_ALT_C_COMMAND="cdr -l | awk '{print \$2}' | sed 's?~?$HOME?g'"
 export FZF_DEFAULT_COMMAND="rg --files --hidden --glob '!.git'"
-export LESS="--raw-control-chars"
 
 # LESS COLORS
+export LESS="--raw-control-chars"
 export LESS_TERMCAP_mb=$'\e[1;31m'
 export LESS_TERMCAP_md=$'\e[1;33m'
 export LESS_TERMCAP_me=$'\e[0m'
