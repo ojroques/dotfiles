@@ -59,6 +59,7 @@ cli: delta gdb-dashboard go neovim
 		shellcheck \
 		tmux \
 		zsh \
+		zsh-syntax-highlighting \
 		> $(LOG)
 
 .PHONY: gui

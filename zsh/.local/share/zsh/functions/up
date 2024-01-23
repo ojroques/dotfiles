@@ -4,13 +4,17 @@
 function up {
   if [[ $# -eq 0 ]]; then
     cd "../"
-  elif [[ $# -eq 1 ]] && [[ $1 -gt 0 ]]; then
-    local up_dir=""
-    for _ in $(seq 1 "$1"); do
-      up_dir+="../"
-    done
-    cd "$up_dir" || return
-  else
+    return
+  fi
+
+  if [[ $# -gt 1 ]] || [[ $1 -le 0 ]]; then
     echo "Usage: up [n > 0]"
   fi
+
+  local dir=""
+  for _ in $(seq 1 "$1"); do
+    dir+="../"
+  done
+
+  cd "$dir" || return
 }

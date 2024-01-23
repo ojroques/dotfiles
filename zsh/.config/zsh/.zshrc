@@ -67,4 +67,5 @@ alias wk="cd $HOME/Work && ls"
 
 # APPS
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+[[ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 [[ -x /usr/bin/direnv ]] && eval "$(direnv hook zsh)"
