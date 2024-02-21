@@ -2,7 +2,7 @@
   useConfigOnly = true
 
 [init]
-  defaultBranch = "main"
+  defaultBranch = main
 
 [include]
   path = "personal"
@@ -41,11 +41,17 @@
   swn = update-index --no-skip-worktree
   ua = restore --staged
 
+[diff]
+  algorithm = histogram
+
 [fetch]
   prune = true
 
 [merge]
-  conflictstyle = diff3
+  conflictstyle = zdiff3
+
+[push]
+  autosetupremote = true
 
 [pull]
   rebase = true
