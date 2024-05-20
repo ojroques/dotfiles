@@ -6,15 +6,15 @@ window:
 
 font:
   normal:
-    family: JetBrains Mono
+    family: JetBrainsMonoNL Nerd Font
     style: Regular
   bold:
-    family: JetBrains Mono
+    family: JetBrainsMonoNL Nerd Font
     style: Bold
   italic:
-    family: JetBrains Mono
+    family: JetBrainsMonoNL Nerd Font
     style: Italic
   bold_italic:
-    family: JetBrains Mono
+    family: JetBrainsMonoNL Nerd Font
     style: Bold Italic
   size: 12.0

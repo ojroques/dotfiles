@@ -3,7 +3,6 @@
 This repository contains my config files for:
 - **alacritty**
 - **git**
-- **helix**
 - **neovim**
 - **tmux**
 - **vim**
@@ -30,14 +29,12 @@ stow alacritty xfce         # GUI configs
 
 ## After Installation
 - Change the default shell: `chsh -s /usr/bin/zsh`
-- Create git configs `~/.config/git/personal` and `~/.config/git/work` with your
-  names and emails
-- Run `nvim`, wait for [paq](https://github.com/savq/paq-nvim) to install itself
-  then execute `:PaqInstall` to install plugins
+- Create git configs `~/.config/git/personal` and `~/.config/git/work`
 - Install [fzf](https://github.com/junegunn/fzf)
-- Configure XFCE if used
+- Install [JetBrainsMono Nerd Font](https://www.nerdfonts.com/font-downloads)
 - Generate SSH keys if needed: `ssh-keygen -t ed25519 -C "email@example.com"`
 - Run keychain if needed: `eval $(keychain --quiet --eval id_ed25519)`
+- Configure XFCE if used
 
 
 ## Docker

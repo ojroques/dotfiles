@@ -66,6 +66,6 @@ alias tree='tree -FC --dirsfirst -I .git'
 alias wk="cd $HOME/Work && ls"
 
 # APPS
-[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+[[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]] && source /usr/share/doc/fzf/examples/key-bindings.zsh
 [[ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 [[ -x /usr/bin/direnv ]] && eval "$(direnv hook zsh)"
