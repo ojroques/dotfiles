@@ -23,7 +23,6 @@ require 'paq' {
   {'lukas-reineke/indent-blankline.nvim'},
   {'navarasu/onedark.nvim'},
   {'neovim/nvim-lspconfig'},
-  {'numtostr/comment.nvim'},
   {'nvim-treesitter/nvim-treesitter'},
   {'nvim-treesitter/nvim-treesitter-context'},
   {'nvim-treesitter/nvim-treesitter-textobjects'},
@@ -37,8 +36,6 @@ require 'paq' {
 }
 
 -------------------- PLUGIN SETUP --------------------------
--- comment.nvim
-require('Comment').setup({mappings = {extra = false}})
 -- dirbuf.nvim
 require('dirbuf').setup {sort_order = 'directories_first', write_cmd = 'DirbufSync -confirm'}
 -- fzf and fzf.vim
