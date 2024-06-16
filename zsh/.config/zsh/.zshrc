@@ -9,7 +9,7 @@ setopt hist_reduce_blanks
 setopt no_auto_menu
 setopt share_history
 
-# VCS
+# GIT
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:git:*' check-for-changes true

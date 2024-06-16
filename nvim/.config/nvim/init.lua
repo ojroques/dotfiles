@@ -106,11 +106,7 @@ require('onedark').setup {
 }
 require('onedark').load()
 -- telescope.nvim
-require('telescope').setup {pickers = {
-  find_files = {hidden = true},
-  live_grep = {additional_args = {'--hidden', '--glob', '!.git'}},
-  grep_string = {additional_args = {'--hidden', '--glob', '!.git'}, use_regex = true},
-}}
+require('telescope').setup {pickers = {grep_string = {use_regex = true}}}
 local telescope = require('telescope.builtin')
 vim.keymap.set('n', '<leader>/', telescope.search_history)
 vim.keymap.set('n', '<leader>;', telescope.command_history)
