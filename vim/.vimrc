@@ -26,7 +26,7 @@ set report=0
 set ruler
 set scrolloff=4
 set shiftround
-set shiftwidth=2
+set shiftwidth=0
 set shortmess=atToOFc
 set showcmd
 set sidescrolloff=12
@@ -35,7 +35,7 @@ set smartindent
 set splitbelow splitright
 set tabstop=2
 set termguicolors
-set textwidth=80
+set textwidth=79
 set updatetime=100
 set wildmenu
 set wildmode=list:longest
