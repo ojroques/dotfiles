@@ -1,7 +1,7 @@
 -------------------- INIT ----------------------------------
 local mini = string.format('%s/site/pack/deps/start/mini.nvim', vim.fn.stdpath('data'))
 if not vim.uv.fs_stat(mini) then
-  vim.api.nvim_echo({{'Installing mini.nvim'}}, false, {})
+  vim.notify('Installing mini.nvim', vim.log.levels.INFO)
   vim.system({'git', 'clone', '--filter=blob:none', 'https://github.com/echasnovski/mini.nvim', mini}):wait()
   vim.cmd('packadd mini.nvim | helptags ALL')
 end
@@ -50,9 +50,10 @@ vim.keymap.set('n', '<leader>gr', 'gHgh', {remap = true})
 vim.keymap.set('n', '<leader>gs', 'ghgh', {remap = true})
 -- mini.files
 require('mini.files').setup {}
-vim.keymap.set('n', '-', function() if not MiniFiles.close() then MiniFiles.open() end end)
+vim.keymap.set('n', '-', function() MiniFiles.open(vim.api.nvim_buf_get_name(0)) end)
 -- mini.git
-require('mini.git').setup {}
+require('mini.git').setup {command = {split = 'horizontal'}}
+vim.keymap.set('n', '<leader>gi', function() MiniGit.show_at_cursor({split = 'horizontal'}) end)
 -- mini.indentscope
 require('mini.indentscope').setup {
   draw = {animation = require('mini.indentscope').gen_animation.none()},
@@ -71,6 +72,7 @@ require('mini.surround').setup {mappings = {
   add = 'ys', delete = 'ds', replace = 'cs',
   find = '', find_left = '', highlight = '', update_n_lines = '', suffix_last = '', suffix_next = '',
 }}
+vim.keymap.del('x', 'ys')
 -- mini.tabline
 require('mini.tabline').setup {}
 -- mini.trailspace
@@ -106,7 +108,10 @@ require('onedark').setup {
 }
 require('onedark').load()
 -- telescope.nvim
-require('telescope').setup {pickers = {grep_string = {use_regex = true}}}
+require('telescope').setup {
+  defaults = {layout_strategy = 'vertical', path_display = {'filename_first'}},
+  pickers = {grep_string = {use_regex = true}},
+}
 local telescope = require('telescope.builtin')
 vim.keymap.set('n', '<leader>/', telescope.search_history)
 vim.keymap.set('n', '<leader>;', telescope.command_history)
@@ -122,34 +127,34 @@ vim.keymap.set('n', '<space>t', telescope.lsp_type_definitions)
 vim.keymap.set('n', 's', telescope.buffers)
 
 -------------------- OPTIONS -------------------------------
-vim.opt.colorcolumn = '+1'               -- Line length marker
-vim.opt.completeopt = {'menu', 'menuone', 'noselect'}  -- Completion options
-vim.opt.cursorline = true                -- Highlight cursor line
-vim.opt.diffopt:append {'linematch:60'}  -- Improve diff mode
-vim.opt.expandtab = true                 -- Use spaces instead of tabs
-vim.opt.ignorecase = true                -- Ignore case
-vim.opt.inccommand = ''                  -- Disable substitution preview
-vim.opt.list = true                      -- Show invisible characters
-vim.opt.mouse = ''                       -- Disable mouse
-vim.opt.number = true                    -- Show line numbers
-vim.opt.pumheight = 12                   -- Max height of pop-up menu
-vim.opt.relativenumber = true            -- Show relative line numbers
-vim.opt.report = 0                       -- Always report changed lines
-vim.opt.scrolloff = 4                    -- Lines of context
-vim.opt.shiftround = true                -- Round indent
-vim.opt.shiftwidth = 0                   -- Size of an indent
-vim.opt.shortmess = 'atToOFc'            -- Prompt message options
-vim.opt.sidescrolloff = 12               -- Columns of context
-vim.opt.signcolumn = 'yes'               -- Show sign column
-vim.opt.smartcase = true                 -- Do not ignore case with capitals
-vim.opt.smartindent = true               -- Insert indents automatically
-vim.opt.splitbelow = true                -- Put new windows below current
-vim.opt.splitright = true                -- Put new windows right of current
-vim.opt.tabstop = 2                      -- Number of spaces tabs count for
-vim.opt.textwidth = 79                   -- Maximum width of text
-vim.opt.updatetime = 100                 -- Delay before swap file is saved
-vim.opt.wildmode = {'list:longest'}      -- Command completion options
-vim.opt.wrap = false                     -- Disable line wrap
+vim.opt.colorcolumn = '+1'                    -- Line length marker
+vim.opt.completeopt = {'menuone', 'noselect'} -- Completion options
+vim.opt.cursorline = true                     -- Highlight cursor line
+vim.opt.diffopt:append {'linematch:60'}       -- Improve diff mode
+vim.opt.expandtab = true                      -- Use spaces instead of tabs
+vim.opt.ignorecase = true                     -- Ignore case
+vim.opt.inccommand = ''                       -- Disable substitution preview
+vim.opt.list = true                           -- Show invisible characters
+vim.opt.mouse = ''                            -- Disable mouse
+vim.opt.number = true                         -- Show line numbers
+vim.opt.pumheight = 12                        -- Max height of pop-up menu
+vim.opt.relativenumber = true                 -- Show relative line numbers
+vim.opt.report = 0                            -- Always report changed lines
+vim.opt.scrolloff = 4                         -- Lines of context
+vim.opt.shiftround = true                     -- Round indent
+vim.opt.shiftwidth = 0                        -- Size of an indent
+vim.opt.shortmess = 'atToOcCF'                -- Prompt message options
+vim.opt.sidescrolloff = 12                    -- Columns of context
+vim.opt.signcolumn = 'yes'                    -- Show sign column
+vim.opt.smartcase = true                      -- Do not ignore capital letters
+vim.opt.smartindent = true                    -- Insert indents automatically
+vim.opt.splitbelow = true                     -- Put new window below current
+vim.opt.splitright = true                     -- Put new window right of current
+vim.opt.tabstop = 2                           -- Number of spaces tabs count for
+vim.opt.textwidth = 99                        -- Maximum width of text
+vim.opt.updatetime = 200                      -- Delay before swap file is saved
+vim.opt.wildmode = {'list:longest'}           -- Command completion options
+vim.opt.wrap = false                          -- Disable line wrap
 
 -------------------- MAPPINGS ------------------------------
 local function substitute()
@@ -163,11 +168,8 @@ vim.keymap.set('n', '<C-Right>', '<C-w>+')
 vim.keymap.set('n', '<C-Up>', '<C-w>>')
 vim.keymap.set('n', '<leader>u', '<cmd>update<CR>')
 vim.keymap.set('n', '<leader>x', '<cmd>conf qa<CR>')
-vim.keymap.set('n', '<space>,', vim.diagnostic.goto_prev)
-vim.keymap.set('n', '<space>;', vim.diagnostic.goto_next)
 vim.keymap.set('n', '<space>a', vim.lsp.buf.code_action)
 vim.keymap.set('n', '<space>f', vim.lsp.buf.format)
-vim.keymap.set('n', '<space>h', vim.lsp.buf.hover)
 vim.keymap.set('n', '<space>n', vim.lsp.buf.rename)
 vim.keymap.set('n', 'H', 'zh')
 vim.keymap.set('n', 'L', 'zl')
