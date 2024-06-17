@@ -1,13 +1,25 @@
-# COLORS
-[[ -x /usr/bin/dircolors ]] && eval "$(dircolors -b)"
-
-# OPTIONS
+# ZSH OPTIONS
 bindkey -e
 setopt glob_dots
 setopt hist_ignore_all_dups
 setopt hist_reduce_blanks
 setopt no_auto_menu
 setopt share_history
+
+# ZSH PARAMETERS
+HISTFILE="$XDG_STATE_HOME/zsh/history"
+HISTORY_IGNORE="(cd|clear|dl|doc|exit|ll|ls|pwd|t|tmp|up|wk)"
+HISTSIZE=10000
+SAVEHIST=10000
+
+# FPATH
+typeset -U fpath
+fpath=("$XDG_DATA_HOME/zsh/functions" "$XDG_DATA_HOME/zsh/prompt" $fpath)
+
+# PATH
+typeset -U path
+path=("$HOME/.local/bin" "$HOME/go/bin" "/usr/local/go/bin" $path)
+export PATH
 
 # GIT
 autoload -Uz vcs_info
@@ -40,11 +52,15 @@ add-zsh-hook chpwd chpwd_recent_dirs
 
 # FUNCTIONS
 autoload -Uz apt-autoremove
-autoload -Uz apt-list
 autoload -Uz apt-upgrade
 autoload -Uz cheat
 autoload -Uz rm-swap
 autoload -Uz up
+
+# EDITOR
+export EDITOR="vim"
+export VISUAL="nvim"
+export SUDO_EDITOR="vim"
 
 # ALIASES
 alias df='df -Th --total'
@@ -65,7 +81,15 @@ alias tmp="cd $HOME/.tmp && ls"
 alias tree='tree -FC --dirsfirst -I .git'
 alias wk="cd $HOME/Work && ls"
 
-# APPS
-[[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]] && source /usr/share/doc/fzf/examples/key-bindings.zsh
-[[ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# APP PARAMETERS
+export BAT_THEME="OneHalfDark"
+export FZF_ALT_C_COMMAND="cdr -l | awk '{print \$2}' | sed 's?~?$HOME?g'"
+export MANPAGER='nvim +Man!'
+export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/config"
+
+# EXTERNAL SOURCES
+[[ -r "$HOME/.env" ]] && source "$HOME/.env"
+[[ -r /usr/share/doc/fzf/examples/key-bindings.zsh ]] && source /usr/share/doc/fzf/examples/key-bindings.zsh
+[[ -r /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+[[ -x /usr/bin/dircolors ]] && eval "$(dircolors -b)"
 [[ -x /usr/bin/direnv ]] && eval "$(direnv hook zsh)"

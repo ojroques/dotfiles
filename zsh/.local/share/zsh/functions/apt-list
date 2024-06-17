@@ -1,9 +1,0 @@
-#!/bin/bash
-
-# List intentionally installed packages
-function apt-list {
-  (zcat "$(ls -tr /var/log/apt/history.log*.gz)"; cat /var/log/apt/history.log) 2> /dev/null |
-  grep '^Commandline' |
-  sed -e 's/Commandline: \(.*\)/\1/' |
-  grep --color=never 'install'
-}
