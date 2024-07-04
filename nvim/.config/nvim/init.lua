@@ -7,15 +7,16 @@ if not vim.uv.fs_stat(mini) then
 end
 
 -------------------- PLUGINS -------------------------------
+local make = function(a) vim.system({'make'}, {cwd = a.path}):wait() end
 require('mini.deps').setup {}
 MiniDeps.add('navarasu/onedark.nvim')
 MiniDeps.add('neovim/nvim-lspconfig')
 MiniDeps.add('nvim-lua/plenary.nvim')
 MiniDeps.add('nvim-telescope/telescope.nvim')
-MiniDeps.add('nvim-tree/nvim-web-devicons')
 MiniDeps.add('nvim-treesitter/nvim-treesitter')
 MiniDeps.add('nvim-treesitter/nvim-treesitter-context')
 MiniDeps.add('ojroques/nvim-buildme')
+MiniDeps.add({source = 'nvim-telescope/telescope-fzf-native.nvim', hooks = {post_install = make, post_checkout = make}})
 
 -------------------- PLUGIN SETUP --------------------------
 -- mini.ai
@@ -52,8 +53,12 @@ vim.keymap.set('n', '<leader>gs', 'ghgh', {remap = true})
 require('mini.files').setup {}
 vim.keymap.set('n', '-', function() MiniFiles.open(vim.api.nvim_buf_get_name(0)) end)
 -- mini.git
-require('mini.git').setup {command = {split = 'horizontal'}}
+require('mini.git').setup {
+  command = {split = 'horizontal'},
+}
 vim.keymap.set('n', '<leader>gi', function() MiniGit.show_at_cursor({split = 'horizontal'}) end)
+-- mini.icons
+require('mini.icons').setup {}
 -- mini.indentscope
 require('mini.indentscope').setup {
   draw = {animation = require('mini.indentscope').gen_animation.none()},
@@ -86,7 +91,7 @@ vim.keymap.set('n', '<leader>bs', buildme.stop)
 -- nvim-lspconfig
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = false
-for _, ls in ipairs({'bashls', 'clangd', 'gopls', 'pylsp'}) do
+for _, ls in ipairs({'bashls', 'gopls', 'pylsp'}) do
   require('lspconfig')[ls].setup {
     capabilities = capabilities,
     on_attach = function(_, buf)
@@ -100,7 +105,9 @@ require('nvim-treesitter.configs').setup {
   highlight = {enable = true},
 }
 -- nvim-treesitter-context
-require('treesitter-context').setup {mode = 'topline'}
+require('treesitter-context').setup {
+  mode = 'topline',
+}
 -- onedark.nvim
 require('onedark').setup {
   code_style = {comments = 'none'},
@@ -108,23 +115,24 @@ require('onedark').setup {
 }
 require('onedark').load()
 -- telescope.nvim
+local telescope_builtin = require('telescope.builtin')
 require('telescope').setup {
-  defaults = {layout_strategy = 'vertical', path_display = {'filename_first'}},
+  defaults = {layout_strategy = 'vertical'},
   pickers = {grep_string = {use_regex = true}},
 }
-local telescope = require('telescope.builtin')
-vim.keymap.set('n', '<leader>/', telescope.search_history)
-vim.keymap.set('n', '<leader>;', telescope.command_history)
-vim.keymap.set('n', '<leader>R', function() telescope.grep_string({search = vim.fn.input('Grep > ')}) end)
-vim.keymap.set('n', '<leader>f', telescope.find_files)
-vim.keymap.set('n', '<leader>r', telescope.live_grep)
-vim.keymap.set('n', '<space>d', telescope.lsp_definitions)
-vim.keymap.set('n', '<space>i', telescope.lsp_implementations)
-vim.keymap.set('n', '<space>r', telescope.lsp_references)
-vim.keymap.set('n', '<space>sd', telescope.lsp_document_symbols)
-vim.keymap.set('n', '<space>sw', telescope.lsp_workspace_symbols)
-vim.keymap.set('n', '<space>t', telescope.lsp_type_definitions)
-vim.keymap.set('n', 's', telescope.buffers)
+require('telescope').load_extension('fzf')
+vim.keymap.set('n', '<leader>/', telescope_builtin.search_history)
+vim.keymap.set('n', '<leader>;', telescope_builtin.command_history)
+vim.keymap.set('n', '<leader>R', function() telescope_builtin.grep_string({search = vim.fn.input('Grep > ')}) end)
+vim.keymap.set('n', '<leader>f', telescope_builtin.find_files)
+vim.keymap.set('n', '<leader>r', telescope_builtin.live_grep)
+vim.keymap.set('n', '<space>d', telescope_builtin.lsp_definitions)
+vim.keymap.set('n', '<space>i', telescope_builtin.lsp_implementations)
+vim.keymap.set('n', '<space>r', telescope_builtin.lsp_references)
+vim.keymap.set('n', '<space>sd', telescope_builtin.lsp_document_symbols)
+vim.keymap.set('n', '<space>sw', telescope_builtin.lsp_workspace_symbols)
+vim.keymap.set('n', '<space>t', telescope_builtin.lsp_type_definitions)
+vim.keymap.set('n', 's', telescope_builtin.buffers)
 
 -------------------- OPTIONS -------------------------------
 vim.opt.colorcolumn = '+1'                    -- Line length marker

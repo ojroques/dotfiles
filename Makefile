@@ -114,19 +114,13 @@ neovim:
 
 #################### LANGUAGE SERVERS ######################
 .PHONY: lsp
-lsp: bashls cls gols pythonls
+lsp: bashls gols pythonls
 
 .PHONY: bashls
 bashls:
 	@echo "Installing bash language server..."
 	@apt-get -y install nodejs npm > $(LOG)
 	@npm install -g bash-language-server > $(LOG)
-
-.PHONY: cls
-cls:
-	@echo "Installing c/c++ language server..."
-	@apt-get -y install clangd-15 > $(LOG)
-	@update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-15 100 > $(LOG)
 
 .PHONY: gols
 gols: go
