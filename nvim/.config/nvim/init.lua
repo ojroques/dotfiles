@@ -17,6 +17,7 @@ MiniDeps.add('nvim-treesitter/nvim-treesitter')
 MiniDeps.add('nvim-treesitter/nvim-treesitter-context')
 MiniDeps.add('ojroques/nvim-buildme')
 MiniDeps.add({source = 'nvim-telescope/telescope-fzf-native.nvim', hooks = {post_install = make, post_checkout = make}})
+MiniDeps.add({source = 'ojroques/nvim-bufbar', checkout = 'personal'})
 
 -------------------- PLUGIN SETUP --------------------------
 -- mini.ai
@@ -78,11 +79,11 @@ require('mini.surround').setup {mappings = {
   find = '', find_left = '', highlight = '', update_n_lines = '', suffix_last = '', suffix_next = '',
 }}
 vim.keymap.del('x', 'ys')
--- mini.tabline
-require('mini.tabline').setup {}
 -- mini.trailspace
 require('mini.trailspace').setup {}
 vim.keymap.set('n', '<leader>t', MiniTrailspace.trim)
+-- nvim-bufbar
+require('bufbar').setup {}
 -- nvim-buildme
 local buildme = require('buildme')
 vim.keymap.set('n', '<leader>bb', buildme.run)
@@ -184,5 +185,5 @@ vim.keymap.set('n', 'L', 'zl')
 vim.keymap.set({'n', 'v'}, '<leader>s', substitute, {expr = true})
 
 -------------------- AUTOCOMMANDS --------------------------
-local au = vim.api.nvim_create_augroup('init', {})
-vim.api.nvim_create_autocmd('TextYankPost', {group = au, callback = function() vim.highlight.on_yank() end})
+local augroup = vim.api.nvim_create_augroup('init', {})
+vim.api.nvim_create_autocmd('TextYankPost', {group = augroup, callback = function() vim.highlight.on_yank() end})
