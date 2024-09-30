@@ -21,9 +21,7 @@ MiniDeps.add({source = 'ojroques/nvim-bufbar', checkout = 'personal'})
 
 -------------------- PLUGIN SETUP --------------------------
 -- mini.ai
-require('mini.ai').setup {
-  custom_textobjects = {B = require('mini.extra').gen_ai_spec.buffer()},
-}
+require('mini.ai').setup {custom_textobjects = {B = require('mini.extra').gen_ai_spec.buffer()}}
 -- mini.basics
 require('mini.basics').setup {
   options = {basic = false},
@@ -36,15 +34,11 @@ require('mini.bracketed').setup {}
 require('mini.bufremove').setup {}
 vim.keymap.set('n', '<leader>w', MiniBufremove.delete)
 -- mini.completion
-require('mini.completion').setup {
-  lsp_completion = {source_func = 'omnifunc', auto_setup = false},
-}
+require('mini.completion').setup {lsp_completion = {source_func = 'omnifunc', auto_setup = false}}
 vim.keymap.set('i', '<Tab>', function() return vim.fn.pumvisible() == 1 and '<C-n>' or '<Tab>' end, {expr = true})
 vim.keymap.set('i', '<S-Tab>', function() return vim.fn.pumvisible() == 1 and '<C-p>' or '<S-Tab>' end, {expr = true})
 -- mini.diff
-require('mini.diff').setup {
-  view = {signs = {add = '+', change = '~', delete = '-'}},
-}
+require('mini.diff').setup {view = {signs = {add = '+', change = '~', delete = '-'}}}
 vim.keymap.set('n', '<leader>gR', 'gHaB', {remap = true})
 vim.keymap.set('n', '<leader>gS', 'ghaB', {remap = true})
 vim.keymap.set('n', '<leader>gp', MiniDiff.toggle_overlay)
@@ -54,23 +48,16 @@ vim.keymap.set('n', '<leader>gs', 'ghgh', {remap = true})
 require('mini.files').setup {}
 vim.keymap.set('n', '-', function() MiniFiles.open(vim.api.nvim_buf_get_name(0)) end)
 -- mini.git
-require('mini.git').setup {
-  command = {split = 'horizontal'},
-}
-vim.keymap.set('n', '<leader>gi', function() MiniGit.show_at_cursor({split = 'horizontal'}) end)
+require('mini.git').setup {}
 -- mini.icons
 require('mini.icons').setup {}
 -- mini.indentscope
-require('mini.indentscope').setup {
-  draw = {animation = require('mini.indentscope').gen_animation.none()},
-}
+require('mini.indentscope').setup {draw = {animation = require('mini.indentscope').gen_animation.none()}}
 -- mini.misc
 require('mini.misc').setup_auto_root()
 -- mini.notify
 require('mini.notify').setup {}
 vim.notify = MiniNotify.make_notify()
--- mini.operators
-require('mini.operators').setup {}
 -- mini.statusline
 require('mini.statusline').setup {}
 -- mini.surround
@@ -106,9 +93,7 @@ require('nvim-treesitter.configs').setup {
   highlight = {enable = true},
 }
 -- nvim-treesitter-context
-require('treesitter-context').setup {
-  mode = 'topline',
-}
+require('treesitter-context').setup {mode = 'topline'}
 -- onedark.nvim
 require('onedark').setup {
   code_style = {comments = 'none'},
@@ -177,9 +162,7 @@ vim.keymap.set('n', '<C-Right>', '<C-w>+')
 vim.keymap.set('n', '<C-Up>', '<C-w>>')
 vim.keymap.set('n', '<leader>u', '<cmd>update<CR>')
 vim.keymap.set('n', '<leader>x', '<cmd>conf qa<CR>')
-vim.keymap.set('n', '<space>a', vim.lsp.buf.code_action)
 vim.keymap.set('n', '<space>f', vim.lsp.buf.format)
-vim.keymap.set('n', '<space>n', vim.lsp.buf.rename)
 vim.keymap.set('n', 'H', 'zh')
 vim.keymap.set('n', 'L', 'zl')
 vim.keymap.set({'n', 'v'}, '<leader>s', substitute, {expr = true})
