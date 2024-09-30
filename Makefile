@@ -130,7 +130,7 @@ gols: go
 .PHONY: pythonls
 pythonls:
 	@echo "Installing python3 language server..."
-	@pip3 install jedi python-lsp-server[pyflakes,pycodestyle,yapf] > $(LOG)
+	@pip3 install --break-system-packages jedi python-lsp-server[pyflakes,pycodestyle,yapf] > $(LOG)
 
 #################### LATEX #################################
 .PHONY: latex
