@@ -15,7 +15,6 @@ MiniDeps.add('nvim-lua/plenary.nvim')
 MiniDeps.add('nvim-telescope/telescope.nvim')
 MiniDeps.add('nvim-treesitter/nvim-treesitter')
 MiniDeps.add('nvim-treesitter/nvim-treesitter-context')
-MiniDeps.add('ojroques/nvim-buildme')
 MiniDeps.add({source = 'nvim-telescope/telescope-fzf-native.nvim', hooks = {post_install = make, post_checkout = make}})
 MiniDeps.add({source = 'ojroques/nvim-bufbar', checkout = 'personal'})
 
@@ -71,11 +70,6 @@ require('mini.trailspace').setup {}
 vim.keymap.set('n', '<leader>t', MiniTrailspace.trim)
 -- nvim-bufbar
 require('bufbar').setup {}
--- nvim-buildme
-local buildme = require('buildme')
-vim.keymap.set('n', '<leader>bb', buildme.run)
-vim.keymap.set('n', '<leader>be', buildme.edit)
-vim.keymap.set('n', '<leader>bs', buildme.stop)
 -- nvim-lspconfig
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = false
@@ -156,10 +150,10 @@ local function substitute()
   return vim.fn.mode() == 'n' and string.format(cmd, '%s') or string.format(cmd, 's')
 end
 vim.keymap.set('i', 'jj', '<ESC>')
-vim.keymap.set('n', '<C-Down>', '<C-w><')
-vim.keymap.set('n', '<C-Left>', '<C-w>-')
-vim.keymap.set('n', '<C-Right>', '<C-w>+')
-vim.keymap.set('n', '<C-Up>', '<C-w>>')
+vim.keymap.set('n', '<C-Down>', '<C-w>-')
+vim.keymap.set('n', '<C-Left>', '<C-w><')
+vim.keymap.set('n', '<C-Right>', '<C-w>>')
+vim.keymap.set('n', '<C-Up>', '<C-w>+')
 vim.keymap.set('n', '<leader>u', '<cmd>update<CR>')
 vim.keymap.set('n', '<leader>x', '<cmd>conf qa<CR>')
 vim.keymap.set('n', '<space>f', vim.lsp.buf.format)
