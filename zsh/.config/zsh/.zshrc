@@ -8,7 +8,7 @@ setopt share_history
 
 # ZSH PARAMETERS
 HISTFILE="$XDG_STATE_HOME/zsh/history"
-HISTORY_IGNORE="(cd|clear|dl|doc|exit|ll|ls|pwd|t|tmp|up|wk)"
+HISTORY_IGNORE="(cd|dl|doc|ls|t|tmp|up|wk)"
 HISTSIZE=10000
 SAVEHIST=10000
 
@@ -46,16 +46,18 @@ zstyle ':completion:*:corrections' format '%F{yellow}-- %d (errors: %e) --%f'
 zstyle ':completion:*:warnings' format '%F{red}-- no matches --%f'
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
-# CDR
-autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
-add-zsh-hook chpwd chpwd_recent_dirs
-
 # FUNCTIONS
 autoload -Uz apt-autoremove
 autoload -Uz apt-upgrade
+autoload -Uz cdls
 autoload -Uz cheat
 autoload -Uz rm-swap
 autoload -Uz up
+
+# CDR
+autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+add-zsh-hook chpwd cdls
+add-zsh-hook chpwd chpwd_recent_dirs
 
 # EDITOR
 export EDITOR="vim"
@@ -65,8 +67,8 @@ export SUDO_EDITOR="vim"
 # ALIASES
 alias df='df -Th --total'
 alias diff='diff -su --color=auto'
-alias dl="cd $HOME/Downloads && ls"
-alias doc="cd $HOME/Documents && ls"
+alias dl="cd $HOME/Downloads"
+alias doc="cd $HOME/Documents"
 alias du='du -ch'
 alias dua='du -a --max-depth=1 | sort -hr'
 alias e="$VISUAL"
@@ -77,9 +79,9 @@ alias ll='ls -lAh'
 alias ls='ls -F --color=auto --group-directories-first'
 alias py='python3'
 alias t='tmux'
-alias tmp="cd $HOME/.tmp && ls"
+alias tmp="cd $HOME/.tmp"
 alias tree='tree -FC --dirsfirst -I .git'
-alias wk="cd $HOME/Work && ls"
+alias wk="cd $HOME/Work"
 
 # APP PARAMETERS
 export BAT_THEME="OneHalfDark"

@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# List files after changing directory
+function cdls {
+  if [[ $(ls -1 | wc -l) -gt 100 ]]; then
+    echo "Too many files to display (> 100)"
+    return
+  fi
+
+  ls -F --color=auto --group-directories-first
+}
