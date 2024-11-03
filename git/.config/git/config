@@ -1,26 +1,3 @@
-[user]
-  useConfigOnly = true
-
-[init]
-  defaultBranch = main
-
-[include]
-  path = "personal"
-
-[includeIf "gitdir:~/Work/"]
-  path = "work"
-
-[core]
-  pager = delta
-
-[interactive]
-  diffFilter = delta --color-only
-
-[delta]
-  line-numbers = true
-  navigate = true
-  syntax-theme = none
-
 [alias]
   a = add
   cm = commit
@@ -28,8 +5,6 @@
   co = checkout
   d = diff
   dc = diff --cached
-  i = show --abbrev-commit --date=iso
-  l = log --abbrev-commit --date=human
   lg = log --graph --format='%C(yellow)%h%Cred%d %Creset%s %Cgreen(%ar) %Cblue%an%Creset'
   lga = log --graph --all --format='%C(yellow)%h%Cred%d %Creset%s %Cgreen(%ar) %Cblue%an%Creset'
   pl = pull
@@ -37,9 +12,14 @@
   rb = rebase
   rs = reset
   s = status
-  sw = update-index --skip-worktree
-  swn = update-index --no-skip-worktree
   ua = restore --staged
+
+[core]
+  pager = delta
+
+[delta]
+  line-numbers = true
+  navigate = true
 
 [diff]
   algorithm = histogram
@@ -47,11 +27,26 @@
 [fetch]
   prune = true
 
+[init]
+  defaultBranch = main
+
+[include]
+  path = personal
+
+[includeIf "gitdir:~/Work/"]
+  path = work
+
+[interactive]
+  diffFilter = delta --color-only
+
 [merge]
   conflictstyle = zdiff3
+
+[pull]
+  rebase = true
 
 [push]
   autosetupremote = true
 
-[pull]
-  rebase = true
+[user]
+  useConfigOnly = true

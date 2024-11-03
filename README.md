@@ -18,7 +18,6 @@ sudo make install-base   # install base packages
 sudo make install-cli    # install base + CLI packages
 sudo make install-gui    # install base + GUI packages
 sudo make install-lsp    # install base + LSP servers
-sudo make install-latex  # install base + LaTeX
 sudo make clean          # clean up packages
 ```
 2. Run [stow](https://www.gnu.org/software/stow/) to install config files:
@@ -36,18 +35,3 @@ stow alacritty xfce                 # GUI configs
 - Generate SSH keys if needed: `ssh-keygen -t ed25519 -C "email@example.com"`
 - Run keychain if needed: `eval $(keychain --quiet --eval id_ed25519)`
 - Configure XFCE if used
-
-
-## Docker
-A [Dockerfile](./Dockerfile) is provided that sets up an Ubuntu 22.04
-environment with all dotfiles installed.
-
-To build the image:
-```bash
-docker build -t dotfiles:latest .
-```
-
-To run it:
-```bash
-docker run -it dotfiles
-```

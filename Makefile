@@ -15,9 +15,6 @@ install-gui: install-base gui
 .PHONY: install-lsp
 install-lsp: install-base lsp
 
-.PHONY: install-latex
-install-latex: install-base latex
-
 .PHONY: update
 update:
 	@echo "Updating packages..."
@@ -48,13 +45,14 @@ base:
 		> $(LOG)
 
 .PHONY: cli
-cli: delta gdb-dashboard go neovim
+cli: go neovim
 	@echo "Installing cli packages..."
 	@apt-get -y install \
 		bat \
 		direnv \
 		fd-find \
 		fzf \
+		git-delta \
 		keychain \
 		ripgrep \
 		shellcheck \
@@ -64,9 +62,10 @@ cli: delta gdb-dashboard go neovim
 		> $(LOG)
 
 .PHONY: gui
-gui: alacritty
+gui:
 	@echo "Installing gui packages..."
 	@apt-get -y install \
+		alacritty \
 		arc-theme \
 		firefox \
 		fonts-jetbrains-mono \
@@ -76,32 +75,11 @@ gui: alacritty
 		xfce4-taskmanager \
 		> $(LOG)
 
-.PHONY: alacritty
-alacritty:
-	@echo "Installing alacritty..."
-	@add-apt-repository -y ppa:aslatter/ppa > $(LOG)
-	@apt-get update > $(LOG)
-	@apt-get -y install alacritty > $(LOG)
-
-.PHONY: delta
-delta:
-	@echo "Installing delta v0.17.0..."
-	@curl -fsSL -o /tmp/delta.dpkg \
-		https://github.com/dandavison/delta/releases/download/0.17.0/git-delta_0.17.0_amd64.deb > $(LOG)
-	@dpkg -i /tmp/delta.dpkg > $(LOG)
-	@rm -f /tmp/delta.dpkg
-
-.PHONY: gdb-dashboard
-gdb-dashboard:
-	@echo "Installing gdb-dashboard..."
-	@curl -fsSL --create-dirs -o /etc/gdb/gdbinit \
-		https://raw.githubusercontent.com/cyrus-and/gdb-dashboard/master/.gdbinit > $(LOG)
-
 .PHONY: go
 go:
-	@echo "Installing go v1.22..."
+	@echo "Installing go v1.23..."
 	@curl -fsSL -o /tmp/go.tar.gz \
-		https://go.dev/dl/go1.22.4.linux-amd64.tar.gz > $(LOG)
+		https://go.dev/dl/go1.23.2.linux-amd64.tar.gz > $(LOG)
 	@rm -rf /usr/local/go && tar -C /usr/local -xzf /tmp/go.tar.gz > $(LOG)
 	@rm -f /tmp/go.tar.gz
 
@@ -131,9 +109,3 @@ gols: go
 pythonls:
 	@echo "Installing python3 language server..."
 	@pip3 install --break-system-packages jedi python-lsp-server[pyflakes,pycodestyle,yapf] > $(LOG)
-
-#################### LATEX #################################
-.PHONY: latex
-latex:
-	@echo "Installing latex..."
-	@apt-get -y install latexmk texlive-full > $(LOG)

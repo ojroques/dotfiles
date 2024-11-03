@@ -95,12 +95,12 @@ require('onedark').setup {
 }
 require('onedark').load()
 -- telescope.nvim
-local telescope_builtin = require('telescope.builtin')
 require('telescope').setup {
   defaults = {layout_strategy = 'vertical'},
   pickers = {grep_string = {use_regex = true}},
 }
 require('telescope').load_extension('fzf')
+local telescope_builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>/', telescope_builtin.search_history)
 vim.keymap.set('n', '<leader>;', telescope_builtin.command_history)
 vim.keymap.set('n', '<leader>R', function() telescope_builtin.grep_string({search = vim.fn.input('Grep > ')}) end)
