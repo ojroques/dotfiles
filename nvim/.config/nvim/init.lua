@@ -1,4 +1,4 @@
--------------------- INIT ----------------------------------
+-------------------- INIT ------------------------------------------------------
 local mini = string.format('%s/site/pack/deps/start/mini.nvim', vim.fn.stdpath('data'))
 if not vim.uv.fs_stat(mini) then
   vim.notify('Installing mini.nvim', vim.log.levels.INFO)
@@ -6,7 +6,7 @@ if not vim.uv.fs_stat(mini) then
   vim.cmd('packadd mini.nvim | helptags ALL')
 end
 
--------------------- PLUGINS -------------------------------
+-------------------- PLUGINS ---------------------------------------------------
 local make = function(a) vim.system({'make'}, {cwd = a.path}):wait() end
 require('mini.deps').setup {}
 MiniDeps.add('navarasu/onedark.nvim')
@@ -18,7 +18,7 @@ MiniDeps.add('nvim-treesitter/nvim-treesitter-context')
 MiniDeps.add({source = 'nvim-telescope/telescope-fzf-native.nvim', hooks = {post_install = make, post_checkout = make}})
 MiniDeps.add({source = 'ojroques/nvim-bufbar', checkout = 'personal'})
 
--------------------- PLUGIN SETUP --------------------------
+-------------------- PLUGIN SETUP ----------------------------------------------
 -- mini.ai
 require('mini.ai').setup {custom_textobjects = {B = require('mini.extra').gen_ai_spec.buffer()}}
 -- mini.basics
@@ -50,6 +50,7 @@ vim.keymap.set('n', '-', function() MiniFiles.open(vim.api.nvim_buf_get_name(0))
 require('mini.git').setup {}
 -- mini.icons
 require('mini.icons').setup {}
+MiniDeps.later(MiniIcons.tweak_lsp_kind)
 -- mini.indentscope
 require('mini.indentscope').setup {draw = {animation = require('mini.indentscope').gen_animation.none()}}
 -- mini.misc
@@ -70,17 +71,6 @@ require('mini.trailspace').setup {}
 vim.keymap.set('n', '<leader>t', MiniTrailspace.trim)
 -- nvim-bufbar
 require('bufbar').setup {}
--- nvim-lspconfig
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = false
-for _, ls in ipairs({'bashls', 'gopls', 'pylsp'}) do
-  require('lspconfig')[ls].setup {
-    capabilities = capabilities,
-    on_attach = function(_, buf)
-      vim.api.nvim_set_option_value('omnifunc', 'v:lua.MiniCompletion.completefunc_lsp', {buf = buf})
-    end,
-  }
-end
 -- nvim-treesitter
 require('nvim-treesitter.configs').setup {
   ensure_installed = 'all',
@@ -105,16 +95,29 @@ vim.keymap.set('n', '<leader>/', telescope_builtin.search_history)
 vim.keymap.set('n', '<leader>;', telescope_builtin.command_history)
 vim.keymap.set('n', '<leader>R', function() telescope_builtin.grep_string({search = vim.fn.input('Grep > ')}) end)
 vim.keymap.set('n', '<leader>f', telescope_builtin.find_files)
+vim.keymap.set('n', '<leader>h', telescope_builtin.resume)
 vim.keymap.set('n', '<leader>r', telescope_builtin.live_grep)
-vim.keymap.set('n', '<space>d', telescope_builtin.lsp_definitions)
-vim.keymap.set('n', '<space>i', telescope_builtin.lsp_implementations)
-vim.keymap.set('n', '<space>r', telescope_builtin.lsp_references)
-vim.keymap.set('n', '<space>sd', telescope_builtin.lsp_document_symbols)
-vim.keymap.set('n', '<space>sw', telescope_builtin.lsp_workspace_symbols)
-vim.keymap.set('n', '<space>t', telescope_builtin.lsp_type_definitions)
 vim.keymap.set('n', 's', telescope_builtin.buffers)
 
--------------------- OPTIONS -------------------------------
+-------------------- LSP -------------------------------------------------------
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = false
+for _, ls in ipairs({'bashls', 'gopls', 'pylsp'}) do
+  require('lspconfig')[ls].setup {
+    capabilities = capabilities,
+    on_attach = function(_, buf)
+      vim.bo[buf].omnifunc = 'v:lua.MiniCompletion.completefunc_lsp'
+      vim.keymap.set('n', '<space>d', telescope_builtin.lsp_definitions, {buffer = buf})
+      vim.keymap.set('n', '<space>e', telescope_builtin.diagnostics, {buffer = buf})
+      vim.keymap.set('n', '<space>f', vim.lsp.buf.format, {buffer = buf})
+      vim.keymap.set('n', '<space>i', telescope_builtin.lsp_implementations, {buffer = buf})
+      vim.keymap.set('n', '<space>r', telescope_builtin.lsp_references, {buffer = buf})
+      vim.keymap.set('n', '<space>t', telescope_builtin.lsp_type_definitions, {buffer = buf})
+    end,
+  }
+end
+
+-------------------- OPTIONS ---------------------------------------------------
 vim.opt.colorcolumn = '+1'                    -- Line length marker
 vim.opt.completeopt = {'menuone', 'noselect'} -- Completion options
 vim.opt.cursorline = true                     -- Highlight cursor line
@@ -144,7 +147,7 @@ vim.opt.updatetime = 200                      -- Delay before swap file is saved
 vim.opt.wildmode = {'list:longest'}           -- Command completion options
 vim.opt.wrap = false                          -- Disable line wrap
 
--------------------- MAPPINGS ------------------------------
+-------------------- MAPPINGS --------------------------------------------------
 local function substitute()
   local cmd = ':%s//gcI<Left><Left><Left><Left>'
   return vim.fn.mode() == 'n' and string.format(cmd, '%s') or string.format(cmd, 's')
@@ -156,11 +159,10 @@ vim.keymap.set('n', '<C-Right>', '<C-w>>')
 vim.keymap.set('n', '<C-Up>', '<C-w>+')
 vim.keymap.set('n', '<leader>u', '<cmd>update<CR>')
 vim.keymap.set('n', '<leader>x', '<cmd>conf qa<CR>')
-vim.keymap.set('n', '<space>f', vim.lsp.buf.format)
 vim.keymap.set('n', 'H', 'zh')
 vim.keymap.set('n', 'L', 'zl')
 vim.keymap.set({'n', 'v'}, '<leader>s', substitute, {expr = true})
 
--------------------- AUTOCOMMANDS --------------------------
+-------------------- AUTOCOMMANDS ----------------------------------------------
 local augroup = vim.api.nvim_create_augroup('init', {})
 vim.api.nvim_create_autocmd('TextYankPost', {group = augroup, callback = function() vim.highlight.on_yank() end})
