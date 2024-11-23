@@ -47,12 +47,7 @@ zstyle ':completion:*:warnings' format '%F{red}-- no matches --%f'
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
 # FUNCTIONS
-autoload -Uz apt-autoremove
-autoload -Uz apt-upgrade
-autoload -Uz cdls
-autoload -Uz cheat
-autoload -Uz rm-swap
-autoload -Uz up
+autoload -Uz "$XDG_DATA_HOME/zsh/functions"/*(:t)
 
 # CDR
 autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
