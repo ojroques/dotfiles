@@ -1,6 +1,5 @@
 #################### VARIABLES #############################
 SHELL = /bin/bash
-LOG = /dev/stdout
 
 #################### COMMANDS ##############################
 .PHONY: install-base
@@ -18,13 +17,13 @@ install-lsp: install-base lsp
 .PHONY: update
 update:
 	@echo "Updating packages..."
-	@apt-get update > $(LOG)
-	@apt-get -y upgrade > $(LOG)
+	@apt-get update
+	@apt-get -y upgrade
 
 .PHONY: clean
 clean:
 	@echo "Cleaning up..."
-	@apt-get -y autoremove > $(LOG)
+	@apt-get -y autoremove
 
 #################### APPS ##################################
 .PHONY: base
@@ -41,25 +40,22 @@ base:
 		stow \
 		tree \
 		unzip \
-		vim \
-		> $(LOG)
+		vim
 
 .PHONY: cli
-cli: go neovim
+cli: fzf go neovim
 	@echo "Installing cli packages..."
 	@apt-get -y install \
 		bat \
 		direnv \
 		fd-find \
-		fzf \
 		git-delta \
 		keychain \
 		ripgrep \
 		shellcheck \
 		tmux \
 		zsh \
-		zsh-syntax-highlighting \
-		> $(LOG)
+		zsh-syntax-highlighting
 
 .PHONY: gui
 gui:
@@ -72,23 +68,29 @@ gui:
 		papirus-icon-theme \
 		viewnior \
 		vlc \
-		xfce4-taskmanager \
-		> $(LOG)
+		xfce4-taskmanager
+
+.PHONY: fzf
+fzf:
+	@echo "Installing fzf..."
+	@rm -rf ~/.fzf ~/.fzf-git
+	@git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+	@git clone --depth 1 https://github.com/junegunn/fzf-git.sh.git ~/.fzf-git
+	@~/.fzf/install --xdg --key-bindings --completion --no-update-rc --no-bash --no-fish
 
 .PHONY: go
 go:
 	@echo "Installing go v1.23..."
-	@curl -fsSL -o /tmp/go.tar.gz \
-		https://go.dev/dl/go1.23.2.linux-amd64.tar.gz > $(LOG)
-	@rm -rf /usr/local/go && tar -C /usr/local -xzf /tmp/go.tar.gz > $(LOG)
-	@rm -f /tmp/go.tar.gz
+	@curl -fsSL -o go.tar.gz https://go.dev/dl/go1.23.3.linux-amd64.tar.gz
+	@rm -rf /usr/local/go && tar -C /usr/local -xzf go.tar.gz
+	@rm -f go.tar.gz
 
 .PHONY: neovim
 neovim:
 	@echo "Installing neovim nightly..."
-	@add-apt-repository -y ppa:neovim-ppa/unstable > $(LOG)
-	@apt-get update > $(LOG)
-	@apt-get -y install neovim > $(LOG)
+	@add-apt-repository -y ppa:neovim-ppa/unstable
+	@apt-get update
+	@apt-get -y install neovim
 
 #################### LANGUAGE SERVERS ######################
 .PHONY: lsp
@@ -97,15 +99,15 @@ lsp: bashls gols pythonls
 .PHONY: bashls
 bashls:
 	@echo "Installing bash language server..."
-	@apt-get -y install nodejs npm > $(LOG)
-	@npm install -g bash-language-server > $(LOG)
+	@apt-get -y install nodejs npm
+	@npm install -g bash-language-server
 
 .PHONY: gols
 gols: go
 	@echo "Installing go language server..."
-	@GOBIN=/usr/local/go/bin /usr/local/go/bin/go install golang.org/x/tools/gopls@latest > $(LOG)
+	@GOBIN=/usr/local/go/bin /usr/local/go/bin/go install golang.org/x/tools/gopls@latest
 
 .PHONY: pythonls
 pythonls:
 	@echo "Installing python3 language server..."
-	@pip3 install --break-system-packages jedi python-lsp-server[pyflakes,pycodestyle,yapf] > $(LOG)
+	@pip3 install --break-system-packages jedi python-lsp-server[pyflakes,pycodestyle,yapf]

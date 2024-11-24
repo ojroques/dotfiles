@@ -38,13 +38,12 @@ prompt personal
 # COMPLETION
 autoload -Uz compinit
 compinit
-zstyle ':completion:*' completer _expand _complete _correct _approximate
+zstyle ':completion:*' completer _expand _complete
 zstyle ':completion:*' group-name ''
-zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
-zstyle ':completion:*:descriptions' format '%F{magenta}-- %d --%f'
-zstyle ':completion:*:corrections' format '%F{yellow}-- %d (errors: %e) --%f'
-zstyle ':completion:*:warnings' format '%F{red}-- no matches --%f'
+zstyle ':completion:*' list-dirs-first true
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*:descriptions' format '%F{magenta}-- %d --%f'
+zstyle ':completion:*:warnings' format '%F{yellow}-- %d --%f'
 
 # FUNCTIONS
 autoload -Uz "$XDG_DATA_HOME/zsh/functions"/*(:t)
@@ -65,7 +64,6 @@ alias diff='diff -su --color=auto'
 alias dl="cd $HOME/Downloads"
 alias doc="cd $HOME/Documents"
 alias du='du -ch'
-alias dua='du -a --max-depth=1 | sort -hr'
 alias e="$VISUAL"
 alias g='git'
 alias grep='grep --color=auto'
@@ -80,13 +78,14 @@ alias wk="cd $HOME/Work"
 
 # APP PARAMETERS
 export BAT_THEME="OneHalfDark"
-export FZF_ALT_C_COMMAND="cdr -l | awk '{print \$2}' | sed 's?~?$HOME?g'"
 export MANPAGER='nvim +Man!'
 export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/config"
 
 # EXTERNAL SOURCES
 [[ -r "$HOME/.env" ]] && source "$HOME/.env"
-[[ -r /usr/share/doc/fzf/examples/key-bindings.zsh ]] && source /usr/share/doc/fzf/examples/key-bindings.zsh
+[[ -r "$HOME/.fzf-git/fzf-git.sh" ]] && source "$HOME/.fzf-git/fzf-git.sh"
+[[ -r "$XDG_CONFIG_HOME/fzf/fzf.zsh" ]] && source "$XDG_CONFIG_HOME/fzf/fzf.zsh"
 [[ -r /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 [[ -x /usr/bin/dircolors ]] && eval "$(dircolors -b)"
 [[ -x /usr/bin/direnv ]] && eval "$(direnv hook zsh)"
+[[ -x /usr/bin/kubectl ]] && eval "$(kubectl completion zsh)"
