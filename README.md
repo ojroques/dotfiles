@@ -3,6 +3,7 @@
 This repository contains my config files for:
 - **alacritty**
 - **git**
+- **mpv**
 - **neovim**
 - **ripgrep**
 - **tmux**
@@ -22,7 +23,7 @@ sudo make clean         # clean up packages
 2. Run [stow](https://www.gnu.org/software/stow/) to symlink config files:
 ```bash
 stow git nvim ripgrep tmux vim zsh  # CLI configs
-stow alacritty xfce                 # GUI configs
+stow alacritty mpv xfce             # GUI configs
 ```
 
 ## Post-installation steps

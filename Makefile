@@ -65,9 +65,9 @@ gui:
 		arc-theme \
 		firefox \
 		fonts-jetbrains-mono \
+		mpv \
 		papirus-icon-theme \
 		viewnior \
-		vlc \
 		xfce4-taskmanager
 
 .PHONY: go
