@@ -43,7 +43,7 @@ base:
 		vim
 
 .PHONY: cli
-cli: fzf go neovim
+cli: go neovim
 	@echo "Installing cli packages..."
 	@apt-get -y install \
 		bat \
@@ -70,14 +70,6 @@ gui:
 		vlc \
 		xfce4-taskmanager
 
-.PHONY: fzf
-fzf:
-	@echo "Installing fzf..."
-	@rm -rf ~/.fzf ~/.fzf-git
-	@git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-	@git clone --depth 1 https://github.com/junegunn/fzf-git.sh.git ~/.fzf-git
-	@~/.fzf/install --xdg --key-bindings --completion --no-update-rc --no-bash --no-fish
-
 .PHONY: go
 go:
 	@echo "Installing go v1.23..."
@@ -88,9 +80,17 @@ go:
 .PHONY: neovim
 neovim:
 	@echo "Installing neovim nightly..."
-	@add-apt-repository -y ppa:neovim-ppa/unstable
-	@apt-get update
-	@apt-get -y install neovim
+	@curl -fsSL -O https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+	@install nvim.appimage /usr/bin/nvim
+	@rm -f nvim.appimage
+
+.PHONY: fzf
+fzf:
+	@echo "Installing fzf..."
+	@rm -rf ~/.fzf ~/.fzf-git
+	@git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+	@git clone --depth 1 https://github.com/junegunn/fzf-git.sh.git ~/.fzf-git
+	@~/.fzf/install --xdg --key-bindings --completion --no-update-rc --no-bash --no-fish
 
 #################### LANGUAGE SERVERS ######################
 .PHONY: lsp
