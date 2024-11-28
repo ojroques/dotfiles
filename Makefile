@@ -80,7 +80,7 @@ go:
 .PHONY: neovim
 neovim:
 	@echo "Installing neovim nightly..."
-	@curl -fsSL -O https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+	@curl -fsSL -O https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
 	@install nvim.appimage /usr/bin/nvim
 	@rm -f nvim.appimage
 
