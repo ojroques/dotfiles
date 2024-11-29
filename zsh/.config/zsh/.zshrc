@@ -1,5 +1,4 @@
 # ZSH OPTIONS
-bindkey -e
 setopt glob_dots
 setopt hist_ignore_all_dups
 setopt hist_reduce_blanks
@@ -11,6 +10,20 @@ HISTFILE="$XDG_STATE_HOME/zsh/history"
 HISTORY_IGNORE="(cd|dl|doc|ls|t|tmp|up|wk)"
 HISTSIZE=10000
 SAVEHIST=10000
+
+# ZLE
+bindkey -v
+bindkey -M main jj vi-cmd-mode
+bindkey -M main ^P up-history
+bindkey -M main ^N down-history
+function zle-line-init zle-keymap-select {
+  case $KEYMAP in
+    vicmd) printf "\e[2 q";; # steady block
+    main) printf "\e[6 q";;  # steady bar
+  esac
+}
+zle -N zle-line-init
+zle -N zle-keymap-select
 
 # FPATH
 typeset -U fpath
