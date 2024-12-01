@@ -9,7 +9,6 @@ set autoread
 set background=dark
 set backspace=indent,eol,start
 set completeopt=menuone,noselect
-set encoding=utf-8
 set expandtab
 set hidden
 set hlsearch
@@ -54,3 +53,4 @@ nnoremap Q @@
 nnoremap Y y$
 nnoremap [b :bprevious<CR>
 nnoremap ]b :bnext<CR>
+noremap <space> <C-w>

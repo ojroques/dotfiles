@@ -8,19 +8,20 @@ end
 
 -------------------- PLUGINS ---------------------------------------------------
 local make = function(a) vim.system({'make'}, {cwd = a.path}):wait() end
+local tsupdate = function() vim.cmd('TSUpdate') end
 require('mini.deps').setup {}
 MiniDeps.add('navarasu/onedark.nvim')
 MiniDeps.add('neovim/nvim-lspconfig')
 MiniDeps.add('nvim-lua/plenary.nvim')
 MiniDeps.add('nvim-telescope/telescope.nvim')
-MiniDeps.add('nvim-treesitter/nvim-treesitter')
 MiniDeps.add('nvim-treesitter/nvim-treesitter-context')
 MiniDeps.add({source = 'nvim-telescope/telescope-fzf-native.nvim', hooks = {post_install = make, post_checkout = make}})
+MiniDeps.add({source = 'nvim-treesitter/nvim-treesitter', hooks = {post_checkout = tsupdate}})
 MiniDeps.add({source = 'ojroques/nvim-bufbar', checkout = 'personal'})
 
 -------------------- PLUGIN SETUP ----------------------------------------------
 -- mini.ai
-require('mini.ai').setup {custom_textobjects = {B = require('mini.extra').gen_ai_spec.buffer()}}
+require('mini.ai').setup {custom_textobjects = {e = require('mini.extra').gen_ai_spec.buffer()}}
 -- mini.basics
 require('mini.basics').setup {
   options = {basic = false},
@@ -38,8 +39,8 @@ vim.keymap.set('i', '<Tab>', function() return vim.fn.pumvisible() == 1 and '<C-
 vim.keymap.set('i', '<S-Tab>', function() return vim.fn.pumvisible() == 1 and '<C-p>' or '<S-Tab>' end, {expr = true})
 -- mini.diff
 require('mini.diff').setup {view = {signs = {add = '+', change = '~', delete = '-'}}}
-vim.keymap.set('n', '<leader>gR', 'gHaB', {remap = true})
-vim.keymap.set('n', '<leader>gS', 'ghaB', {remap = true})
+vim.keymap.set('n', '<leader>gR', 'gHae', {remap = true})
+vim.keymap.set('n', '<leader>gS', 'ghae', {remap = true})
 vim.keymap.set('n', '<leader>gp', MiniDiff.toggle_overlay)
 vim.keymap.set('n', '<leader>gr', 'gHgh', {remap = true})
 vim.keymap.set('n', '<leader>gs', 'ghgh', {remap = true})
@@ -58,6 +59,8 @@ require('mini.misc').setup_auto_root()
 -- mini.notify
 require('mini.notify').setup {}
 vim.notify = MiniNotify.make_notify()
+-- mini.operators
+require('mini.operators').setup {replace = {prefix = 'gp'}}
 -- mini.statusline
 require('mini.statusline').setup {}
 -- mini.surround
@@ -107,12 +110,12 @@ for _, ls in ipairs({'bashls', 'gopls', 'pylsp'}) do
     capabilities = capabilities,
     on_attach = function(_, buf)
       vim.bo[buf].omnifunc = 'v:lua.MiniCompletion.completefunc_lsp'
-      vim.keymap.set('n', '<space>d', telescope_builtin.lsp_definitions, {buffer = buf})
-      vim.keymap.set('n', '<space>e', telescope_builtin.diagnostics, {buffer = buf})
-      vim.keymap.set('n', '<space>f', vim.lsp.buf.format, {buffer = buf})
-      vim.keymap.set('n', '<space>i', telescope_builtin.lsp_implementations, {buffer = buf})
-      vim.keymap.set('n', '<space>r', telescope_builtin.lsp_references, {buffer = buf})
-      vim.keymap.set('n', '<space>t', telescope_builtin.lsp_type_definitions, {buffer = buf})
+      vim.keymap.set('n', '<C-]>', telescope_builtin.lsp_definitions, {buffer = buf})
+      vim.keymap.set('n', 'gqe', vim.lsp.buf.format, {buffer = buf})
+      vim.keymap.set('n', 'grd', telescope_builtin.diagnostics, {buffer = buf})
+      vim.keymap.set('n', 'gri', telescope_builtin.lsp_implementations, {buffer = buf})
+      vim.keymap.set('n', 'grr', telescope_builtin.lsp_references, {buffer = buf})
+      vim.keymap.set('n', 'grt', telescope_builtin.lsp_type_definitions, {buffer = buf})
     end,
   }
 end
@@ -152,6 +155,8 @@ local function substitute()
   local cmd = ':%s//gcI<Left><Left><Left><Left>'
   return vim.fn.mode() == 'n' and string.format(cmd, '%s') or string.format(cmd, 's')
 end
+vim.keymap.set('', '<leader>s', substitute, {expr = true})
+vim.keymap.set('', '<space>', '<C-w>')
 vim.keymap.set('i', 'jj', '<ESC>')
 vim.keymap.set('n', '<C-Down>', '<C-w>-')
 vim.keymap.set('n', '<C-Left>', '<C-w><')
@@ -161,7 +166,6 @@ vim.keymap.set('n', '<leader>u', '<cmd>update<CR>')
 vim.keymap.set('n', '<leader>x', '<cmd>conf qa<CR>')
 vim.keymap.set('n', 'H', 'zh')
 vim.keymap.set('n', 'L', 'zl')
-vim.keymap.set({'n', 'v'}, '<leader>s', substitute, {expr = true})
 
 -------------------- AUTOCOMMANDS ----------------------------------------------
 local augroup = vim.api.nvim_create_augroup('init', {})
