@@ -25,7 +25,6 @@ require('mini.ai').setup {custom_textobjects = {e = require('mini.extra').gen_ai
 -- mini.basics
 require('mini.basics').setup {
   options = {basic = false},
-  autocommands = {basic = false},
   mappings = {option_toggle_prefix = 'yo'},
 }
 -- mini.bracketed
@@ -60,7 +59,7 @@ require('mini.misc').setup_auto_root()
 require('mini.notify').setup {}
 vim.notify = MiniNotify.make_notify()
 -- mini.operators
-require('mini.operators').setup {replace = {prefix = 'gp'}}
+require('mini.operators').setup {replace = {prefix = 'cr'}}
 -- mini.statusline
 require('mini.statusline').setup {}
 -- mini.surround
@@ -166,7 +165,3 @@ vim.keymap.set('n', '<leader>u', '<cmd>update<CR>')
 vim.keymap.set('n', '<leader>x', '<cmd>conf qa<CR>')
 vim.keymap.set('n', 'H', 'zh')
 vim.keymap.set('n', 'L', 'zl')
-
--------------------- AUTOCOMMANDS ----------------------------------------------
-local augroup = vim.api.nvim_create_augroup('init', {})
-vim.api.nvim_create_autocmd('TextYankPost', {group = augroup, callback = function() vim.highlight.on_yank() end})
