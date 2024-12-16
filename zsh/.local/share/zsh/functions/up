@@ -7,7 +7,7 @@ function up {
     return
   fi
 
-  if [[ $# -gt 1 ]] || [[ $1 -le 0 ]]; then
+  if [[ $# -gt 1 || $1 -le 0 ]]; then
     echo "Usage: up [n > 0]"
   fi
 
@@ -16,5 +16,5 @@ function up {
     dir+="../"
   done
 
-  cd "$dir" || return
+  cd "$dir"
 }
