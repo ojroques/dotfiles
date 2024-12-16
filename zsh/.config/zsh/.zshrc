@@ -13,9 +13,10 @@ SAVEHIST=10000
 
 # ZLE
 bindkey -v
-bindkey -M main jj vi-cmd-mode
-bindkey -M main ^P up-history
+bindkey -M main '\e.' insert-last-word
 bindkey -M main ^N down-history
+bindkey -M main ^P up-history
+bindkey -M main jj vi-cmd-mode
 function zle-line-init zle-keymap-select {
   case $KEYMAP in
     vicmd) printf "\e[2 q";; # steady block
@@ -95,10 +96,9 @@ export MANPAGER='nvim --appimage-extract-and-run +Man!'
 export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/config"
 
 # EXTERNAL SOURCES
-[[ -r "$HOME/.env" ]] && source "$HOME/.env"
-[[ -r "$HOME/.fzf-git/fzf-git.sh" ]] && source "$HOME/.fzf-git/fzf-git.sh"
-[[ -r "$XDG_CONFIG_HOME/fzf/fzf.zsh" ]] && source "$XDG_CONFIG_HOME/fzf/fzf.zsh"
-[[ -r /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 [[ -x /usr/bin/dircolors ]] && eval "$(dircolors -b)"
 [[ -x /usr/bin/direnv ]] && eval "$(direnv hook zsh)"
-[[ -x /usr/bin/kubectl ]] && eval "$(kubectl completion zsh)"
+[[ -r /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+[[ -r "$XDG_CONFIG_HOME/fzf/fzf.zsh" ]] && source "$XDG_CONFIG_HOME/fzf/fzf.zsh"
+[[ -r "$HOME/.fzf-git/fzf-git.sh" ]] && source "$HOME/.fzf-git/fzf-git.sh"
+[[ -r "$HOME/.env" ]] && source "$HOME/.env"
