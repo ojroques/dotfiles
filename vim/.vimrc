@@ -45,12 +45,12 @@ inoremap <C-u> <C-g>u<C-u>
 inoremap <C-w> <C-g>u<C-w>
 inoremap jj <ESC>
 nnoremap <C-l> :nohlsearch<CR>
-nnoremap <leader>u :update<CR>
-nnoremap <leader>x :conf qa<CR>
 nnoremap H zh
 nnoremap L zl
 nnoremap Q @@
+nnoremap U :update<CR>
+nnoremap X :conf qa<CR>
 nnoremap Y y$
 nnoremap [b :bprevious<CR>
 nnoremap ]b :bnext<CR>
-noremap <space> <C-w>
+noremap <Space> <C-w>
