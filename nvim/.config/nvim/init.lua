@@ -7,15 +7,12 @@ if not vim.uv.fs_stat(mini) then
 end
 
 -------------------- PLUGINS ---------------------------------------------------
-local make = function(a) vim.system({'make'}, {cwd = a.path}):wait() end
 local tsupdate = function() vim.cmd('TSUpdate') end
 require('mini.deps').setup {}
+MiniDeps.add('ibhagwan/fzf-lua')
 MiniDeps.add('navarasu/onedark.nvim')
 MiniDeps.add('neovim/nvim-lspconfig')
-MiniDeps.add('nvim-lua/plenary.nvim')
-MiniDeps.add('nvim-telescope/telescope.nvim')
 MiniDeps.add('nvim-treesitter/nvim-treesitter-context')
-MiniDeps.add({source = 'nvim-telescope/telescope-fzf-native.nvim', hooks = {post_install = make, post_checkout = make}})
 MiniDeps.add({source = 'nvim-treesitter/nvim-treesitter', hooks = {post_checkout = tsupdate}})
 MiniDeps.add({source = 'ojroques/nvim-bufbar', checkout = 'personal'})
 
@@ -31,18 +28,18 @@ require('mini.basics').setup {
 require('mini.bracketed').setup {}
 -- mini.bufremove
 require('mini.bufremove').setup {}
-vim.keymap.set('n', '<leader>w', MiniBufremove.delete)
+vim.keymap.set('n', 'gd', MiniBufremove.delete)
 -- mini.completion
 require('mini.completion').setup {lsp_completion = {source_func = 'omnifunc', auto_setup = false}}
 vim.keymap.set('i', '<Tab>', function() return vim.fn.pumvisible() == 1 and '<C-n>' or '<Tab>' end, {expr = true})
 vim.keymap.set('i', '<S-Tab>', function() return vim.fn.pumvisible() == 1 and '<C-p>' or '<S-Tab>' end, {expr = true})
 -- mini.diff
 require('mini.diff').setup {view = {signs = {add = '+', change = '~', delete = '-'}}}
-vim.keymap.set('n', '<leader>gR', 'gHae', {remap = true})
-vim.keymap.set('n', '<leader>gS', 'ghae', {remap = true})
-vim.keymap.set('n', '<leader>gp', MiniDiff.toggle_overlay)
-vim.keymap.set('n', '<leader>gr', 'gHgh', {remap = true})
-vim.keymap.set('n', '<leader>gs', 'ghgh', {remap = true})
+vim.keymap.set('n', 'ghp', MiniDiff.toggle_overlay)
+vim.keymap.set('n', 'ghR', 'gHae', {remap = true})
+vim.keymap.set('n', 'ghS', 'ghae', {remap = true})
+vim.keymap.set('n', 'ghr', 'gHgh', {remap = true})
+vim.keymap.set('n', 'ghs', 'ghgh', {remap = true})
 -- mini.files
 require('mini.files').setup {}
 vim.keymap.set('n', '-', function() MiniFiles.open(vim.api.nvim_buf_get_name(0)) end)
@@ -59,7 +56,10 @@ require('mini.misc').setup_auto_root()
 require('mini.notify').setup {}
 vim.notify = MiniNotify.make_notify()
 -- mini.operators
-require('mini.operators').setup {replace = {prefix = 'cr'}}
+require('mini.operators').setup {
+  evaluate = {prefix = ''}, multiply = {prefix = ''},
+  exchange = {prefix = 'cx'}, replace = {prefix = 'cr'},
+}
 -- mini.statusline
 require('mini.statusline').setup {}
 -- mini.surround
@@ -70,7 +70,6 @@ require('mini.surround').setup {mappings = {
 vim.keymap.del('x', 'ys')
 -- mini.trailspace
 require('mini.trailspace').setup {}
-vim.keymap.set('n', '<leader>t', MiniTrailspace.trim)
 -- nvim-bufbar
 require('bufbar').setup {}
 -- nvim-treesitter
@@ -86,20 +85,18 @@ require('onedark').setup {
   highlights = {TreesitterContext = {bg = require('onedark.palette').dark.bg1, fmt = 'italic'}},
 }
 require('onedark').load()
--- telescope.nvim
-require('telescope').setup {
-  defaults = {layout_strategy = 'vertical'},
-  pickers = {grep_string = {use_regex = true}},
+-- fzf-lua
+fzf_lua = require('fzf-lua')
+fzf_lua.setup {
+  keymap = {builtin = {true, ['jj'] = 'hide'}},
+  grep = {RIPGREP_CONFIG_PATH = vim.env.RIPGREP_CONFIG_PATH},
+  winopts = {preview = {layout = 'vertical', vertical = 'up:50%'}},
 }
-require('telescope').load_extension('fzf')
-local telescope_builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>/', telescope_builtin.search_history)
-vim.keymap.set('n', '<leader>;', telescope_builtin.command_history)
-vim.keymap.set('n', '<leader>R', function() telescope_builtin.grep_string({search = vim.fn.input('Grep > ')}) end)
-vim.keymap.set('n', '<leader>f', telescope_builtin.find_files)
-vim.keymap.set('n', '<leader>h', telescope_builtin.resume)
-vim.keymap.set('n', '<leader>r', telescope_builtin.live_grep)
-vim.keymap.set('n', 's', telescope_builtin.buffers)
+vim.keymap.set('n', 'sb', fzf_lua.buffers)
+vim.keymap.set('n', 'sf', fzf_lua.files)
+vim.keymap.set('n', 'sg', fzf_lua.grep)
+vim.keymap.set('n', 'sl', fzf_lua.live_grep)
+vim.keymap.set('n', 'sr', fzf_lua.resume)
 
 -------------------- LSP -------------------------------------------------------
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -109,12 +106,12 @@ for _, ls in ipairs({'bashls', 'gopls', 'pylsp'}) do
     capabilities = capabilities,
     on_attach = function(_, buf)
       vim.bo[buf].omnifunc = 'v:lua.MiniCompletion.completefunc_lsp'
-      vim.keymap.set('n', '<C-]>', telescope_builtin.lsp_definitions, {buffer = buf})
-      vim.keymap.set('n', 'gqe', vim.lsp.buf.format, {buffer = buf})
-      vim.keymap.set('n', 'grd', telescope_builtin.diagnostics, {buffer = buf})
-      vim.keymap.set('n', 'gri', telescope_builtin.lsp_implementations, {buffer = buf})
-      vim.keymap.set('n', 'grr', telescope_builtin.lsp_references, {buffer = buf})
-      vim.keymap.set('n', 'grt', telescope_builtin.lsp_type_definitions, {buffer = buf})
+      vim.keymap.set('n', 'gqae', vim.lsp.buf.format, {buffer = buf})
+      vim.keymap.set('n', 'grd', function() fzf_lua.lsp_definitions({jump_to_single_result = true}) end, {buffer = buf})
+      vim.keymap.set('n', 'gre', function() fzf_lua.lsp_workspace_diagnostics({jump_to_single_result = true}) end, {buffer = buf})
+      vim.keymap.set('n', 'gri', function() fzf_lua.lsp_implementations({jump_to_single_result = true}) end, {buffer = buf})
+      vim.keymap.set('n', 'grr', function() fzf_lua.lsp_references({jump_to_single_result = true}) end, {buffer = buf})
+      vim.keymap.set('n', 'grt', function() fzf_lua.lsp_typedefs({jump_to_single_result = true}) end, {buffer = buf})
     end,
   }
 end
@@ -154,14 +151,14 @@ local function substitute()
   local cmd = ':%s//gcI<Left><Left><Left><Left>'
   return vim.fn.mode() == 'n' and string.format(cmd, '%s') or string.format(cmd, 's')
 end
-vim.keymap.set('', '<leader>s', substitute, {expr = true})
-vim.keymap.set('', '<space>', '<C-w>')
+vim.keymap.set('', '<Space>', '<C-w>')
+vim.keymap.set('', 'S', substitute, {expr = true})
 vim.keymap.set('i', 'jj', '<ESC>')
 vim.keymap.set('n', '<C-Down>', '<C-w>-')
 vim.keymap.set('n', '<C-Left>', '<C-w><')
 vim.keymap.set('n', '<C-Right>', '<C-w>>')
 vim.keymap.set('n', '<C-Up>', '<C-w>+')
-vim.keymap.set('n', '<leader>u', '<cmd>update<CR>')
-vim.keymap.set('n', '<leader>x', '<cmd>conf qa<CR>')
 vim.keymap.set('n', 'H', 'zh')
 vim.keymap.set('n', 'L', 'zl')
+vim.keymap.set('n', 'U', '<Cmd>update<CR>')
+vim.keymap.set('n', 'X', '<Cmd>conf qa<CR>')
