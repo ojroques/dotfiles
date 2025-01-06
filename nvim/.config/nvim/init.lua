@@ -7,17 +7,17 @@ if not vim.uv.fs_stat(mini) then
 end
 
 -------------------- PLUGINS ---------------------------------------------------
-local tsupdate = function() vim.cmd('TSUpdate') end
 require('mini.deps').setup {}
-MiniDeps.add('ibhagwan/fzf-lua')
 MiniDeps.add('navarasu/onedark.nvim')
 MiniDeps.add('neovim/nvim-lspconfig')
+MiniDeps.add('nvim-treesitter/nvim-treesitter')
 MiniDeps.add('nvim-treesitter/nvim-treesitter-context')
-MiniDeps.add({source = 'nvim-treesitter/nvim-treesitter', hooks = {post_checkout = tsupdate}})
 
 -------------------- PLUGIN SETUP ----------------------------------------------
+-- mini-extra
+require('mini.extra').setup {}
 -- mini.ai
-require('mini.ai').setup {custom_textobjects = {e = require('mini.extra').gen_ai_spec.buffer()}}
+require('mini.ai').setup {custom_textobjects = {e = MiniExtra.gen_ai_spec.buffer()}}
 -- mini.basics
 require('mini.basics').setup {
   options = {basic = false},
@@ -59,6 +59,14 @@ require('mini.operators').setup {
   evaluate = {prefix = ''}, multiply = {prefix = ''},
   exchange = {prefix = 'cx'}, replace = {prefix = 'cr'},
 }
+-- mini-pick
+require('mini.pick').setup {mappings = {refine = '<C-q>', refine_marked = '<M-q>'}}
+vim.keymap.set('n', 'sb', MiniPick.builtin.buffers)
+vim.keymap.set('n', 'sd', MiniExtra.pickers.diagnostic)
+vim.keymap.set('n', 'sf', MiniPick.builtin.files)
+vim.keymap.set('n', 'sg', MiniPick.builtin.grep)
+vim.keymap.set('n', 'sl', MiniPick.builtin.grep_live)
+vim.keymap.set('n', 'sr', MiniPick.builtin.resume)
 -- mini.statusline
 require('mini.statusline').setup {}
 -- mini.surround
@@ -84,18 +92,6 @@ require('onedark').setup {
 require('onedark').load()
 -- tabline
 require('tabline').setup {}
--- fzf-lua
-fzf_lua = require('fzf-lua')
-fzf_lua.setup {
-  keymap = {builtin = {true, ['jj'] = 'hide'}},
-  grep = {RIPGREP_CONFIG_PATH = vim.env.RIPGREP_CONFIG_PATH},
-  winopts = {preview = {layout = 'vertical', vertical = 'up:50%'}},
-}
-vim.keymap.set('n', 'sb', fzf_lua.buffers)
-vim.keymap.set('n', 'sf', fzf_lua.files)
-vim.keymap.set('n', 'sg', fzf_lua.grep)
-vim.keymap.set('n', 'sl', fzf_lua.live_grep)
-vim.keymap.set('n', 'sr', fzf_lua.resume)
 
 -------------------- LSP -------------------------------------------------------
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -106,11 +102,10 @@ for _, ls in ipairs({'bashls', 'gopls', 'pylsp'}) do
     on_attach = function(_, buf)
       vim.bo[buf].omnifunc = 'v:lua.MiniCompletion.completefunc_lsp'
       vim.keymap.set('n', 'gqae', vim.lsp.buf.format, {buffer = buf})
-      vim.keymap.set('n', 'grd', function() fzf_lua.lsp_definitions({jump_to_single_result = true}) end, {buffer = buf})
-      vim.keymap.set('n', 'gre', function() fzf_lua.lsp_workspace_diagnostics({jump_to_single_result = true}) end, {buffer = buf})
-      vim.keymap.set('n', 'gri', function() fzf_lua.lsp_implementations({jump_to_single_result = true}) end, {buffer = buf})
-      vim.keymap.set('n', 'grr', function() fzf_lua.lsp_references({jump_to_single_result = true}) end, {buffer = buf})
-      vim.keymap.set('n', 'grt', function() fzf_lua.lsp_typedefs({jump_to_single_result = true}) end, {buffer = buf})
+      vim.keymap.set('n', 'grd', function() MiniExtra.pickers.lsp({scope = 'definition'}) end, {buffer = buf})
+      vim.keymap.set('n', 'gri', function() MiniExtra.pickers.lsp({scope = 'implementation'}) end, {buffer = buf})
+      vim.keymap.set('n', 'grr', function() MiniExtra.pickers.lsp({scope = 'references'}) end, {buffer = buf})
+      vim.keymap.set('n', 'grt', function() MiniExtra.pickers.lsp({scope = 'type_definition'}) end, {buffer = buf})
     end,
   }
 end
