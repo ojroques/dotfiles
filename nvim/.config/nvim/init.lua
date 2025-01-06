@@ -14,7 +14,6 @@ MiniDeps.add('navarasu/onedark.nvim')
 MiniDeps.add('neovim/nvim-lspconfig')
 MiniDeps.add('nvim-treesitter/nvim-treesitter-context')
 MiniDeps.add({source = 'nvim-treesitter/nvim-treesitter', hooks = {post_checkout = tsupdate}})
-MiniDeps.add({source = 'ojroques/nvim-bufbar', checkout = 'personal'})
 
 -------------------- PLUGIN SETUP ----------------------------------------------
 -- mini.ai
@@ -70,8 +69,6 @@ require('mini.surround').setup {mappings = {
 vim.keymap.del('x', 'ys')
 -- mini.trailspace
 require('mini.trailspace').setup {}
--- nvim-bufbar
-require('bufbar').setup {}
 -- nvim-treesitter
 require('nvim-treesitter.configs').setup {
   ensure_installed = 'all',
@@ -85,6 +82,8 @@ require('onedark').setup {
   highlights = {TreesitterContext = {bg = require('onedark.palette').dark.bg1, fmt = 'italic'}},
 }
 require('onedark').load()
+-- tabline
+require('tabline').setup {}
 -- fzf-lua
 fzf_lua = require('fzf-lua')
 fzf_lua.setup {
