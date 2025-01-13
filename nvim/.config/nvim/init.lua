@@ -14,7 +14,7 @@ MiniDeps.add('nvim-treesitter/nvim-treesitter')
 MiniDeps.add('nvim-treesitter/nvim-treesitter-context')
 
 -------------------- PLUGIN SETUP ----------------------------------------------
--- mini-extra
+-- mini.extra
 require('mini.extra').setup {}
 -- mini.ai
 require('mini.ai').setup {custom_textobjects = {e = MiniExtra.gen_ai_spec.buffer()}}
@@ -59,7 +59,7 @@ require('mini.operators').setup {
   evaluate = {prefix = ''}, multiply = {prefix = ''},
   exchange = {prefix = 'cx'}, replace = {prefix = 'cr'},
 }
--- mini-pick
+-- mini.pick
 require('mini.pick').setup {mappings = {refine = '<C-q>', refine_marked = '<M-q>'}}
 vim.keymap.set('n', 'sb', MiniPick.builtin.buffers)
 vim.keymap.set('n', 'sd', MiniExtra.pickers.diagnostic)
@@ -83,12 +83,8 @@ require('nvim-treesitter.configs').setup {
   highlight = {enable = true},
 }
 -- nvim-treesitter-context
-require('treesitter-context').setup {mode = 'topline'}
+require('treesitter-context').setup {mode = 'topline', separator = '━'}
 -- onedark.nvim
-require('onedark').setup {
-  code_style = {comments = 'none'},
-  highlights = {TreesitterContext = {bg = require('onedark.palette').dark.bg1, fmt = 'italic'}},
-}
 require('onedark').load()
 -- tabline
 require('tabline').setup {}

@@ -1,57 +1,40 @@
--------------------- VARIABLES -------------------------------------------------
 local M = {}
-local colors = {  -- onedark
-  black =      '#181A1F',
-  blue =       '#61AFEF',
-  cyan =       '#56B6C2',
-  green =      '#98C379',
-  grey =       '#5C6370',
-  grey_light = '#31353F',
-  purple =     '#C678DD',
-  red =        '#E86671',
-  white =      '#ABB2BF',
-  yellow =     '#E5C07B',
-}
+local palette = require('onedark.palette').dark
 local colorscheme = {
   separator = {
-    default = {guifg = colors.grey, guibg = colors.grey_light},
+    default = {guifg = palette.fg, guibg = palette.bg1},
   },
   listed = {
-    inactive = {guifg = colors.green, guibg = colors.grey_light},
-    active = {guifg = colors.black, guibg = colors.green},
-    active_low = {guifg = colors.grey, guibg = colors.green},
+    active = {guifg = palette.black, guibg = palette.green},
+    active_low = {guifg = palette.grey, guibg = palette.green},
+    inactive = {guifg = palette.green, guibg = palette.bg1},
   },
   modified = {
-    inactive = {guifg = colors.blue, guibg = colors.grey_light},
-    active = {guifg = colors.black, guibg = colors.blue},
-    active_low = {guifg = colors.grey, guibg = colors.blue},
+    active = {guifg = palette.black, guibg = palette.blue},
+    active_low = {guifg = palette.grey, guibg = palette.blue},
+    inactive = {guifg = palette.blue, guibg = palette.bg1},
   },
   terminal = {
-    inactive = {guifg = colors.red, guibg = colors.grey_light},
-    active = {guifg = colors.black, guibg = colors.red},
-    active_low = {guifg = colors.grey, guibg = colors.red},
+    active = {guifg = palette.black, guibg = palette.red},
+    active_low = {guifg = palette.grey, guibg = palette.red},
+    inactive = {guifg = palette.red, guibg = palette.bg1},
   },
 }
 
--------------------- PRIVATE ---------------------------------------------------
 local function set_hlgroup(text, class, level)
   local hlgroup = string.format('Tabline_%s_%s', class, level)
-
-  if vim.fn.hlexists(hlgroup) == 0 then
-    return text
-  end
-
   return string.format('%%#%s#%s%%*', hlgroup, text)
 end
 
 local function is_excluded(bufnr)
-  return vim.fn.buflisted(bufnr) == 0 or vim.fn.getbufvar(bufnr, '&filetype') == 'qf'
+  local filetype = vim.fn.getbufvar(bufnr, '&filetype')
+  return filetype == 'help' or filetype == 'qf' or filetype == 'minipick'
 end
 
 local function get_buffers()
   local buffers = {}
   local current_bufnr = vim.fn.bufnr()
-  local last_timestamp, last_buffer
+  local last_used, last_buffer
 
   for _, bufinfo in ipairs(vim.fn.getbufinfo({buflisted = 1})) do
     if not is_excluded(bufinfo.bufnr) then
@@ -64,8 +47,8 @@ local function get_buffers()
         terminal = vim.fn.getbufvar(bufinfo.bufnr, '&buftype') == 'terminal',
       }
 
-      if not last_timestamp or bufinfo.lastused > last_timestamp then
-        last_timestamp, last_buffer = bufinfo.lastused, buffer
+      if not last_used or bufinfo.lastused > last_used then
+        last_used, last_buffer = bufinfo.lastused, buffer
       end
 
       table.insert(buffers, buffer)
@@ -105,7 +88,7 @@ local function get_buffer_name(buffer)
   class = buffer.terminal and 'terminal' or class
 
   if not buffer.current then
-    return set_hlgroup(tostring(buffer.bufnr), class, level)
+    return set_hlgroup(string.format(' %d ', buffer.bufnr), class, level)
   end
 
   local name = vim.fn.bufname(buffer.bufnr)
@@ -146,20 +129,6 @@ local function get_buffer_name(buffer)
   return string.format('%s%s%s%s', prefix, head, tail, suffix)
 end
 
--------------------- PUBLIC ----------------------------------------------------
-function M.build_tabline()
-  local buffers = get_buffers()
-  local separator = set_hlgroup('|', 'separator', 'default')
-  local tabline = {}
-
-  for _, buffer in ipairs(buffers) do
-    table.insert(tabline, get_buffer_name(buffer))
-  end
-
-  return table.concat(tabline, separator)
-end
-
--------------------- SETUP -----------------------------------------------------
 local function set_colorscheme()
   local augroup = vim.api.nvim_create_augroup('Tabline', {})
 
@@ -183,10 +152,21 @@ local function set_tabline()
   vim.o.tabline = [[%!luaeval('require("tabline").build_tabline()')]]
 end
 
+function M.build_tabline()
+  local buffers = get_buffers()
+  local separator = set_hlgroup('|', 'separator', 'default')
+  local tabline = {}
+
+  for _, buffer in ipairs(buffers) do
+    table.insert(tabline, get_buffer_name(buffer))
+  end
+
+  return table.concat(tabline, separator)
+end
+
 function M.setup()
   set_colorscheme()
   set_tabline()
 end
 
---------------------------------------------------------------------------------
 return M
