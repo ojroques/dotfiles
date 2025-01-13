@@ -14,7 +14,7 @@ MiniDeps.add('nvim-treesitter/nvim-treesitter')
 MiniDeps.add('nvim-treesitter/nvim-treesitter-context')
 
 -------------------- PLUGIN SETUP ----------------------------------------------
--- mini-extra
+-- mini.extra
 require('mini.extra').setup {}
 -- mini.ai
 require('mini.ai').setup {custom_textobjects = {e = MiniExtra.gen_ai_spec.buffer()}}
@@ -59,7 +59,7 @@ require('mini.operators').setup {
   evaluate = {prefix = ''}, multiply = {prefix = ''},
   exchange = {prefix = 'cx'}, replace = {prefix = 'cr'},
 }
--- mini-pick
+-- mini.pick
 require('mini.pick').setup {mappings = {refine = '<C-q>', refine_marked = '<M-q>'}}
 vim.keymap.set('n', 'sb', MiniPick.builtin.buffers)
 vim.keymap.set('n', 'sd', MiniExtra.pickers.diagnostic)
@@ -75,6 +75,8 @@ require('mini.surround').setup {mappings = {
   find = '', find_left = '', highlight = '', update_n_lines = '', suffix_last = '', suffix_next = '',
 }}
 vim.keymap.del('x', 'ys')
+-- mini.tabline
+require('mini.tabline').setup {}
 -- mini.trailspace
 require('mini.trailspace').setup {}
 -- nvim-treesitter
@@ -83,15 +85,21 @@ require('nvim-treesitter.configs').setup {
   highlight = {enable = true},
 }
 -- nvim-treesitter-context
-require('treesitter-context').setup {mode = 'topline'}
+require('treesitter-context').setup {mode = 'topline', separator = '━'}
 -- onedark.nvim
+local palette = require('onedark.palette').dark
 require('onedark').setup {
-  code_style = {comments = 'none'},
-  highlights = {TreesitterContext = {bg = require('onedark.palette').dark.bg1, fmt = 'italic'}},
+  highlights = {
+    MiniStatuslineFilename = {fg = palette.fg, bg = palette.bg1, fmt = 'bold'},
+    MiniTablineCurrent = {fg = palette.bg1, bg = palette.green, fmt = 'bold'},
+    MiniTablineVisible = {fg = palette.green, bg = palette.bg1},
+    MiniTablineHidden = {fg = palette.green, bg = palette.bg1},
+    MiniTablineModifiedCurrent = {fg = palette.bg1, bg = palette.blue, fmt = 'bold,italic'},
+    MiniTablineModifiedHidden = {fg = palette.blue, bg = palette.bg1, fmt = 'italic'},
+    MiniTablineModifiedVisible = {fg = palette.blue, bg = palette.bg1, fmt = 'italic'},
+  },
 }
 require('onedark').load()
--- tabline
-require('tabline').setup {}
 
 -------------------- LSP -------------------------------------------------------
 local capabilities = vim.lsp.protocol.make_client_capabilities()
