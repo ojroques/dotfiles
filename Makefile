@@ -73,16 +73,16 @@ gui:
 .PHONY: go
 go:
 	@echo "Installing go v1.23..."
-	@curl -fsSL -o go.tar.gz https://go.dev/dl/go1.23.3.linux-amd64.tar.gz
+	@curl -fsSL -o go.tar.gz https://go.dev/dl/go1.23.5.linux-amd64.tar.gz
 	@rm -rf /usr/local/go && tar -C /usr/local -xzf go.tar.gz
 	@rm -f go.tar.gz
 
 .PHONY: neovim
 neovim:
 	@echo "Installing neovim nightly..."
-	@curl -fsSL -O https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
-	@install nvim.appimage /usr/bin/nvim
-	@rm -f nvim.appimage
+	@curl -fsSL -O https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.appimage
+	@install nvim-linux-x86_64.appimage /usr/bin/nvim
+	@rm -f nvim-linux-x86_64.appimage
 
 .PHONY: fzf
 fzf:
