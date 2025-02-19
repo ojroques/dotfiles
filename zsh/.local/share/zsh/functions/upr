@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Go to the project root folder
+function upr {
+  local current=$PWD
+  local root=$PWD
+
+  while true; do
+    if [[ -e $current/.git ]]; then
+      root=$current
+      break
+    fi
+
+    if [[ $current = "/" ]]; then
+      break
+    fi
+
+    current=$(dirname "$current")
+  done
+
+  cd "$root" || return
+}

@@ -16,5 +16,5 @@ function up {
     dir+="../"
   done
 
-  cd "$dir"
+  cd "$dir" || return
 }
