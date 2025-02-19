@@ -50,7 +50,7 @@ MiniDeps.later(MiniIcons.tweak_lsp_kind)
 -- mini.indentscope
 require('mini.indentscope').setup {draw = {animation = require('mini.indentscope').gen_animation.none()}}
 -- mini.misc
-require('mini.misc').setup_auto_root()
+require('mini.misc').setup_auto_root({'.git'})
 -- mini.notify
 require('mini.notify').setup {}
 vim.notify = MiniNotify.make_notify()
