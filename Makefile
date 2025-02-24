@@ -72,8 +72,8 @@ gui:
 
 .PHONY: go
 go:
-	@echo "Installing go v1.23..."
-	@curl -fsSL -o go.tar.gz https://go.dev/dl/go1.23.5.linux-amd64.tar.gz
+	@echo "Installing go v1.24..."
+	@curl -fsSL -o go.tar.gz https://go.dev/dl/go1.24.0.linux-amd64.tar.gz
 	@rm -rf /usr/local/go && tar -C /usr/local -xzf go.tar.gz
 	@rm -f go.tar.gz
 
