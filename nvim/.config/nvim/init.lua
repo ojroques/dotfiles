@@ -10,10 +10,22 @@ end
 require('mini.deps').setup {}
 MiniDeps.add('navarasu/onedark.nvim')
 MiniDeps.add('neovim/nvim-lspconfig')
+MiniDeps.add('nvim-lua/plenary.nvim')
 MiniDeps.add('nvim-treesitter/nvim-treesitter')
 MiniDeps.add('nvim-treesitter/nvim-treesitter-context')
+MiniDeps.add({source = 'theprimeagen/harpoon', checkout = 'harpoon2'})
 
 -------------------- PLUGIN SETUP ----------------------------------------------
+-- harpoon
+local harpoon = require('harpoon'):setup {}
+local harpoon_extensions = require('harpoon.extensions')
+harpoon:extend(harpoon_extensions.builtins.highlight_current_file())
+vim.keymap.set('n', 'M', function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+vim.keymap.set('n', 'm1', function() harpoon:list():select(1) end)
+vim.keymap.set('n', 'm2', function() harpoon:list():select(2) end)
+vim.keymap.set('n', 'm3', function() harpoon:list():select(3) end)
+vim.keymap.set('n', 'm4', function() harpoon:list():select(4) end)
+vim.keymap.set('n', 'mm', function() harpoon:list():add() end)
 -- mini.extra
 require('mini.extra').setup {}
 -- mini.ai
@@ -33,7 +45,7 @@ require('mini.completion').setup {lsp_completion = {source_func = 'omnifunc', au
 vim.keymap.set('i', '<Tab>', function() return vim.fn.pumvisible() == 1 and '<C-n>' or '<Tab>' end, {expr = true})
 vim.keymap.set('i', '<S-Tab>', function() return vim.fn.pumvisible() == 1 and '<C-p>' or '<S-Tab>' end, {expr = true})
 -- mini.diff
-require('mini.diff').setup {view = {signs = {add = '+', change = '~', delete = '-'}}}
+require('mini.diff').setup {}
 vim.keymap.set('n', 'ghp', MiniDiff.toggle_overlay)
 vim.keymap.set('n', 'ghR', 'gHae', {remap = true})
 vim.keymap.set('n', 'ghS', 'ghae', {remap = true})
@@ -42,15 +54,13 @@ vim.keymap.set('n', 'ghs', 'ghgh', {remap = true})
 -- mini.files
 require('mini.files').setup {}
 vim.keymap.set('n', '-', function() MiniFiles.open(vim.api.nvim_buf_get_name(0)) end)
--- mini.git
-require('mini.git').setup {}
 -- mini.icons
 require('mini.icons').setup {}
 MiniDeps.later(MiniIcons.tweak_lsp_kind)
 -- mini.indentscope
 require('mini.indentscope').setup {draw = {animation = require('mini.indentscope').gen_animation.none()}}
 -- mini.misc
-require('mini.misc').setup_auto_root({'.git'})
+require('mini.misc').setup_auto_root {'.git'}
 -- mini.notify
 require('mini.notify').setup {}
 vim.notify = MiniNotify.make_notify()
@@ -67,6 +77,8 @@ vim.keymap.set('n', 'sf', MiniPick.builtin.files)
 vim.keymap.set('n', 'sg', MiniPick.builtin.grep)
 vim.keymap.set('n', 'sl', MiniPick.builtin.grep_live)
 vim.keymap.set('n', 'sr', MiniPick.builtin.resume)
+-- mini.snippets
+require('mini.snippets').setup {}
 -- mini.statusline
 require('mini.statusline').setup {}
 -- mini.surround
@@ -90,11 +102,8 @@ require('onedark').load()
 require('tabline').setup {}
 
 -------------------- LSP -------------------------------------------------------
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = false
 for _, ls in ipairs({'bashls', 'gopls', 'pylsp'}) do
   require('lspconfig')[ls].setup {
-    capabilities = capabilities,
     on_attach = function(_, buf)
       vim.bo[buf].omnifunc = 'v:lua.MiniCompletion.completefunc_lsp'
       vim.keymap.set('n', 'gqae', vim.lsp.buf.format, {buffer = buf})
@@ -107,6 +116,7 @@ for _, ls in ipairs({'bashls', 'gopls', 'pylsp'}) do
 end
 
 -------------------- OPTIONS ---------------------------------------------------
+vim.diagnostic.config {severity_sort = true, virtual_text = true}
 vim.opt.colorcolumn = '+1'                    -- Line length marker
 vim.opt.completeopt = {'menuone', 'noselect'} -- Completion options
 vim.opt.cursorline = true                     -- Highlight cursor line
