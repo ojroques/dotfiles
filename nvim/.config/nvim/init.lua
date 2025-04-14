@@ -109,16 +109,14 @@ local on_attach = function(_, buf)
 end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = false
-for _, ls in ipairs({'bashls', 'gopls', 'pylsp', 'terraformls'}) do
-  require('lspconfig')[ls].setup({capabilities = capabilities, on_attach = on_attach})
-end
+vim.lsp.config('*', {capabilities = capabilities, on_attach = on_attach})
+vim.lsp.enable({'bashls', 'gopls', 'pylsp', 'terraformls'})
 
 -------------------- OPTIONS ---------------------------------------------------
 vim.diagnostic.config({severity_sort = true, virtual_text = true})
 vim.opt.colorcolumn = '+1'                    -- Line length marker
 vim.opt.completeopt = {'menuone', 'noselect'} -- Completion options
 vim.opt.cursorline = true                     -- Highlight cursor line
-vim.opt.diffopt:append {'linematch:60'}       -- Improve diff mode
 vim.opt.expandtab = true                      -- Use spaces instead of tabs
 vim.opt.ignorecase = true                     -- Ignore case
 vim.opt.inccommand = ''                       -- Disable substitution preview
