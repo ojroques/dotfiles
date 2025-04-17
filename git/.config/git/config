@@ -6,15 +6,16 @@
   d = diff
   dc = diff --cached
   i = show --abbrev-commit --date=iso
-  l = log --abbrev-commit --date=human
-  lg = log --graph --format='%C(yellow)%h%Cred%d %Creset%s %Cgreen(%ar) %Cblue%an%Creset'
-  lga = log --graph --all --format='%C(yellow)%h%Cred%d %Creset%s %Cgreen(%ar) %Cblue%an%Creset'
+  l = log --graph --format='%C(yellow)%h%Cred%d %Creset%s %Cgreen(%ar) %Cblue%an%Creset'
   pl = pull
   ps = push
   rb = rebase
   rs = reset
   s = status
   ua = restore --staged
+
+[column]
+  ui = auto
 
 [core]
   pager = delta
@@ -25,9 +26,14 @@
 
 [diff]
   algorithm = histogram
+  colorMoved = true
+  colorMovedWS = allow-indentation-change
+  mnemonicPrefix = true
 
 [fetch]
+  all = true
   prune = true
+  pruneTags = true
 
 [init]
   defaultBranch = main
@@ -43,12 +49,19 @@
 
 [merge]
   conflictstyle = zdiff3
+  tool = nvimdiff3
+
+[mergetool]
+  keepBackup = false
 
 [pull]
   rebase = true
 
 [push]
   autosetupremote = true
+
+[rebase]
+  updateRefs = true
 
 [user]
   useConfigOnly = true
