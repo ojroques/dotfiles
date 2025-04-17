@@ -1,6 +1,3 @@
-#################### VARIABLES #############################
-SHELL = /bin/bash
-
 #################### COMMANDS ##############################
 .PHONY: install-base
 install-base: update base
@@ -46,6 +43,7 @@ base:
 cli: go neovim
 	@echo "Installing cli packages..."
 	@apt-get -y install \
+		7zip \
 		bat \
 		direnv \
 		fd-find \
@@ -64,16 +62,15 @@ gui:
 		alacritty \
 		arc-theme \
 		firefox \
-		fonts-jetbrains-mono \
 		mpv \
+		nomacs \
 		papirus-icon-theme \
-		viewnior \
 		xfce4-taskmanager
 
 .PHONY: go
 go:
 	@echo "Installing go v1.24..."
-	@curl -fsSL -o go.tar.gz https://go.dev/dl/go1.24.0.linux-amd64.tar.gz
+	@curl -fsSL -o go.tar.gz https://go.dev/dl/go1.24.2.linux-amd64.tar.gz
 	@rm -rf /usr/local/go && tar -C /usr/local -xzf go.tar.gz
 	@rm -f go.tar.gz
 
@@ -83,6 +80,15 @@ neovim:
 	@curl -fsSL -O https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.appimage
 	@install nvim-linux-x86_64.appimage /usr/bin/nvim
 	@rm -f nvim-linux-x86_64.appimage
+
+.PHONY: jetbrains-mono
+jetbrains-mono:
+	@echo "Installing jetbrains mono..."
+	@curl -fsSL -o jetbrains-mono.tar.xz https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz
+	@mkdir -p ~/.local/share/fonts/JetBrainsMono
+	@tar -C ~/.local/share/fonts/JetBrainsMono -xJf jetbrains-mono.tar.xz
+	@rm -f jetbrains-mono.tar.xz ~/.local/share/fonts/JetBrainsMono/{*.md,*.txt}
+	@fc-cache -f
 
 .PHONY: fzf
 fzf:

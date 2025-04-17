@@ -12,7 +12,7 @@ This repository contains my config files for:
 - **zsh**
 
 ## Install
-1. In Ubuntu 22.04+, you can use the [Makefile](./Makefile) to install apps:
+1. In Ubuntu 24.04+, you can use the [Makefile](./Makefile) to install apps:
 ```bash
 sudo make install-base  # install base packages
 sudo make install-cli   # install base + CLI packages
@@ -30,7 +30,7 @@ stow alacritty mpv xfce             # GUI configs
 - Change the default shell: `chsh -s /usr/bin/zsh` and reboot
 - Create git configs `~/.config/git/personal` and `~/.config/git/work`
 - Install fzf: `make fzf`
-- Install [JetBrainsMono Nerd Font](https://www.nerdfonts.com/font-downloads)
+- Install JetBrainsMono Nerd Font: `make jetbrains-mono`
 - Generate SSH keys if needed: `ssh-keygen -t ed25519 -C "email@example.com"`
 - Run keychain if needed: `eval $(keychain --quiet --eval id_ed25519)`
 - Configure XFCE if used
