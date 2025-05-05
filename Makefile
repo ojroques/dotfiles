@@ -70,7 +70,7 @@ gui:
 .PHONY: go
 go:
 	@echo "Installing go v1.24..."
-	@curl -fsSL -o go.tar.gz https://go.dev/dl/go1.24.2.linux-amd64.tar.gz
+	@curl -fsSL -o go.tar.gz https://go.dev/dl/go1.24.3.linux-amd64.tar.gz
 	@rm -rf /usr/local/go && tar -C /usr/local -xzf go.tar.gz
 	@rm -f go.tar.gz
 
@@ -87,7 +87,7 @@ jetbrains-mono:
 	@curl -fsSL -o jetbrains-mono.tar.xz https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz
 	@mkdir -p ~/.local/share/fonts/JetBrainsMono
 	@tar -C ~/.local/share/fonts/JetBrainsMono -xJf jetbrains-mono.tar.xz
-	@rm -f jetbrains-mono.tar.xz ~/.local/share/fonts/JetBrainsMono/{*.md,*.txt}
+	@rm -f jetbrains-mono.tar.xz
 	@fc-cache -f
 
 .PHONY: fzf
