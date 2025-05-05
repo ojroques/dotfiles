@@ -32,8 +32,6 @@ require('mini.bufremove').setup()
 vim.keymap.set('n', 'gd', MiniBufremove.delete)
 -- mini.completion
 require('mini.completion').setup({lsp_completion = {source_func = 'omnifunc', auto_setup = false}})
-vim.keymap.set('i', '<Tab>', function() return vim.fn.pumvisible() == 1 and '<C-n>' or '<Tab>' end, {expr = true})
-vim.keymap.set('i', '<S-Tab>', function() return vim.fn.pumvisible() == 1 and '<C-p>' or '<S-Tab>' end, {expr = true})
 -- mini.diff
 require('mini.diff').setup()
 vim.keymap.set('n', 'ghp', MiniDiff.toggle_overlay)
@@ -49,6 +47,11 @@ require('mini.icons').setup()
 MiniDeps.later(MiniIcons.tweak_lsp_kind)
 -- mini.indentscope
 require('mini.indentscope').setup({draw = {animation = require('mini.indentscope').gen_animation.none()}})
+-- mini.keymap
+require('mini.keymap').setup()
+MiniKeymap.map_multistep('i', '<Tab>', {'pmenu_next'})
+MiniKeymap.map_multistep('i', '<S-Tab>', {'pmenu_prev'})
+MiniKeymap.map_multistep('i', '<CR>', {'pmenu_accept'})
 -- mini.misc
 require('mini.misc').setup_auto_root({'.git'})
 -- mini.notify
@@ -89,10 +92,7 @@ vim.keymap.set('n', 'M', bookmarks.toggle_menu)
 -- nvim-bufbar
 require('bufbar').setup()
 -- nvim-treesitter
-require('nvim-treesitter.configs').setup({
-  ensure_installed = 'all',
-  highlight = {enable = true},
-})
+require('nvim-treesitter.configs').setup({ensure_installed = 'all', highlight = {enable = true}})
 -- nvim-treesitter-context
 require('treesitter-context').setup({mode = 'topline', separator = '━'})
 -- onedark.nvim
