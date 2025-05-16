@@ -52,6 +52,7 @@ cli: go neovim
 		ripgrep \
 		shellcheck \
 		tmux \
+		trash-cli \
 		zsh \
 		zsh-syntax-highlighting
 
