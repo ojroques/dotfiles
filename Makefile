@@ -33,6 +33,7 @@ base:
 		htop \
 		manpages-posix \
 		python3-pip \
+		python3-venv \
 		software-properties-common \
 		stow \
 		tree \
@@ -98,6 +99,12 @@ fzf:
 	@git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 	@git clone --depth 1 https://github.com/junegunn/fzf-git.sh.git ~/.fzf-git
 	@~/.fzf/install --xdg --key-bindings --completion --no-update-rc --no-bash --no-fish
+
+.PHONY: aider
+aider:
+	@echo "Installing aider..."
+	@curl -LsSf https://astral.sh/uv/install.sh | sh
+	@uv tool install --force --python python3.12 --with pip aider-chat@latest
 
 #################### LANGUAGE SERVERS ######################
 .PHONY: lsp

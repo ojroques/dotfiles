@@ -1,6 +1,7 @@
 # dotfiles
 
 This repository contains my config files for:
+- **aider**
 - **alacritty**
 - **git**
 - **mpv**
@@ -22,8 +23,8 @@ sudo make clean         # clean up packages
 ```
 2. Run [stow](https://www.gnu.org/software/stow/) to symlink config files:
 ```bash
-stow git nvim ripgrep tmux vim zsh  # CLI configs
-stow alacritty mpv xfce             # GUI configs
+stow aider git nvim ripgrep tmux vim zsh  # CLI configs
+stow alacritty mpv xfce                   # GUI configs
 ```
 
 ## Post-installation steps
@@ -34,3 +35,4 @@ stow alacritty mpv xfce             # GUI configs
 - Generate SSH keys if needed: `ssh-keygen -t ed25519 -C "email@example.com"`
 - Run keychain if needed: `eval $(keychain --quiet --eval id_ed25519)`
 - Configure XFCE if used
+- Set environment variables in `~/.env`
