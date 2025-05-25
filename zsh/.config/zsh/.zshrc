@@ -32,7 +32,7 @@ fpath=("$XDG_DATA_HOME/zsh/functions" "$XDG_DATA_HOME/zsh/prompt" $fpath)
 
 # PATH
 typeset -U path
-path=("$HOME/.local/bin" "$HOME/go/bin" "/usr/local/go/bin" $path)
+path=("$XDG_BIN_HOME" "$HOME/go/bin" "/usr/local/go/bin" "$HOME/.node_modules/bin" $path)
 export PATH
 
 # GIT
@@ -94,6 +94,7 @@ alias wk="cd $HOME/Work"
 export BAT_THEME="OneHalfDark"
 export MANPAGER='nvim --appimage-extract-and-run +Man!'
 export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/config"
+export NPM_CONFIG_PREFIX="$HOME/.node_modules"
 
 # EXTERNAL SOURCES
 [[ -x /usr/bin/dircolors ]] && eval "$(dircolors -b)"

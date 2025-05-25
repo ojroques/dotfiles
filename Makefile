@@ -1,4 +1,4 @@
-#################### COMMANDS ##############################
+#################### COMMANDS ##################################################
 .PHONY: install-base
 install-base: update base
 
@@ -8,33 +8,33 @@ install-cli: install-base cli
 .PHONY: install-gui
 install-gui: install-base gui
 
-.PHONY: install-lsp
-install-lsp: install-base lsp
+.PHONY: install-ls
+install-ls: bashls gols pythonls
 
 .PHONY: update
 update:
 	@echo "Updating packages..."
-	@apt-get update
-	@apt-get -y upgrade
+	@apt update
+	@apt -y upgrade
 
 .PHONY: clean
 clean:
 	@echo "Cleaning up..."
-	@apt-get -y autoremove
+	@apt -y autoremove
 
-#################### APPS ##################################
+#################### PACKAGES ##################################################
 .PHONY: base
 base:
 	@echo "Installing base packages..."
-	@apt-get -y install \
+	@apt -y install \
 		build-essential \
 		curl \
+		direnv \
 		git \
-		htop \
 		manpages-posix \
-		python3-pip \
 		software-properties-common \
 		stow \
+		tmux \
 		tree \
 		unzip \
 		vim
@@ -42,16 +42,17 @@ base:
 .PHONY: cli
 cli: go neovim
 	@echo "Installing cli packages..."
-	@apt-get -y install \
+	@apt -y install \
 		7zip \
 		bat \
-		direnv \
 		fd-find \
 		git-delta \
+		htop \
 		keychain \
+		nodejs \
+		npm \
 		ripgrep \
 		shellcheck \
-		tmux \
 		trash-cli \
 		zsh \
 		zsh-syntax-highlighting
@@ -59,7 +60,7 @@ cli: go neovim
 .PHONY: gui
 gui:
 	@echo "Installing gui packages..."
-	@apt-get -y install \
+	@apt -y install \
 		alacritty \
 		arc-theme \
 		firefox \
@@ -82,6 +83,32 @@ neovim:
 	@install nvim-linux-x86_64.appimage /usr/bin/nvim
 	@rm -f nvim-linux-x86_64.appimage
 
+#################### LANGUAGE SERVERS ##########################################
+.PHONY: bashls
+bashls:
+	@echo "Installing bash language server..."
+	@npm install -g bash-language-server
+	@go install mvdan.cc/sh/v3/cmd/shfmt@latest
+
+.PHONY: gols
+gols:
+	@echo "Installing go language server..."
+	@go install golang.org/x/tools/gopls@latest
+
+.PHONY: pythonls
+pythonls: uv
+	@echo "Installing python language server..."
+	@uv tool install ty@latest
+
+#################### APPS ######################################################
+.PHONY: fzf
+fzf:
+	@echo "Installing fzf..."
+	@rm -rf ~/.fzf ~/.fzf-git
+	@git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+	@git clone --depth 1 https://github.com/junegunn/fzf-git.sh.git ~/.fzf-git
+	@~/.fzf/install --xdg --key-bindings --completion --no-update-rc --no-bash --no-fish
+
 .PHONY: jetbrains-mono
 jetbrains-mono:
 	@echo "Installing jetbrains mono..."
@@ -91,30 +118,7 @@ jetbrains-mono:
 	@rm -f jetbrains-mono.tar.xz
 	@fc-cache -f
 
-.PHONY: fzf
-fzf:
-	@echo "Installing fzf..."
-	@rm -rf ~/.fzf ~/.fzf-git
-	@git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-	@git clone --depth 1 https://github.com/junegunn/fzf-git.sh.git ~/.fzf-git
-	@~/.fzf/install --xdg --key-bindings --completion --no-update-rc --no-bash --no-fish
-
-#################### LANGUAGE SERVERS ######################
-.PHONY: lsp
-lsp: bashls gols pythonls
-
-.PHONY: bashls
-bashls:
-	@echo "Installing bash language server..."
-	@apt-get -y install nodejs npm
-	@npm install -g bash-language-server
-
-.PHONY: gols
-gols: go
-	@echo "Installing go language server..."
-	@GOBIN=/usr/local/go/bin /usr/local/go/bin/go install golang.org/x/tools/gopls@latest
-
-.PHONY: pythonls
-pythonls:
-	@echo "Installing python3 language server..."
-	@pip3 install --break-system-packages jedi python-lsp-server[pyflakes,pycodestyle,yapf]
+.PHONY: uv
+uv:
+	@echo "Installing uv..."
+	@curl -fsSL https://astral.sh/uv/install.sh | sh

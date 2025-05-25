@@ -112,7 +112,7 @@ end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = false
 vim.lsp.config('*', {capabilities = capabilities, on_attach = on_attach})
-vim.lsp.enable({'bashls', 'gopls', 'pylsp', 'terraformls'})
+vim.lsp.enable({'bashls', 'gopls', 'ty'})
 
 -------------------- OPTIONS ---------------------------------------------------
 vim.diagnostic.config({severity_sort = true, virtual_text = true})
