@@ -1,0 +1,8 @@
+model: anthropic/claude-3-7-sonnet-20250219
+dark-mode: true
+code-theme: one-dark
+gitignore: false
+auto-commits: false
+dirty-commits: false
+analytics-disable: true
+disable-playwright: true
