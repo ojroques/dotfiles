@@ -102,4 +102,5 @@ export NPM_CONFIG_PREFIX="$HOME/.node_modules"
 [[ -r /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 [[ -r "$XDG_CONFIG_HOME/fzf/fzf.zsh" ]] && source "$XDG_CONFIG_HOME/fzf/fzf.zsh"
 [[ -r "$HOME/.fzf-git/fzf-git.sh" ]] && source "$HOME/.fzf-git/fzf-git.sh"
-[[ -r "$HOME/.env" ]] && source "$HOME/.env"
+[[ -r "$XDG_CONFIG_HOME/zsh/.env" ]] && source "$XDG_CONFIG_HOME/zsh/.env"
+[[ -r "$XDG_CONFIG_HOME/zsh/.run" ]] && source "$XDG_CONFIG_HOME/zsh/.run"

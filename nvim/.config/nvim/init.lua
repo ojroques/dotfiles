@@ -10,7 +10,7 @@ end
 require('mini.deps').setup()
 MiniDeps.add({source = 'navarasu/onedark.nvim', checkout = 'master'})
 MiniDeps.add({source = 'neovim/nvim-lspconfig', checkout = 'master'})
-MiniDeps.add({source = 'nvim-treesitter/nvim-treesitter', checkout = 'master'})
+MiniDeps.add({source = 'nvim-treesitter/nvim-treesitter', checkout = 'main'})
 MiniDeps.add({source = 'nvim-treesitter/nvim-treesitter-context', checkout = 'master'})
 MiniDeps.add({source = 'ojroques/nvim-bookmarks', checkout = 'main'})
 MiniDeps.add({source = 'ojroques/nvim-bufbar', checkout = 'personal'})
@@ -58,8 +58,7 @@ require('mini.notify').setup()
 vim.notify = MiniNotify.make_notify()
 -- mini.operators
 require('mini.operators').setup({
-  exchange = {prefix = 'cx'}, replace = {prefix = 'cr'},
-  evaluate = {prefix = ''}, multiply = {prefix = ''},
+  exchange = {prefix = ''}, replace = {prefix = 'cr'}, evaluate = {prefix = ''}, multiply = {prefix = ''},
 })
 -- mini.pick
 require('mini.pick').setup({mappings = {refine = '<C-q>', refine_marked = '<M-q>'}})
@@ -91,9 +90,10 @@ vim.keymap.set('n', 'M', bookmarks.toggle_menu)
 -- nvim-bufbar
 require('bufbar').setup()
 -- nvim-treesitter
-require('nvim-treesitter.configs').setup({
-  ensure_installed = 'all',
-  highlight = {enable = true},
+local parsers = require('nvim-treesitter.config').installed_parsers()
+vim.api.nvim_create_autocmd('FileType', {
+  group = vim.api.nvim_create_augroup('init', {}),
+  callback = function(a) if vim.list_contains(parsers, a.match) then vim.treesitter.start(a.buf, a.match) end end,
 })
 -- nvim-treesitter-context
 require('treesitter-context').setup({mode = 'topline', separator = '━'})

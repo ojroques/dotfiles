@@ -21,8 +21,8 @@ sudo make clean         # clean up packages
 ```
 2. Install additional apps:
 ```bash
-make install-ls             # language servers
-make fzf jetbrains-mono uv  # user apps
+make install-ls                         # language servers
+make fzf jetbrains-mono tree-sitter uv  # user apps
 ```
 3. Run [stow](https://www.gnu.org/software/stow/) to symlink config files:
 ```bash
@@ -37,3 +37,4 @@ stow alacritty mpv xfce             # GUI configs
 - Run keychain if needed: `eval $(keychain --quiet --eval id_ed25519)`
 - Configure XFCE if used
 - Export environment variables in `~/.env`
+- Add additional commands to run in `~/.run`

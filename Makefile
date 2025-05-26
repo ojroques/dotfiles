@@ -118,6 +118,11 @@ jetbrains-mono:
 	@rm -f jetbrains-mono.tar.xz
 	@fc-cache -f
 
+.PHONY: tree-sitter
+tree-sitter:
+	@echo "Installing tree-sitter..."
+	@npm install -g tree-sitter-cli
+
 .PHONY: uv
 uv:
 	@echo "Installing uv..."
