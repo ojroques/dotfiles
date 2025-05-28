@@ -45,9 +45,9 @@ cli: go neovim
 	@apt -y install \
 		7zip \
 		bat \
+		btop \
 		fd-find \
 		git-delta \
-		htop \
 		keychain \
 		nodejs \
 		npm \
