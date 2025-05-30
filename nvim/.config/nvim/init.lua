@@ -58,7 +58,8 @@ require('mini.notify').setup()
 vim.notify = MiniNotify.make_notify()
 -- mini.operators
 require('mini.operators').setup({
-  exchange = {prefix = ''}, replace = {prefix = 'cr'}, evaluate = {prefix = ''}, multiply = {prefix = ''},
+  replace = {prefix = 'cr'},
+  exchange = {prefix = ''}, evaluate = {prefix = ''}, multiply = {prefix = ''},
 })
 -- mini.pick
 require('mini.pick').setup({mappings = {refine = '<C-q>', refine_marked = '<M-q>'}})
@@ -89,12 +90,6 @@ vim.keymap.set('n', 'm4', function() bookmarks.open(4) end)
 vim.keymap.set('n', 'M', bookmarks.toggle_menu)
 -- nvim-bufbar
 require('bufbar').setup()
--- nvim-treesitter
-local parsers = require('nvim-treesitter.config').installed_parsers()
-vim.api.nvim_create_autocmd('FileType', {
-  group = vim.api.nvim_create_augroup('init', {}),
-  callback = function(a) if vim.list_contains(parsers, a.match) then vim.treesitter.start(a.buf, a.match) end end,
-})
 -- nvim-treesitter-context
 require('treesitter-context').setup({mode = 'topline', separator = '━'})
 -- onedark.nvim
@@ -113,6 +108,17 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = false
 vim.lsp.config('*', {capabilities = capabilities, on_attach = on_attach})
 vim.lsp.enable({'bashls', 'gopls', 'ty'})
+
+-------------------- TREESITTER ------------------------------------------------
+vim.api.nvim_create_autocmd('FileType', {
+  group = vim.api.nvim_create_augroup('treesitter', {}),
+  callback = function(a)
+    lang = vim.treesitter.language.get_lang(a.match)
+    if vim.treesitter.language.add(lang) then
+      vim.treesitter.start(a.buf, lang)
+    end
+  end,
+})
 
 -------------------- OPTIONS ---------------------------------------------------
 vim.diagnostic.config({severity_sort = true, virtual_text = true})
