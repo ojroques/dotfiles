@@ -29,7 +29,7 @@ require('mini.basics').setup({
 require('mini.bracketed').setup()
 -- mini.bufremove
 require('mini.bufremove').setup()
-vim.keymap.set('n', 'gd', MiniBufremove.delete)
+vim.keymap.set('n', '<Leader>d', MiniBufremove.delete)
 -- mini.completion
 require('mini.completion').setup({lsp_completion = {source_func = 'omnifunc', auto_setup = false}})
 -- mini.diff
@@ -82,12 +82,12 @@ require('mini.trailspace').setup()
 -- nvim-bookmarks
 local bookmarks = require('bookmarks')
 bookmarks.setup()
-vim.keymap.set('n', 'mm', bookmarks.add)
+vim.keymap.set('n', '<Leader>m', bookmarks.toggle_menu)
 vim.keymap.set('n', 'm1', function() bookmarks.open(1) end)
 vim.keymap.set('n', 'm2', function() bookmarks.open(2) end)
 vim.keymap.set('n', 'm3', function() bookmarks.open(3) end)
 vim.keymap.set('n', 'm4', function() bookmarks.open(4) end)
-vim.keymap.set('n', 'M', bookmarks.toggle_menu)
+vim.keymap.set('n', 'mm', bookmarks.add)
 -- nvim-bufbar
 require('bufbar').setup()
 -- nvim-treesitter-context
@@ -96,9 +96,9 @@ require('treesitter-context').setup({mode = 'topline', separator = '━'})
 require('onedark').load()
 
 -------------------- LSP -------------------------------------------------------
-local on_attach = function(_, buf)
+local function on_attach(_, buf)
   vim.bo[buf].omnifunc = 'v:lua.MiniCompletion.completefunc_lsp'
-  vim.keymap.set('n', 'gqae', vim.lsp.buf.format, {buffer = buf})
+  vim.keymap.set('n', 'gqe', vim.lsp.buf.format, {buffer = buf})
   vim.keymap.set('n', 'grd', function() MiniExtra.pickers.lsp({scope = 'definition'}) end, {buffer = buf})
   vim.keymap.set('n', 'gri', function() MiniExtra.pickers.lsp({scope = 'implementation'}) end, {buffer = buf})
   vim.keymap.set('n', 'grr', function() MiniExtra.pickers.lsp({scope = 'references'}) end, {buffer = buf})
@@ -122,47 +122,49 @@ vim.api.nvim_create_autocmd('FileType', {
 
 -------------------- OPTIONS ---------------------------------------------------
 vim.diagnostic.config({severity_sort = true, virtual_text = true})
-vim.opt.colorcolumn = '+1'                    -- Line length marker
-vim.opt.completeopt = {'menuone', 'noselect'} -- Completion options
-vim.opt.cursorline = true                     -- Highlight cursor line
-vim.opt.expandtab = true                      -- Use spaces instead of tabs
-vim.opt.ignorecase = true                     -- Ignore case
-vim.opt.inccommand = ''                       -- Disable substitution preview
-vim.opt.list = true                           -- Show invisible characters
-vim.opt.mouse = ''                            -- Disable mouse
-vim.opt.number = true                         -- Show line numbers
-vim.opt.pumheight = 12                        -- Max height of pop-up menu
-vim.opt.relativenumber = true                 -- Show relative line numbers
-vim.opt.report = 0                            -- Always report changed lines
-vim.opt.scrolloff = 4                         -- Lines of context
-vim.opt.shiftround = true                     -- Round indent
-vim.opt.shiftwidth = 0                        -- Indent size
-vim.opt.shortmess = 'atToOcCF'                -- Prompt message options
-vim.opt.sidescrolloff = 12                    -- Columns of context
-vim.opt.signcolumn = 'yes'                    -- Show sign column
-vim.opt.smartcase = true                      -- Do not ignore capital letters
-vim.opt.smartindent = true                    -- Insert indents automatically
-vim.opt.splitbelow = true                     -- Put new window below current
-vim.opt.splitright = true                     -- Put new window right of current
-vim.opt.tabstop = 2                           -- Number of spaces tabs count for
-vim.opt.textwidth = 99                        -- Max width of text
-vim.opt.updatetime = 200                      -- Delay before swap file is saved
-vim.opt.wildmode = {'list:longest'}           -- Command completion options
-vim.opt.wrap = false                          -- Disable line wrap
+vim.opt.colorcolumn = '+1'                                      -- Line length marker
+vim.opt.completeopt = {'menuone', 'noselect'}                   -- Completion options
+vim.opt.cursorline = true                                       -- Highlight cursor line
+vim.opt.diffopt = {'internal', 'context:999999', 'inline:none'} -- Diff mode options
+vim.opt.expandtab = true                                        -- Use spaces instead of tabs
+vim.opt.ignorecase = true                                       -- Ignore case
+vim.opt.inccommand = ''                                         -- Disable substitution preview
+vim.opt.list = true                                             -- Show invisible characters
+vim.opt.mouse = ''                                              -- Disable mouse
+vim.opt.number = true                                           -- Show line numbers
+vim.opt.pumheight = 12                                          -- Max height of pop-up menu
+vim.opt.relativenumber = true                                   -- Show relative line numbers
+vim.opt.report = 0                                              -- Always report changed lines
+vim.opt.scrolloff = 4                                           -- Lines of context
+vim.opt.shiftround = true                                       -- Round indent
+vim.opt.shiftwidth = 0                                          -- Indent size
+vim.opt.shortmess = 'atToOcCF'                                  -- Prompt message options
+vim.opt.sidescrolloff = 12                                      -- Columns of context
+vim.opt.signcolumn = 'yes'                                      -- Show sign column
+vim.opt.smartcase = true                                        -- Do not ignore capital letters
+vim.opt.smartindent = true                                      -- Insert indents automatically
+vim.opt.splitbelow = true                                       -- Put new window below current
+vim.opt.splitright = true                                       -- Put new window right of current
+vim.opt.tabstop = 2                                             -- Number of spaces tabs count for
+vim.opt.textwidth = 99                                          -- Max width of text
+vim.opt.updatetime = 200                                        -- Delay before swap file is saved
+vim.opt.wildmode = {'list:longest'}                             -- Command completion options
+vim.opt.wrap = false                                            -- Disable line wrap
 
 -------------------- MAPPINGS --------------------------------------------------
 local function substitute()
   local cmd = ':%s//gcI<Left><Left><Left><Left>'
   return vim.fn.mode() == 'n' and string.format(cmd, '%s') or string.format(cmd, 's')
 end
+vim.keymap.set('', '<Leader>s', substitute, {expr = true})
 vim.keymap.set('', '<Space>', '<C-w>')
-vim.keymap.set('', 'S', substitute, {expr = true})
 vim.keymap.set('i', 'jj', '<ESC>')
 vim.keymap.set('n', '<C-Down>', '<C-w>-')
 vim.keymap.set('n', '<C-Left>', '<C-w><')
 vim.keymap.set('n', '<C-Right>', '<C-w>>')
 vim.keymap.set('n', '<C-Up>', '<C-w>+')
+vim.keymap.set('n', '<Leader>u', '<Cmd>update<CR>')
+vim.keymap.set('n', '<Leader>x', '<Cmd>conf qa<CR>')
 vim.keymap.set('n', 'H', 'zh')
 vim.keymap.set('n', 'L', 'zl')
-vim.keymap.set('n', 'U', '<Cmd>update<CR>')
-vim.keymap.set('n', 'X', '<Cmd>conf qa<CR>')
+vim.keymap.set('n', 'gyp', function() vim.fn.setreg('+', vim.fn.expand('%:p:~')) end)
