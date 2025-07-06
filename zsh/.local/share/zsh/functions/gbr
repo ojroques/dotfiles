@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# Open the current git repository in the browser
+function gbr {
+  local file=$1
+  local branch=$(git branch --show-current 2> /dev/null)
+  local commit=$(git rev-parse HEAD 2> /dev/null)
+  local rev=${branch:-$commit}
+
+  if [[ -z $rev ]]; then
+    echo "error: not in a git repository"
+    return 1
+  fi
+
+  local remote=$(git config branch."$branch".remote || echo "origin")
+  local remote_url=$(git remote get-url "$remote" 2> /dev/null)
+  local host repository url
+
+  if [[ -z $remote_url ]]; then
+    echo "error: no git remote found"
+    return 1
+  fi
+
+  if [[ $remote_url =~ "^git@([^:]*):(.*)$" ]]; then
+    host=${match[1]}
+    repository=${match[2]%.git}
+  elif [[ $remote_url =~ "^https://([^/]*)/(.*)$" ]]; then
+    host=${match[1]}
+    repository=${match[2]%.git}
+  else
+    echo "error: could not parse git remote url: $remote_url"
+    return 1
+  fi
+
+  if [[ $host =~ "github" ]]; then
+    [[ -z $file || -d $file ]] && url="https://$host/$repository/tree/$rev/$file"
+    [[ -f $file ]] && url="https://$host/$repository/blob/$rev/$file"
+  elif [[ $host =~ "gitlab" ]]; then
+    [[ -z $file || -d $file ]] && url="https://$host/$repository/-/tree/$rev/$file"
+    [[ -f $file ]] && url="https://$host/$repository/-/blob/$rev/$file"
+  else
+    echo "error: unsupported git host: $host"
+    return 1
+  fi
+
+  xdg-open "$url"
+}
