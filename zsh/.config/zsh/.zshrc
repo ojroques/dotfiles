@@ -93,8 +93,8 @@ alias wk="cd $HOME/Work"
 # APP PARAMETERS
 export BAT_THEME="OneHalfDark"
 export MANPAGER='nvim --appimage-extract-and-run +Man!'
-export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/config"
 export NPM_CONFIG_PREFIX="$HOME/.node_modules"
+export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/config"
 
 # EXTERNAL SOURCES
 [[ -x /usr/bin/dircolors ]] && eval "$(dircolors -b)"

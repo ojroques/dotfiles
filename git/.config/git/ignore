@@ -1,4 +1,2 @@
-.aider*
-!.aider.conf.yml
-!.aider.model.settings.yml
+*.swp
 .envrc

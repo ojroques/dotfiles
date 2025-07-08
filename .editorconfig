@@ -1,4 +1,0 @@
-[*.lua]
-align_continuous_assign_statement = true
-quote_style = single
-space_around_table_field_list = false

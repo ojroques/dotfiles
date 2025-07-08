@@ -1,7 +1,6 @@
 # dotfiles
 
 This repository contains my config files for:
-- **aider**
 - **alacritty**
 - **git**
 - **mpv**
@@ -22,13 +21,13 @@ sudo make clean         # clean up packages
 ```
 2. Install additional apps:
 ```bash
-make install-ls                               # language servers
-make aider fzf jetbrains-mono tree-sitter uv  # user apps
+make install-ls                         # language servers
+make fzf jetbrains-mono tree-sitter uv  # user apps
 ```
 3. Run [stow](https://www.gnu.org/software/stow/) to symlink config files:
 ```bash
-stow aider git nvim ripgrep tmux vim zsh  # CLI configs
-stow alacritty mpv xfce                   # GUI configs
+stow git nvim ripgrep tmux vim zsh  # CLI configs
+stow alacritty mpv xfce             # GUI configs
 ```
 
 ## Post-install

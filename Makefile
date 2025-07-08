@@ -101,11 +101,6 @@ pythonls: uv
 	@uv tool install ty@latest
 
 #################### APPS ######################################################
-.PHONY: aider
-aider:
-	@echo "Installing aider..."
-	@uv tool install --with pip aider-chat@latest
-
 .PHONY: fzf
 fzf:
 	@echo "Installing fzf..."
