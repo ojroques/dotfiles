@@ -56,8 +56,10 @@ zstyle ':completion:*' completer _expand _complete
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' list-dirs-first true
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*:descriptions' format '%F{magenta}-- %d --%f'
-zstyle ':completion:*:warnings' format '%F{yellow}-- %d --%f'
+zstyle ':completion:*:descriptions' format '[%d]'
+zstyle ':fzf-tab:*' fzf-bindings 'ctrl-x:toggle'
+zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
+zstyle ':fzf-tab:*' switch-group '<' '>'
 
 # FUNCTIONS
 autoload -Uz "$XDG_DATA_HOME/zsh/functions"/*(:t)
@@ -102,5 +104,6 @@ export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/config"
 [[ -r /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 [[ -r "$XDG_CONFIG_HOME/fzf/fzf.zsh" ]] && source "$XDG_CONFIG_HOME/fzf/fzf.zsh"
 [[ -r "$HOME/.fzf-git/fzf-git.sh" ]] && source "$HOME/.fzf-git/fzf-git.sh"
+[[ -r "$HOME/.fzf-tab/fzf-tab.plugin.zsh" ]] && source "$HOME/.fzf-tab/fzf-tab.plugin.zsh"
 [[ -r "$XDG_CONFIG_HOME/zsh/.env" ]] && source "$XDG_CONFIG_HOME/zsh/.env"
 [[ -r "$XDG_CONFIG_HOME/zsh/.run" ]] && source "$XDG_CONFIG_HOME/zsh/.run"

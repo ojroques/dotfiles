@@ -104,9 +104,10 @@ pythonls: uv
 .PHONY: fzf
 fzf:
 	@echo "Installing fzf..."
-	@rm -rf ~/.fzf ~/.fzf-git
+	@rm -rf ~/.fzf ~/.fzf-git ~/.fzf-tab
 	@git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 	@git clone --depth 1 https://github.com/junegunn/fzf-git.sh.git ~/.fzf-git
+	@git clone --depth 1 https://github.com/Aloxaf/fzf-tab.git ~/.fzf-tab
 	@~/.fzf/install --xdg --key-bindings --completion --no-update-rc --no-bash --no-fish
 
 .PHONY: jetbrains-mono
