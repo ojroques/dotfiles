@@ -1,19 +1,13 @@
--------------------- INIT ------------------------------------------------------
-local mini = string.format('%s/site/pack/deps/start/mini.nvim', vim.fn.stdpath('data'))
-if not vim.uv.fs_stat(mini) then
-  vim.notify('Installing mini.nvim', vim.log.levels.INFO)
-  vim.system({'git', 'clone', '--filter=blob:none', 'https://github.com/echasnovski/mini.nvim', mini}):wait()
-  vim.cmd('packadd mini.nvim | helptags ALL')
-end
-
 -------------------- PLUGINS ---------------------------------------------------
-require('mini.deps').setup()
-MiniDeps.add({source = 'navarasu/onedark.nvim', checkout = 'master'})
-MiniDeps.add({source = 'neovim/nvim-lspconfig', checkout = 'master'})
-MiniDeps.add({source = 'nvim-treesitter/nvim-treesitter', checkout = 'main'})
-MiniDeps.add({source = 'nvim-treesitter/nvim-treesitter-context', checkout = 'master'})
-MiniDeps.add({source = 'ojroques/nvim-bookmarks', checkout = 'main'})
-MiniDeps.add({source = 'ojroques/nvim-bufbar', checkout = 'personal'})
+vim.pack.add({
+  {src = 'https://github.com/echasnovski/mini.nvim', version = 'main'},
+  {src = 'https://github.com/navarasu/onedark.nvim', version = 'master'},
+  {src = 'https://github.com/neovim/nvim-lspconfig', version = 'master'},
+  {src = 'https://github.com/nvim-treesitter/nvim-treesitter', version = 'main'},
+  {src = 'https://github.com/nvim-treesitter/nvim-treesitter-context', version = 'master'},
+  {src = 'https://github.com/ojroques/nvim-bookmarks', version = 'main'},
+  {src = 'https://github.com/ojroques/nvim-bufbar', version = 'personal'},
+})
 
 -------------------- PLUGIN SETUP ----------------------------------------------
 -- mini.extra
@@ -44,7 +38,7 @@ require('mini.files').setup()
 vim.keymap.set('n', '-', function() MiniFiles.open(vim.api.nvim_buf_get_name(0)) end)
 -- mini.icons
 require('mini.icons').setup()
-MiniDeps.later(MiniIcons.tweak_lsp_kind)
+MiniIcons.tweak_lsp_kind()
 -- mini.indentscope
 require('mini.indentscope').setup({draw = {animation = require('mini.indentscope').gen_animation.none()}})
 -- mini.keymap
