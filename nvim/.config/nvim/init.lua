@@ -116,34 +116,34 @@ vim.api.nvim_create_autocmd('FileType', {
 
 -------------------- OPTIONS ---------------------------------------------------
 vim.diagnostic.config({severity_sort = true, virtual_text = true})
-vim.opt.colorcolumn = '+1'                                      -- Line length marker
-vim.opt.completeopt = {'menuone', 'noselect'}                   -- Completion options
-vim.opt.cursorline = true                                       -- Highlight cursor line
-vim.opt.diffopt = {'internal', 'context:999999', 'inline:none'} -- Diff mode options
-vim.opt.expandtab = true                                        -- Use spaces instead of tabs
-vim.opt.ignorecase = true                                       -- Ignore case
-vim.opt.inccommand = ''                                         -- Disable substitution preview
-vim.opt.list = true                                             -- Show invisible characters
-vim.opt.mouse = ''                                              -- Disable mouse
-vim.opt.number = true                                           -- Show line numbers
-vim.opt.pumheight = 12                                          -- Max height of pop-up menu
-vim.opt.relativenumber = true                                   -- Show relative line numbers
-vim.opt.report = 0                                              -- Always report changed lines
-vim.opt.scrolloff = 4                                           -- Lines of context
-vim.opt.shiftround = true                                       -- Round indent
-vim.opt.shiftwidth = 0                                          -- Indent size
-vim.opt.shortmess = 'atToOcCF'                                  -- Prompt message options
-vim.opt.sidescrolloff = 12                                      -- Columns of context
-vim.opt.signcolumn = 'yes'                                      -- Show sign column
-vim.opt.smartcase = true                                        -- Do not ignore capital letters
-vim.opt.smartindent = true                                      -- Insert indents automatically
-vim.opt.splitbelow = true                                       -- Put new window below current
-vim.opt.splitright = true                                       -- Put new window right of current
-vim.opt.tabstop = 2                                             -- Number of spaces tabs count for
-vim.opt.textwidth = 99                                          -- Max width of text
-vim.opt.updatetime = 200                                        -- Delay before swap file is saved
-vim.opt.wildmode = {'list:longest'}                             -- Command completion options
-vim.opt.wrap = false                                            -- Disable line wrap
+vim.opt.colorcolumn = '+1'                    -- Line length marker
+vim.opt.completeopt = {'menuone', 'noselect'} -- Completion options
+vim.opt.cursorline = true                     -- Highlight cursor line
+vim.opt.diffopt = {'algorithm:histogram', 'internal', 'context:9999', 'inline:none'} -- Diff mode options
+vim.opt.expandtab = true                      -- Use spaces instead of tabs
+vim.opt.ignorecase = true                     -- Ignore case
+vim.opt.inccommand = ''                       -- Disable substitution preview
+vim.opt.list = true                           -- Show invisible characters
+vim.opt.mouse = ''                            -- Disable mouse
+vim.opt.number = true                         -- Show line numbers
+vim.opt.pumheight = 12                        -- Max height of pop-up menu
+vim.opt.relativenumber = true                 -- Show relative line numbers
+vim.opt.report = 0                            -- Always report changed lines
+vim.opt.scrolloff = 4                         -- Lines of context
+vim.opt.shiftround = true                     -- Round indent
+vim.opt.shiftwidth = 0                        -- Indent size
+vim.opt.shortmess = 'atToOcCF'                -- Prompt message options
+vim.opt.sidescrolloff = 12                    -- Columns of context
+vim.opt.signcolumn = 'yes'                    -- Show sign column
+vim.opt.smartcase = true                      -- Do not ignore capital letters
+vim.opt.smartindent = true                    -- Insert indents automatically
+vim.opt.splitbelow = true                     -- Put new window below current
+vim.opt.splitright = true                     -- Put new window right of current
+vim.opt.tabstop = 2                           -- Number of spaces tabs count for
+vim.opt.textwidth = 99                        -- Max width of text
+vim.opt.updatetime = 200                      -- Delay before swap file is saved
+vim.opt.wildmode = {'list:longest'}           -- Command completion options
+vim.opt.wrap = false                          -- Disable line wrap
 
 -------------------- MAPPINGS --------------------------------------------------
 local function substitute()

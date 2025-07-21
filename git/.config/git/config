@@ -3,9 +3,9 @@
   cm = commit
   cma = commit --amend
   co = checkout
-  d = diff
-  dc = diff --cached
-  i = show --abbrev-commit --date=iso
+  d = diff --ext-diff
+  dc = diff --cached --ext-diff
+  i = show --abbrev-commit --date=iso --ext-diff
   l = log --graph --format='%C(yellow)%h%Cred%d %Creset%s %Cgreen(%ar) %Cblue%an%Creset'
   pl = pull
   ps = push
@@ -17,17 +17,9 @@
 [column]
   ui = auto
 
-[core]
-  pager = delta
-
-[delta]
-  line-numbers = true
-  navigate = true
-
 [diff]
   algorithm = histogram
-  colorMoved = true
-  colorMovedWS = allow-indentation-change
+  external = difft
   mnemonicPrefix = true
 
 [fetch]
@@ -44,9 +36,6 @@
 [includeIf "gitdir:~/Work/"]
   path = work
 
-[interactive]
-  diffFilter = delta --color-only
-
 [merge]
   conflictstyle = zdiff3
   tool = nvimdiff3
@@ -59,9 +48,6 @@
 
 [push]
   autosetupremote = true
-
-[rebase]
-  updateRefs = true
 
 [user]
   useConfigOnly = true

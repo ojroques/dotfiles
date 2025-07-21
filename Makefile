@@ -47,7 +47,6 @@ cli: go neovim
 		bat \
 		btop \
 		fd-find \
-		git-delta \
 		keychain \
 		nodejs \
 		npm \
@@ -100,6 +99,13 @@ pythonls: uv
 	@uv tool install ty@latest
 
 #################### APPS ######################################################
+.PHONY: difftastic
+difftastic:
+	@echo "Installing difftastic v0.64..."
+	@curl -fsSL -o difftastic.tar.gz https://github.com/Wilfred/difftastic/releases/download/0.64.0/difft-x86_64-unknown-linux-gnu.tar.gz
+	@tar -C ~/.local/bin -xzf difftastic.tar.gz
+	@rm -f difftastic.tar.gz
+
 .PHONY: fzf
 fzf:
 	@echo "Installing fzf..."

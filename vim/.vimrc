@@ -47,6 +47,8 @@ inoremap jj <ESC>
 nnoremap <C-l> :nohlsearch<CR>
 nnoremap <Leader>u :update<CR>
 nnoremap <Leader>x :conf qa<CR>
+nnoremap H zh
+nnoremap L zl
 nnoremap Q @@
 nnoremap Y y$
 nnoremap [<Space> O<ESC>
