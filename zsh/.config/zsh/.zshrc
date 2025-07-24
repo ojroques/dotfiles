@@ -12,19 +12,22 @@ HISTSIZE=10000
 SAVEHIST=10000
 
 # ZLE
-bindkey -v
-bindkey -M main '\e.' insert-last-word
-bindkey -M main ^N down-history
-bindkey -M main ^P up-history
-bindkey -M main jj vi-cmd-mode
 function zle-line-init zle-keymap-select {
   case $KEYMAP in
     vicmd) printf "\e[2 q";; # steady block
     main) printf "\e[6 q";;  # steady bar
   esac
 }
-zle -N zle-line-init
+autoload -Uz edit-command-line
+zle -N edit-command-line
 zle -N zle-keymap-select
+zle -N zle-line-init
+bindkey -v
+bindkey -M main '\e.' insert-last-word
+bindkey -M main '^n' down-history
+bindkey -M main '^p' up-history
+bindkey -M main '^x^e' edit-command-line
+bindkey -M main 'jj' vi-cmd-mode
 
 # FPATH
 typeset -U fpath
@@ -74,17 +77,17 @@ export VISUAL="nvim"
 export SUDO_EDITOR="vim"
 
 # ALIASES
-alias df='df -Th --total'
+alias df='df -TH'
 alias diff='diff -su --color=auto'
 alias dl="cd $HOME/Downloads"
 alias doc="cd $HOME/Documents"
-alias du='du -ch'
+alias du1='du --si --max-depth=1 --time | sort -hr'
 alias e="$VISUAL"
 alias g='git'
 alias grep='grep --color=auto'
-alias ip='ip -c -h'
+alias ip='ip -h --color=auto'
 alias ll='ls -lAh'
-alias ls='ls -F --color=auto --group-directories-first'
+alias ls='ls -F --group-directories-first --color=auto'
 alias py='python3'
 alias t='tmux'
 alias tmp="cd $HOME/.tmp"

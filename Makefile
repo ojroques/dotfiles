@@ -63,6 +63,7 @@ gui:
 		alacritty \
 		arc-theme \
 		firefox \
+		gparted \
 		mpv \
 		nomacs \
 		papirus-icon-theme \
