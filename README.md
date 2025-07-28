@@ -34,7 +34,5 @@ stow alacritty mpv xfce             # GUI configs
 - Change the default shell: `chsh -s /usr/bin/zsh` and reboot
 - Create git configs `~/.config/git/personal` and `~/.config/git/work`
 - Generate SSH keys if needed: `ssh-keygen -t ed25519 -C "email@example.com"`
-- Run keychain if needed: `eval $(keychain --quiet --eval id_ed25519)`
-- Configure XFCE if used
 - Export environment variables in `~/.config/zsh/.env`
 - Add additional commands to run in `~/.config/zsh/.run`

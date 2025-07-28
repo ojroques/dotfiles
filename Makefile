@@ -29,13 +29,11 @@ base:
 	@apt -y install \
 		build-essential \
 		curl \
-		direnv \
 		git \
 		manpages-posix \
 		software-properties-common \
 		stow \
 		tmux \
-		tree \
 		unzip \
 		vim
 
@@ -46,13 +44,14 @@ cli: go neovim
 		7zip \
 		bat \
 		btop \
+		direnv \
 		fd-find \
-		keychain \
 		nodejs \
 		npm \
 		ripgrep \
 		shellcheck \
 		trash-cli \
+		tree \
 		zsh \
 		zsh-syntax-highlighting
 
@@ -104,6 +103,7 @@ pythonls: uv
 difftastic:
 	@echo "Installing difftastic v0.64..."
 	@curl -fsSL -o difftastic.tar.gz https://github.com/Wilfred/difftastic/releases/download/0.64.0/difft-x86_64-unknown-linux-gnu.tar.gz
+	@mkdir -p ~/.local/bin
 	@tar -C ~/.local/bin -xzf difftastic.tar.gz
 	@rm -f difftastic.tar.gz
 

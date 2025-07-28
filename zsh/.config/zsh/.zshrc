@@ -101,10 +101,10 @@ export NPM_CONFIG_PREFIX="$HOME/.node_modules"
 export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/config"
 
 # EXTERNAL SOURCES
-[[ -x /usr/bin/dircolors ]] && eval "$(dircolors -b)"
-[[ -x /usr/bin/direnv ]] && eval "$(direnv hook zsh)"
-[[ -r /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-[[ -r "$XDG_CONFIG_HOME/fzf/fzf.zsh" ]] && source "$XDG_CONFIG_HOME/fzf/fzf.zsh"
-[[ -r "$HOME/.fzf-git/fzf-git.sh" ]] && source "$HOME/.fzf-git/fzf-git.sh"
-[[ -r "$XDG_CONFIG_HOME/zsh/.env" ]] && source "$XDG_CONFIG_HOME/zsh/.env"
-[[ -r "$XDG_CONFIG_HOME/zsh/.run" ]] && source "$XDG_CONFIG_HOME/zsh/.run"
+[[ -x /usr/bin/dircolors ]] && eval "$(dircolors -b)" || true
+[[ -x /usr/bin/direnv ]] && eval "$(direnv hook zsh)" || true
+[[ -r /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh || true
+[[ -r "$XDG_CONFIG_HOME/fzf/fzf.zsh" ]] && source "$XDG_CONFIG_HOME/fzf/fzf.zsh" || true
+[[ -r "$HOME/.fzf-git/fzf-git.sh" ]] && source "$HOME/.fzf-git/fzf-git.sh" || true
+[[ -r "$XDG_CONFIG_HOME/zsh/.env" ]] && source "$XDG_CONFIG_HOME/zsh/.env" || true
+[[ -r "$XDG_CONFIG_HOME/zsh/.run" ]] && source "$XDG_CONFIG_HOME/zsh/.run" || true
