@@ -1,8 +1,8 @@
 -------------------- PLUGINS ---------------------------------------------------
 vim.pack.add({
-  {src = 'https://github.com/echasnovski/mini.nvim', version = 'main'},
   {src = 'https://github.com/navarasu/onedark.nvim', version = 'master'},
   {src = 'https://github.com/neovim/nvim-lspconfig', version = 'master'},
+  {src = 'https://github.com/nvim-mini/mini.nvim', version = 'main'},
   {src = 'https://github.com/nvim-treesitter/nvim-treesitter', version = 'main'},
   {src = 'https://github.com/nvim-treesitter/nvim-treesitter-context', version = 'master'},
   {src = 'https://github.com/ojroques/nvim-bookmarks', version = 'main'},
