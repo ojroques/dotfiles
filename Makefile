@@ -101,8 +101,8 @@ pythonls: uv
 #################### APPS ######################################################
 .PHONY: difftastic
 difftastic:
-	@echo "Installing difftastic v0.64..."
-	@curl -fsSL -o difftastic.tar.gz https://github.com/Wilfred/difftastic/releases/download/0.64.0/difft-x86_64-unknown-linux-gnu.tar.gz
+	@echo "Installing difftastic v0.65..."
+	@curl -fsSL -o difftastic.tar.gz https://github.com/Wilfred/difftastic/releases/download/0.65.0/difft-x86_64-unknown-linux-gnu.tar.gz
 	@mkdir -p ~/.local/bin
 	@tar -C ~/.local/bin -xzf difftastic.tar.gz
 	@rm -f difftastic.tar.gz
