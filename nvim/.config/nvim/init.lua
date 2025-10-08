@@ -60,7 +60,6 @@ require('mini.pick').setup({mappings = {refine = '<C-q>', refine_marked = '<M-q>
 vim.keymap.set('n', 'sb', MiniPick.builtin.buffers)
 vim.keymap.set('n', 'sd', MiniExtra.pickers.diagnostic)
 vim.keymap.set('n', 'sf', MiniPick.builtin.files)
-vim.keymap.set('n', 'sg', MiniPick.builtin.grep)
 vim.keymap.set('n', 'sl', MiniPick.builtin.grep_live)
 vim.keymap.set('n', 'sr', MiniPick.builtin.resume)
 -- mini.statusline
@@ -86,6 +85,9 @@ vim.keymap.set('n', 'mm', bookmarks.add)
 require('bufbar').setup()
 -- nvim-treesitter-context
 require('treesitter-context').setup({mode = 'topline', separator = '━'})
+-- nvim.undotree
+vim.cmd('packadd nvim.undotree')
+vim.keymap.set('n', 'U', '<Cmd>Undotree<CR>')
 -- onedark.nvim
 require('onedark').load()
 
@@ -141,24 +143,22 @@ vim.opt.splitbelow = true                     -- Put new window below current
 vim.opt.splitright = true                     -- Put new window right of current
 vim.opt.tabstop = 2                           -- Number of spaces tabs count for
 vim.opt.textwidth = 99                        -- Max width of text
+vim.opt.undofile = true                       -- Undo persistence
 vim.opt.updatetime = 200                      -- Delay before swap file is saved
 vim.opt.wildmode = {'list:longest'}           -- Command completion options
 vim.opt.wrap = false                          -- Disable line wrap
 
 -------------------- MAPPINGS --------------------------------------------------
-local function substitute()
-  local cmd = ':%s//gcI<Left><Left><Left><Left>'
-  return vim.fn.mode() == 'n' and string.format(cmd, '%s') or string.format(cmd, 's')
-end
-vim.keymap.set('', '<Leader>s', substitute, {expr = true})
 vim.keymap.set('', '<Space>', '<C-w>')
 vim.keymap.set('i', 'jj', '<ESC>')
 vim.keymap.set('n', '<C-Down>', '<C-w>-')
 vim.keymap.set('n', '<C-Left>', '<C-w><')
 vim.keymap.set('n', '<C-Right>', '<C-w>>')
 vim.keymap.set('n', '<C-Up>', '<C-w>+')
+vim.keymap.set('n', '<Leader>s', ':s//gcI<Left><Left><Left><Left>')
 vim.keymap.set('n', '<Leader>u', '<Cmd>update<CR>')
 vim.keymap.set('n', '<Leader>x', '<Cmd>conf qa<CR>')
 vim.keymap.set('n', 'H', 'zh')
 vim.keymap.set('n', 'L', 'zl')
 vim.keymap.set('n', 'gyp', function() vim.fn.setreg('+', vim.fn.getreg('%')) end)
+vim.keymap.set('x', '<Leader>s', ':%s//gcI<Left><Left><Left><Left>')
