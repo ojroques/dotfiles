@@ -1,20 +1,13 @@
-#!/bin/bash
+#!/usr/bin/env zsh
 
 # Go to the n-th parent folder
 function up {
-  if [[ $# -eq 0 ]]; then
-    cd "../"
-    return
+  local n=${1:-1}
+
+  if (( n <= 0 )) || (( $# > 1 )); then
+    print "Usage: up [n > 0]" >&2
+    return 1
   fi
 
-  if [[ $# -gt 1 || $1 -le 0 ]]; then
-    echo "Usage: up [n > 0]"
-  fi
-
-  local dir=""
-  for _ in $(seq 1 "$1"); do
-    dir+="../"
-  done
-
-  cd "$dir" || return
+  cd "$(printf '../%.0s' {1..$n})" || return
 }

@@ -1,11 +1,11 @@
-#!/bin/bash
+#!/usr/bin/env zsh
 
 # List files after changing directory
 function cdls {
   local count=$(ls -1 | wc -l)
 
-  if [[ $count -gt 100 ]]; then
-    echo "Too many files to display ($count)"
+  if (( count > 100 )); then
+    print "Too many files to display ($count)"
     return
   fi
 

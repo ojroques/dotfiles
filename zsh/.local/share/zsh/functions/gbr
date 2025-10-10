@@ -1,45 +1,47 @@
-#!/bin/bash
+#!/usr/bin/env zsh
 
 # Open the current git repository in the browser
 function gbr {
   local file=$1
-  local branch=$(git branch --show-current 2> /dev/null)
-  local commit=$(git rev-parse HEAD 2> /dev/null)
-  local rev=${branch:-$commit}
+
+  local branch commit rev
+  branch=$(git branch --show-current 2> /dev/null)
+  commit=$(git rev-parse HEAD 2> /dev/null)
+  rev=${branch:-$commit}
 
   if [[ -z $rev ]]; then
-    echo "error: not in a git repository"
+    print "No git revision" >&2
     return 1
   fi
 
-  local remote=$(git config branch."$branch".remote || echo "origin")
-  local remote_url=$(git remote get-url "$remote" 2> /dev/null)
-  local host repository url
+  local remote remote_url host repository url
+  remote=$(git config branch."$branch".remote 2> /dev/null || print "origin")
+  remote_url=$(git remote get-url "$remote" 2> /dev/null)
 
   if [[ -z $remote_url ]]; then
-    echo "error: no git remote found"
+    print "No git remote" >&2
     return 1
   fi
 
   if [[ $remote_url =~ "^git@([^:]*):(.*)$" ]]; then
     host=${match[1]}
-    repository=${match[2]%.git}
+    repository=${match[2]%\.git}
   elif [[ $remote_url =~ "^https://([^/]*)/(.*)$" ]]; then
     host=${match[1]}
-    repository=${match[2]%.git}
+    repository=${match[2]%\.git}
   else
-    echo "error: could not parse git remote url: $remote_url"
+    print "Invalid git remote url: $remote_url" >&2
     return 1
   fi
 
-  if [[ $host =~ "github" ]]; then
+  if [[ $host == *"github"* ]]; then
     [[ -z $file || -d $file ]] && url="https://$host/$repository/tree/$rev/$file"
     [[ -f $file ]] && url="https://$host/$repository/blob/$rev/$file"
-  elif [[ $host =~ "gitlab" ]]; then
+  elif [[ $host == *"gitlab"* ]]; then
     [[ -z $file || -d $file ]] && url="https://$host/$repository/-/tree/$rev/$file"
     [[ -f $file ]] && url="https://$host/$repository/-/blob/$rev/$file"
   else
-    echo "error: unsupported git host: $host"
+    print "Unsupported git host: $host" >&2
     return 1
   fi
 

@@ -1,22 +1,12 @@
-#!/bin/bash
+#!/usr/bin/env zsh
 
 # Go to the project root folder
 function upr {
-  local current=$PWD
-  local root=$PWD
+  local dir=$PWD
 
-  while true; do
-    if [[ -e $current/.git ]]; then
-      root=$current
-      break
-    fi
-
-    if [[ $current = "/" ]]; then
-      break
-    fi
-
-    current=$(dirname "$current")
+  while [[ $dir != "/" && ! -d "$dir/.git" ]]; do
+    dir=${dir:h}
   done
 
-  cd "$root" || return
+  cd "$dir" || return
 }
