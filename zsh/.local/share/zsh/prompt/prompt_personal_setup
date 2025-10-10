@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env zsh
 
 function prompt_personal_precmd {
   vcs_info

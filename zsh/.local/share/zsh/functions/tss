@@ -1,0 +1,43 @@
+#!/usr/bin/env zsh
+
+# Tmux session switcher
+function tss {
+  local current_session=$([[ -n $TMUX ]] && tmux display-message -p "#S" || print "")
+  local list_sessions="tmux list-sessions -F '#{==:#S,$current_session} #{?session_last_attached,#{session_last_attached},0} #S' 2>/dev/null | sort -k1,1n -k2,2nr -k3 | cut -d' ' -f3-"
+  local new_session="tmux new-session -ds {q} 2>/dev/null"
+  local kill_session="tmux kill-session -t {} 2>/dev/null"
+  local list_windows="tmux list-sessions -f '#{==:#S,{r}}' -F 'Last activity at #{t/f/%T:session_activity} on #{t/f/%F:session_activity}' 2>/dev/null && tmux list-windows -t {} -F '#I: #W #F' 2>/dev/null"
+
+  local fzf_opts=(
+    --bind "alt-enter:execute-silent($new_session)+reload-sync($list_sessions)"
+    --bind "ctrl-k:execute-silent($kill_session)+reload-sync($list_sessions)"
+    --border
+    --border-label "Tmux sessions"
+    --border-label-pos 2
+    --color "label:blue"
+    --exit-0
+    --header "ALT-ENTER to create session / CTRL-K to kill session"
+    --header-border "horizontal"
+    --height "40%"
+    --layout "reverse"
+    --no-separator
+    --no-sort
+    --preview "$list_windows"
+    --preview-border "line"
+    --preview-window "right,50%"
+    --tmux "60%,40%"
+  )
+  local session=$(eval "$list_sessions" | fzf "${fzf_opts[@]}")
+
+  if [[ -z $session ]]; then
+    print "No tmux session" >&2
+    return 1
+  fi
+
+  if ! tmux has-session -t "$session" 2>/dev/null; then
+    print "Unknown tmux session $session" >&2
+    return 1
+  fi
+
+  [[ -n $TMUX ]] && tmux switch-client -t "$session" || tmux attach-session -t "$session"
+}
