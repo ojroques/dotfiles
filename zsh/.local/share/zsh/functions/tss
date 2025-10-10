@@ -1,0 +1,47 @@
+#!/usr/bin/env zsh
+
+# Tmux session switcher
+function tss {
+  local list_sessions="tmux list-sessions -F '#{?session_last_attached,#{session_last_attached},0} #{session_name}' 2> /dev/null | sort -n -r -k 1,1"
+  local list_windows="tmux list-windows -t {2..} -F '#I: #W #F (#{window_panes} panes)' 2> /dev/null"
+  local new_session="tmux new-session -ds '{q}' 2> /dev/null"
+  local fzf_opts=(
+    --accept-nth "2.."
+    --ansi
+    --bind "alt-enter:execute-silent($new_session)+reload-sync($list_sessions)"
+    --border
+    --border-label "Tmux sessions"
+    --border-label-pos 4
+    --color "label:blue"
+    --exit-0
+    --header "ALT-ENTER to create a new session"
+    --header-border "horizontal"
+    --height "50%"
+    --layout "reverse"
+    --no-separator
+    --no-sort
+    --preview "$list_windows"
+    --preview-border "line"
+    --preview-window "right,50%"
+    --tmux "center"
+    --with-nth "2.."
+  )
+
+  local session=$(eval "$list_sessions" | fzf "${fzf_opts[@]}")
+
+  if [[ -z $session ]]; then
+    print "No tmux session" >&2
+    return 1
+  fi
+
+  if ! tmux has-session -t "$session" 2> /dev/null; then
+    print "Unknown tmux session $session" >&2
+    return 1
+  fi
+
+  if [[ -n $TMUX ]]; then
+    tmux switch-client -t "$session"
+  else
+    tmux attach-session -t "$session"
+  fi
+}
