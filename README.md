@@ -33,6 +33,7 @@ stow alacritty mpv xfce             # GUI configs
 ## Post-install
 - Change the default shell: `chsh -s /usr/bin/zsh` and reboot
 - Create git configs `~/.config/git/personal` and `~/.config/git/work`
-- Generate SSH keys if needed: `ssh-keygen -t ed25519 -C "email@example.com"`
+- Install or generate SSH keys
+- Install crontab: `crontab crontab`
 - Export environment variables in `~/.config/zsh/.env`
 - Add additional commands to run in `~/.config/zsh/.run`

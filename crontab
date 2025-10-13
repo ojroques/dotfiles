@@ -1,0 +1,5 @@
+SHELL=/usr/bin/zsh
+
+# TMUX
+* * * * * zsh -c '$XDG_DATA_HOME/tmux/save-sessions.sh' 2>&1 | logger -t tmux-save-sessions
+@reboot zsh -c '$XDG_DATA_HOME/tmux/restore-sessions.sh' 2>&1 | logger -t tmux-restore-sessions
