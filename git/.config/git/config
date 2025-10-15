@@ -21,6 +21,10 @@
   algorithm = histogram
   external = difft
   mnemonicPrefix = true
+  tool = nvimdifftool
+
+[difftool "nvimdifftool"]
+  cmd = "nvim -c \"packadd nvim.difftool\" -c \"DiffTool $LOCAL $REMOTE\""
 
 [fetch]
   all = true
