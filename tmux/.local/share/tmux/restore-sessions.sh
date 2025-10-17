@@ -8,15 +8,13 @@ if [[ ! -r "$SESSION_FILE" ]]; then
   exit 0
 fi
 
-tmux start-server
-
 while IFS="$DELIMITER" read -r session_name _; do
   if tmux has-session -t "$session_name" 2>/dev/null; then
     tmux kill-session -t "$session_name"
   fi
 done < "$SESSION_FILE"
 
-while IFS="$DELIMITER" read -r session_name start_directory; do
+while IFS="$DELIMITER" read -r session_name _ start_directory; do
   if [[ -d "$start_directory" ]]; then
     if ! tmux has-session -t "$session_name" 2>/dev/null; then
       tmux new-session -d -s "$session_name" -c "$start_directory"

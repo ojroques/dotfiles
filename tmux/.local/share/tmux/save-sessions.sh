@@ -7,5 +7,5 @@ DELIMITER=":"
 mkdir -p "$STATE_DIR"
 
 if tmux has-session 2>/dev/null; then
-  tmux list-windows -a -F "#S${DELIMITER}#{pane_current_path}" > "$SESSION_FILE"
+  tmux list-windows -a -F "#S${DELIMITER}#W${DELIMITER}#{pane_current_path}" > "$SESSION_FILE"
 fi

@@ -121,7 +121,7 @@ vim.diagnostic.config({severity_sort = true, virtual_text = true})
 vim.opt.colorcolumn = '+1'                    -- Line length marker
 vim.opt.completeopt = {'menuone', 'noselect'} -- Completion options
 vim.opt.cursorline = true                     -- Highlight cursor line
-vim.opt.diffopt:append({'algorithm:histogram', 'context:999999'}) -- Diff mode options
+vim.opt.diffopt:append({'algorithm:histogram', 'context:999999', 'inline:none'}) -- Diff mode options
 vim.opt.expandtab = true                      -- Use spaces instead of tabs
 vim.opt.ignorecase = true                     -- Ignore case
 vim.opt.inccommand = ''                       -- Disable substitution preview

@@ -1,0 +1,10 @@
+[Unit]
+Description=Run tmux session saver every 10 seconds
+
+[Timer]
+OnActiveSec=10s
+OnUnitActiveSec=10s
+AccuracySec=1s
+
+[Install]
+WantedBy=timers.target

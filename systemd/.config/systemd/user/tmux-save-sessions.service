@@ -1,0 +1,6 @@
+[Unit]
+Description=Tmux session saver
+
+[Service]
+Type=oneshot
+ExecStart=zsh -c '$$XDG_DATA_HOME/tmux/save-sessions.sh'

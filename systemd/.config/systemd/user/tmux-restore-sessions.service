@@ -1,0 +1,12 @@
+[Unit]
+Description=Tmux session restorer
+After=default.target
+
+[Service]
+Type=oneshot
+Environment=SSH_AUTH_SOCK=%t/keyring/ssh
+ExecStart=zsh -c '$$XDG_DATA_HOME/tmux/restore-sessions.sh'
+RemainAfterExit=yes
+
+[Install]
+WantedBy=default.target
