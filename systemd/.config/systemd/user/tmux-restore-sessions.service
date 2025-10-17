@@ -1,0 +1,8 @@
+[Unit]
+Description=Tmux session restorer
+Wants=graphical-session.target ssh-agent.service gnome-keyring.service
+After=graphical-session.target ssh-agent.service gnome-keyring.service
+
+[Service]
+Type=oneshot
+ExecStart=zsh -c '$XDG_DATA_HOME/tmux/restore-sessions.sh'
