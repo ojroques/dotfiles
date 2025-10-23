@@ -5,6 +5,7 @@
   co = checkout
   d = diff --ext-diff
   dc = diff --cached --ext-diff
+  dt = difftool -d
   i = show --abbrev-commit --date=iso --ext-diff
   l = log --graph --format='%C(yellow)%h%Cred%d %Creset%s %Cgreen(%ar) %Cblue%an%Creset'
   pl = pull
