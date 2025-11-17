@@ -1,6 +1,6 @@
 -------------------- PLUGINS ---------------------------------------------------
 vim.pack.add({
-  {src = 'https://github.com/navarasu/onedark.nvim', version = 'master'},
+  {src = 'https://github.com/bluz71/vim-nightfly-colors', version = 'master'},
   {src = 'https://github.com/neovim/nvim-lspconfig', version = 'master'},
   {src = 'https://github.com/nvim-mini/mini.nvim', version = 'main'},
   {src = 'https://github.com/nvim-treesitter/nvim-treesitter', version = 'main'},
@@ -88,8 +88,6 @@ require('treesitter-context').setup({mode = 'topline', separator = '━'})
 -- nvim.undotree
 vim.cmd('packadd nvim.undotree')
 vim.keymap.set('n', 'U', '<Cmd>Undotree<CR>')
--- onedark.nvim
-require('onedark').load()
 
 -------------------- LSP -------------------------------------------------------
 local function on_attach(_, buf)
@@ -142,11 +140,13 @@ vim.opt.smartindent = true                    -- Insert indents automatically
 vim.opt.splitbelow = true                     -- Put new window below current
 vim.opt.splitright = true                     -- Put new window right of current
 vim.opt.tabstop = 2                           -- Number of spaces tabs count for
+vim.opt.termguicolors = true                  -- Enable 24-bit RGB colors
 vim.opt.textwidth = 99                        -- Max width of text
 vim.opt.undofile = true                       -- Undo persistence
 vim.opt.updatetime = 200                      -- Delay before swap file is saved
 vim.opt.wildmode = {'list:longest'}           -- Command completion options
 vim.opt.wrap = false                          -- Disable line wrap
+vim.cmd('colorscheme nightfly')
 
 -------------------- MAPPINGS --------------------------------------------------
 vim.keymap.set('', '<Space>', '<C-w>')
