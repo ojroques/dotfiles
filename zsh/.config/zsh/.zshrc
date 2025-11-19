@@ -95,6 +95,7 @@ alias tree='tree -FC --dirsfirst -I .git'
 alias wk="cd $HOME/Work"
 
 # APP PARAMETERS
+export BAT_THEME="OneHalfDark"
 export MANPAGER='nvim +Man!'
 export NPM_CONFIG_PREFIX="$HOME/.node_modules"
 export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/config"

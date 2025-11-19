@@ -1,59 +1,40 @@
 # Options
 [font]
 size = 12.0
-
 [font.normal]
 family = 'JetBrainsMonoNL Nerd Font'
-style = 'Regular'
-
+style  = 'Regular'
 [font.bold]
 family = 'JetBrainsMonoNL Nerd Font'
-style = 'Bold'
-
+style  = 'Bold'
 [font.italic]
 family = 'JetBrainsMonoNL Nerd Font'
-style = 'Italic'
-
+style  = 'Italic'
 [font.bold_italic]
 family = 'JetBrainsMonoNL Nerd Font'
-style = 'Bold Italic'
-
+style  = 'Bold Italic'
 [window]
 startup_mode = 'Maximized'
 
-# Colors (Nightfly)
-[colors]
-draw_bold_text_with_bright_colors = true
-
-[colors.bright]
-black = "#7c8f8f"
-blue = "#82aaff"
-cyan = "#7fdbca"
-green = "#21c7a8"
-magenta = "#ae81ff"
-red = "#ff5874"
-white = "#d6deeb"
-yellow = "#ecc48d"
-
-[colors.cursor]
-cursor = "#9ca1aa"
-text = "#080808"
-
-[colors.normal]
-black = "#1d3b53"
-blue = "#82aaff"
-cyan = "#7fdbca"
-green = "#a1cd5e"
-magenta = "#c792ea"
-red = "#fc514e"
-white = "#a1aab8"
-yellow = "#e3d18a"
-
+# Colors (One Dark)
 [colors.primary]
-background = "#011627"
-bright_foreground = "#eeeeee"
-foreground = "#bdc1c6"
-
-[colors.selection]
-background = "#b2ceee"
-text = "#080808"
+background = '#282c34'
+foreground = '#abb2bf'
+[colors.normal]
+black   = '#1e2127'
+red     = '#e06c75'
+green   = '#98c379'
+yellow  = '#d19a66'
+blue    = '#61afef'
+magenta = '#c678dd'
+cyan    = '#56b6c2'
+white   = '#abb2bf'
+[colors.bright]
+black   = '#5c6370'
+red     = '#e06c75'
+green   = '#98c379'
+yellow  = '#d19a66'
+blue    = '#61afef'
+magenta = '#c678dd'
+cyan    = '#56b6c2'
+white   = '#ffffff'
