@@ -15,6 +15,7 @@ This repository contains my config files for:
 ## Install
 1. With Ubuntu 24.04+, use the [Makefile](./Makefile) to install packages:
 ```sh
+sudo make update        # update packages
 sudo make install-base  # install base packages
 sudo make install-cli   # install base + CLI packages
 sudo make install-gui   # install base + GUI packages

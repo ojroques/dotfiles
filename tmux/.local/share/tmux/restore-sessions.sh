@@ -16,10 +16,10 @@ done < "$SESSION_FILE"
 
 while IFS="$DELIMITER" read -r session_name _ start_directory; do
   if [[ -d "$start_directory" ]]; then
-    if ! tmux has-session -t "$session_name" 2>/dev/null; then
-      tmux new-session -d -s "$session_name" -c "$start_directory"
-    else
+    if tmux has-session -t "$session_name" 2>/dev/null; then
       tmux new-window -t "$session_name" -c "$start_directory"
+    else
+      tmux new-session -d -s "$session_name" -c "$start_directory"
     fi
   fi
 done < "$SESSION_FILE"

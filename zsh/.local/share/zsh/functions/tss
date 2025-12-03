@@ -6,7 +6,7 @@ function tss {
   local list_sessions="tmux list-sessions -F '#{==:#S,$current_session} #{?session_last_attached,#{session_last_attached},0} #S' 2>/dev/null | sort -k1,1n -k2,2nr -k3 | cut -d' ' -f3-"
   local new_session="tmux new-session -d -s {q} 2>/dev/null"
   local kill_session="tmux kill-session -t {} 2>/dev/null"
-  local list_windows="tmux list-sessions -f '#{==:#S,{r}}' -F 'Last activity at #{t/f/%T:session_activity} on #{t/f/%F:session_activity}' 2>/dev/null && tmux list-windows -t {} -F '#I: #W #F' 2>/dev/null"
+  local list_windows="tmux list-windows -t {} -F '#I: #W#F' 2>/dev/null"
 
   local fzf_opts=(
     --bind "alt-enter:execute-silent($new_session)+reload-sync($list_sessions)"
