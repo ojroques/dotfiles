@@ -61,8 +61,6 @@ vim.keymap.set('n', 'sd', MiniExtra.pickers.diagnostic)
 vim.keymap.set('n', 'sf', MiniPick.builtin.files)
 vim.keymap.set('n', 'sl', MiniPick.builtin.grep_live)
 vim.keymap.set('n', 'sr', MiniPick.builtin.resume)
--- mini.statusline
-require('mini.statusline').setup()
 -- mini.surround
 require('mini.surround').setup({mappings = {
   add = 'ys', delete = 'ds', replace = 'cs',
@@ -87,6 +85,8 @@ vim.cmd('packadd nvim.undotree')
 vim.keymap.set('n', 'U', '<Cmd>Undotree<CR>')
 -- onedark.nvim
 require('onedark').load()
+-- statusline
+require('statusline').setup()
 -- tabline
 require('tabline').setup()
 
@@ -134,6 +134,7 @@ vim.opt.scrolloff = 4                         -- Lines of context
 vim.opt.shiftround = true                     -- Round indent
 vim.opt.shiftwidth = 0                        -- Indent size
 vim.opt.shortmess = 'atToOcCF'                -- Prompt message options
+vim.opt.showmode = false                      -- Hide mode
 vim.opt.sidescrolloff = 12                    -- Columns of context
 vim.opt.signcolumn = 'yes'                    -- Show sign column
 vim.opt.smartcase = true                      -- Do not ignore capital letters
