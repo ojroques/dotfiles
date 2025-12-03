@@ -18,12 +18,12 @@ local highlights = {
   },
 }
 
--------------------- PRIVATE ---------------------------------------------------
 local function highlight_text(text, class, state)
   local group = string.format('Tabline%s%s', class, state)
   return string.format('%%#%s#%s%%*', group, text)
 end
 
+-------------------- TABS ------------------------------------------------------
 local function is_excluded(bufnr)
   local filetype = vim.bo[bufnr].filetype
   return filetype == 'help' or filetype == 'qf' or filetype == 'minipick'
@@ -39,7 +39,7 @@ local function get_buffers()
       local buffer = {
         bufnr = bufinfo.bufnr,
         current = bufinfo.bufnr == current_bufnr,
-        modified = vim.bo[bufinfo.bufnr].modified == 1,
+        modified = vim.bo[bufinfo.bufnr].modified,
         terminal = vim.bo[bufinfo.bufnr].buftype == 'terminal',
       }
 
@@ -64,6 +64,7 @@ local function build_tab(buffer)
   return highlight_text(string.format(' %d ', buffer.bufnr), class, state)
 end
 
+-------------------- SETUP -----------------------------------------------------
 function set_highlights()
   for class, states in pairs(highlights) do
     for state, highlight in pairs(states) do
