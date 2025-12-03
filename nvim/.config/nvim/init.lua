@@ -1,4 +1,4 @@
--------------------- PLUGINS ---------------------------------------------------
+------------------- PLUGINS ---------------------------------------------------
 vim.pack.add({
   {src = 'https://github.com/navarasu/onedark.nvim', version = 'master'},
   {src = 'https://github.com/neovim/nvim-lspconfig', version = 'master'},
@@ -6,7 +6,6 @@ vim.pack.add({
   {src = 'https://github.com/nvim-treesitter/nvim-treesitter', version = 'main'},
   {src = 'https://github.com/nvim-treesitter/nvim-treesitter-context', version = 'master'},
   {src = 'https://github.com/ojroques/nvim-bookmarks', version = 'main'},
-  {src = 'https://github.com/ojroques/nvim-bufbar', version = 'personal'},
 })
 
 -------------------- PLUGIN SETUP ----------------------------------------------
@@ -81,8 +80,6 @@ vim.keymap.set('n', 'm2', function() bookmarks.open(2) end)
 vim.keymap.set('n', 'm3', function() bookmarks.open(3) end)
 vim.keymap.set('n', 'm4', function() bookmarks.open(4) end)
 vim.keymap.set('n', 'mm', bookmarks.add)
--- nvim-bufbar
-require('bufbar').setup()
 -- nvim-treesitter-context
 require('treesitter-context').setup({mode = 'topline', separator = '━'})
 -- nvim.undotree
@@ -90,6 +87,8 @@ vim.cmd('packadd nvim.undotree')
 vim.keymap.set('n', 'U', '<Cmd>Undotree<CR>')
 -- onedark.nvim
 require('onedark').load()
+-- tabline
+require('tabline').setup()
 
 -------------------- LSP -------------------------------------------------------
 local function on_attach(_, buf)
