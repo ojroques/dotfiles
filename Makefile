@@ -43,7 +43,6 @@ cli: go neovim
 	@apt -y install \
 		7zip \
 		bat \
-		btop \
 		direnv \
 		fd-find \
 		nodejs \
