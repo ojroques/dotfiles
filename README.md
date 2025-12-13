@@ -9,7 +9,6 @@ This repository contains my config files for:
 - **systemd**
 - **tmux**
 - **vim**
-- **xfce**
 - **zsh**
 
 ## Install
@@ -24,7 +23,7 @@ sudo make clean         # clean up packages
 2. Run [stow](https://www.gnu.org/software/stow/) to symlink config files:
 ```sh
 stow git nvim ripgrep systemd tmux vim zsh  # CLI configs
-stow alacritty mpv xfce                     # GUI configs
+stow alacritty mpv                          # GUI configs
 ```
 3. Change the default shell: `chsh -s /usr/bin/zsh` and reboot.
 4. Install additional apps:

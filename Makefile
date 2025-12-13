@@ -60,13 +60,8 @@ gui:
 	@echo "Installing gui packages..."
 	@apt -y install \
 		alacritty \
-		arc-theme \
 		firefox \
-		gparted \
-		mpv \
-		nomacs \
-		papirus-icon-theme \
-		xfce4-taskmanager
+		mpv
 
 .PHONY: go
 go:
