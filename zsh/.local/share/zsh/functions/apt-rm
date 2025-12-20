@@ -2,5 +2,5 @@
 
 # Remove packages no longer needed
 function apt-rm {
-  sudo -E apt -y autoremove
+  sudo apt -y autoremove
 }

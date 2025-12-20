@@ -1,37 +1,42 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.1" encoding="UTF-8"?>
 
 <channel name="xfce4-keyboard-shortcuts" version="1.0">
   <property name="commands" type="empty">
     <property name="custom" type="empty">
       <property name="override" type="bool" value="true"/>
-      <property name="&lt;Super&gt;e" type="string" value="exo-open --launch FileManager"/>
-      <property name="&lt;Primary&gt;&lt;Alt&gt;t" type="string" value="exo-open --launch TerminalEmulator"/>
-      <property name="&lt;Super&gt;t" type="string" value="exo-open --launch TerminalEmulator"/>
-      <property name="&lt;Super&gt;w" type="string" value="exo-open --launch WebBrowser"/>
-      <property name="&lt;Super&gt;r" type="string" value="xfce4-appfinder"/>
-      <property name="Print" type="string" value="xfce4-screenshooter -f"/>
-      <property name="&lt;Shift&gt;Print" type="string" value="xfce4-screenshooter -r"/>
       <property name="&lt;Alt&gt;Print" type="string" value="xfce4-screenshooter -w"/>
       <property name="&lt;Primary&gt;&lt;Alt&gt;Delete" type="string" value="xfce4-session-logout"/>
+      <property name="&lt;Primary&gt;&lt;Alt&gt;t" type="string" value="exo-open --launch TerminalEmulator"/>
       <property name="&lt;Primary&gt;&lt;Shift&gt;Escape" type="string" value="xfce4-taskmanager"/>
+      <property name="&lt;Shift&gt;Print" type="string" value="xfce4-screenshooter -r"/>
+      <property name="&lt;Super&gt;e" type="string" value="exo-open --launch FileManager"/>
       <property name="&lt;Super&gt;l" type="string" value="xflock4"/>
+      <property name="&lt;Super&gt;r" type="string" value="xfce4-appfinder"/>
+      <property name="&lt;Super&gt;t" type="string" value="exo-open --launch TerminalEmulator"/>
+      <property name="&lt;Super&gt;w" type="string" value="exo-open --launch WebBrowser"/>
+      <property name="Print" type="string" value="xfce4-screenshooter -f"/>
     </property>
   </property>
   <property name="xfwm4" type="empty">
     <property name="custom" type="empty">
       <property name="override" type="bool" value="true"/>
-        <property name="&lt;Alt&gt;F4" type="string" value="close_window_key"/>
-        <property name="&lt;Alt&gt;Tab" type="string" value="cycle_windows_key"/>
-        <property name="&lt;Alt&gt;&lt;Shift&gt;Tab" type="string" value="cycle_reverse_windows_key"/>
-        <property name="&lt;Super&gt;d" type="string" value="show_desktop_key"/>
-        <property name="&lt;Super&gt;Tab" type="string" value="next_workspace_key"/>
-        <property name="&lt;Shift&gt;&lt;Super&gt;Tab" type="string" value="prev_workspace_key"/>
-        <property name="&lt;Super&gt;1" type="string" value="workspace_1_key"/>
-        <property name="&lt;Super&gt;2" type="string" value="workspace_2_key"/>
-        <property name="&lt;Super&gt;3" type="string" value="workspace_3_key"/>
-        <property name="&lt;Shift&gt;&lt;Super&gt;exclam" type="string" value="move_window_workspace_1_key"/>
-        <property name="&lt;Shift&gt;&lt;Super&gt;quotedbl" type="string" value="move_window_workspace_2_key"/>
-        <property name="&lt;Shift&gt;&lt;Super&gt;sterling" type="string" value="move_window_workspace_3_key"/>
+      <property name="&lt;Alt&gt;&lt;Shift&gt;Tab" type="string" value="cycle_reverse_windows_key"/>
+      <property name="&lt;Alt&gt;F4" type="string" value="close_window_key"/>
+      <property name="&lt;Alt&gt;Tab" type="string" value="cycle_windows_key"/>
+      <property name="&lt;Shift&gt;&lt;Super&gt;Tab" type="string" value="prev_workspace_key"/>
+      <property name="&lt;Shift&gt;&lt;Super&gt;exclam" type="string" value="move_window_workspace_1_key"/>
+      <property name="&lt;Shift&gt;&lt;Super&gt;quotedbl" type="string" value="move_window_workspace_2_key"/>
+      <property name="&lt;Shift&gt;&lt;Super&gt;sterling" type="string" value="move_window_workspace_3_key"/>
+      <property name="&lt;Super&gt;1" type="string" value="workspace_1_key"/>
+      <property name="&lt;Super&gt;2" type="string" value="workspace_2_key"/>
+      <property name="&lt;Super&gt;3" type="string" value="workspace_3_key"/>
+      <property name="&lt;Super&gt;Down" type="string" value="tile_down_key"/>
+      <property name="&lt;Super&gt;Left" type="string" value="tile_left_key"/>
+      <property name="&lt;Super&gt;Right" type="string" value="tile_right_key"/>
+      <property name="&lt;Super&gt;Tab" type="string" value="next_workspace_key"/>
+      <property name="&lt;Super&gt;Up" type="string" value="tile_up_key"/>
+      <property name="&lt;Super&gt;d" type="string" value="show_desktop_key"/>
+      <property name="&lt;Super&gt;m" type="string" value="maximize_window_key"/>
     </property>
   </property>
   <property name="providers" type="array">
