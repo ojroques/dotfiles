@@ -56,6 +56,8 @@ require('mini.operators').setup({
 })
 -- mini.pick
 require('mini.pick').setup({mappings = {refine = '<C-q>', refine_marked = '<M-q>'}})
+vim.keymap.set('n', 's/', function() MiniExtra.pickers.history({scope = '/'}) end)
+vim.keymap.set('n', 's;', function() MiniExtra.pickers.history({scope = ':'}) end)
 vim.keymap.set('n', 'sb', MiniPick.builtin.buffers)
 vim.keymap.set('n', 'sd', MiniExtra.pickers.diagnostic)
 vim.keymap.set('n', 'sf', MiniPick.builtin.files)

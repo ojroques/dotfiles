@@ -51,6 +51,7 @@ cli: go neovim
 		shellcheck \
 		trash-cli \
 		tree \
+		xsel \
 		zsh \
 		zsh-syntax-highlighting
 
@@ -69,8 +70,8 @@ gui:
 
 .PHONY: go
 go:
-	@echo "Installing go v1.25..."
-	@curl -fsSL -o go.tar.gz https://go.dev/dl/go1.25.2.linux-amd64.tar.gz
+	@echo "Installing go v1.26..."
+	@curl -fsSL -o go.tar.gz https://go.dev/dl/go1.26.0.linux-amd64.tar.gz
 	@rm -rf /usr/local/go
 	@tar -C /usr/local -xzf go.tar.gz && rm -f go.tar.gz
 
