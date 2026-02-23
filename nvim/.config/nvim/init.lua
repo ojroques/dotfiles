@@ -110,7 +110,7 @@ vim.lsp.enable({'bashls', 'gopls', 'terraformls', 'ty'})
 vim.api.nvim_create_autocmd('FileType', {
   group = vim.api.nvim_create_augroup('treesitter', {}),
   callback = function(a)
-    lang = vim.treesitter.language.get_lang(a.match)
+    local lang = vim.treesitter.language.get_lang(a.match)
     if vim.treesitter.language.add(lang) then
       vim.treesitter.start(a.buf, lang)
     end

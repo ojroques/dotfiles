@@ -65,7 +65,7 @@ local function build_tab(buffer)
 end
 
 -------------------- SETUP -----------------------------------------------------
-function set_highlights()
+local function set_highlights()
   for class, states in pairs(highlights) do
     for state, highlight in pairs(states) do
       local group = string.format('Tabline%s%s', class, state)

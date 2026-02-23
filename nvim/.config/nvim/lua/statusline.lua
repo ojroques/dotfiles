@@ -136,13 +136,13 @@ local function get_position(active)
   local col = vim.fn.col('.')
   local percent = math.floor(line / nblines * 100)
   local text = string.format('%d/%d %d/%d %d%%%%', line, nblines, col, nbcols, percent)
-  local mode = modes[vim.api.nvim_get_mode().mode] or modes['?']
+  local mode = modes[string.sub(vim.api.nvim_get_mode().mode, 1, 1)] or modes['?']
   local state = active and mode.state or 'Inactive'
   return highlight_text(string.format(' %s ', text), 'High', state)
 end
 
 -------------------- SETUP -----------------------------------------------------
-function set_highlights()
+local function set_highlights()
   for class, states in pairs(highlights) do
     for state, highlight in pairs(states) do
       local group = string.format('Statusline%s%s', class, state)

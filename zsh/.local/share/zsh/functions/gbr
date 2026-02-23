@@ -1,48 +1,35 @@
 #!/usr/bin/env zsh
 
-# Open the current git repository in the browser
+# Open the git origin remote in the default browser
 function gbr {
-  local file=$1
+  local remote=$(git remote get-url origin 2>/dev/null)
 
-  local branch commit rev
-  branch=$(git branch --show-current 2>/dev/null)
-  commit=$(git rev-parse HEAD 2>/dev/null)
-  rev=${branch:-$commit}
-
-  if [[ -z $rev ]]; then
-    print "No git revision" >&2
-    return 1
-  fi
-
-  local remote remote_url host repository url
-  remote=$(git config branch."$branch".remote 2>/dev/null || print "origin")
-  remote_url=$(git remote get-url "$remote" 2>/dev/null)
-
-  if [[ -z $remote_url ]]; then
-    print "No git remote" >&2
-    return 1
-  fi
-
-  if [[ $remote_url =~ "^git@([^:]*):(.*)$" ]]; then
+  local host repo
+  if [[ $remote =~ "^git@([^:]+):(.+)$" ]]; then
     host=${match[1]}
-    repository=${match[2]%\.git}
-  elif [[ $remote_url =~ "^https://([^/]*)/(.*)$" ]]; then
+    repo=${match[2]%.git}
+  elif [[ $remote =~ "^https://([^/]+)/(.+)$" ]]; then
     host=${match[1]}
-    repository=${match[2]%\.git}
+    repo=${match[2]%.git}
   else
-    print "Invalid git remote url: $remote_url" >&2
+    print "Cannot parse remote 'origin': ${remote:-not found}" >&2
     return 1
   fi
 
-  if [[ $host == *"github"* ]]; then
-    [[ -z $file || -d $file ]] && url="https://$host/$repository/tree/$rev/$file"
-    [[ -f $file ]] && url="https://$host/$repository/blob/$rev/$file"
-  elif [[ $host == *"gitlab"* ]]; then
-    [[ -z $file || -d $file ]] && url="https://$host/$repository/-/tree/$rev/$file"
-    [[ -f $file ]] && url="https://$host/$repository/-/blob/$rev/$file"
-  else
-    print "Unsupported git host: $host" >&2
-    return 1
+  local url="https://$host/$repo"
+
+  if [[ -n $1 ]]; then
+    local rev=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+    [[ $rev == "HEAD" ]] && rev=$(git rev-parse HEAD 2>/dev/null)
+
+    if [[ $host == *"github"* ]]; then
+      [[ -f $1 ]] && url+="/blob/$rev/$1" || url+="/tree/$rev/$1"
+    elif [[ $host == *"gitlab"* ]]; then
+      [[ -f $1 ]] && url+="/-/blob/$rev/$1" || url+="/-/tree/$rev/$1"
+    else
+      print "Unsupported host: $host" >&2
+      return 1
+    fi
   fi
 
   xdg-open "$url"
