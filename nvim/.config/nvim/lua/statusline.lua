@@ -1,5 +1,5 @@
 -------------------- HIGHLIGHTS ------------------------------------------------
-local palette = require('onedark.palette').dark
+local palette = require('onedark')
 local highlights = {
   High = {
     Default = {fg = palette.black, bg = palette.light_grey, bold = true},
