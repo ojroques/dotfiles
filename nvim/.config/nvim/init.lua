@@ -1,6 +1,5 @@
 ------------------- PLUGINS ---------------------------------------------------
 vim.pack.add({
-  {src = 'https://github.com/navarasu/onedark.nvim', version = 'master'},
   {src = 'https://github.com/neovim/nvim-lspconfig', version = 'master'},
   {src = 'https://github.com/nvim-mini/mini.nvim', version = 'main'},
   {src = 'https://github.com/nvim-treesitter/nvim-treesitter', version = 'main'},
@@ -14,10 +13,7 @@ require('mini.extra').setup()
 -- mini.ai
 require('mini.ai').setup({custom_textobjects = {e = MiniExtra.gen_ai_spec.buffer()}})
 -- mini.basics
-require('mini.basics').setup({
-  options = {basic = false},
-  mappings = {option_toggle_prefix = 'yo'},
-})
+require('mini.basics').setup({options = {basic = false}, mappings = {option_toggle_prefix = 'yo'}})
 -- mini.bracketed
 require('mini.bracketed').setup()
 -- mini.bufremove
@@ -85,8 +81,8 @@ require('treesitter-context').setup({mode = 'topline', separator = '━'})
 -- nvim.undotree
 vim.cmd('packadd nvim.undotree')
 vim.keymap.set('n', 'U', '<Cmd>Undotree<CR>')
--- onedark.nvim
-require('onedark').load()
+-- onedark
+require('onedark')
 -- statusline
 require('statusline').setup()
 -- tabline

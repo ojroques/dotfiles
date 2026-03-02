@@ -1,5 +1,5 @@
 -------------------- HIGHLIGHTS ------------------------------------------------
-local palette = require('onedark.palette').dark
+local palette = require('onedark')
 local highlights = {
   Separator = {
     Default = {fg = palette.fg, bg = palette.bg1},
