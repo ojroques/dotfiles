@@ -13,7 +13,10 @@ require('mini.extra').setup()
 -- mini.ai
 require('mini.ai').setup({custom_textobjects = {e = MiniExtra.gen_ai_spec.buffer()}})
 -- mini.basics
-require('mini.basics').setup({options = {basic = false}, mappings = {option_toggle_prefix = 'yo'}})
+require('mini.basics').setup({
+  options = {basic = false, extra_ui = true},
+  mappings = {basic = false, option_toggle_prefix = 'yo'},
+})
 -- mini.bracketed
 require('mini.bracketed').setup()
 -- mini.bufremove
@@ -33,7 +36,7 @@ require('mini.files').setup()
 vim.keymap.set('n', '-', function() MiniFiles.open(vim.api.nvim_buf_get_name(0)) end)
 -- mini.icons
 require('mini.icons').setup()
-MiniIcons.tweak_lsp_kind()
+require('mini.deps').later(MiniIcons.tweak_lsp_kind())
 -- mini.indentscope
 require('mini.indentscope').setup({draw = {animation = require('mini.indentscope').gen_animation.none()}})
 -- mini.keymap
@@ -48,7 +51,7 @@ vim.notify = MiniNotify.make_notify()
 -- mini.operators
 require('mini.operators').setup({
   replace = {prefix = 'cr'},
-  exchange = {prefix = ''}, evaluate = {prefix = ''}, multiply = {prefix = ''},
+  evaluate = {prefix = ''}, exchange = {prefix = ''}, multiply = {prefix = ''},
 })
 -- mini.pick
 require('mini.pick').setup({mappings = {refine = '<C-q>', refine_marked = '<M-q>'}})
@@ -62,7 +65,7 @@ vim.keymap.set('n', 'sr', MiniPick.builtin.resume)
 -- mini.surround
 require('mini.surround').setup({mappings = {
   add = 'ys', delete = 'ds', replace = 'cs',
-  find = '', find_left = '', highlight = '', suffix_last = '', suffix_next = '', update_n_lines = '',
+  find = '', find_left = '', highlight = '', suffix_last = '', suffix_next = '',
 }})
 vim.keymap.del('x', 'ys')
 -- mini.trailspace
@@ -122,10 +125,8 @@ vim.opt.diffopt:append({'algorithm:histogram', 'context:999999', 'inline:none'})
 vim.opt.expandtab = true                      -- Use spaces instead of tabs
 vim.opt.ignorecase = true                     -- Ignore case
 vim.opt.inccommand = ''                       -- Disable substitution preview
-vim.opt.list = true                           -- Show invisible characters
 vim.opt.mouse = ''                            -- Disable mouse
 vim.opt.number = true                         -- Show line numbers
-vim.opt.pumheight = 12                        -- Max height of pop-up menu
 vim.opt.relativenumber = true                 -- Show relative line numbers
 vim.opt.report = 0                            -- Always report changed lines
 vim.opt.scrolloff = 4                         -- Lines of context
@@ -147,8 +148,7 @@ vim.opt.wildmode = {'list:longest'}           -- Command completion options
 vim.opt.wrap = false                          -- Disable line wrap
 
 -------------------- MAPPINGS --------------------------------------------------
-vim.keymap.set('', '<Space>', '<C-w>')
-vim.keymap.set('i', 'jj', '<ESC>')
+vim.keymap.set('i', 'jj', '<Esc>')
 vim.keymap.set('n', '<C-Down>', '<C-w>-')
 vim.keymap.set('n', '<C-Left>', '<C-w><')
 vim.keymap.set('n', '<C-Right>', '<C-w>>')
@@ -158,5 +158,9 @@ vim.keymap.set('n', '<Leader>u', '<Cmd>update<CR>')
 vim.keymap.set('n', '<Leader>x', '<Cmd>conf qa<CR>')
 vim.keymap.set('n', 'H', 'zh')
 vim.keymap.set('n', 'L', 'zl')
+vim.keymap.set('n', 'S', 'i<CR><Esc>==')
+vim.keymap.set('n', 'gp', '"+p')
 vim.keymap.set('n', 'gyp', function() vim.fn.setreg('+', vim.fn.getreg('%')) end)
 vim.keymap.set('x', '<Leader>s', ':s//gcI<Left><Left><Left><Left>')
+vim.keymap.set({'n', 'x'}, '<Space>', '<C-w>')
+vim.keymap.set({'n', 'x'}, 'gy', '"+y')
