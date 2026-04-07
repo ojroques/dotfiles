@@ -7,7 +7,6 @@ syntax enable
 set autoindent
 set autoread
 set background=dark
-set backspace=indent,eol,start
 set completeopt=menuone,noselect
 set expandtab
 set hidden
@@ -23,7 +22,6 @@ set nowrap
 set number relativenumber
 set pumheight=12
 set report=0
-set ruler
 set scrolloff=4
 set shiftround
 set shiftwidth=0
@@ -45,14 +43,16 @@ inoremap <C-u> <C-g>u<C-u>
 inoremap <C-w> <C-g>u<C-w>
 inoremap jj <ESC>
 nnoremap <C-l> :nohlsearch<CR>
+nnoremap <Leader>s :%s//gcI<Left><Left><Left><Left>
 nnoremap <Leader>u :update<CR>
 nnoremap <Leader>x :conf qa<CR>
 nnoremap H zh
 nnoremap L zl
 nnoremap Q @@
+nnoremap S i<CR><Esc>==
 nnoremap Y y$
-nnoremap [<Space> O<ESC>
+nnoremap [<Space> O<Esc>
 nnoremap [b :bprevious<CR>
-nnoremap ]<Space> o<ESC>
+nnoremap ]<Space> o<Esc>
 nnoremap ]b :bnext<CR>
 noremap <Space> <C-w>
