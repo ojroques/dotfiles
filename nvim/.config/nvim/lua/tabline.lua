@@ -4,6 +4,10 @@ local highlights = {
   Separator = {
     Default = {fg = palette.fg, bg = palette.bg1},
   },
+  Bookmark = {
+    Active = {fg = palette.black, bg = palette.orange, bold = true},
+    Inactive = {fg = palette.orange, bg = palette.bg1},
+  },
   Listed = {
     Active = {fg = palette.black, bg = palette.green, bold = true},
     Inactive = {fg = palette.green, bg = palette.bg1},
@@ -64,6 +68,37 @@ local function build_tab(buffer)
   return highlight_text(string.format(' %d ', buffer.bufnr), class, state)
 end
 
+local function build_bookmarks()
+  local ok, bookmarks = pcall(require, 'bookmarks')
+  if not ok or bookmarks.shada == nil then
+    return ''
+  end
+
+  local files = bookmarks.shada:files(bookmarks.namespace)
+  if files == nil or #files == 0 then
+    return ''
+  end
+
+  local current_path = vim.api.nvim_buf_get_name(0)
+  local separator = highlight_text('|', 'Separator', 'Default')
+  local items = {}
+
+  for i = 1, math.min(4, #files) do
+    local file = files[i]
+    local filename = vim.fn.fnamemodify(file.path, ':t')
+    if filename ~= '' then
+      local state = (file.path == current_path) and 'Active' or 'Inactive'
+      table.insert(items, highlight_text(string.format(' %d: %s ', i, filename), 'Bookmark', state))
+    end
+  end
+
+  if #items == 0 then
+    return ''
+  end
+
+  return separator .. table.concat(items, separator)
+end
+
 -------------------- SETUP -----------------------------------------------------
 local function set_highlights()
   for class, states in pairs(highlights) do
@@ -91,7 +126,7 @@ function M.build_tabline()
     table.insert(tabs, build_tab(buffer))
   end
 
-  return table.concat(tabs, separator)
+  return table.concat(tabs, separator) .. '%=' .. build_bookmarks()
 end
 
 function M.setup()
