@@ -5,7 +5,6 @@
   co = checkout
   d = diff --ext-diff
   dc = diff --cached --ext-diff
-  dt = difftool -d
   i = show --abbrev-commit --date=iso --ext-diff
   l = log --graph --format='%C(yellow)%h%Cred%d %Creset%s %Cgreen(%ar) %Cblue%an%Creset'
   pl = pull
@@ -22,10 +21,6 @@
   algorithm = histogram
   external = difft
   mnemonicPrefix = true
-  tool = nvimdifftool
-
-[difftool "nvimdifftool"]
-  cmd = "nvim -c \"packadd nvim.difftool\" -c \"DiffTool $LOCAL $REMOTE\""
 
 [fetch]
   all = true
