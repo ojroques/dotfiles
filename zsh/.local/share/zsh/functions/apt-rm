@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-# Remove packages no longer needed
+# Remove unneeded packages
 function apt-rm {
   sudo apt -y autoremove
 }

@@ -13,13 +13,10 @@ This repository contains my config files for:
 - **zsh**
 
 ## Install
-1. On Ubuntu 24.04+, use the [Makefile](./Makefile) to install packages:
+1. On Ubuntu 24.04+, use the [Makefile](./Makefile) to install apps:
 ```sh
-sudo make update        # update packages
-sudo make install-base  # install base packages
-sudo make install-cli   # install base + CLI packages
-sudo make install-gui   # install base + GUI packages
-sudo make clean         # clean up packages
+sudo make system-cli-apps  # install system CLI apps
+sudo make system-gui-apps  # install system GUI apps
 ```
 2. Run [stow](https://www.gnu.org/software/stow/) to symlink config files:
 ```sh
@@ -29,8 +26,8 @@ stow alacritty mpv xfce                     # GUI configs
 3. Change the default shell: `chsh -s /usr/bin/zsh` and reboot.
 4. Install additional apps:
 ```sh
-make difftastic fzf jetbrains-mono tree-sitter uv  # user apps
-make install-ls                                    # language servers
+make user-apps         # user apps
+make language-servers  # language servers
 ```
 
 ## Post-install
@@ -38,4 +35,4 @@ make install-ls                                    # language servers
 - Install or generate SSH keys
 - Enable user systemd units: `systemctl --user enable <unit>`
 - Export environment variables in `~/.config/zsh/.env`
-- Add additional commands to run in `~/.config/zsh/.run`
+- Run additional commands in `~/.config/zsh/.run`
