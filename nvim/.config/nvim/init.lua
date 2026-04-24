@@ -103,7 +103,7 @@ end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = false
 vim.lsp.config('*', {capabilities = capabilities, on_attach = on_attach})
-vim.lsp.enable({'bashls', 'gopls', 'terraformls', 'ty'})
+vim.lsp.enable({'gopls', 'terraformls', 'ty'})
 
 -------------------- TREESITTER ------------------------------------------------
 vim.api.nvim_create_autocmd('FileType', {

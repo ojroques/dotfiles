@@ -35,7 +35,7 @@ fpath=("$XDG_DATA_HOME/zsh/functions" "$XDG_DATA_HOME/zsh/prompt" $fpath)
 
 # PATH
 typeset -U path
-path=("$XDG_BIN_HOME" "$HOME/go/bin" "/usr/local/go/bin" "$HOME/.node_modules/bin" $path)
+path=("$XDG_BIN_HOME" "$HOME/go/bin" "$HOME/.node_modules/bin" $path)
 export PATH
 
 # GIT
