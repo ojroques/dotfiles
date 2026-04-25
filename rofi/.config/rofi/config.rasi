@@ -1,0 +1,5 @@
+configuration {
+  show-icons: true;
+}
+
+@theme "/usr/share/rofi/themes/Arc-Dark.rasi"
