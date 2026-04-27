@@ -90,7 +90,7 @@ tree-sitter:
 
 #################### USER APPS #################################################
 # renovate: datasource=github-releases packageName=wilfred/difftastic
-difftastic_version := "0.67.0"
+difftastic_version := "0.68.0"
 
 .PHONY: difftastic
 difftastic:
