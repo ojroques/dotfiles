@@ -59,7 +59,7 @@ gui-pkg: apt-update
 		papirus-icon-theme
 
 # renovate: datasource=golang-version depName=go
-go_version := "1.26.1"
+go_version := "1.26.2"
 
 .PHONY: go
 go:
@@ -79,7 +79,7 @@ neovim:
 	@ln -sf /opt/nvim/bin/nvim /usr/local/bin/nvim
 
 # renovate: datasource=github-releases depName=tree-sitter/tree-sitter
-tree_sitter_version := "v0.26.7"
+tree_sitter_version := "v0.26.8"
 
 .PHONY: tree-sitter
 tree-sitter:
@@ -90,7 +90,7 @@ tree-sitter:
 
 #################### USER APPS #################################################
 # renovate: datasource=github-releases depName=wilfred/difftastic
-difftastic_version := "0.67.0"
+difftastic_version := "0.68.0"
 
 .PHONY: difftastic
 difftastic:
@@ -108,7 +108,7 @@ fzf:
 	@~/.fzf/install --xdg --key-bindings --completion --no-update-rc --no-bash --no-fish
 
 # renovate: datasource=github-releases depName=ryanoasis/nerd-fonts
-jetbrains_mono_version := "v3.3.0"
+jetbrains_mono_version := "v3.4.0"
 
 .PHONY: jetbrains-mono
 jetbrains-mono:
@@ -119,7 +119,7 @@ jetbrains-mono:
 	@fc-cache -f
 
 # renovate: datasource=github-releases depName=astral-sh/uv
-uv_version := "0.11.6"
+uv_version := "0.11.7"
 
 .PHONY: uv
 uv:
@@ -140,7 +140,7 @@ python-ls:
 	@uv tool install ty@latest
 
 # renovate: datasource=github-releases depName=hashicorp/terraform-ls
-terraform_ls_version := "0.38.4"
+terraform_ls_version := "0.38.6"
 
 .PHONY: terraform-ls
 terraform-ls:
