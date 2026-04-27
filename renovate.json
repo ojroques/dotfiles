@@ -1,0 +1,13 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": ["^Makefile$"],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>\\S+) packageName=(?<packageName>\\S+)\\n\\w+ := \"(?<currentValue>[^\"]+)\""
+      ]
+    }
+  ]
+}
