@@ -58,7 +58,7 @@ gui-pkg: apt-update
 		mpv \
 		papirus-icon-theme
 
-# renovate: datasource=golang-version packageName=go
+# renovate: datasource=golang-version depName=go
 go_version := "1.26.2"
 
 .PHONY: go
@@ -78,8 +78,8 @@ neovim:
 	@tar -C /opt/nvim --strip-components=1 -xzf nvim.tar.gz && rm -f nvim.tar.gz
 	@ln -sf /opt/nvim/bin/nvim /usr/local/bin/nvim
 
-# renovate: datasource=github-releases packageName=tree-sitter/tree-sitter
-tree_sitter_version := "v0.26.8"
+# renovate: datasource=github-releases depName=tree-sitter/tree-sitter
+tree_sitter_version := "v0.26."
 
 .PHONY: tree-sitter
 tree-sitter:
@@ -89,7 +89,7 @@ tree-sitter:
 	@chmod +x /usr/local/bin/tree-sitter
 
 #################### USER APPS #################################################
-# renovate: datasource=github-releases packageName=wilfred/difftastic
+# renovate: datasource=github-releases depName=wilfred/difftastic
 difftastic_version := "0.68.0"
 
 .PHONY: difftastic
@@ -107,7 +107,7 @@ fzf:
 	@git clone --depth 1 https://github.com/junegunn/fzf-git.sh.git ~/.fzf-git
 	@~/.fzf/install --xdg --key-bindings --completion --no-update-rc --no-bash --no-fish
 
-# renovate: datasource=github-releases packageName=ryanoasis/nerd-fonts
+# renovate: datasource=github-releases depName=ryanoasis/nerd-fonts
 jetbrains_mono_version := "v3.4.0"
 
 .PHONY: jetbrains-mono
@@ -118,7 +118,7 @@ jetbrains-mono:
 	@tar -C ~/.local/share/fonts/JetBrainsMono -xJf jetbrains-mono.tar.xz && rm -f jetbrains-mono.tar.xz
 	@fc-cache -f
 
-# renovate: datasource=github-releases packageName=astral-sh/uv
+# renovate: datasource=github-releases depName=astral-sh/uv
 uv_version := "0.11.7"
 
 .PHONY: uv

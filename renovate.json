@@ -6,8 +6,15 @@
       "customType": "regex",
       "fileMatch": ["^Makefile$"],
       "matchStrings": [
-        "# renovate: datasource=(?<datasource>\\S+) packageName=(?<packageName>\\S+)\\n\\w+ := \"(?<currentValue>[^\"]+)\""
+        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\n\\w+_version := \"(?<currentValue>[^\"]+)\""
       ]
+    }
+  ],
+  "packageRules": [
+    {
+      "matchManagers": ["custom.regex"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
     }
   ]
 }
