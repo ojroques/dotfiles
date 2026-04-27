@@ -15,7 +15,7 @@
   "packageRules": [
     {
       "matchManagers": ["custom.regex"],
-      "matchUpdateTypes": ["minor", "patch"],
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
       "automerge": true
     }
   ]

@@ -59,7 +59,7 @@ gui-pkg: apt-update
 		papirus-icon-theme
 
 # renovate: datasource=golang-version depName=go
-go_version := "1.26.2"
+go_version := "1.26.1"
 
 .PHONY: go
 go:
