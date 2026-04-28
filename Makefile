@@ -79,7 +79,7 @@ neovim:
 	@ln -sf /opt/nvim/bin/nvim /usr/local/bin/nvim
 
 # renovate: datasource=github-releases depName=tree-sitter/tree-sitter
-tree_sitter_version := "0.26.7"
+tree_sitter_version := "0.26.8"
 
 .PHONY: tree-sitter
 tree-sitter:
@@ -108,7 +108,7 @@ fzf:
 	@~/.fzf/install --xdg --key-bindings --completion --no-update-rc --no-bash --no-fish
 
 # renovate: datasource=github-releases depName=ryanoasis/nerd-fonts
-jetbrains_mono_version := "3.3.0"
+jetbrains_mono_version := "3.4.0"
 
 .PHONY: jetbrains-mono
 jetbrains-mono:
