@@ -79,12 +79,12 @@ neovim:
 	@ln -sf /opt/nvim/bin/nvim /usr/local/bin/nvim
 
 # renovate: datasource=github-releases depName=tree-sitter/tree-sitter
-tree_sitter_version := "v0.26.8"
+tree_sitter_version := "0.26.7"
 
 .PHONY: tree-sitter
 tree-sitter:
-	@echo "Installing tree-sitter $(tree_sitter_version)..."
-	@curl -fsSL -o tree-sitter.zip https://github.com/tree-sitter/tree-sitter/releases/download/$(tree_sitter_version)/tree-sitter-cli-linux-x64.zip
+	@echo "Installing tree-sitter v$(tree_sitter_version)..."
+	@curl -fsSL -o tree-sitter.zip https://github.com/tree-sitter/tree-sitter/releases/download/v$(tree_sitter_version)/tree-sitter-cli-linux-x64.zip
 	@unzip -d /usr/local/bin -oq tree-sitter.zip && rm -f tree-sitter.zip
 	@chmod +x /usr/local/bin/tree-sitter
 
@@ -108,12 +108,12 @@ fzf:
 	@~/.fzf/install --xdg --key-bindings --completion --no-update-rc --no-bash --no-fish
 
 # renovate: datasource=github-releases depName=ryanoasis/nerd-fonts
-jetbrains_mono_version := "v3.4.0"
+jetbrains_mono_version := "3.3.0"
 
 .PHONY: jetbrains-mono
 jetbrains-mono:
-	@echo "Installing jetbrains mono $(jetbrains_mono_version)..."
-	@curl -fsSL -o jetbrains-mono.tar.xz https://github.com/ryanoasis/nerd-fonts/releases/download/$(jetbrains_mono_version)/JetBrainsMono.tar.xz
+	@echo "Installing jetbrains mono v$(jetbrains_mono_version)..."
+	@curl -fsSL -o jetbrains-mono.tar.xz https://github.com/ryanoasis/nerd-fonts/releases/download/v$(jetbrains_mono_version)/JetBrainsMono.tar.xz
 	@rm -rf ~/.local/share/fonts/JetBrainsMono && mkdir -p ~/.local/share/fonts/JetBrainsMono
 	@tar -C ~/.local/share/fonts/JetBrainsMono -xJf jetbrains-mono.tar.xz && rm -f jetbrains-mono.tar.xz
 	@fc-cache -f
