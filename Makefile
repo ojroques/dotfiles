@@ -5,8 +5,11 @@ system-cli-apps: cli-pkg go neovim tree-sitter
 .PHONY: system-gui-apps
 system-gui-apps: gui-pkg
 
-.PHONY: user-apps
-user-apps: difftastic fzf jetbrains-mono uv
+.PHONY: user-cli-apps
+user-cli-apps: difftastic fzf uv
+
+.PHONY: user-gui-apps
+user-gui-apps: jetbrains-mono
 
 .PHONY: language-servers
 language-servers: go-ls python-ls terraform-ls

@@ -26,8 +26,9 @@ stow alacritty mpv xfce                     # GUI configs
 3. Change the default shell: `chsh -s /usr/bin/zsh` and reboot.
 4. Install additional apps:
 ```sh
-make user-apps         # user apps
-make language-servers  # language servers
+make user-cli-apps     # install user CLI apps
+make user-gui-apps     # install user GUI apps
+make language-servers  # install language servers
 ```
 
 ## Post-install
