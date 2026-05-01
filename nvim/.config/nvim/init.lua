@@ -4,7 +4,6 @@ vim.pack.add({
   {src = 'https://github.com/nvim-mini/mini.nvim', version = 'main'},
   {src = 'https://github.com/nvim-treesitter/nvim-treesitter', version = 'main'},
   {src = 'https://github.com/nvim-treesitter/nvim-treesitter-context', version = 'master'},
-  {src = 'https://github.com/ojroques/nvim-bookmarks', version = 'main'},
 })
 
 -------------------- PLUGIN SETUP ----------------------------------------------
@@ -70,15 +69,16 @@ require('mini.surround').setup({mappings = {
 vim.keymap.del('x', 'ys')
 -- mini.trailspace
 require('mini.trailspace').setup()
--- nvim-bookmarks
-local bookmarks = require('bookmarks')
-bookmarks.setup()
-vim.keymap.set('n', '<Leader>m', bookmarks.toggle_menu)
-vim.keymap.set('n', 'm1', function() bookmarks.open(1) end)
-vim.keymap.set('n', 'm2', function() bookmarks.open(2) end)
-vim.keymap.set('n', 'm3', function() bookmarks.open(3) end)
-vim.keymap.set('n', 'm4', function() bookmarks.open(4) end)
-vim.keymap.set('n', 'mm', bookmarks.add)
+-- mini.visits
+require('mini.visits').setup({list = {
+  filter = function(path_data)
+    local s = vim.uv.fs_stat(path_data.path)
+    return s and s.type ~= 'directory' and not path_data.path:find('/.git/', 1, true)
+  end
+}})
+for i = 1, 6 do
+  vim.keymap.set('n', 'm' .. i, function() MiniVisits.iterate_paths('first', nil, {n_times = i}) end)
+end
 -- nvim-treesitter-context
 require('treesitter-context').setup({mode = 'topline', separator = '━'})
 -- nvim.undotree

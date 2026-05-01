@@ -4,10 +4,6 @@ local highlights = {
   Separator = {
     Default = {fg = palette.fg, bg = palette.bg1},
   },
-  Bookmark = {
-    Active = {fg = palette.black, bg = palette.orange, bold = true},
-    Inactive = {fg = palette.orange, bg = palette.bg1},
-  },
   Listed = {
     Active = {fg = palette.black, bg = palette.green, bold = true},
     Inactive = {fg = palette.green, bg = palette.bg1},
@@ -16,10 +12,6 @@ local highlights = {
     Active = {fg = palette.black, bg = palette.blue, bold = true},
     Inactive = {fg = palette.blue, bg = palette.bg1},
   },
-  Terminal = {
-    Active = {fg = palette.black, bg = palette.red, bold = true},
-    Inactive = {fg = palette.red, bg = palette.bg1},
-  },
 }
 
 local function highlight_text(text, class, state)
@@ -27,76 +19,65 @@ local function highlight_text(text, class, state)
   return string.format('%%#%s#%s%%*', group, text)
 end
 
--------------------- TABS ------------------------------------------------------
+-------------------- BUFFERS ---------------------------------------------------
 local function is_excluded(bufnr)
   local filetype = vim.bo[bufnr].filetype
   return filetype == 'help' or filetype == 'qf' or filetype == 'minipick'
 end
 
-local function get_buffers()
-  local buffers = {}
+local function list_buffers()
   local current_bufnr = vim.api.nvim_get_current_buf()
-  local last_used, last_buffer
+  local buffers = {}
 
   for _, bufinfo in ipairs(vim.fn.getbufinfo({buflisted = 1})) do
     if not is_excluded(bufinfo.bufnr) then
-      local buffer = {
+      table.insert(buffers, {
         bufnr = bufinfo.bufnr,
         current = bufinfo.bufnr == current_bufnr,
-        modified = vim.bo[bufinfo.bufnr].modified,
-        terminal = vim.bo[bufinfo.bufnr].buftype == 'terminal',
-      }
-
-      if not last_used or bufinfo.lastused > last_used then
-        last_used, last_buffer = bufinfo.lastused, buffer
-      end
-
-      table.insert(buffers, buffer)
+        modified = bufinfo.changed ~= 0,
+      })
     end
-  end
-
-  if is_excluded(current_bufnr) and last_buffer then
-    last_buffer.current = true
   end
 
   return buffers
 end
 
-local function build_tab(buffer)
-  local class = buffer.terminal and 'Terminal' or buffer.modified and 'Modified' or 'Listed'
-  local state = buffer.current and 'Active' or 'Inactive'
-  return highlight_text(string.format(' %d ', buffer.bufnr), class, state)
+-------------------- BUILDERS --------------------------------------------------
+local function build_buffers()
+  local buffers = list_buffers()
+  if not buffers or #buffers == 0 then return '' end
+
+  local separator = highlight_text('|', 'Separator', 'Default')
+  local parts = {}
+
+  for _, buffer in ipairs(buffers) do
+    local class = buffer.modified and 'Modified' or 'Listed'
+    local state = buffer.current and 'Active' or 'Inactive'
+    table.insert(parts, highlight_text(string.format(' %d ', buffer.bufnr), class, state))
+  end
+
+  return table.concat(parts, separator)
 end
 
-local function build_bookmarks()
-  local ok, bookmarks = pcall(require, 'bookmarks')
-  if not ok or bookmarks.shada == nil then
-    return ''
-  end
+local function build_visits()
+  if not MiniVisits then return '' end
 
-  local files = bookmarks.shada:files(bookmarks.namespace)
-  if files == nil or #files == 0 then
-    return ''
-  end
+  local paths = MiniVisits.list_paths()
+  if not paths or #paths == 0 then return '' end
 
-  local current_path = vim.api.nvim_buf_get_name(0)
   local separator = highlight_text('|', 'Separator', 'Default')
-  local items = {}
+  local current_path = vim.api.nvim_buf_get_name(0)
+  local parts = {}
 
-  for i = 1, math.min(4, #files) do
-    local file = files[i]
-    local filename = vim.fn.fnamemodify(file.path, ':t')
-    if filename ~= '' then
-      local state = (file.path == current_path) and 'Active' or 'Inactive'
-      table.insert(items, highlight_text(string.format(' %d: %s ', i, filename), 'Bookmark', state))
-    end
+  for i = 1, math.min(6, #paths) do
+    local filename = vim.fn.fnamemodify(paths[i], ':t')
+    local bufnr = vim.fn.bufnr(paths[i])
+    local class = bufnr ~= -1 and vim.bo[bufnr].modified and 'Modified' or 'Listed'
+    local state = paths[i] == current_path and 'Active' or 'Inactive'
+    table.insert(parts, highlight_text(string.format(' %d: %s ', i, filename), class, state))
   end
 
-  if #items == 0 then
-    return ''
-  end
-
-  return table.concat(items, separator)
+  return table.concat(parts, separator)
 end
 
 -------------------- SETUP -----------------------------------------------------
@@ -118,15 +99,7 @@ end
 local M = {}
 
 function M.build_tabline()
-  local tabs = {}
-  local buffers = get_buffers()
-  local separator = highlight_text('|', 'Separator', 'Default')
-
-  for _, buffer in ipairs(buffers) do
-    table.insert(tabs, build_tab(buffer))
-  end
-
-  return table.concat(tabs, separator) .. '%=' .. build_bookmarks()
+  return build_visits() .. '%=' .. build_buffers()
 end
 
 function M.setup()

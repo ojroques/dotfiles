@@ -44,17 +44,15 @@ local modes = {
   ['v'] = {long = 'Visual', short = 'V', state = 'Visual'},
 }
 
-local function get_mode(active)
-  local mode = modes[string.sub(vim.api.nvim_get_mode().mode, 1, 1)] or modes['?']
-  local width = vim.api.nvim_win_get_width(0)
+local function get_mode(active, mode, width)
   local text = width < 140 and mode.short or mode.long
   local state = active and mode.state or 'Inactive'
   return highlight_text(string.format(' %s ', text), 'High', state)
 end
 
 -------------------- FILETYPE --------------------------------------------------
-local function get_filetype(active)
-  if vim.api.nvim_win_get_width(0) < 80 then
+local function get_filetype(active, width)
+  if width < 80 then
     return ''
   end
 
@@ -70,8 +68,7 @@ local function get_filetype(active)
 end
 
 -------------------- FILEPATH --------------------------------------------------
-local function get_filepath(active)
-  local width = vim.api.nvim_win_get_width(0)
+local function get_filepath(active, width)
   local head, body, tail = ' ', '', ' %r%h%w '
 
   if vim.fn.expand('%:t') == '' then
@@ -92,22 +89,19 @@ local function get_filepath(active)
     end
   end
 
-  if active then
-    head = highlight_text(head, 'Medium', 'Default')
-    body = highlight_text(body, 'Medium', 'Emphasized')
-    tail = highlight_text(tail, 'Medium', 'Default')
-  else
-    head = highlight_text(head, 'Medium', 'Inactive')
-    body = highlight_text(body, 'Medium', 'Inactive')
-    tail = highlight_text(tail, 'Medium', 'Inactive')
-  end
+  local head_state = active and 'Default' or 'Inactive'
+  local body_state = active and 'Emphasized' or 'Inactive'
+
+  head = highlight_text(head, 'Medium', head_state)
+  body = highlight_text(body, 'Medium', body_state)
+  tail = highlight_text(tail, 'Medium', head_state)
 
   return string.format('%s%s%s', head, body, tail)
 end
 
 -------------------- FILESIZE --------------------------------------------------
-local function get_filesize(active)
-  if vim.api.nvim_win_get_width(0) < 120 then
+local function get_filesize(active, width)
+  if width < 120 then
     return ''
   end
 
@@ -129,14 +123,13 @@ local function get_filesize(active)
 end
 
 -------------------- POSITION --------------------------------------------------
-local function get_position(active)
+local function get_position(active, mode)
   local nblines = vim.fn.line('$')
   local line = vim.fn.line('.')
   local nbcols = vim.fn.col('$') - 1
   local col = vim.fn.col('.')
   local percent = math.floor(line / nblines * 100)
   local text = string.format('%d/%d %d/%d %d%%%%', line, nblines, col, nbcols, percent)
-  local mode = modes[string.sub(vim.api.nvim_get_mode().mode, 1, 1)] or modes['?']
   local state = active and mode.state or 'Inactive'
   return highlight_text(string.format(' %s ', text), 'High', state)
 end
@@ -171,14 +164,16 @@ end
 local M = {}
 
 function M.build_statusline(active)
+  local width = vim.api.nvim_win_get_width(0)
+  local mode = modes[string.sub(vim.api.nvim_get_mode().mode, 1, 1)] or modes['?']
   return table.concat({
-    get_mode(active),
-    get_filetype(active),
-    get_filepath(active),
+    get_mode(active, mode, width),
+    get_filetype(active, width),
+    get_filepath(active, width),
     '%<',
     highlight_text('%=', 'Medium', 'Default'),
-    get_filesize(active),
-    get_position(active),
+    get_filesize(active, width),
+    get_position(active, mode),
   })
 end
 
