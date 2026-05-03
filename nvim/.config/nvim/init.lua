@@ -35,7 +35,7 @@ require('mini.files').setup()
 vim.keymap.set('n', '-', function() MiniFiles.open(vim.api.nvim_buf_get_name(0)) end)
 -- mini.icons
 require('mini.icons').setup()
-require('mini.deps').later(MiniIcons.tweak_lsp_kind())
+require('mini.deps').later(MiniIcons.tweak_lsp_kind)
 -- mini.indentscope
 require('mini.indentscope').setup({draw = {animation = require('mini.indentscope').gen_animation.none()}})
 -- mini.keymap
@@ -76,7 +76,7 @@ require('mini.visits').setup({list = {
     return s and s.type ~= 'directory' and not path_data.path:find('/.git/', 1, true)
   end
 }})
-for i = 1, 6 do
+for i = 1, 5 do
   vim.keymap.set('n', 'm' .. i, function() MiniVisits.iterate_paths('first', nil, {n_times = i}) end)
 end
 -- nvim-treesitter-context

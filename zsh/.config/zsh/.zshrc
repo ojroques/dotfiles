@@ -1,4 +1,5 @@
 # ZSH OPTIONS
+setopt extended_glob
 setopt glob_dots
 setopt hist_ignore_all_dups
 setopt hist_reduce_blanks
@@ -54,7 +55,7 @@ prompt personal
 
 # COMPLETION
 autoload -Uz compinit
-compinit
+[[ -n $ZDOTDIR/.zcompdump(#qN.mh+24) ]] && compinit && touch $ZDOTDIR/.zcompdump || compinit -C
 zstyle ':completion:*' completer _expand _complete
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' list-dirs-first true

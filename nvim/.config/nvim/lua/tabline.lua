@@ -20,7 +20,7 @@ local function highlight_text(text, class, state)
 end
 
 -------------------- BUFFERS ---------------------------------------------------
-local function is_excluded(bufnr)
+local function excluded_buffer(bufnr)
   local filetype = vim.bo[bufnr].filetype
   return filetype == 'help' or filetype == 'qf' or filetype == 'minipick'
 end
@@ -30,7 +30,7 @@ local function list_buffers()
   local buffers = {}
 
   for _, bufinfo in ipairs(vim.fn.getbufinfo({buflisted = 1})) do
-    if not is_excluded(bufinfo.bufnr) then
+    if not excluded_buffer(bufinfo.bufnr) then
       table.insert(buffers, {
         bufnr = bufinfo.bufnr,
         current = bufinfo.bufnr == current_bufnr,
@@ -65,11 +65,11 @@ local function build_visits()
   local paths = MiniVisits.list_paths()
   if not paths or #paths == 0 then return '' end
 
-  local separator = highlight_text('|', 'Separator', 'Default')
   local current_path = vim.api.nvim_buf_get_name(0)
+  local separator = highlight_text('|', 'Separator', 'Default')
   local parts = {}
 
-  for i = 1, math.min(6, #paths) do
+  for i = 1, math.min(5, #paths) do
     local filename = vim.fn.fnamemodify(paths[i], ':t')
     local bufnr = vim.fn.bufnr(paths[i])
     local class = bufnr ~= -1 and vim.bo[bufnr].modified and 'Modified' or 'Listed'
@@ -99,7 +99,7 @@ end
 local M = {}
 
 function M.build_tabline()
-  return build_visits() .. '%=' .. build_buffers()
+  return build_buffers() .. '%=' .. build_visits()
 end
 
 function M.setup()

@@ -127,7 +127,7 @@ uv_version := "0.11.8"
 .PHONY: uv
 uv:
 	@echo "Installing uv v$(uv_version)..."
-	@curl -fsSL -o uv.tar.gz https://releases.astral.sh/github/uv/releases/download/$(uv_version)/uv-x86_64-unknown-linux-gnu.tar.gz
+	@curl -fsSL -o uv.tar.gz https://github.com/astral-sh/uv/releases/download/$(uv_version)/uv-x86_64-unknown-linux-gnu.tar.gz
 	@mkdir -p ~/.local/bin
 	@tar -C ~/.local/bin --strip-components=1 -xzf uv.tar.gz && rm -f uv.tar.gz
 
