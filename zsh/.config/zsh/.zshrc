@@ -55,6 +55,7 @@ prompt personal
 # COMPLETION
 autoload -Uz compinit
 compinit
+[[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]] && compinit || compinit -C # Run the full check once a day
 zstyle ':completion:*' completer _expand _complete
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' list-dirs-first true

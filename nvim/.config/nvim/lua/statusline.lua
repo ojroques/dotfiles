@@ -106,10 +106,10 @@ local function get_filesize(active, width)
   end
 
   local state = active and 'Default' or 'Inactive'
-  local size = math.max(vim.fn.line2byte(vim.fn.line('$') + 1) - 1, 0)
+  local size = vim.api.nvim_buf_get_offset(0, vim.fn.line('$'))
   local text
 
-  if size == 0 then
+  if size <= 0 then
     return ''
   elseif size < 1000 then
     text = string.format('%dB', size)
