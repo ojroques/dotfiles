@@ -65,16 +65,23 @@ local function build_visits()
   local paths = MiniVisits.list_paths()
   if not paths or #paths == 0 then return '' end
 
+  local buffers = {}
   local current_path = vim.api.nvim_buf_get_name(0)
   local separator = highlight_text('|', 'Separator', 'Default')
   local parts = {}
 
   for i = 1, math.min(5, #paths) do
     local filename = vim.fn.fnamemodify(paths[i], ':t')
+    buffers[filename] = (buffers[filename] or 0) + 1
+  end
+
+  for i = 1, math.min(5, #paths) do
+    local name = vim.fn.fnamemodify(paths[i], ':t')
+    name = buffers[name] > 1 and vim.fn.fnamemodify(paths[i], ':~:.') or name
     local bufnr = vim.fn.bufnr(paths[i])
     local class = bufnr ~= -1 and vim.bo[bufnr].modified and 'Modified' or 'Listed'
     local state = paths[i] == current_path and 'Active' or 'Inactive'
-    table.insert(parts, highlight_text(string.format(' %d: %s ', i, filename), class, state))
+    table.insert(parts, highlight_text(string.format(' %d: %s ', i, name), class, state))
   end
 
   return table.concat(parts, separator)
