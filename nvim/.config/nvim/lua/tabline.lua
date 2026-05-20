@@ -106,7 +106,7 @@ end
 local M = {}
 
 function M.build_tabline()
-  return build_buffers() .. '%=' .. build_visits()
+  return build_buffers() .. '%=%<' .. build_visits()
 end
 
 function M.setup()
