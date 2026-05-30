@@ -122,7 +122,7 @@ jetbrains-mono:
 	@fc-cache -f
 
 # renovate: datasource=github-releases depName=astral-sh/uv
-uv_version := "0.11.16"
+uv_version := "0.11.17"
 
 .PHONY: uv
 uv:
