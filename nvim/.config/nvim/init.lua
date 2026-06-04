@@ -38,6 +38,8 @@ require('mini.icons').setup()
 require('mini.deps').later(MiniIcons.tweak_lsp_kind)
 -- mini.indentscope
 require('mini.indentscope').setup({draw = {animation = require('mini.indentscope').gen_animation.none()}})
+-- mini.input
+require('mini.input').setup()
 -- mini.keymap
 require('mini.keymap').setup()
 MiniKeymap.map_multistep('i', '<Tab>', {'pmenu_next'})
