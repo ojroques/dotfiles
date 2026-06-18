@@ -8,7 +8,7 @@ setopt share_history
 
 # ZSH PARAMETERS
 HISTFILE="$XDG_STATE_HOME/zsh/history"
-HISTORY_IGNORE="(cd|dl|doc|e|ll|ls|py|t|tmp|up|upr|wk)"
+HISTORY_IGNORE="(cd|dl|doc|e|ll|ls|poweroff|py|t|tmp|tree|up|upr|wk)"
 HISTSIZE=10000
 SAVEHIST=10000
 

@@ -77,7 +77,7 @@ local function build_visits()
 
   for i = 1, math.min(5, #paths) do
     local name = vim.fn.fnamemodify(paths[i], ':t')
-    name = buffers[name] > 1 and vim.fn.pathshorten(vim.fn.fnamemodify(paths[i], ':~:.'), 8) or name
+    name = buffers[name] > 1 and vim.fn.fnamemodify(paths[i], ':~:.') or name
     local bufnr = vim.fn.bufnr(paths[i])
     local class = bufnr ~= -1 and vim.bo[bufnr].modified and 'Modified' or 'Listed'
     local state = paths[i] == current_path and 'Active' or 'Inactive'
