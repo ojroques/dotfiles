@@ -83,9 +83,6 @@ for i = 1, 5 do
 end
 -- nvim-treesitter-context
 require('treesitter-context').setup({mode = 'topline', separator = '━'})
--- nvim.undotree
-vim.cmd('packadd nvim.undotree')
-vim.keymap.set('n', 'U', '<Cmd>Undotree<CR>')
 -- onedark
 require('onedark')
 -- statusline
@@ -160,7 +157,6 @@ vim.keymap.set('n', '<Leader>u', '<Cmd>update<CR>')
 vim.keymap.set('n', '<Leader>x', '<Cmd>conf qa<CR>')
 vim.keymap.set('n', 'H', 'zh')
 vim.keymap.set('n', 'L', 'zl')
-vim.keymap.set('n', 'S', 'i<CR><Esc>==')
 vim.keymap.set('n', 'gp', '"+p')
 vim.keymap.set('n', 'gyp', function() vim.fn.setreg('+', vim.fn.getreg('%')) end)
 vim.keymap.set('x', '<Leader>s', ':s//gcI<Left><Left><Left><Left>')
