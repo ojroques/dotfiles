@@ -2,7 +2,7 @@
 
 # Tmux session switcher
 function tss {
-  local current_session=$([[ -n $TMUX ]] && tmux display-message -p "#S" || print "")
+  local current_session=$([[ -n $TMUX ]] && tmux display-message -p "#S" || print -n "")
   local list_sessions="tmux list-sessions -F '#{==:#S,$current_session} #{?session_last_attached,#{session_last_attached},0} #S' 2>/dev/null | sort -k1,1n -k2,2nr -k3 | cut -d' ' -f3-"
   local new_session="tmux new-session -d -s {q} 2>/dev/null"
   local kill_session="tmux kill-session -t {} 2>/dev/null"
