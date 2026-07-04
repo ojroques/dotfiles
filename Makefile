@@ -82,7 +82,7 @@ neovim:
 	@ln -sf /opt/nvim/bin/nvim /usr/local/bin/nvim
 
 # renovate: datasource=github-releases depName=tree-sitter/tree-sitter
-tree_sitter_version := "0.26.9"
+tree_sitter_version := "0.26.10"
 
 .PHONY: tree-sitter
 tree-sitter:
@@ -122,7 +122,7 @@ jetbrains-mono:
 	@fc-cache -f
 
 # renovate: datasource=github-releases depName=astral-sh/uv
-uv_version := "0.11.25"
+uv_version := "0.11.26"
 
 .PHONY: uv
 uv:
@@ -143,7 +143,7 @@ python-ls:
 	@uv tool install ty@latest
 
 # renovate: datasource=github-releases depName=hashicorp/terraform-ls
-terraform_ls_version := "0.38.7"
+terraform_ls_version := "0.38.8"
 
 .PHONY: terraform-ls
 terraform-ls:
