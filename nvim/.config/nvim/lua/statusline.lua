@@ -22,7 +22,7 @@ local highlights = {
 }
 
 local function highlight_text(text, class, state)
-  local group = string.format('Statusline%s%s', class, state)
+  local group = 'Statusline' .. class .. state
   return string.format('%%#%s#%s%%*', group, text)
 end
 
@@ -96,7 +96,7 @@ local function get_filepath(active, width)
   body = highlight_text(body, 'Medium', body_state)
   tail = highlight_text(tail, 'Medium', head_state)
 
-  return string.format('%s%s%s', head, body, tail)
+  return head .. body .. tail
 end
 
 -------------------- FILESIZE --------------------------------------------------
@@ -138,7 +138,7 @@ end
 local function set_highlights()
   for class, states in pairs(highlights) do
     for state, highlight in pairs(states) do
-      local group = string.format('Statusline%s%s', class, state)
+      local group = 'Statusline' .. class .. state
       vim.api.nvim_set_hl(0, group, highlight)
     end
   end

@@ -15,7 +15,7 @@ local highlights = {
 }
 
 local function highlight_text(text, class, state)
-  local group = string.format('Tabline%s%s', class, state)
+  local group = 'Tabline' .. class .. state
   return string.format('%%#%s#%s%%*', group, text)
 end
 
@@ -78,6 +78,7 @@ local function build_visits()
   for i = 1, math.min(5, #paths) do
     local name = vim.fn.fnamemodify(paths[i], ':t')
     name = buffers[name] > 1 and vim.fn.fnamemodify(paths[i], ':~:.') or name
+    name = #name > 40 and '…' .. string.sub(name, -40) or name
     local bufnr = vim.fn.bufnr(paths[i])
     local class = bufnr ~= -1 and vim.bo[bufnr].modified and 'Modified' or 'Listed'
     local state = paths[i] == current_path and 'Active' or 'Inactive'
@@ -91,7 +92,7 @@ end
 local function set_highlights()
   for class, states in pairs(highlights) do
     for state, highlight in pairs(states) do
-      local group = string.format('Tabline%s%s', class, state)
+      local group = 'Tabline' .. class .. state
       vim.api.nvim_set_hl(0, group, highlight)
     end
   end
