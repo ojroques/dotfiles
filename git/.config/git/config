@@ -2,17 +2,18 @@
   a = add
   cm = commit
   cma = commit --amend
-  co = checkout
   d = diff --ext-diff
   dc = diff --cached --ext-diff
-  i = show --abbrev-commit --date=iso --ext-diff
   l = log --graph --format='%C(yellow)%h%Cred%d %Creset%s %Cgreen(%ar) %Cblue%an%Creset'
   pl = pull
   ps = push
   rb = rebase
   rs = reset
+  rt = restore
   s = status
-  ua = restore --staged
+  sh = show --abbrev-commit --date=iso --ext-diff
+  sw = switch
+  wt = worktree
 
 [column]
   ui = auto
