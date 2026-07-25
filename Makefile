@@ -122,7 +122,7 @@ jetbrains-mono:
 	@fc-cache -f
 
 # renovate: datasource=github-releases depName=astral-sh/uv
-uv_version := "0.11.29"
+uv_version := "0.11.32"
 
 .PHONY: uv
 uv:
@@ -143,7 +143,7 @@ python-ls:
 	@uv tool install ty@latest
 
 # renovate: datasource=github-releases depName=hashicorp/terraform-ls
-terraform_ls_version := "0.38.8"
+terraform_ls_version := "0.39.0"
 
 .PHONY: terraform-ls
 terraform-ls:
