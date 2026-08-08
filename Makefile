@@ -93,7 +93,7 @@ tree-sitter:
 
 #################### USER APPS #################################################
 # renovate: datasource=github-releases depName=wilfred/difftastic
-difftastic_version := "0.69.0"
+difftastic_version := "0.70.0"
 
 .PHONY: difftastic
 difftastic:
@@ -111,7 +111,7 @@ fzf:
 	@~/.fzf/install --xdg --key-bindings --completion --no-update-rc --no-bash --no-fish
 
 # renovate: datasource=github-releases depName=ryanoasis/nerd-fonts
-jetbrains_mono_version := "3.4.0"
+jetbrains_mono_version := "3.5.0"
 
 .PHONY: jetbrains-mono
 jetbrains-mono:
@@ -122,7 +122,7 @@ jetbrains-mono:
 	@fc-cache -f
 
 # renovate: datasource=github-releases depName=astral-sh/uv
-uv_version := "0.12.1"
+uv_version := "0.12.3"
 
 .PHONY: uv
 uv:
