@@ -82,7 +82,7 @@ neovim:
 	@ln -sf /opt/nvim/bin/nvim /usr/local/bin/nvim
 
 # renovate: datasource=github-releases depName=tree-sitter/tree-sitter
-tree_sitter_version := "0.26.11"
+tree_sitter_version := "0.26.12"
 
 .PHONY: tree-sitter
 tree-sitter:
