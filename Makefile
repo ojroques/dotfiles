@@ -6,7 +6,7 @@ system-cli-apps: cli-pkg go neovim tree-sitter
 system-gui-apps: gui-pkg
 
 .PHONY: user-cli-apps
-user-cli-apps: difftastic fzf uv
+user-cli-apps: buf difftastic fzf uv
 
 .PHONY: user-gui-apps
 user-gui-apps: jetbrains-mono
@@ -92,6 +92,16 @@ tree-sitter:
 	@chmod +x /usr/local/bin/tree-sitter
 
 #################### USER APPS #################################################
+# renovate: datasource=github-releases depName=bufbuild/buf
+buf_version := "1.72.0"
+
+.PHONY: buf
+buf:
+	@echo "Installing buf v$(buf_version)..."
+	@curl -fsSL -o buf https://github.com/bufbuild/buf/releases/download/v$(buf_version)/buf-Linux-x86_64
+	@mkdir -p ~/.local/bin
+	@mv buf ~/.local/bin && chmod +x ~/.local/bin/buf
+
 # renovate: datasource=github-releases depName=wilfred/difftastic
 difftastic_version := "0.70.0"
 
