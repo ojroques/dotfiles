@@ -62,7 +62,7 @@ gui-pkg: apt-update
 		papirus-icon-theme
 
 # renovate: datasource=golang-version depName=go
-go_version := "1.26.6"
+go_version := "1.27.0"
 
 .PHONY: go
 go:
@@ -121,7 +121,7 @@ fzf:
 	@~/.fzf/install --xdg --key-bindings --completion --no-update-rc --no-bash --no-fish
 
 # renovate: datasource=github-releases depName=ryanoasis/nerd-fonts
-jetbrains_mono_version := "3.5.0"
+jetbrains_mono_version := "3.5.1"
 
 .PHONY: jetbrains-mono
 jetbrains-mono:
