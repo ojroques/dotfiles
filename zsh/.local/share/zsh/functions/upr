@@ -4,7 +4,7 @@
 function upr {
   local dir=$PWD
 
-  while [[ $dir != "/" && ! -d "$dir/.git" ]]; do
+  while [[ $dir != "/" && ! -e "$dir/.git" ]]; do
     dir=${dir:h}
   done
 
