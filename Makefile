@@ -82,7 +82,7 @@ neovim:
 	@ln -sf /opt/nvim/bin/nvim /usr/local/bin/nvim
 
 # renovate: datasource=github-releases depName=tree-sitter/tree-sitter
-tree_sitter_version := "0.26.12"
+tree_sitter_version := "0.26.13"
 
 .PHONY: tree-sitter
 tree-sitter:
@@ -132,7 +132,7 @@ jetbrains-mono:
 	@fc-cache -f
 
 # renovate: datasource=github-releases depName=astral-sh/uv
-uv_version := "0.12.5"
+uv_version := "0.12.7"
 
 .PHONY: uv
 uv:
