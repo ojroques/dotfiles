@@ -10,14 +10,14 @@ vim.pack.add({
 -- mini.extra
 require('mini.extra').setup()
 -- mini.ai
-require('mini.ai').setup({custom_textobjects = {e = MiniExtra.gen_ai_spec.buffer()}})
+require('mini.ai').setup({mappings = {around_next = '', inside_next = '', around_last = '', inside_last = ''}})
 -- mini.basics
 require('mini.basics').setup({
   options = {basic = false, extra_ui = true},
   mappings = {basic = false, option_toggle_prefix = 'yo'},
 })
 -- mini.bracketed
-require('mini.bracketed').setup()
+require('mini.bracketed').setup({comment = {suffix = ''}})
 -- mini.bufremove
 require('mini.bufremove').setup()
 vim.keymap.set('n', '<Leader>d', MiniBufremove.delete)
@@ -26,8 +26,8 @@ require('mini.completion').setup({lsp_completion = {source_func = 'omnifunc', au
 -- mini.diff
 require('mini.diff').setup()
 vim.keymap.set('n', 'ghp', MiniDiff.toggle_overlay)
-vim.keymap.set('n', 'ghR', 'gHae', {remap = true})
-vim.keymap.set('n', 'ghS', 'ghae', {remap = true})
+vim.keymap.set('n', 'ghR', 'gHal', {remap = true})
+vim.keymap.set('n', 'ghS', 'ghal', {remap = true})
 vim.keymap.set('n', 'ghr', 'gHgh', {remap = true})
 vim.keymap.set('n', 'ghs', 'ghgh', {remap = true})
 -- mini.files
@@ -93,7 +93,7 @@ require('tabline').setup()
 -------------------- LSP -------------------------------------------------------
 local function on_attach(_, buf)
   vim.bo[buf].omnifunc = 'v:lua.MiniCompletion.completefunc_lsp'
-  vim.keymap.set('n', 'gqe', vim.lsp.buf.format, {buffer = buf})
+  vim.keymap.set('n', 'gql', vim.lsp.buf.format, {buffer = buf})
   vim.keymap.set('n', 'grd', function() MiniExtra.pickers.lsp({scope = 'definition'}) end, {buffer = buf})
   vim.keymap.set('n', 'gri', function() MiniExtra.pickers.lsp({scope = 'implementation'}) end, {buffer = buf})
   vim.keymap.set('n', 'grr', function() MiniExtra.pickers.lsp({scope = 'references'}) end, {buffer = buf})
