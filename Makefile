@@ -93,7 +93,7 @@ tree-sitter:
 
 #################### USER APPS #################################################
 # renovate: datasource=github-releases depName=bufbuild/buf
-buf_version := "1.72.0"
+buf_version := "1.73.0"
 
 .PHONY: buf
 buf:
@@ -132,7 +132,7 @@ jetbrains-mono:
 	@fc-cache -f
 
 # renovate: datasource=github-releases depName=astral-sh/uv
-uv_version := "0.12.10"
+uv_version := "0.12.13"
 
 .PHONY: uv
 uv:
