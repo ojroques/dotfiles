@@ -103,12 +103,12 @@ buf:
 	@mv buf ~/.local/bin && chmod +x ~/.local/bin/buf
 
 # renovate: datasource=github-releases depName=wilfred/difftastic
-difftastic_version := "0.70.0"
+difftastic_version := "0.71.0"
 
 .PHONY: difftastic
 difftastic:
 	@echo "Installing difftastic v$(difftastic_version)..."
-	@curl -fsSL -o difftastic.tar.gz https://github.com/Wilfred/difftastic/releases/download/$(difftastic_version)/difft-x86_64-unknown-linux-gnu.tar.gz
+	@curl -fsSL -o difftastic.tar.gz https://github.com/Wilfred/difftastic/releases/download/$(difftastic_version)/difft-$(difftastic_version)-x86_64-unknown-linux-gnu.tar.gz
 	@mkdir -p ~/.local/bin
 	@tar -C ~/.local/bin -xzf difftastic.tar.gz && rm -f difftastic.tar.gz
 
@@ -132,7 +132,7 @@ jetbrains-mono:
 	@fc-cache -f
 
 # renovate: datasource=github-releases depName=astral-sh/uv
-uv_version := "0.12.13"
+uv_version := "0.12.17"
 
 .PHONY: uv
 uv:
