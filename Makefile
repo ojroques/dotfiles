@@ -62,7 +62,7 @@ gui-pkg: apt-update
 		papirus-icon-theme
 
 # renovate: datasource=golang-version depName=go
-go_version := "1.27.1"
+go_version := "1.27.2"
 
 .PHONY: go
 go:
@@ -82,7 +82,7 @@ neovim:
 	@ln -sf /opt/nvim/bin/nvim /usr/local/bin/nvim
 
 # renovate: datasource=github-releases depName=tree-sitter/tree-sitter
-tree_sitter_version := "0.27.0"
+tree_sitter_version := "0.27.1"
 
 .PHONY: tree-sitter
 tree-sitter:
@@ -132,7 +132,7 @@ jetbrains-mono:
 	@fc-cache -f
 
 # renovate: datasource=github-releases depName=astral-sh/uv
-uv_version := "0.12.23"
+uv_version := "0.13.0"
 
 .PHONY: uv
 uv:
