@@ -62,7 +62,7 @@ gui-pkg: apt-update
 		papirus-icon-theme
 
 # renovate: datasource=golang-version depName=go
-go_version := "1.27.2"
+go_version := "1.27.3"
 
 .PHONY: go
 go:
@@ -93,7 +93,7 @@ tree-sitter:
 
 #################### USER APPS #################################################
 # renovate: datasource=github-releases depName=bufbuild/buf
-buf_version := "1.74.0"
+buf_version := "1.75.0"
 
 .PHONY: buf
 buf:
@@ -132,7 +132,7 @@ jetbrains-mono:
 	@fc-cache -f
 
 # renovate: datasource=github-releases depName=astral-sh/uv
-uv_version := "0.13.1"
+uv_version := "0.13.5"
 
 .PHONY: uv
 uv:
