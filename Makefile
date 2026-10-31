@@ -103,7 +103,7 @@ buf:
 	@mv buf ~/.local/bin && chmod +x ~/.local/bin/buf
 
 # renovate: datasource=github-releases depName=wilfred/difftastic
-difftastic_version := "0.71.0"
+difftastic_version := "0.72.0"
 
 .PHONY: difftastic
 difftastic:
@@ -132,7 +132,7 @@ jetbrains-mono:
 	@fc-cache -f
 
 # renovate: datasource=github-releases depName=astral-sh/uv
-uv_version := "0.13.5"
+uv_version := "0.13.6"
 
 .PHONY: uv
 uv:
@@ -153,7 +153,7 @@ python-ls:
 	@uv tool install ty@latest
 
 # renovate: datasource=github-releases depName=hashicorp/terraform-ls
-terraform_ls_version := "0.39.0"
+terraform_ls_version := "0.39.1"
 
 .PHONY: terraform-ls
 terraform-ls:
