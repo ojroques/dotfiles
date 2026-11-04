@@ -6,13 +6,16 @@ system-cli-apps: cli-pkg go neovim node tree-sitter
 system-gui-apps: gui-pkg
 
 .PHONY: user-cli-apps
-user-cli-apps: buf difftastic fzf uv
+user-cli-apps: buf difftastic fzf tuicr uv
 
 .PHONY: user-gui-apps
 user-gui-apps: jetbrains-mono
 
 .PHONY: language-servers
 language-servers: go-ls python-ls terraform-ls
+
+.PHONY: agent-skills
+agent-skills: go-skills
 
 .PHONY: apt-update
 apt-update:
@@ -142,6 +145,16 @@ jetbrains-mono:
 	@tar -C ~/.local/share/fonts/JetBrainsMono -xJf jetbrains-mono.tar.xz && rm -f jetbrains-mono.tar.xz
 	@fc-cache -f
 
+# renovate: datasource=github-releases depName=agavra/tuicr
+tuicr_version := "0.28.0"
+
+.PHONY: tuicr
+tuicr:
+	@echo "Installing tuicr v$(tuicr_version)..."
+	@curl -fsSL -o tuicr.tar.gz https://github.com/agavra/tuicr/releases/download/v$(tuicr_version)/tuicr-$(tuicr_version)-x86_64-unknown-linux-gnu.tar.gz
+	@mkdir -p ~/.local/bin
+	@tar -C ~/.local/bin -xzf tuicr.tar.gz && rm -f tuicr.tar.gz
+
 # renovate: datasource=github-releases depName=astral-sh/uv
 uv_version := "0.13.6"
 
@@ -172,3 +185,8 @@ terraform-ls:
 	@curl -fsSL -o terraform-ls.zip https://releases.hashicorp.com/terraform-ls/$(terraform_ls_version)/terraform-ls_$(terraform_ls_version)_linux_amd64.zip
 	@mkdir -p ~/.local/bin
 	@unzip -d ~/.local/bin -oq terraform-ls.zip terraform-ls && rm -f terraform-ls.zip
+
+#################### AGENTS SKILLS #############################################
+.PHONY: go-skills
+go-skills:
+	@npx skills add samber/cc-skills-golang -s '*' -g -a codex

@@ -8,6 +8,7 @@ This repository contains my config files for:
 - **ripgrep**
 - **systemd**
 - **tmux**
+- **tuicr**
 - **vim**
 - **xfce**
 - **zsh**
@@ -29,6 +30,7 @@ stow alacritty mpv xfce                     # GUI configs
 make user-cli-apps     # install user CLI apps
 make user-gui-apps     # install user GUI apps
 make language-servers  # install language servers
+make agent-skills      # install agent skills (requires npx)
 ```
 
 ## Post-install

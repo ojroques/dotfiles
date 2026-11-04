@@ -1,0 +1,4 @@
+comment_vim = true
+editor = "nvim"
+theme = "onedark"
+wrap_style = "gutter"
