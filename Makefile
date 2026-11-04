@@ -1,6 +1,6 @@
 #################### COMMANDS ##################################################
 .PHONY: system-cli-apps
-system-cli-apps: cli-pkg go neovim tree-sitter
+system-cli-apps: cli-pkg go neovim node tree-sitter
 
 .PHONY: system-gui-apps
 system-gui-apps: gui-pkg
@@ -80,6 +80,17 @@ neovim:
 	@rm -rf /opt/nvim && mkdir -p /opt/nvim
 	@tar -C /opt/nvim --strip-components=1 -xzf nvim.tar.gz && rm -f nvim.tar.gz
 	@ln -sf /opt/nvim/bin/nvim /usr/local/bin/nvim
+
+# renovate: datasource=node-version depName=node
+node_version := "26.13.0"
+
+.PHONY: node
+node:
+	@echo "Installing node.js v$(node_version)..."
+	@curl -fsSL -o node.tar.xz https://nodejs.org/dist/v$(node_version)/node-v$(node_version)-linux-x64.tar.xz
+	@rm -rf /opt/node && mkdir -p /opt/node
+	@tar -C /opt/node --strip-components=1 -xJf node.tar.xz && rm -f node.tar.xz
+	@ln -sf /opt/node/bin/* /usr/local/bin/
 
 # renovate: datasource=github-releases depName=tree-sitter/tree-sitter
 tree_sitter_version := "0.27.1"

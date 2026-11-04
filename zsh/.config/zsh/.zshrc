@@ -36,7 +36,7 @@ fpath=("$XDG_DATA_HOME/zsh/functions" "$XDG_DATA_HOME/zsh/prompt" $fpath)
 
 # PATH
 typeset -U path
-path=("$XDG_BIN_HOME" "$HOME/go/bin" "$HOME/.node_modules/bin" $path)
+path=("$XDG_BIN_HOME" "$HOME/go/bin" "$HOME/.npm-global/bin" $path)
 export PATH
 
 # GIT
@@ -98,7 +98,7 @@ alias wk="cd $HOME/Work"
 # APP PARAMETERS
 export BAT_THEME="OneHalfDark"
 export MANPAGER='nvim +Man!'
-export NPM_CONFIG_PREFIX="$HOME/.node_modules"
+export NPM_CONFIG_PREFIX="$HOME/.npm-global"
 export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/config"
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/gcr/ssh" # https://bugs.launchpad.net/ubuntu/+source/openssh/+bug/2125549
 
