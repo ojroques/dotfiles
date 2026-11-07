@@ -96,7 +96,7 @@ node:
 	@ln -sf /opt/node/bin/* /usr/local/bin/
 
 # renovate: datasource=github-releases depName=tree-sitter/tree-sitter
-tree_sitter_version := "0.27.1"
+tree_sitter_version := "0.27.2"
 
 .PHONY: tree-sitter
 tree-sitter:
