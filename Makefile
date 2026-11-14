@@ -65,7 +65,7 @@ gui-pkg: apt-update
 		papirus-icon-theme
 
 # renovate: datasource=golang-version depName=go
-go_version := "1.27.3"
+go_version := "1.27.4"
 
 .PHONY: go
 go:
@@ -85,7 +85,7 @@ neovim:
 	@ln -sf /opt/nvim/bin/nvim /usr/local/bin/nvim
 
 # renovate: datasource=node-version depName=node
-node_version := "26.13.0"
+node_version := "26.13.1"
 
 .PHONY: node
 node:
@@ -156,7 +156,7 @@ tuicr:
 	@tar -C ~/.local/bin -xzf tuicr.tar.gz && rm -f tuicr.tar.gz
 
 # renovate: datasource=github-releases depName=astral-sh/uv
-uv_version := "0.13.7"
+uv_version := "0.13.8"
 
 .PHONY: uv
 uv:
