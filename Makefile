@@ -146,7 +146,7 @@ jetbrains-mono:
 	@fc-cache -f
 
 # renovate: datasource=github-releases depName=agavra/tuicr
-tuicr_version := "0.28.0"
+tuicr_version := "0.29.0"
 
 .PHONY: tuicr
 tuicr:
