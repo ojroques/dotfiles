@@ -1,4 +1,5 @@
 comment_vim = true
 editor = "nvim"
+file_list_position = "right"
 theme = "onedark"
 wrap_style = "gutter"
