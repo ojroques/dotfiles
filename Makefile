@@ -156,7 +156,7 @@ tuicr:
 	@tar -C ~/.local/bin -xzf tuicr.tar.gz && rm -f tuicr.tar.gz
 
 # renovate: datasource=github-releases depName=astral-sh/uv
-uv_version := "0.13.8"
+uv_version := "0.13.9"
 
 .PHONY: uv
 uv:
