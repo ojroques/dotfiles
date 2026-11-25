@@ -62,7 +62,8 @@ gui-pkg: apt-update
 		arc-theme \
 		firefox \
 		mpv \
-		papirus-icon-theme
+		papirus-icon-theme \
+		xdg-terminal-exec
 
 # renovate: datasource=golang-version depName=go
 go_version := "1.27.4"
