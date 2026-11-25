@@ -83,6 +83,7 @@ neovim:
 	@rm -rf /opt/nvim && mkdir -p /opt/nvim
 	@tar -C /opt/nvim --strip-components=1 -xzf nvim.tar.gz && rm -f nvim.tar.gz
 	@ln -sf /opt/nvim/bin/nvim /usr/local/bin/nvim
+	@ln -sf /opt/nvim/share/applications/org.neovim.nvim.desktop /usr/share/applications/nvim.desktop
 
 # renovate: datasource=node-version depName=node
 node_version := "26.13.1"
