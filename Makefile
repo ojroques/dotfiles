@@ -148,7 +148,7 @@ jetbrains-mono:
 	@fc-cache -f
 
 # renovate: datasource=github-releases depName=agavra/tuicr
-tuicr_version := "0.29.0"
+tuicr_version := "0.30.0"
 
 .PHONY: tuicr
 tuicr:
@@ -158,7 +158,7 @@ tuicr:
 	@tar -C ~/.local/bin -xzf tuicr.tar.gz && rm -f tuicr.tar.gz
 
 # renovate: datasource=github-releases depName=astral-sh/uv
-uv_version := "0.13.9"
+uv_version := "0.13.10"
 
 .PHONY: uv
 uv:
